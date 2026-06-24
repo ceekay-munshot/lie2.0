@@ -47,9 +47,54 @@ pipeline/                 Node ESM (.mjs) build/verify scripts (run locally)
   validate-corpus.mjs     Validate a corpus (chunks ≤ cap, no boilerplate, roles)
   gen-index.mjs           Regenerate index.json from committed ledgers
   test/p3.test.mjs        Ingestion unit tests (normalizer / chunker / needs_ocr)
-pipeline/output/<ticker>/ Acquisition + corpus artifacts (gitignored): manifest.json,
-                          raw/*.pdf, corpus.json
+  lib/extract-prompt.mjs  Extraction system prompt + JSON schema (rubric, few-shots)
+  lib/multi-llm.mjs       Ensemble/partition/single runner (per-provider concurrency, degrade)
+  lib/ground-quote.mjs    Verbatim quote grounding (substring → snap → drop)
+  lib/dedup.mjs           Cross-model merge (found_by), reaffirmed_on, revisions, ids
+  lib/test-date.mjs       deriveTestDate from a target period
+  extract.mjs             Extraction engine: corpus → promises.json (FIRST LLM step)
+  eval-extraction.mjs     Recall of extracted promises vs the golden fixture
+  test/p4.test.mjs        Extraction unit tests (mock LLM)
+fixtures/<ticker>.corpus.json  Committed corpus for CI extraction (recall eval; NOT gitignored)
+pipeline/output/<ticker>/ Acquisition + corpus + promises artifacts (gitignored): manifest.json,
+                          raw/*.pdf, corpus.json, promises.json, cache/extract/
 ```
+
+## Extraction engine (Prompt 4)
+
+`extract.mjs` is the first LLM step: it reads `corpus.json` and runs an
+**ensemble** of Gemini + Groq + Mistral (all first-class workers, all free-tier)
+to pull **measurable management commitments** → `pipeline/output/<ticker>/promises.json`.
+
+Company-agnostic: never hardcode a metric set — models return whatever measurable
+guidance the company gives (bank→NIM/GNPA, IT→margin/TCV, metals→cost/capacity).
+Per doc the engine builds **management-only** text (prepared remarks + management
+answers, the preceding analyst Q kept inline as `[context]`), calls each provider
+with the same rubric+schema (`extract-prompt.mjs`), then: grounds every quote to a
+verbatim substring (snap-or-drop — `ground-quote.mjs`), cross-model-merges +
+dedups (`dedup.mjs`: `found_by` ≥2 = agreement, `reaffirmed_on`/`revisions` across
+quarters), and derives `test_date` (`test-date.mjs`). `eval-extraction.mjs` scores
+recall vs the fixture. **No verification/status/variance here — that's Prompt 5.**
+
+Strategies (`LLM_STRATEGY`): `ensemble` (default, every doc × all 3 → max recall,
+~docs×3 calls), `partition` (round-robin docs across providers), `single` (debug).
+A throttled/unavailable provider is skipped and the run continues (graceful
+degradation); per (doc×model) caching makes re-runs ~free.
+
+**Keys live only in GitHub Secrets** → the live run is CI-only
+(`.github/workflows/test-extract.yml`, `workflow_dispatch`). In-session: build +
+`DRY_RUN=1` (estimates calls/tokens) + mock-LLM unit tests.
+
+### Confirmed free-tier models (June 2026)
+
+| Provider | Default model (env override) | Free-tier limits |
+| --- | --- | --- |
+| Gemini | `gemini-2.5-flash` (`GEMINI_MODEL`) | 10 RPM · ~250K TPM · 1,500 RPD; free tier = Flash/Flash-Lite |
+| Groq | `llama-3.3-70b-versatile` (`GROQ_MODEL`) | 30 RPM · 12K TPM · 1,000 RPD (TPM is the binding limit for whole-doc calls → backoff) |
+| Mistral | `mistral-large-latest` (`MISTRAL_MODEL`) | free "Experiment" tier, all models, RPS/TPM-limited, ~1B tok/mo |
+
+Ensemble over a ~6-doc corpus ≈ 18 calls — within all three RPD caps; Groq's 12K
+TPM means big-doc calls back off and run roughly serial, which is fine.
 
 ## Ingestion & normalization (Prompt 3)
 
@@ -208,6 +253,12 @@ SOURCE=upload TICKER=vedl npm run ingest:upload   # filename-agnostic content de
 TICKER=vedl npm run ingest                  # manifest PDFs → output/<ticker>/corpus.json
 npm run validate:corpus vedl                # chunks ≤ cap, no boilerplate, roles OK
 npm run test:ingest                         # normalizer / chunker / needs_ocr unit tests
+
+# Extraction engine (Prompt 4) — first LLM step; keys via env/secrets only
+DRY_RUN=1 TICKER=vedl npm run extract        # estimate calls/tokens (ensemble → docs×3), no API
+npm run test:extract                         # mock-LLM unit tests (merge/ground/dedup/test-date)
+# live ensemble runs in CI (test-extract.yml) with GEMINI/GROQ/MISTRAL_API_KEY secrets:
+CORPUS=pipeline/fixtures/vedl.corpus.json TICKER=vedl LLM_STRATEGY=ensemble npm run extract
 ```
 
 ## Roadmap (≈12 prompts)
@@ -223,21 +274,22 @@ npm run test:ingest                         # normalizer / chunker / needs_ocr u
       transcript speaker-turn + role tagging, presentation slides + guidance
       flags, citable chunking → `corpus.json`; upload backend made
       filename-agnostic via content detection. Deterministic & offline. *(this prompt)*
-- [ ] **P4 — LLM hardening.** Confirm live provider models/limits, prompt
-      scaffolding, structured-output plumbing on top of `completeJSON`.
-- [ ] **P5 — Promise extraction.** Pull measurable commitments → `promises[]`
-      (`promise`, `quote`, `metric`, `target`, `confidence`, `category`).
-- [ ] **P6 — Verification & credibility.** Match promises to actuals; assign
+- [x] **P4 — Extraction engine.** Ensemble (Gemini+Groq+Mistral, all first-class)
+      → measurable management promises in `promises.json`: rubric prompt +
+      structured output on `completeJSON`, verbatim quote grounding, cross-model
+      merge (`found_by`/`reaffirmed_on`/`revisions`), `deriveTestDate`, recall
+      eval. Build + DRY_RUN + mock tests in-session; live run is CI-only. *(this prompt)*
+- [ ] **P5 — Verification & credibility.** Match promises to actuals; assign
       `status`/`variance`/`root_cause`; compute `aggregates` and the real
       `credibility` score/grade.
-- [ ] **P7 — Dashboard shell.** Company route, header, search, credibility hero.
-- [ ] **P8 — Charts.** Status donut, slippage/timeline, financial-trend
+- [ ] **P6 — Dashboard shell.** Company route, header, search, credibility hero.
+- [ ] **P7 — Charts.** Status donut, slippage/timeline, financial-trend
       (ECharts, dark theme).
-- [ ] **P9 — Track-record cards + master promise table.** Filter / sort / drill.
-- [ ] **P10 — PDF export.** Polished, multi-page report.
-- [ ] **P11 — Pipeline orchestration + multi-company.** Batch build, caching,
+- [ ] **P8 — Track-record cards + master promise table.** Filter / sort / drill.
+- [ ] **P9 — PDF export.** Polished, multi-page report.
+- [ ] **P10 — Pipeline orchestration + multi-company.** Batch build, caching,
       `index.json` at scale.
-- [ ] **P12 — Polish / QA / deploy.** A11y, performance, Cloudflare deploy.
+- [ ] **P11 — Polish / QA / deploy.** A11y, performance, Cloudflare deploy.
 
 ## Do / Don't (P1)
 

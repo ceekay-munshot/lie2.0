@@ -154,6 +154,34 @@ wrapped words) → tag structure → chunk with citable metadata.
 · `INGEST_MODE` (`text` default; `gemini` is a documented Prompt-4 hook — no LLM
 here) · `DEBUG`. Output: `pipeline/output/<ticker>/corpus.json` (gitignored).
 
+## Extraction engine (Prompt 4)
+
+The first LLM step: read `corpus.json` and extract every **measurable management
+commitment** → `pipeline/output/<ticker>/promises.json`. Company-agnostic (no
+hardcoded metric set). **No verification/status/variance — that's Prompt 5.**
+
+An **ensemble** of Gemini + Groq + Mistral (all first-class, all free-tier) each
+extract management-only text; results are unioned, every quote is grounded to a
+verbatim substring (snap-or-drop), cross-model-merged + deduped (`found_by` ≥2 =
+agreement; `reaffirmed_on`/`revisions` track a commitment across quarters), and
+each gets a derived `test_date`. Recall is scored against the golden fixture.
+
+```bash
+# In-session (no keys): estimate + mock-LLM unit tests
+DRY_RUN=1 TICKER=vedl npm run extract        # planned calls/tokens (ensemble → docs×3)
+npm run test:extract                         # mock-LLM unit tests
+
+# Live 3-model run happens in CI (keys in GitHub Secrets) — see test-extract.yml
+CORPUS=pipeline/fixtures/vedl.corpus.json TICKER=vedl npm run extract
+```
+
+**Env knobs:** `TICKER` · `CORPUS=<path>` · `LLM_STRATEGY` (`ensemble` |
+`partition` | `single`) · `GEMINI_API_KEY`/`GROQ_API_KEY`/`MISTRAL_API_KEY`
+(+ optional `<PROVIDER>_MODEL`) · `LLM_CONCURRENCY` (2) · `EXTRACT_SCOPE`
+(`management` | `all`) · `EVAL` · `LIMIT` · `DRY_RUN` · `DEBUG`. A throttled
+provider is skipped (graceful degradation); per (doc×model) caching makes re-runs
+nearly free. Confirmed free-tier models are documented in `CLAUDE.md`.
+
 ## Layout
 
 ```
@@ -168,15 +196,23 @@ pipeline/
   lib/detect.mjs           Filename-agnostic {type, quarter, date} from PDF text
   lib/normalize-text.mjs   De-boilerplate, speaker turns + roles, slides
   lib/chunk.mjs            Token-bounded, overlapping, no-mid-turn chunking
+  lib/extract-prompt.mjs   Extraction system prompt + JSON schema
+  lib/multi-llm.mjs        Ensemble/partition/single runner (concurrency, degrade)
+  lib/ground-quote.mjs     Verbatim quote grounding (snap-or-drop)
+  lib/dedup.mjs            Cross-model merge, reaffirmed_on, revisions
+  lib/test-date.mjs        deriveTestDate from a target period
   scrape-screener.mjs      Screener acquisition orchestrator (Playwright)
   ingest-upload.mjs        Manual-upload backend (content-detected, filename-agnostic)
   ingest.mjs               Manifest PDFs → corpus.json
+  extract.mjs              Extraction engine: corpus → promises.json (first LLM step)
+  eval-extraction.mjs      Recall vs the golden fixture
   validate.mjs             Ledger ↔ schema validation
   validate-manifest.mjs    Acquisition-manifest validation
   validate-corpus.mjs      Corpus validation (chunks, boilerplate, roles)
   gen-index.mjs            Home-page index.json generator
-  test/p3.test.mjs         Ingestion unit tests
-.github/workflows/         CI (acquire.yml — manual document acquisition)
+  test/p3.test.mjs         Ingestion unit tests · test/p4.test.mjs  Extraction unit tests
+  fixtures/<ticker>.corpus.json  Committed corpus for CI extraction
+.github/workflows/         CI (acquire.yml · test-extract.yml)
 wrangler.jsonc             Worker config
 ```
 

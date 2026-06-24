@@ -14,7 +14,9 @@
     "scrape": "node pipeline/scrape-screener.mjs",
     "ingest:upload": "node pipeline/ingest-upload.mjs",
     "ingest": "node pipeline/ingest.mjs",
+    "extract": "node pipeline/extract.mjs",
     "test:ingest": "node pipeline/test/p3.test.mjs",
+    "test:extract": "node pipeline/test/p4.test.mjs",
     "llm:selftest": "node pipeline/lib/llm.mjs --selftest"
   },
   "engines": {
