@@ -117,6 +117,43 @@ cleanly (clear message + debug dump) rather than hanging:
 On login failure, a missing Concalls block, or an unreachable host the scraper
 writes `pipeline/output/<ticker>/debug/*.{html,png}` and exits non-zero.
 
+## Ingestion & normalization (Prompt 3)
+
+Turn the acquired PDFs into a clean, tagged, chunked corpus the extraction
+engine (Prompt 4) reads. **Deterministic & offline — no LLM, no OCR.**
+
+```bash
+npm i -D unpdf --no-save                       # one-time (PDF→text; pure JS)
+
+# upload backend is now FILENAME-AGNOSTIC — drop arbitrarily-named PDFs, no CSV:
+SOURCE=upload TICKER=vedl npm run ingest:upload  # detects {type,quarter,date} from page-1 text
+npm run validate:manifest vedl
+
+TICKER=vedl npm run ingest                       # manifest → pipeline/output/vedl/corpus.json
+npm run validate:corpus vedl                     # chunks ≤ CHUNK_TOKENS, no boilerplate, roles OK
+npm run test:ingest                              # normalizer/chunker/needs_ocr unit tests
+```
+
+Per document: extract per-page text (unpdf) → de-boilerplate (drop lines on ≥40%
+of pages, "Page X of Y", "Sensitivity: …", bare page numbers; de-hyphenate
+wrapped words) → tag structure → chunk with citable metadata.
+
+- **Transcripts → speaker turns** `{kind, speaker, role, page, text}`, with roles
+  (`management` | `analyst` | `moderator` | `null`) tagged from the MANAGEMENT
+  roster, and prepared-remarks vs Q&A segmented.
+- **Presentations → slides** (one page = one slide) with a title and an
+  `is_guidance` flag (guidance / outlook / target / deleveraging / capex).
+- **Chunks** `{chunk_id, doc_id, quarter, page_start, page_end, kind, speaker,
+  approx_tokens, text}`, ≤ `CHUNK_TOKENS` (default 1500) with ~`CHUNK_OVERLAP`
+  (150) overlap, never split mid-turn unless a single turn exceeds a chunk.
+- A PDF with no text layer → `needs_ocr: true` (flagged, not crashed; OCR is out
+  of scope here). The raw `local_path` is kept so Prompt 4 can feed table-heavy
+  decks to a vision model.
+
+**Env knobs:** `TICKER` · `CHUNK_TOKENS` (1500) · `CHUNK_OVERLAP` (150) · `LIMIT`
+· `INGEST_MODE` (`text` default; `gemini` is a documented Prompt-4 hook — no LLM
+here) · `DEBUG`. Output: `pipeline/output/<ticker>/corpus.json` (gitignored).
+
 ## Layout
 
 ```
@@ -127,11 +164,18 @@ pipeline/
   lib/llm.mjs              Provider-agnostic LLM client
   lib/manifest.mjs         Acquisition contract (fiscal-quarter, sha256, paths)
   lib/screener.mjs         Screener resolve/login/scrape + drift-resilient selectors
+  lib/pdftext.mjs          PDF → per-page text (unpdf) + needs_ocr detection
+  lib/detect.mjs           Filename-agnostic {type, quarter, date} from PDF text
+  lib/normalize-text.mjs   De-boilerplate, speaker turns + roles, slides
+  lib/chunk.mjs            Token-bounded, overlapping, no-mid-turn chunking
   scrape-screener.mjs      Screener acquisition orchestrator (Playwright)
-  ingest-upload.mjs        Manual-upload acquisition backend
+  ingest-upload.mjs        Manual-upload backend (content-detected, filename-agnostic)
+  ingest.mjs               Manifest PDFs → corpus.json
   validate.mjs             Ledger ↔ schema validation
   validate-manifest.mjs    Acquisition-manifest validation
+  validate-corpus.mjs      Corpus validation (chunks, boilerplate, roles)
   gen-index.mjs            Home-page index.json generator
+  test/p3.test.mjs         Ingestion unit tests
 .github/workflows/         CI (acquire.yml — manual document acquisition)
 wrangler.jsonc             Worker config
 ```
