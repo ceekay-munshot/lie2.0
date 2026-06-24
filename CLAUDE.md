@@ -35,13 +35,37 @@ pipeline/                 Node ESM (.mjs) build/verify scripts (run locally)
   lib/llm.mjs             Provider-agnostic, OpenAI-compatible LLM client
   lib/manifest.mjs        Acquisition contract: fiscal-quarter, sha256, %PDF, paths
   lib/screener.mjs        Screener resolve/login/scrape (+ drift-resilient selectors)
+  lib/pdftext.mjs         PDF → per-page text (unpdf); flags needs_ocr, never crashes
+  lib/detect.mjs          Filename-agnostic {type,quarter,date} from PDF text
+  lib/normalize-text.mjs  De-boilerplate, transcript turns + roles, presentation slides
+  lib/chunk.mjs           Token-bounded, overlapping, no-mid-turn chunking
   scrape-screener.mjs     Screener acquisition orchestrator (Playwright + session reuse)
-  ingest-upload.mjs       Manual-upload acquisition backend (same manifest)
+  ingest-upload.mjs       Manual-upload backend (content-detected, filename-agnostic)
+  ingest.mjs              Manifest PDFs → corpus.json (extract→normalize→tag→chunk)
   validate.mjs            ajv validation of every company ledger vs the schema
   validate-manifest.mjs   Validate an acquisition manifest (keys, bytes, sha256, %PDF)
+  validate-corpus.mjs     Validate a corpus (chunks ≤ cap, no boilerplate, roles)
   gen-index.mjs           Regenerate index.json from committed ledgers
-pipeline/output/<ticker>/ Acquisition artifacts (gitignored): manifest.json + raw/*.pdf
+  test/p3.test.mjs        Ingestion unit tests (normalizer / chunker / needs_ocr)
+pipeline/output/<ticker>/ Acquisition + corpus artifacts (gitignored): manifest.json,
+                          raw/*.pdf, corpus.json
 ```
+
+## Ingestion & normalization (Prompt 3)
+
+`ingest.mjs` turns a manifest's PDFs into `pipeline/output/<ticker>/corpus.json`
+— the clean, tagged, chunked input Prompt 4 mines for promises. **Deterministic
+& offline: no LLM, no OCR.** Per doc: `pdftext` extracts per-page text →
+`normalize-text` de-boilerplates (lines on ≥40% of pages, "Page X of Y",
+"Sensitivity: …", de-hyphenation) and tags structure (transcript speaker turns
+with roster-based roles + prepared_remarks/qa; presentation slides with titles +
+`is_guidance`) → `chunk` emits ≤`CHUNK_TOKENS` (1500) overlapping chunks that
+never split mid-turn. No-text PDFs → `needs_ocr:true` (flagged, run continues).
+
+The **upload backend is filename-agnostic** (P3 upgrade): real downloads have
+arbitrary names, so `ingest-upload.mjs` reads page-1 text and detects
+`{type,quarter,date}` via `lib/detect.mjs` (an optional `index.csv` overrides).
+`npm run validate:corpus` gates the result.
 
 ## Document acquisition (Prompt 2)
 
@@ -177,6 +201,13 @@ TICKER=VEDL DRY_RUN=1 npm run scrape       # list concalls + URLs, download noth
 TICKER=VEDL EXPLORE=1 npm run scrape       # dump HTML + screenshot + candidate selectors
 SOURCE=upload TICKER=test npm run ingest:upload   # manual-upload fallback
 npm run validate:manifest VEDL             # validate an acquisition manifest
+
+# Ingestion & normalization (Prompt 3) — needs unpdf
+npm i -D unpdf --no-save
+SOURCE=upload TICKER=vedl npm run ingest:upload   # filename-agnostic content detection
+TICKER=vedl npm run ingest                  # manifest PDFs → output/<ticker>/corpus.json
+npm run validate:corpus vedl                # chunks ≤ cap, no boilerplate, roles OK
+npm run test:ingest                         # normalizer / chunker / needs_ocr unit tests
 ```
 
 ## Roadmap (≈12 prompts)
@@ -188,7 +219,10 @@ npm run validate:manifest VEDL             # validate an acquisition manifest
       scraping (Playwright, drift-resilient selectors, session reuse) and a manual
       upload fallback → `pipeline/output/<ticker>/manifest.json` + raw PDFs.
       Bytes + metadata only. *(this prompt)*
-- [ ] **P3 — Parsing.** PDF / transcript text extraction, cleanup and chunking.
+- [x] **P3 — Ingestion & normalization.** PDF→text (unpdf), de-boilerplate,
+      transcript speaker-turn + role tagging, presentation slides + guidance
+      flags, citable chunking → `corpus.json`; upload backend made
+      filename-agnostic via content detection. Deterministic & offline. *(this prompt)*
 - [ ] **P4 — LLM hardening.** Confirm live provider models/limits, prompt
       scaffolding, structured-output plumbing on top of `completeJSON`.
 - [ ] **P5 — Promise extraction.** Pull measurable commitments → `promises[]`
