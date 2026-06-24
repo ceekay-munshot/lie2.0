@@ -1,0 +1,20 @@
+{
+  // Cloudflare Worker config for Lie Detector.
+  // Docs: https://developers.cloudflare.com/workers/wrangler/configuration/
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lie-detector",
+  "main": "worker/index.js",
+  "compatibility_date": "2025-06-01",
+
+  // Static dashboard lives in ./public and is served through the ASSETS binding.
+  // Unmatched non-/api routes fall through to index.html (single-page app behaviour).
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}

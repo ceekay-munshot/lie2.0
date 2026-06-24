@@ -1,0 +1,18 @@
+{
+  "name": "lie-detector",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Lie Detector — extract, verify and score measurable management promises for Indian listed companies.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "validate": "node pipeline/validate.mjs",
+    "gen:index": "node pipeline/gen-index.mjs",
+    "llm:selftest": "node pipeline/lib/llm.mjs --selftest"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "comment": "Pipeline + validation deps (ajv, ajv-formats, wrangler, ...) are installed with `npm install --no-save <pkg>`; they are intentionally NOT listed here and node_modules/ is gitignored."
+}
