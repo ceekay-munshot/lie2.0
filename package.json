@@ -8,7 +8,10 @@
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
     "validate": "node pipeline/validate.mjs",
+    "validate:manifest": "node pipeline/validate-manifest.mjs",
     "gen:index": "node pipeline/gen-index.mjs",
+    "scrape": "node pipeline/scrape-screener.mjs",
+    "ingest:upload": "node pipeline/ingest-upload.mjs",
     "llm:selftest": "node pipeline/lib/llm.mjs --selftest"
   },
   "engines": {
