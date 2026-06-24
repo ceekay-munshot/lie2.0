@@ -7,6 +7,12 @@ scratchpad/
 # Pipeline build artifacts (generated JSON lives under public/data/, not here)
 pipeline/output/
 
+# Manual-upload inputs (source PDFs supplied by hand; never committed)
+pipeline/input/
+
+# Persisted Screener browser session (also covered by scratchpad/ above)
+scratchpad/screener-state.json
+
 # Secrets & local config
 .dev.vars
 .env

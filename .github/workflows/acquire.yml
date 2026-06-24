@@ -1,0 +1,89 @@
+# Document acquisition (Prompt 2) — manually triggered.
+#
+# Scrapes a company's Concalls from Screener.in (or runs the upload fallback) and
+# uploads the resulting manifest + raw PDFs as a build artifact. Acquisition only:
+# no PDF parsing, no LLM, nothing committed to the repo.
+#
+# Egress allowlist — a hardened/self-hosted runner (or a Claude Code on the web
+# network policy) must permit these hosts; without them the scraper fails cleanly:
+#   www.screener.in · www.bseindia.com · nsearchives.nseindia.com · www.nseindia.com
+#   company IR domains (transcript/PPT redirects) · cdn.playwright.dev (browser download)
+#
+# Secrets required for the Screener backend: SCREENER_EMAIL, SCREENER_PASSWORD.
+
+name: Acquire documents
+
+on:
+  workflow_dispatch:
+    inputs:
+      ticker:
+        description: "Ticker (e.g. VEDL) or, with source=screener, a COMPANY name"
+        required: true
+        default: "VEDL"
+      source:
+        description: "Acquisition backend"
+        type: choice
+        options: [screener, upload]
+        default: screener
+      limit:
+        description: "Latest N quarters"
+        required: false
+        default: "8"
+      dry_run:
+        description: "List only, download nothing (screener)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TICKER: ${{ inputs.ticker }}
+      SOURCE: ${{ inputs.source }}
+      LIMIT: ${{ inputs.limit }}
+      DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+      SCREENER_EMAIL: ${{ secrets.SCREENER_EMAIL }}
+      SCREENER_PASSWORD: ${{ secrets.SCREENER_PASSWORD }}
+      # Hosts the scraper is permitted to reach (documented for hardened egress).
+      EGRESS_ALLOWLIST: "www.screener.in,www.bseindia.com,nsearchives.nseindia.com,www.nseindia.com,cdn.playwright.dev"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright + Chromium (skips download if preinstalled)
+        if: ${{ inputs.source == 'screener' }}
+        run: |
+          npm i -D playwright --no-save
+          # Use a preinstalled browser if present (PLAYWRIGHT_BROWSERS_PATH / image);
+          # otherwise download Chromium from cdn.playwright.dev.
+          npx playwright install --with-deps chromium
+
+      - name: Acquire (Screener)
+        if: ${{ inputs.source == 'screener' }}
+        run: npm run scrape
+
+      - name: Acquire (manual upload)
+        if: ${{ inputs.source == 'upload' }}
+        run: npm run ingest:upload
+
+      - name: Validate manifest
+        if: ${{ !inputs.dry_run }}
+        run: npm run validate:manifest "$TICKER"
+
+      - name: Upload artifacts (manifest, raw PDFs, debug)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: acquisition-${{ inputs.ticker }}
+          path: |
+            pipeline/output/**/manifest.json
+            pipeline/output/**/raw/**
+            pipeline/output/**/debug/**
+          if-no-files-found: ignore

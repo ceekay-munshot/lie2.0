@@ -33,9 +33,36 @@ public/                   Static site (zero build step; CDN libs only)
     index.json            Generated card-sized summaries for the home page
 pipeline/                 Node ESM (.mjs) build/verify scripts (run locally)
   lib/llm.mjs             Provider-agnostic, OpenAI-compatible LLM client
+  lib/manifest.mjs        Acquisition contract: fiscal-quarter, sha256, %PDF, paths
+  lib/screener.mjs        Screener resolve/login/scrape (+ drift-resilient selectors)
+  scrape-screener.mjs     Screener acquisition orchestrator (Playwright + session reuse)
+  ingest-upload.mjs       Manual-upload acquisition backend (same manifest)
   validate.mjs            ajv validation of every company ledger vs the schema
+  validate-manifest.mjs   Validate an acquisition manifest (keys, bytes, sha256, %PDF)
   gen-index.mjs           Regenerate index.json from committed ledgers
+pipeline/output/<ticker>/ Acquisition artifacts (gitignored): manifest.json + raw/*.pdf
 ```
+
+## Document acquisition (Prompt 2)
+
+Two interchangeable backends fetch transcripts + presentations and write the
+**same** `pipeline/output/<ticker>/manifest.json` (mirrors the company schema's
+`documents[]`) so downstream stages are source-agnostic:
+
+- **Screener scraper** (`scrape-screener.mjs` + `lib/screener.mjs`): Playwright
+  logs in (Django form + persisted `scratchpad/screener-state.json`, reused →
+  idempotent), resolves the company, scrapes Concalls with primary selectors and
+  a **heading-anchored fallback** (find the "Concalls" heading → its link list)
+  so markup drift only needs `lib/screener.mjs` retouched via `EXPLORE=1`.
+- **Manual upload** (`ingest-upload.mjs`): reads `pipeline/input/<ticker>/` PDFs
+  (`<QUARTER>-<type>.pdf` or an `index.csv`).
+
+Acquisition is **bytes + metadata only** — no PDF→text, no LLM, nothing under
+`public/data/`. Quarters use `toFiscalQuarter(date)` = the most-recently-completed
+fiscal quarter (an earnings doc dated 31 Jul 2025 reports **Q1FY26**); doc id =
+`<quarter-lower>-<type>` (e.g. `q2fy26-transcript`). Failures save a debug
+HTML+screenshot under `output/<ticker>/debug/` and exit non-zero. Env knobs and
+the egress allowlist live in the README.
 
 - **Datastore = committed JSON** under `public/data/`. No database.
 - **Frontend = zero build step.** Libraries load from CDN only: Tailwind Play,
@@ -142,6 +169,14 @@ npm run dev           # wrangler dev — serve the site + worker locally
 npm run validate      # ajv-validate every public/data/companies/*.json (auto-installs ajv --no-save)
 npm run gen:index     # regenerate public/data/companies/index.json
 npm run llm:selftest  # print resolved LLM provider/model/baseURL + "config OK" (no key needed)
+
+# Document acquisition (Prompt 2) — needs Playwright + a browser
+npm i -D playwright --no-save && npx playwright install chromium
+TICKER=VEDL npm run scrape                 # scrape Screener → output/<ticker>/{manifest.json, raw/}
+TICKER=VEDL DRY_RUN=1 npm run scrape       # list concalls + URLs, download nothing
+TICKER=VEDL EXPLORE=1 npm run scrape       # dump HTML + screenshot + candidate selectors
+SOURCE=upload TICKER=test npm run ingest:upload   # manual-upload fallback
+npm run validate:manifest VEDL             # validate an acquisition manifest
 ```
 
 ## Roadmap (≈12 prompts)
@@ -149,8 +184,10 @@ npm run llm:selftest  # print resolved LLM provider/model/baseURL + "config OK" 
 - [x] **P1 — Foundation.** Scaffold, Worker + static shell, design system, the
       data contract (schema), provider-agnostic LLM client, golden Vedanta
       fixture + `index.json`, `npm run validate`. *(this prompt)*
-- [ ] **P2 — Ingestion.** Screener.in lookup + document discovery (transcripts /
-      presentations / press releases), populate `documents[]`.
+- [x] **P2 — Document acquisition.** Screener.in lookup + login + Concalls
+      scraping (Playwright, drift-resilient selectors, session reuse) and a manual
+      upload fallback → `pipeline/output/<ticker>/manifest.json` + raw PDFs.
+      Bytes + metadata only. *(this prompt)*
 - [ ] **P3 — Parsing.** PDF / transcript text extraction, cleanup and chunking.
 - [ ] **P4 — LLM hardening.** Confirm live provider models/limits, prompt
       scaffolding, structured-output plumbing on top of `completeJSON`.
