@@ -1,0 +1,83 @@
+# Extraction engine (Prompt 4) — live 3-model ensemble run, CI-only.
+#
+# API keys live ONLY in GitHub Secrets, so the real Gemini + Groq + Mistral run
+# happens here (build + DRY_RUN + mock unit tests run in-session). Reads the
+# committed corpus fixture, extracts measurable management promises, evaluates
+# recall against the golden fixture, and uploads promises.json as an artifact.
+# Nothing is committed.
+#
+# Required repo secrets: GEMINI_API_KEY, GROQ_API_KEY, MISTRAL_API_KEY
+# Egress: generativelanguage.googleapis.com · api.groq.com · api.mistral.ai
+
+name: Test extraction (ensemble)
+
+on:
+  workflow_dispatch:
+    inputs:
+      ticker:
+        description: "Ticker (a pipeline/fixtures/<ticker>.corpus.json must exist)"
+        required: true
+        default: "vedl"
+      strategy:
+        description: "LLM strategy"
+        type: choice
+        options: [ensemble, partition, single]
+        default: ensemble
+
+permissions:
+  contents: read
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      TICKER: ${{ inputs.ticker }}
+      LLM_STRATEGY: ${{ inputs.strategy }}
+      CORPUS: pipeline/fixtures/${{ inputs.ticker }}.corpus.json
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+      LLM_CONCURRENCY: "2"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install deps (--no-save)
+        run: npm install --no-save --no-audit --no-fund ajv ajv-formats
+
+      - name: Mock-LLM unit tests (no keys needed)
+        run: node pipeline/test/p4.test.mjs
+
+      - name: Extract (live ensemble)
+        run: node pipeline/extract.mjs
+
+      - name: Print eval + per-model counts
+        if: ${{ always() }}
+        run: |
+          f="pipeline/output/${TICKER}/promises.json"
+          if [ -f "$f" ]; then
+            node -e '
+              const o = require("./"+process.argv[1]);
+              const s = o.stats, e = o.eval;
+              console.log("strategy:", o.strategy, "| models:", o.models.map(m=>m.provider+"="+m.model).join(", "));
+              console.log("raw:", s.raw_candidates, "| by_model:", JSON.stringify(s.by_model));
+              console.log("after_dedup:", s.after_dedup, "| agreement_2plus:", s.agreement_2plus, "| ungrounded_dropped:", s.rejected_ungrounded);
+              console.log("by_category:", JSON.stringify(s.by_category));
+              if (e) console.log("RECALL:", (e.recall*100).toFixed(1)+"%", "("+e.found+"/"+e.known+")", "| missed:", e.missed.length);
+            ' "$f"
+          else
+            echo "no promises.json produced"; exit 1
+          fi
+
+      - name: Upload artifact (promises.json)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: promises-${{ inputs.ticker }}-${{ inputs.strategy }}
+          path: |
+            pipeline/output/${{ inputs.ticker }}/promises.json
+          if-no-files-found: warn

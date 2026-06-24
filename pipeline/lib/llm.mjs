@@ -106,6 +106,25 @@ export function resolveConfig(env = process.env) {
   return configFor(provider, env, { isPrimary: true });
 }
 
+/**
+ * Resolve a SPECIFIC provider's config (for multi-provider ensembles where each
+ * provider is a first-class worker, not a fallback). Honours per-provider env
+ * overrides <PROVIDER>_MODEL / <PROVIDER>_BASE_URL and the preset key env.
+ */
+export function providerConfig(provider, env = process.env) {
+  const p = String(provider).toLowerCase();
+  const preset = PROVIDER_PRESETS[p] || {};
+  const up = p.toUpperCase();
+  return {
+    provider: p,
+    baseURL: env[`${up}_BASE_URL`] || preset.baseURL || null,
+    model: env[`${up}_MODEL`] || preset.model || null,
+    apiKey: (preset.keyEnv && env[preset.keyEnv]) || env[`${up}_API_KEY`] || null,
+    structured: preset.structured || "json_object",
+    isPrimary: false,
+  };
+}
+
 /** Resolve [primary, ...fallbacks] as an ordered, de-duplicated list of configs. */
 export function resolveChain(env = process.env) {
   const primary = (env.LLM_PROVIDER || DEFAULT_PROVIDER).toLowerCase();
@@ -296,7 +315,10 @@ function responseFormatFor(cfg, jsonSchema, opts) {
       json_schema: {
         name: opts.schemaName || "response",
         schema: jsonSchema,
-        strict: true,
+        // Non-strict by default for cross-provider compatibility (Gemini/Groq/
+        // Mistral OpenAI-compat vary on strict json_schema); ajv + the repair
+        // retry still enforce the contract. Opt in with opts.strict.
+        strict: opts.strict === true,
       },
     };
   }
