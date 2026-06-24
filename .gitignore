@@ -1,0 +1,22 @@
+# Dependencies (installed --no-save; never committed)
+node_modules/
+
+# Local scratch / working files
+scratchpad/
+
+# Pipeline build artifacts (generated JSON lives under public/data/, not here)
+pipeline/output/
+
+# Secrets & local config
+.dev.vars
+.env
+.env.*
+
+# Wrangler / Cloudflare local state
+.wrangler/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*

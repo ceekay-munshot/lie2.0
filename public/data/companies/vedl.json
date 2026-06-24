@@ -1,0 +1,1757 @@
+{
+  "schema_version": "1.0",
+  "company": {
+    "ticker": "VEDL",
+    "name": "Vedanta Limited",
+    "sector": "Metals & Mining",
+    "screener_url": "https://www.screener.in/company/VEDL/",
+    "fiscal_year_end": "03"
+  },
+  "generated_at": "2026-06-24T00:00:00Z",
+  "coverage": {
+    "from": "Q1FY26",
+    "to": "Q3FY26",
+    "as_of": "2026-01-29"
+  },
+  "verification_window": {
+    "latest_reported": "Q3FY26",
+    "latest_reported_date": "2026-01-29",
+    "note": "Outcomes verifiable only through the latest reported period; later targets are NYT."
+  },
+  "documents": [
+    {
+      "id": "q1fy26-presn",
+      "type": "presentation",
+      "quarter": "Q1FY26",
+      "date": "2025-07-31",
+      "title": "Q1FY26 Earnings Presentation",
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy26-call",
+      "type": "transcript",
+      "quarter": "Q2FY26",
+      "date": "2025-10-31",
+      "title": "Q2FY26 Earnings Call",
+      "url": null,
+      "source": "Upload",
+      "role": "guidance"
+    },
+    {
+      "id": "q2fy26-presn",
+      "type": "presentation",
+      "quarter": "Q2FY26",
+      "date": "2025-10-31",
+      "title": "Q2FY26 Press Release + Investor Presentation",
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy26-call",
+      "type": "transcript",
+      "quarter": "Q3FY26",
+      "date": "2026-01-29",
+      "title": "Q3FY26 Earnings Call",
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy26-presn",
+      "type": "presentation",
+      "quarter": "Q3FY26",
+      "date": "2026-01-29",
+      "title": "Q3FY26 Press Release + Investor Presentation",
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    }
+  ],
+  "promises": [
+    {
+      "id": "p001",
+      "date": "31 Jul 2025",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presn",
+      "source_label": "Q1FY26 Presn (31 Jul'25)",
+      "category": "cost",
+      "promise": "FY26 alumina production target",
+      "quote": "Guidance: \"Alumina 3.0-3.1 Mnt\"",
+      "metric": "Alumina 3.0-3.1 Mnt (FY26)",
+      "target": {
+        "text": "Alumina 3.0-3.1 Mnt (FY26)",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q1FY26"
+      },
+      "test_date": "FY26 results (Apr'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "9M FY26: 2,034 kt (+32% YoY); Q3 0.8 Mnt — on track",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "9M FY26: 2,034 kt (+32% YoY); Q3 0.8 Mnt — on track"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "9M 2.03 Mnt of 3.0-3.1 (~67%)"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p002",
+      "date": "31 Jul 2025",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presn",
+      "source_label": "Q1FY26 Presn (31 Jul'25)",
+      "category": "volume",
+      "promise": "FY26 aluminium production target",
+      "quote": "Guidance: \"Aluminium 2.5-2.6 Mnt\"",
+      "metric": "Aluminium 2.5-2.6 Mnt (FY26)",
+      "target": {
+        "text": "Aluminium 2.5-2.6 Mnt (FY26)",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q1FY26"
+      },
+      "test_date": "FY26 results (Apr'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "9M FY26: 1,842 kt (+1%); run-rate ~2.45 Mnt — slightly soft",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "9M FY26: 1,842 kt (+1%); run-rate ~2.45 Mnt — slightly soft"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "9M 1.84 Mnt; FY ~2.45 vs 2.5-2.6"
+      },
+      "mgmt_explanation": "BALCO ramp gradual",
+      "root_cause": "Capacity delay"
+    },
+    {
+      "id": "p003",
+      "date": "31 Jul 2025",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presn",
+      "source_label": "Q1FY26 Presn (31 Jul'25)",
+      "category": "cost",
+      "promise": "FY26 aluminium hot-metal cost",
+      "quote": "Guidance: \"CoP $1,700/t - $1,750/t\"",
+      "metric": "Hot-metal CoP $1,700-1,750/t",
+      "target": {
+        "text": "Hot-metal CoP $1,700-1,750/t",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q1FY26"
+      },
+      "test_date": "FY26 results (Apr'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "Q3 $1,674/t (below guide); 9M avg ~$1,755/t",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Q3 $1,674/t (below guide); 9M avg ~$1,755/t"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Q3 -$26 to -$76 vs band; tracking in-range"
+      },
+      "mgmt_explanation": "Power/alumina cost down in H2",
+      "root_cause": null
+    },
+    {
+      "id": "p004",
+      "date": "31 Jul 2025",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presn",
+      "source_label": "Q1FY26 Presn (31 Jul'25)",
+      "category": "cost",
+      "promise": "FY26 Zinc India cost of production",
+      "quote": "Guidance: \"Zinc India CoP $1,025/t-$1,050/t\"",
+      "metric": "Zinc CoP $1,025-1,050/t (rev ~$1,000)",
+      "target": {
+        "text": "Zinc CoP $1,025-1,050/t (rev ~$1,000)",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q1FY26"
+      },
+      "test_date": "FY26 results (Apr'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "Q3 $940/t — 6% better than guide",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Q3 $940/t — 6% better than guide"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Q3 ~-$60 to -$110/t (beating)"
+      },
+      "mgmt_explanation": "Record mined metal, lower input cost",
+      "root_cause": null
+    },
+    {
+      "id": "p005",
+      "date": "31 Jul 2025",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presn",
+      "source_label": "Q1FY26 Presn (31 Jul'25)",
+      "category": "volume",
+      "promise": "FY26 Oil & Gas volume target",
+      "quote": "Guidance: \"Avg Gross Volume 95-100 kboepd\"",
+      "metric": "O&G 95-100 kboepd (rev 90-95)",
+      "target": {
+        "text": "O&G 95-100 kboepd (rev 90-95)",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q1FY26"
+      },
+      "test_date": "FY26 results (Apr'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "Cut to 90-95 at Q2; Q3 84.9; 9M ~89 kboepd",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Cut to 90-95 at Q2; Q3 84.9; 9M ~89 kboepd"
+      },
+      "status": "PARTIAL",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "~-6 to -11 kboepd vs 95-100 (~6-11%)"
+      },
+      "mgmt_explanation": "ASP commissioning delay; base decline",
+      "root_cause": "Capacity delay"
+    },
+    {
+      "id": "p006",
+      "date": "31 Jul 2025",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presn",
+      "source_label": "Q1FY26 Presn (31 Jul'25)",
+      "category": "timeline",
+      "promise": "Gamsberg Phase-2 completion",
+      "quote": "Slide: \"Project completion targeted in 2HFY26\"",
+      "metric": "Gamsberg Ph-2 200 ktpa by 2HFY26",
+      "target": {
+        "text": "Gamsberg Ph-2 200 ktpa by 2HFY26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q1FY26"
+      },
+      "test_date": "FY26-end (Mar'26)",
+      "confidence": "M",
+      "actual": {
+        "text": "Q2 82%; Q3 ~90%, commissioning re-set to 1HFY27",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Q2 82%; Q3 ~90%, commissioning re-set to 1HFY27"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Slipped ~1-2 quarters"
+      },
+      "mgmt_explanation": "Ramp pushed to next year",
+      "root_cause": "Capacity delay"
+    },
+    {
+      "id": "p007",
+      "date": "31 Jul 2025",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presn",
+      "source_label": "Q1FY26 Presn (31 Jul'25)",
+      "category": "timeline",
+      "promise": "O&G ASP injection start",
+      "quote": "Slide: \"ASP: Injection targeted in 2QFY26\"",
+      "metric": "ASP injection live by Q2FY26",
+      "target": {
+        "text": "ASP injection live by Q2FY26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q1FY26"
+      },
+      "test_date": "Q2FY26 results",
+      "confidence": "M",
+      "actual": {
+        "text": "Re-set to mid-3QFY26, then Q4FY26; first oil ~Apr'26",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Re-set to mid-3QFY26, then Q4FY26; first oil ~Apr'26"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Slipped ~2 quarters"
+      },
+      "mgmt_explanation": "Large/complex EOR; commissioning delayed",
+      "root_cause": "Capacity delay"
+    },
+    {
+      "id": "p008",
+      "date": "31 Jul 2025",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presn",
+      "source_label": "Q1FY26 Presn (31 Jul'25)",
+      "category": "timeline",
+      "promise": "Meenakshi Unit-4 (350MW) commissioning",
+      "quote": "Slide: \"Unit 4 (350 MW) set to begin operation in 2QFY26\"",
+      "metric": "Meenakshi U4 350MW by Q2FY26",
+      "target": {
+        "text": "Meenakshi U4 350MW by Q2FY26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q1FY26"
+      },
+      "test_date": "Q2FY26 results",
+      "confidence": "M",
+      "actual": {
+        "text": "Commissioned in H1FY26 (1.3 GW added H1)",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Commissioned in H1FY26 (1.3 GW added H1)"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "On time"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p009",
+      "date": "31 Jul 2025",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presn",
+      "source_label": "Q1FY26 Presn (31 Jul'25)",
+      "category": "timeline",
+      "promise": "Athena Unit-2 (600MW) commissioning",
+      "quote": "Slide: \"Unit 2 (600MW) expected to start operations in 4QFY26\"",
+      "metric": "Athena U2 600MW by Q4FY26",
+      "target": {
+        "text": "Athena U2 600MW by Q4FY26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q1FY26"
+      },
+      "test_date": "Q4FY26 results",
+      "confidence": "M",
+      "actual": {
+        "text": "Q3 deck re-sets to 2HFY27",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Q3 deck re-sets to 2HFY27"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Slipped ~3-4 quarters"
+      },
+      "mgmt_explanation": "Sequenced after first unit ramp/PPAs",
+      "root_cause": "Capacity delay"
+    },
+    {
+      "id": "p010",
+      "date": "31 Jul 2025",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presn",
+      "source_label": "Q1FY26 Presn (31 Jul'25)",
+      "category": "volume",
+      "promise": "FY26 Athena PLF target",
+      "quote": "Guidance: \"Athena PLF 61%\"",
+      "metric": "Athena PLF 61% (FY26)",
+      "target": {
+        "text": "Athena PLF 61% (FY26)",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q1FY26"
+      },
+      "test_date": "FY26 results (Apr'26)",
+      "confidence": "M",
+      "actual": {
+        "text": "Q3 PLF 72% — mgmt: 11% over guidance",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Q3 PLF 72% — mgmt: 11% over guidance"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Q3 +11 ppt (ahead)"
+      },
+      "mgmt_explanation": "Strong availability",
+      "root_cause": null
+    },
+    {
+      "id": "p011",
+      "date": "31 Jul 2025",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presn",
+      "source_label": "Q1FY26 Presn (31 Jul'25)",
+      "category": "leverage",
+      "promise": "VRL FY26 debt repayment",
+      "quote": "Slide: \"remaining FY26, repayment of loan $320 Mn\"",
+      "metric": "VRL repay $320M in FY26",
+      "target": {
+        "text": "VRL repay $320M in FY26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q1FY26"
+      },
+      "test_date": "FY26 results (Apr'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "$227M repaid in 1Q; ICL/maturities on track",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "$227M repaid in 1Q; ICL/maturities on track"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "~$227M of $320M done by Q1"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p012",
+      "date": "31 Jul 2025",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presn",
+      "source_label": "Q1FY26 Presn (31 Jul'25)",
+      "category": "ebitda",
+      "promise": "Group leverage (deleveraging path)",
+      "quote": "Slide: \"Group Net Debt/EBITDA <1x (Med Term); VEDL <1x near term\"",
+      "metric": "Group/VEDL ND-EBITDA <1x",
+      "target": {
+        "text": "Group/VEDL ND-EBITDA <1x",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q1FY26"
+      },
+      "test_date": "FY26-FY27",
+      "confidence": "M",
+      "actual": {
+        "text": "Q3 1.23x; mgmt guides ~1x by Mar'26",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Q3 1.23x; mgmt guides ~1x by Mar'26"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "1.23x vs <1x target"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p013",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "ebitda",
+      "promise": "FY26 consolidated EBITDA",
+      "quote": "\"confident in achieving an annual EBITDA of more than $6 billion in FY 26 at Vedanta India consol level\"",
+      "metric": "FY26 EBITDA > $6.0 bn",
+      "target": {
+        "text": "FY26 EBITDA > $6.0 bn",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "FY26 results (Apr'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "9M EBITDA Rs 37,529 cr (~$4.3bn); reaffirmed in Q3",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "9M EBITDA Rs 37,529 cr (~$4.3bn); reaffirmed in Q3"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Needs ~$1.7bn in Q4 (on track)"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p014",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "capex",
+      "promise": "FY26 growth capex",
+      "quote": "\"well on track to achieve our enhanced full-year capital guidance of between USD $1.7 to $1.9 billion\"",
+      "metric": "FY26 capex $1.7-1.9 bn",
+      "target": {
+        "text": "FY26 capex $1.7-1.9 bn",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "FY26 results (Apr'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "9M $1.3bn; Q3 narrowed to ~$1.7bn (low end)",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "9M $1.3bn; Q3 narrowed to ~$1.7bn (low end)"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Tracking low end of range"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p015",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "cost",
+      "promise": "Alumina cost reduction (Q3 & Q4)",
+      "quote": "\"$50 per ton in Quarter 3 and $50 per ton in Quarter 4... exit... closer to $700 to $710\"",
+      "metric": "Alumina -$50/t each Q3 & Q4",
+      "target": {
+        "text": "Alumina -$50/t each Q3 & Q4",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "Q3FY26 results (29 Jan'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "Q3 only -$20/-$22; exit re-set to sub-$750 (Q1FY27)",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Q3 only -$20/-$22; exit re-set to sub-$750 (Q1FY27)"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "~-$28-30/t short (~58%)"
+      },
+      "mgmt_explanation": "LME surge on priced bought-out alumina",
+      "root_cause": "Pricing / mix"
+    },
+    {
+      "id": "p016",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "cost",
+      "promise": "H2FY26 hot-metal cost",
+      "quote": "\"H2 hot metal cost being sub $1,650\"",
+      "metric": "Hot-metal CoP < $1,650/t (H2)",
+      "target": {
+        "text": "Hot-metal CoP < $1,650/t (H2)",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "Q4FY26 results (Apr'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "Q3 $1,674/t (above); Q4 guided flat",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Q3 $1,674/t (above); Q4 guided flat"
+      },
+      "status": "PARTIAL",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Q3 +$24/t (+1.5%) vs cap"
+      },
+      "mgmt_explanation": "Carbon inflation; alumina benefit delayed",
+      "root_cause": "Cost inflation"
+    },
+    {
+      "id": "p017",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "cost",
+      "promise": "H2FY26 power cost",
+      "quote": "\"timely power plant shutdown will enable us to achieve sub 500 per ton power cost in H2 FY 26\"",
+      "metric": "Power cost < $500/t (H2)",
+      "target": {
+        "text": "Power cost < $500/t (H2)",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "Q4FY26 results (Apr'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "Q3 power cost -$110/t QoQ (sharp fall)",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Q3 power cost -$110/t QoQ (sharp fall)"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "H2 not fully reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p018",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "volume",
+      "promise": "O&G volume stabilisation",
+      "quote": "\"We expect ASP injection to stabilize production volumes from Quarter 3 onwards\"",
+      "metric": "O&G volume stabilises from Q3",
+      "target": {
+        "text": "O&G volume stabilises from Q3",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "Q3FY26 results (29 Jan'26)",
+      "confidence": "M",
+      "actual": {
+        "text": "Q3 84.9 kboepd — fell from 89 (Q2)",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Q3 84.9 kboepd — fell from 89 (Q2)"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "-4 kboepd QoQ (declined, not stable)"
+      },
+      "mgmt_explanation": "ASP commissioning/startup delayed",
+      "root_cause": "Capacity delay"
+    },
+    {
+      "id": "p019",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "timeline",
+      "promise": "Demerger — list all 5 entities",
+      "quote": "\"listing of all five demerged entities by the end of FY 26\"",
+      "metric": "5 entities listed by 31 Mar'26",
+      "target": {
+        "text": "5 entities listed by 31 Mar'26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "FY26-end (Mar'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "NCLT order 16 Dec; effective 1 Apr'26; listing ~late May",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "NCLT order 16 Dec; effective 1 Apr'26; listing ~late May"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "~2 months late (into Q1FY27)"
+      },
+      "mgmt_explanation": "NCLT/CP steps; power order only 9 Jan",
+      "root_cause": "Regulatory"
+    },
+    {
+      "id": "p020",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "leverage",
+      "promise": "VRL deleveraging (2-year)",
+      "quote": "\"from current $4.4 billion will go down to $3 billion over next two years\"",
+      "metric": "VRL net debt $4.4bn -> $3.0bn by ~FY27",
+      "target": {
+        "text": "VRL net debt $4.4bn -> $3.0bn by ~FY27",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "FY27 (by Mar'27)",
+      "confidence": "H",
+      "actual": {
+        "text": "Dec'25 ~$4.8bn incl ICL; ~$0.3bn cut guided FY26",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Dec'25 ~$4.8bn incl ICL; ~$0.3bn cut guided FY26"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "2-year target; early innings"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p021",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "ebitda",
+      "promise": "VEDL India leverage to 1x",
+      "quote": "\"our debt to EBITDA will further improve to 1x... That goal remains unchanged\"",
+      "metric": "VEDL ND/EBITDA -> 1.0x",
+      "target": {
+        "text": "VEDL ND/EBITDA -> 1.0x",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "FY26 results (Apr'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "Q3 1.23x; mgmt guides closing FY26 ~1x",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Q3 1.23x; mgmt guides closing FY26 ~1x"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "0.23x to go"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p022",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "leverage",
+      "promise": "Cost of borrowings",
+      "quote": "\"targeting to bring down our average cost of borrowings to below 8% in near term\"",
+      "metric": "Avg borrowing cost < 8%",
+      "target": {
+        "text": "Avg borrowing cost < 8%",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "Near term (FY26-27)",
+      "confidence": "M",
+      "actual": {
+        "text": "Q3 ~9% (below 9%, not yet <8%)",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Q3 ~9% (below 9%, not yet <8%)"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "~100 bps above 8% target"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p023",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "timeline",
+      "promise": "Sijimali bauxite mine commissioning",
+      "quote": "\"on Sijimali, we have previously communicated Quarter 4 FY 26, so we are keeping the commissioning\"",
+      "metric": "Sijimali live by Q4FY26",
+      "target": {
+        "text": "Sijimali live by Q4FY26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "Q4FY26 results (Apr'26)",
+      "confidence": "M",
+      "actual": {
+        "text": "FC-I only on 31 Dec'25; EC awaited; re-set to 1HFY27",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "FC-I only on 31 Dec'25; EC awaited; re-set to 1HFY27"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Slipped ~1-2 quarters"
+      },
+      "mgmt_explanation": "Forest/EC clearances pending",
+      "root_cause": "Regulatory"
+    },
+    {
+      "id": "p024",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "timeline",
+      "promise": "Kuraloi coal mine commissioning",
+      "quote": "\"on Kuraloi... we might push it out by a couple of months to Quarter 4 this year\"",
+      "metric": "Kuraloi live by Q4FY26",
+      "target": {
+        "text": "Kuraloi live by Q4FY26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "Q4FY26 results (Apr'26)",
+      "confidence": "M",
+      "actual": {
+        "text": "FC Stage-II on 12 Jan'26; MDO on ground; on track Q4",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "FC Stage-II on 12 Jan'26; MDO on ground; on track Q4"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Tracking to Q4FY26"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p025",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "leverage",
+      "promise": "VRL ICL repayment (no rollover)",
+      "quote": "\"$200 million is due in January... balance $217 million... in May... repay as scheduled... no further rollover\"",
+      "metric": "Repay ICL $417M ($200M Jan/$217M May)",
+      "target": {
+        "text": "Repay ICL $417M ($200M Jan/$217M May)",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "Q1FY27 (May'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "$50M prepaid Dec'25; $150M Jan, $200M May — on time",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "$50M prepaid Dec'25; $150M Jan, $200M May — on time"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "$50M prepaid; rest pending"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p026",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "timeline",
+      "promise": "O&G Northeast exploratory wells",
+      "quote": "\"first valve... in the Rudra region will be end of November spudded. Second well in Nagaland... in February\"",
+      "metric": "Rudra spud Nov'25; Nagaland Feb'26",
+      "target": {
+        "text": "Rudra spud Nov'25; Nagaland Feb'26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "Q3/Q4 FY26",
+      "confidence": "M",
+      "actual": {
+        "text": "Q3: NE (SP-1) still delayed; spud pushed to ~end Mar'26",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Q3: NE (SP-1) still delayed; spud pushed to ~end Mar'26"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "~1 quarter+ slip"
+      },
+      "mgmt_explanation": "Env/local-govt approvals not complete",
+      "root_cause": "Regulatory"
+    },
+    {
+      "id": "p027",
+      "date": "31 Oct 2025",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-call",
+      "source_label": "Q2FY26 Call (31 Oct'25)",
+      "category": "other",
+      "promise": "Merchant power capacity (long-term)",
+      "quote": "\"increase our merchant power capacity by 20 Gigawatts as we have guided previously by 2030\"",
+      "metric": "+20 GW merchant power by 2030",
+      "target": {
+        "text": "+20 GW merchant power by 2030",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q2FY26"
+      },
+      "test_date": "2030",
+      "confidence": "L",
+      "actual": {
+        "text": "4.2 GW now; +10-12 GW plan being framed (Q3)",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "4.2 GW now; +10-12 GW plan being framed (Q3)"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Long-dated aspiration"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p028",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "timeline",
+      "promise": "Demerger effective date & listing",
+      "quote": "\"targeting 1st of April as the effective date with listings in the same quarter... mid-to-end of May\"",
+      "metric": "Effective 1 Apr'26; list by ~end May'26",
+      "target": {
+        "text": "Effective 1 Apr'26; list by ~end May'26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "Q1FY27 (Apr-May'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "Pending (post-Q3 event)",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Pending (post-Q3 event)"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Test Apr-May'26"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p029",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "ebitda",
+      "promise": "Q4FY26 EBITDA / FY26 record",
+      "quote": "\"With our Quarter 4 performance likely to surpass Q3 levels... lifetime high annual EBITDA of over $6 billion\"",
+      "metric": "Q4 EBITDA > Rs 15,171 cr; FY26 > $6bn",
+      "target": {
+        "text": "Q4 EBITDA > Rs 15,171 cr; FY26 > $6bn",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "FY26 results (Apr'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "Pending",
+        "value": null,
+        "unit": null,
+        "source_id": null,
+        "source_date": null,
+        "what_happened": "Pending"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Test Apr'26"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p030",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "leverage",
+      "promise": "FY26 group deleveraging",
+      "quote": "\"roughly about 0.8 to 1 billion will be deleveraging across the group in the current fiscal... closing the fiscal at about 1x\"",
+      "metric": "FY26 deleverage $0.8-1.0bn; VEDL ~1.0x",
+      "target": {
+        "text": "FY26 deleverage $0.8-1.0bn; VEDL ~1.0x",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "FY26 results (Apr'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "Pending (OFS ~Rs 3,000 cr earmarked)",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Pending (OFS ~Rs 3,000 cr earmarked)"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Test Apr'26"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p031",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "capital_allocation",
+      "promise": "Zinc India OFS / HZL stake",
+      "quote": "\"launched Zinc India offer-for-sale... shareholding in HZL will be around 60.7% from 61.8%\"",
+      "metric": "OFS ~1.1% HZL (~Rs 3,000 cr)",
+      "target": {
+        "text": "OFS ~1.1% HZL (~Rs 3,000 cr)",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "Immediate (Jan'26)",
+      "confidence": "H",
+      "actual": {
+        "text": "OFS launched 27 Jan, bids closed; ~1.1% / ~Rs 3,000 cr",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "OFS launched 27 Jan, bids closed; ~1.1% / ~Rs 3,000 cr"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Delivered as stated"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p032",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "timeline",
+      "promise": "Captive alumina mix ramp",
+      "quote": "\"60% in Q3 captive, 70% in Q4, and going forward, Q1, Q2, it should be 80%\"",
+      "metric": "Captive alumina 70% Q4FY26; 80% Q1FY27",
+      "target": {
+        "text": "Captive alumina 70% Q4FY26; 80% Q1FY27",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "Q4FY26 / Q1FY27",
+      "confidence": "M",
+      "actual": {
+        "text": "Pending",
+        "value": null,
+        "unit": null,
+        "source_id": null,
+        "source_date": null,
+        "what_happened": "Pending"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Test Apr-Jul'26"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p033",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "volume",
+      "promise": "Q4FY26 aluminium production",
+      "quote": "\"we did about 800 KT in Q3, and we are expecting 900 KT plus in Q4\"",
+      "metric": "Aluminium 900 kt+ in Q4FY26",
+      "target": {
+        "text": "Aluminium 900 kt+ in Q4FY26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "Q4FY26 results (Apr'26)",
+      "confidence": "M",
+      "actual": {
+        "text": "Pending",
+        "value": null,
+        "unit": null,
+        "source_id": null,
+        "source_date": null,
+        "what_happened": "Pending"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Test Apr'26"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p034",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "timeline",
+      "promise": "BALCO smelter pot ramp",
+      "quote": "\"increase to about 1 lakh ton by this March end, and then next three to six months... rest of the pots\"",
+      "metric": "BALCO 100 kt by Mar'26; full ramp +3-6 mo",
+      "target": {
+        "text": "BALCO 100 kt by Mar'26; full ramp +3-6 mo",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "Q4FY26 / 1HFY27",
+      "confidence": "M",
+      "actual": {
+        "text": "Pending (20 pots live at Q3)",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Pending (20 pots live at Q3)"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Test Apr'26 onward"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p035",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "other",
+      "promise": "Aluminium capacity expansion",
+      "quote": "\"get to 2.8 million tons... post BALCO ramp... close the gap from 2.8 to 3 million tons... over the next 18-months\"",
+      "metric": "Al capacity 2.8 Mnt then 3.0 Mnt (~18 mo)",
+      "target": {
+        "text": "Al capacity 2.8 Mnt then 3.0 Mnt (~18 mo)",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "~FY27/FY28",
+      "confidence": "M",
+      "actual": {
+        "text": "Pending",
+        "value": null,
+        "unit": null,
+        "source_id": null,
+        "source_date": null,
+        "what_happened": "Pending"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Test ~FY27-28"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p036",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "cost",
+      "promise": "Hot-metal cost trajectory",
+      "quote": "\"next quarter... costs will remain flat... Coming to Quarter 1... a $50-$60 cost reduction\"",
+      "metric": "Q4 cost flat; Q1FY27 -$50-60/t",
+      "target": {
+        "text": "Q4 cost flat; Q1FY27 -$50-60/t",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "Q4FY26 / Q1FY27",
+      "confidence": "M",
+      "actual": {
+        "text": "Pending",
+        "value": null,
+        "unit": null,
+        "source_id": null,
+        "source_date": null,
+        "what_happened": "Pending"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Test Apr-Jul'26"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p037",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "cost",
+      "promise": "Q1FY27 alumina cost",
+      "quote": "\"as we go into Q1, you will see a cost sub-$750\"",
+      "metric": "Alumina CoP < $750/t by Q1FY27",
+      "target": {
+        "text": "Alumina CoP < $750/t by Q1FY27",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "Q1FY27 results (Jul'26)",
+      "confidence": "M",
+      "actual": {
+        "text": "Pending",
+        "value": null,
+        "unit": null,
+        "source_id": null,
+        "source_date": null,
+        "what_happened": "Pending"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Test Jul'26"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p038",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "other",
+      "promise": "Power capacity expansion",
+      "quote": "\"4.2 gigawatt. This is expected to go to around 4.8 gigawatt by end of H1 of the next year\"",
+      "metric": "Power capacity 4.2 -> 4.8 GW by H1FY27",
+      "target": {
+        "text": "Power capacity 4.2 -> 4.8 GW by H1FY27",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "H1FY27 (Sep'26)",
+      "confidence": "M",
+      "actual": {
+        "text": "Pending",
+        "value": null,
+        "unit": null,
+        "source_id": null,
+        "source_date": null,
+        "what_happened": "Pending"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Test ~Oct'26"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p039",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "volume",
+      "promise": "O&G ASP first volumes",
+      "quote": "\"to pick up the first volumes... in the period of next three months... additional reserves of 50 million barrels\"",
+      "metric": "ASP first oil in ~3 mo; +50 mn bbl",
+      "target": {
+        "text": "ASP first oil in ~3 mo; +50 mn bbl",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "Q1FY27 (~Apr'26)",
+      "confidence": "M",
+      "actual": {
+        "text": "Pending",
+        "value": null,
+        "unit": null,
+        "source_id": null,
+        "source_date": null,
+        "what_happened": "Pending"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Test ~Apr'26"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p040",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "volume",
+      "promise": "O&G production recovery",
+      "quote": "\"we expect the next year to stabilize everything and to grow to at least 90,000, and then... ultimate target of 150,000\"",
+      "metric": "O&G ~90 kboepd in FY27; ult. 150 kboepd",
+      "target": {
+        "text": "O&G ~90 kboepd in FY27; ult. 150 kboepd",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "FY27+",
+      "confidence": "M",
+      "actual": {
+        "text": "Pending (Q3 84.9 kboepd)",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presn",
+        "source_date": "2026-01-29",
+        "what_happened": "Pending (Q3 84.9 kboepd)"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Test through FY27"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p041",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "volume",
+      "promise": "O&G Ambe (West offshore) field",
+      "quote": "\"that project will be commissioned and startup this financial year 27 in Quarter 4... around 15,000 in March next year\"",
+      "metric": "Ambe live Q4FY27; ~15 kboepd by Mar'27",
+      "target": {
+        "text": "Ambe live Q4FY27; ~15 kboepd by Mar'27",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "Q4FY27 (Mar'27)",
+      "confidence": "M",
+      "actual": {
+        "text": "Pending",
+        "value": null,
+        "unit": null,
+        "source_id": null,
+        "source_date": null,
+        "what_happened": "Pending"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Test Mar'27"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    },
+    {
+      "id": "p042",
+      "date": "29 Jan 2026",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-call",
+      "source_label": "Q3FY26 Call (29 Jan'26)",
+      "category": "leverage",
+      "promise": "VRL FY27 debt servicing",
+      "quote": "\"interest... almost 450 million... principal, the actual debt is 450 and ICL 200, 650... self-funded to a 5% dividend and routine brand fee\"",
+      "metric": "VRL FY27: $650M principal + $450M interest",
+      "target": {
+        "text": "VRL FY27: $650M principal + $450M interest",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "FY27",
+      "confidence": "M",
+      "actual": {
+        "text": "Pending",
+        "value": null,
+        "unit": null,
+        "source_id": null,
+        "source_date": null,
+        "what_happened": "Pending"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Test through FY27"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null
+    }
+  ],
+  "financial_trend": [
+    {
+      "quarter": "Q1FY26",
+      "ebitda": 10746,
+      "ebitda_margin": 35,
+      "revenue": 37434,
+      "pat": 4457,
+      "net_debt_ebitda": 1.32,
+      "roce": 25,
+      "unit": "INR_cr"
+    },
+    {
+      "quarter": "Q2FY26",
+      "ebitda": 11612,
+      "ebitda_margin": 34,
+      "revenue": 39218,
+      "pat": 3479,
+      "net_debt_ebitda": 1.37,
+      "roce": 26,
+      "unit": "INR_cr"
+    },
+    {
+      "quarter": "Q3FY26",
+      "ebitda": 15171,
+      "ebitda_margin": 41,
+      "revenue": 45899,
+      "pat": 7807,
+      "net_debt_ebitda": 1.23,
+      "roce": 27,
+      "unit": "INR_cr"
+    }
+  ],
+  "aggregates": {
+    "total": 42,
+    "status_counts": {
+      "MET": 2,
+      "PARTIAL": 2,
+      "MISSED": 8,
+      "NYT": 30
+    },
+    "testable": 12,
+    "by_quarter": {
+      "Q1FY26": {
+        "MET": 1,
+        "PARTIAL": 1,
+        "MISSED": 3,
+        "NYT": 7
+      },
+      "Q2FY26": {
+        "MET": 0,
+        "PARTIAL": 1,
+        "MISSED": 5,
+        "NYT": 9
+      },
+      "Q3FY26": {
+        "MET": 1,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 14
+      }
+    },
+    "root_causes": {
+      "Capacity delay": 6,
+      "Pricing / mix": 1,
+      "Cost inflation": 1,
+      "Regulatory": 3
+    },
+    "confidence_mix": {
+      "H": 19,
+      "M": 22,
+      "L": 1
+    },
+    "timeline_commitments": {
+      "due": 7,
+      "on_time": 1,
+      "slipped": 6
+    }
+  },
+  "credibility": {
+    "score": 26,
+    "grade": "E",
+    "timeline_score": 14,
+    "delivery_score": 42,
+    "method": "Conf-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6). Bands A>=75 B>=60 C>=45 D>=30 E<30.",
+    "headline": "Most already-testable promises missed — chiefly slipped project deadlines; the beating full-year cost/profit guidance is still NYT."
+  }
+}

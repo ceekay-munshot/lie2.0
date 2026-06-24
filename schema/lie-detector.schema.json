@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lie-detector.app/schema/company.json",
+  "title": "Lie Detector — Company Promise Ledger",
+  "type": "object",
+  "required": ["schema_version","company","generated_at","coverage","documents","promises","aggregates","credibility"],
+  "properties": {
+    "schema_version": {"type":"string"},
+    "company": {
+      "type":"object",
+      "required":["ticker","name"],
+      "properties":{
+        "ticker":{"type":"string"},
+        "name":{"type":"string"},
+        "sector":{"type":["string","null"]},
+        "screener_url":{"type":["string","null"]},
+        "fiscal_year_end":{"type":["string","null"],"description":"calendar month FY ends, e.g. '03'"}
+      }
+    },
+    "generated_at":{"type":"string","format":"date-time"},
+    "coverage":{"type":"object","required":["from","to"],
+      "properties":{"from":{"type":"string"},"to":{"type":"string"},"as_of":{"type":["string","null"]}}},
+    "verification_window":{"type":["object","null"],
+      "properties":{"latest_reported":{"type":["string","null"]},"latest_reported_date":{"type":["string","null"]},"note":{"type":["string","null"]}}},
+    "documents":{"type":"array","items":{
+      "type":"object","required":["id","type","quarter","date"],
+      "properties":{
+        "id":{"type":"string"},
+        "type":{"enum":["transcript","presentation","press_release","annual_report","other"]},
+        "quarter":{"type":"string"},
+        "date":{"type":"string"},
+        "title":{"type":["string","null"]},
+        "url":{"type":["string","null"]},
+        "source":{"enum":["Screener","Upload","BSE","NSE","Other"]},
+        "role":{"enum":["guidance","actuals","both"]}
+      }}},
+    "promises":{"type":"array","items":{
+      "type":"object",
+      "required":["id","date","quarter_context","category","promise","quote","metric","target","test_date","confidence","status"],
+      "properties":{
+        "id":{"type":"string"},
+        "date":{"type":"string"},
+        "quarter_context":{"type":"string"},
+        "source_id":{"type":["string","null"]},
+        "source_label":{"type":["string","null"]},
+        "category":{"enum":["revenue","ebitda","margin","pat","capex","capacity","working_capital","leverage","roce","volume","orderbook","timeline","cost","capital_allocation","other"]},
+        "promise":{"type":"string"},
+        "quote":{"type":"string","description":"<=25 words, verbatim"},
+        "metric":{"type":"string"},
+        "target":{"type":"object","properties":{
+          "text":{"type":["string","null"]},"value":{"type":["number","null"]},
+          "value_high":{"type":["number","null"]},"unit":{"type":["string","null"]},"period":{"type":["string","null"]}}},
+        "test_date":{"type":["string","null"]},
+        "confidence":{"enum":["H","M","L"]},
+        "actual":{"type":["object","null"],"properties":{
+          "text":{"type":["string","null"]},"value":{"type":["number","null"]},"unit":{"type":["string","null"]},
+          "source_id":{"type":["string","null"]},"source_date":{"type":["string","null"]},"what_happened":{"type":["string","null"]}}},
+        "status":{"enum":["MET","PARTIAL","MISSED","NYT"]},
+        "variance":{"type":["object","null"],"properties":{
+          "absolute":{"type":["number","null"]},"pct":{"type":["number","null"]},
+          "bps":{"type":["number","null"]},"days":{"type":["number","null"]},"text":{"type":["string","null"]}}},
+        "mgmt_explanation":{"type":["string","null"],"description":"<=25 words"},
+        "root_cause":{"type":["string","null"],"enum":["Demand slowdown","Pricing / mix","Cost inflation","Supply chain","Execution","Capacity delay","Regulatory","Working capital","Capital allocation","Other",null]}
+      }}},
+    "financial_trend":{"type":"array","items":{
+      "type":"object","required":["quarter"],
+      "properties":{
+        "quarter":{"type":"string"},"ebitda":{"type":["number","null"]},"ebitda_margin":{"type":["number","null"]},
+        "revenue":{"type":["number","null"]},"pat":{"type":["number","null"]},
+        "net_debt_ebitda":{"type":["number","null"]},"roce":{"type":["number","null"]},"unit":{"type":["string","null"]}}}},
+    "aggregates":{"type":"object","required":["total","status_counts"],
+      "properties":{
+        "total":{"type":"integer"},
+        "status_counts":{"type":"object"},
+        "testable":{"type":["integer","null"]},
+        "by_quarter":{"type":"object"},
+        "root_causes":{"type":"object"},
+        "confidence_mix":{"type":"object"},
+        "timeline_commitments":{"type":"object"}}},
+    "credibility":{"type":"object","required":["score","grade"],
+      "properties":{
+        "score":{"type":["number","null"]},"grade":{"type":["string","null"]},
+        "timeline_score":{"type":["number","null"]},"delivery_score":{"type":["number","null"]},
+        "method":{"type":["string","null"]},"headline":{"type":["string","null"]}}}
+  }
+}
