@@ -46,7 +46,10 @@ export const PROVIDER_PRESETS = {
   gemini: {
     baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
     model: "gemini-2.5-flash",
-    structured: "json_schema",
+    // The OpenAI-compat endpoint is reliable with json_object but flaky with
+    // json_schema response_format — use json_object (schema goes in the prompt;
+    // ajv + repair still enforce it).
+    structured: "json_object",
     keyEnv: "GEMINI_API_KEY",
   },
   groq: {
@@ -54,6 +57,13 @@ export const PROVIDER_PRESETS = {
     model: "llama-3.3-70b-versatile",
     structured: "json_schema",
     keyEnv: "GROQ_API_KEY",
+    // Free tier ≈ 12K tokens/min (input+output combined). maxInputTokens is the
+    // TOTAL input budget per request (the caller reserves prompt overhead from
+    // it before sizing a segment); input + output must stay under the TPM cap, so
+    // 8000 + 3000 = 11000 < 12000 with margin. Keeps every call a valid one that
+    // recovers on backoff rather than one that can never fit.
+    maxInputTokens: 8000,
+    maxOutputTokens: 3000,
   },
   cerebras: {
     baseURL: "https://api.cerebras.ai/v1",
@@ -121,6 +131,8 @@ export function providerConfig(provider, env = process.env) {
     model: env[`${up}_MODEL`] || preset.model || null,
     apiKey: (preset.keyEnv && env[preset.keyEnv]) || env[`${up}_API_KEY`] || null,
     structured: preset.structured || "json_object",
+    maxInputTokens: env[`${up}_MAX_INPUT_TOKENS`] ? Number(env[`${up}_MAX_INPUT_TOKENS`]) : preset.maxInputTokens ?? null,
+    maxOutputTokens: preset.maxOutputTokens ?? null,
     isPrimary: false,
   };
 }
@@ -325,10 +337,8 @@ function responseFormatFor(cfg, jsonSchema, opts) {
   return { type: "json_object" };
 }
 
-/** Try one provider for structured JSON: initial attempt + one repair retry. */
-async function completeJSONWith(cfg, messages, jsonSchema, validate, opts) {
-  const rf = responseFormatFor(cfg, jsonSchema, opts);
-
+/** Run one response_format mode for a provider: initial attempt + one repair retry. */
+async function tryJSONMode(cfg, messages, jsonSchema, validate, rf, opts) {
   // For json_object mode, weaker providers need the schema + the word "json" in
   // the prompt to reliably emit a single JSON object.
   let baseMessages = messages;
@@ -355,7 +365,6 @@ async function completeJSONWith(cfg, messages, jsonSchema, validate, opts) {
     }
     lastDetail =
       parsed === undefined ? "output was not valid JSON" : ajvErrorsText(validate.errors);
-    // Build a repair turn referencing the failure.
     msgs = [
       ...baseMessages,
       { role: "assistant", content: typeof content === "string" ? content : JSON.stringify(content) },
@@ -371,6 +380,21 @@ async function completeJSONWith(cfg, messages, jsonSchema, validate, opts) {
     `completeJSON failed for ${cfg.provider} after repair retry (${lastDetail})`,
     { provider: cfg.provider },
   );
+}
+
+/** Try a provider; if it rejects json_schema (4xx), fall back to json_object. */
+async function completeJSONWith(cfg, messages, jsonSchema, validate, opts) {
+  const rf = responseFormatFor(cfg, jsonSchema, opts);
+  try {
+    return await tryJSONMode(cfg, messages, jsonSchema, validate, rf, opts);
+  } catch (err) {
+    if (rf.type === "json_schema" && (err.status === 400 || err.status === 422)) {
+      // The provider's OpenAI-compat layer rejected the json_schema payload —
+      // retry the same provider with json_object (schema-in-prompt).
+      return await tryJSONMode(cfg, messages, jsonSchema, validate, { type: "json_object" }, opts);
+    }
+    throw err;
+  }
 }
 
 /**

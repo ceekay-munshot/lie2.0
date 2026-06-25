@@ -9,7 +9,7 @@
  *   node pipeline/test/p4.test.mjs
  */
 import { runExtraction } from "../lib/multi-llm.mjs";
-import { buildDocText, assemblePromises } from "../extract.mjs";
+import { buildDocText, assemblePromises, segmentText } from "../extract.mjs";
 import { deriveTestDate } from "../lib/test-date.mjs";
 import { SYSTEM_PROMPT } from "../lib/extract-prompt.mjs";
 import { evalExtraction } from "../eval-extraction.mjs";
@@ -53,6 +53,7 @@ ok(!d1.text.includes("DROPPEDANALYSTONLY"), "standalone analyst turn (no mgmt re
 ok(!/\bAmit Kumar:/.test(d1.text), "analyst is not emitted as a speaker turn");
 ok(d1.text.includes("[Analyst context:") && d1.text.includes("ANALYSTQUESTIONMARKER"), "preceding analyst Q kept inline as [context]");
 ok(d1.text.includes("Ajay Goel:") && d1.text.includes("Arun Misra:"), "management turns kept");
+ok(/\n\n/.test(d1.text), "turns separated by blank lines so segmentText can split on boundaries");
 
 // ---- 2) mock ensemble + grounding + merge + reaffirm/revision --------------
 const mock = async (cfg, doc) => {
@@ -121,6 +122,16 @@ const deg = await runExtraction({ docs: [d1], providers, extractOne: flaky, stra
 ok(deg.stats.errors.length === 1 && deg.stats.errors[0].provider === "groq", "throttled provider recorded as error");
 ok(deg.contributors.includes("gemini") && deg.contributors.includes("mistral") && !deg.contributors.includes("groq"), "run continues on the other providers");
 
+// partial-segment failure must surface (not silently drop a segment's commitments)
+const partial = async (cfg, doc) => ({
+  promises: [{ quarter_context: doc.quarter, category: "revenue", promise: "x", quote: "q", metric: "m", target: { period: "FY26" }, confidence: "M" }],
+  calls: 2,
+  errors: ["segment 2/2 failed: 429 throttled"],
+});
+const par = await runExtraction({ docs: [d1], providers: [{ provider: "groq", model: "g" }], extractOne: partial, strategy: "single" });
+ok(par.stats.errors.length === 1 && /segment 2\/2/.test(par.stats.errors[0].reason), "partial-segment failure recorded in stats.errors");
+ok(par.promises.length === 1, "partial success still keeps the segment that succeeded");
+
 // ---- 4) reject-vague rubric + vague→none -----------------------------------
 console.log("\nreject-vague:");
 ok(/REJECT/i.test(SYSTEM_PROMPT) && /confiden|grow strongly|well positioned/i.test(SYSTEM_PROMPT), "system prompt instructs rejecting vague statements");
@@ -145,6 +156,20 @@ const fixture = { company: { ticker: "TEST" }, promises: [
 const ev = evalExtraction(promises, fixture);
 ok(ev.known === 3 && ev.found === 2 && ev.recall > 0.6, `recall 2/3 (ebitda+capex matched, leverage missed) got ${ev.found}/${ev.known}`);
 ok(ev.missed.some((m) => m.category === "leverage"), "missed[] lists the leverage promise");
+
+// ---- 7) input segmentation (Groq TPM) --------------------------------------
+console.log("\nsegmentation:");
+const big = Array.from({ length: 20 }, (_, i) => `Speaker ${i}: ${"word ".repeat(400)}`).join("\n\n"); // ~40k chars
+const segs = segmentText(big, 12000);
+ok(segs.length >= 3 && segs.every((s) => s.length <= 12000), `splits oversized text into ≤cap segments (${segs.length})`);
+ok(segmentText(big, Infinity).length === 1, "no cap → single segment");
+ok(segmentText("short text", 12000).length === 1, "text under cap → single segment");
+ok(segs.join("").includes("Speaker 19:"), "segmentation preserves all turns");
+
+// ---- 8) rubric: forward-looking only ---------------------------------------
+console.log("\nrubric (reject reported actuals):");
+ok(/FORWARD-LOOKING/i.test(SYSTEM_PROMPT) && /REPORTED ACTUALS|already happened/i.test(SYSTEM_PROMPT), "prompt rejects reported actuals, keeps forward guidance");
+ok(/each distinct commitment ONCE|do not split|quality over quantity/i.test(SYSTEM_PROMPT), "prompt discourages over-splitting / padding");
 
 console.log(fails === 0 ? "\nALL P4 UNIT TESTS PASSED" : `\n${fails} TEST(S) FAILED`);
 process.exit(fails ? 1 : 0);
