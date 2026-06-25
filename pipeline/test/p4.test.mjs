@@ -133,6 +133,31 @@ const par = await runExtraction({ docs: [d1], providers: [{ provider: "groq", mo
 ok(par.stats.errors.length === 1 && /segment 2\/2/.test(par.stats.errors[0].reason), "partial-segment failure recorded in stats.errors");
 ok(par.promises.length === 1, "partial success still keeps the segment that succeeded");
 
+// failover: one combined quota pool, used in priority order; a daily-limited
+// provider is dropped for the remaining docs; each doc extracted exactly once.
+console.log("\nfailover (sequential quota pool):");
+const fdocs = [d1, d2, { id: "d3", quarter: "Q4FY26", type: "transcript", date: "2026-04-29", text: "x", sections: [] }];
+let geminiTries = 0;
+const failMock = async (cfg, doc) => {
+  if (cfg.provider === "gemini") {
+    geminiTries++;
+    const e = new Error("gemini HTTP 429 (daily/quota limit — not retrying)");
+    e.daily = true;
+    throw e;
+  }
+  return { promises: [{ quarter_context: doc.quarter, category: "revenue", promise: "x", quote: "q", metric: "m", target: { period: "FY26" }, confidence: "M" }], calls: 1 };
+};
+const fo = await runExtraction({
+  docs: fdocs,
+  providers: [{ provider: "gemini", model: "g" }, { provider: "groq", model: "q" }, { provider: "mistral", model: "m" }],
+  extractOne: failMock,
+  strategy: "failover",
+  concurrency: 1,
+});
+ok(geminiTries === 1, "daily-limited gemini dropped after its first failure (not retried per-doc)");
+ok(fo.stats.by_model.groq === fdocs.length && !fo.stats.by_model.mistral, "groq picks up every remaining doc; mistral never touched");
+ok(fo.contributors.length === 1 && fo.contributors[0] === "groq", "only one provider does the work per doc (no redundant extraction)");
+
 // ---- 4) reject-vague rubric + vague→none -----------------------------------
 console.log("\nreject-vague:");
 ok(/REJECT/i.test(SYSTEM_PROMPT) && /confiden|grow strongly|well positioned/i.test(SYSTEM_PROMPT), "system prompt instructs rejecting vague statements");

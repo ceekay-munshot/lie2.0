@@ -16,10 +16,12 @@
 export const EXTRACTION_PROVIDERS = ["gemini", "groq", "mistral"];
 
 /** Build the (doc, provider) task list for a strategy. */
-export function planTasks(docs, providers, strategy = "ensemble") {
+export function planTasks(docs, providers, strategy = "failover") {
   const tasks = [];
   if (providers.length === 0) return tasks;
-  if (strategy === "single") {
+  if (strategy === "single" || strategy === "failover") {
+    // failover's best case (and single) = the primary provider does every doc;
+    // failover only spills to the next provider when one's quota is exhausted.
     const p = providers[0];
     docs.forEach((doc) => tasks.push({ doc, provider: p }));
   } else if (strategy === "partition") {
@@ -56,10 +58,81 @@ async function runPool(tasks, cap, worker) {
  * @param {number} o.concurrency per-provider concurrency cap
  * @returns {Promise<{promises:Array, stats:object, contributors:string[]}>}
  */
-export async function runExtraction({ docs, providers, extractOne, strategy = "ensemble", concurrency = 2, debug = false }) {
-  const tasks = planTasks(docs, providers, strategy);
+const newStats = (strategy, docs) => ({
+  docs: docs.length,
+  strategy,
+  raw_candidates: 0,
+  llm_calls: 0,
+  cache_hits: 0,
+  by_model: {},
+  errors: [],
+});
 
-  // Group by provider so each provider gets its own concurrency-capped pool.
+/** Fold a successful extractOne result into the run's stats + tagged promises. */
+function recordResult(stats, promises, providerName, doc, res, debug) {
+  const got = Array.isArray(res?.promises) ? res.promises : [];
+  if (res?.cached) stats.cache_hits += 1;
+  else stats.llm_calls += res?.calls ?? 1;
+  // Partial failures (e.g. one segment of a multi-segment doc) are not thrown —
+  // record them so a degraded result is never silent.
+  for (const reason of res?.errors || []) {
+    stats.errors.push({ provider: providerName, doc: doc.id, reason });
+    if (debug) console.error(`  ! ${providerName} ${doc.id} (partial): ${reason}`);
+  }
+  stats.by_model[providerName] = (stats.by_model[providerName] || 0) + got.length;
+  stats.raw_candidates += got.length;
+  for (const p of got) {
+    promises.push({
+      ...p,
+      model: providerName,
+      source_id: doc.id,
+      source_label: doc.label || `${doc.quarter} ${doc.type}`,
+      date: doc.date ?? null,
+      doc_quarter: doc.quarter,
+    });
+  }
+}
+
+/**
+ * Sequential pool — treat the providers as ONE combined free-tier quota, used in
+ * priority order. Each document is extracted ONCE, by the first provider with
+ * budget; a provider that hits a per-DAY/quota limit is dropped for the remaining
+ * documents (so we don't redundantly re-extract, and we don't waste a model's
+ * budget on work another already did). Cross-model agreement is intentionally not
+ * used here — accuracy is a separate, later verification step.
+ */
+async function runFailover({ docs, providers, extractOne, concurrency, debug }) {
+  const stats = newStats("failover", docs);
+  const promises = [];
+  const dead = new Set(); // providers whose daily quota is spent
+  await runPool(docs, concurrency, async (doc) => {
+    for (const provider of providers) {
+      if (dead.has(provider.provider)) continue;
+      try {
+        const res = await extractOne(provider, doc);
+        recordResult(stats, promises, provider.provider, doc, res, debug);
+        return; // handled — do not call the other providers for this doc
+      } catch (err) {
+        stats.errors.push({ provider: provider.provider, doc: doc.id, reason: err.message });
+        if (err.daily) {
+          dead.add(provider.provider);
+          if (debug) console.error(`  ⓧ ${provider.provider} daily/quota limit — dropping for remaining docs`);
+        } else if (debug) {
+          console.error(`  ! ${provider.provider} ${doc.id}: ${err.message} → next provider`);
+        }
+        // fall through to the next provider for this doc
+      }
+    }
+  });
+  const contributors = Object.keys(stats.by_model).filter((m) => stats.by_model[m] > 0);
+  return { promises, stats, contributors };
+}
+
+export async function runExtraction({ docs, providers, extractOne, strategy = "failover", concurrency = 2, debug = false }) {
+  if (strategy === "failover") return runFailover({ docs, providers, extractOne, concurrency, debug });
+
+  // ensemble / partition / single: a fixed (doc, provider) plan run per provider.
+  const tasks = planTasks(docs, providers, strategy);
   const byProvider = new Map();
   tasks.forEach((t) => {
     const k = t.provider.provider;
@@ -67,43 +140,13 @@ export async function runExtraction({ docs, providers, extractOne, strategy = "e
     byProvider.get(k).push(t);
   });
 
-  const stats = {
-    docs: docs.length,
-    strategy,
-    raw_candidates: 0,
-    llm_calls: 0,
-    cache_hits: 0,
-    by_model: {},
-    errors: [],
-  };
+  const stats = newStats(strategy, docs);
   const promises = [];
-
   await Promise.all(
     [...byProvider.entries()].map(([providerName, provTasks]) =>
       runPool(provTasks, concurrency, async ({ doc, provider }) => {
         try {
-          const res = await extractOne(provider, doc);
-          const got = Array.isArray(res?.promises) ? res.promises : [];
-          if (res?.cached) stats.cache_hits += 1;
-          else stats.llm_calls += res?.calls ?? 1;
-          // Partial failures (e.g. one segment of a multi-segment doc) are not
-          // thrown — record them so a degraded result is never silent.
-          for (const reason of res?.errors || []) {
-            stats.errors.push({ provider: providerName, doc: doc.id, reason });
-            if (debug) console.error(`  ! ${providerName} ${doc.id} (partial): ${reason}`);
-          }
-          stats.by_model[providerName] = (stats.by_model[providerName] || 0) + got.length;
-          stats.raw_candidates += got.length;
-          for (const p of got) {
-            promises.push({
-              ...p,
-              model: providerName,
-              source_id: doc.id,
-              source_label: doc.label || `${doc.quarter} ${doc.type}`,
-              date: doc.date ?? null,
-              doc_quarter: doc.quarter,
-            });
-          }
+          recordResult(stats, promises, provider.provider, doc, await extractOne(provider, doc), debug);
         } catch (err) {
           stats.errors.push({ provider: providerName, doc: doc.id, reason: err.message });
           if (debug) console.error(`  ! ${providerName} ${doc.id}: ${err.message}`);

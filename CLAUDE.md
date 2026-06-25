@@ -62,9 +62,11 @@ pipeline/output/<ticker>/ Acquisition + corpus + promises artifacts (gitignored)
 
 ## Extraction engine (Prompt 4)
 
-`extract.mjs` is the first LLM step: it reads `corpus.json` and runs an
-**ensemble** of Gemini + Groq + Mistral (all first-class workers, all free-tier)
-to pull **measurable management commitments** → `pipeline/output/<ticker>/promises.json`.
+`extract.mjs` is the first LLM step: it reads `corpus.json` and uses Gemini + Groq
++ Mistral (all free-tier) to pull **measurable management commitments** →
+`pipeline/output/<ticker>/promises.json`. By default the three keys are a single
+quota pool used in **failover** order (not all-three-on-every-doc), to conserve
+free tiers.
 
 Company-agnostic: never hardcode a metric set — models return whatever measurable
 guidance the company gives (bank→NIM/GNPA, IT→margin/TCV, metals→cost/capacity).
@@ -76,10 +78,20 @@ dedups (`dedup.mjs`: `found_by` ≥2 = agreement, `reaffirmed_on`/`revisions` ac
 quarters), and derives `test_date` (`test-date.mjs`). `eval-extraction.mjs` scores
 recall vs the fixture. **No verification/status/variance here — that's Prompt 5.**
 
-Strategies (`LLM_STRATEGY`): `ensemble` (default, every doc × all 3 → max recall,
-~docs×3 calls), `partition` (round-robin docs across providers), `single` (debug).
-A throttled/unavailable provider is skipped and the run continues (graceful
-degradation); per (doc×model) caching makes re-runs ~free.
+Strategies (`LLM_STRATEGY`):
+- **`failover` (default)** — treat the three free tiers as ONE combined quota pool,
+  used in priority order (Gemini → Groq → Mistral). Each doc is extracted **once**,
+  by the first provider with budget; a provider that hits its per-day quota is
+  dropped for the remaining docs. A 6-doc corpus = ~6 calls, all Gemini (Groq/
+  Mistral held in reserve) — no redundant work, no 3× quota burn.
+- `ensemble` — every doc × all 3 (≈ docs×3 calls) for max recall + cross-model
+  agreement. Use only when you have quota to spare.
+- `partition` — round-robin docs across providers (~1/3 each). `single` — one (debug).
+
+Per (doc×model) caching makes re-runs ~free. **Accuracy is NOT pursued via
+cross-model agreement** — that's deferred to a dedicated data-verification step
+once the full dataset is wired; extraction just needs to surface the commitments
+cheaply.
 
 **Keys live only in GitHub Secrets** → the live run is CI-only
 (`.github/workflows/test-extract.yml`, `workflow_dispatch`). In-session: build +
@@ -106,9 +118,10 @@ degradation); per (doc×model) caching makes re-runs ~free.
   on Gemini+Mistral. For repeated runs the same day, use `partition` or unset
   `GROQ_API_KEY`; Groq's TPD resets at midnight UTC.
 
-Ensemble over a ~6-doc corpus ≈ 24 calls (gemini 6, groq ~12 segmented, mistral
-6) — within all three RPD caps. A provider that contributes 0 promises is now
-called out in the summary so a degraded ensemble is never silent.
+Default failover over a ~6-doc corpus ≈ 6 calls (all Gemini; Groq/Mistral held in
+reserve). Ensemble (opt-in) ≈ 24 calls — 3× the quota. Under ensemble/partition a
+provider that contributes 0 is flagged as a degraded run; under failover, untouched
+providers are normal (reported as "held in reserve").
 
 ## Ingestion & normalization (Prompt 3)
 

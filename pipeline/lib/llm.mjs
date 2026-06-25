@@ -246,10 +246,12 @@ async function callChat(cfg, messages, opts = {}) {
       const daily = isDailyLimit(res.status, retryAfter, body429);
       if (daily || !(res.status === 429 || res.status >= 500) || attempt >= maxRetries) {
         const text = body429 || (await res.text().catch(() => ""));
-        throw new LLMError(
+        const e = new LLMError(
           `${cfg.provider} HTTP ${res.status}${daily ? " (daily/quota limit — not retrying)" : ""}: ${text.slice(0, 300)}`,
           { status: res.status, provider: cfg.provider },
         );
+        if (daily) e.daily = true; // lets a sequential runner drop this provider for the rest of the run
+        throw e;
       }
       await sleep(backoffMs(attempt, res));
       continue;

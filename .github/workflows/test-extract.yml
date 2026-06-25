@@ -19,10 +19,10 @@ on:
         required: true
         default: "vedl"
       strategy:
-        description: "LLM strategy"
+        description: "LLM strategy (failover = quota-efficient default; ensemble = 3× quota, max recall)"
         type: choice
-        options: [ensemble, partition, single]
-        default: ensemble
+        options: [failover, ensemble, partition, single]
+        default: failover
 
 permissions:
   contents: read
