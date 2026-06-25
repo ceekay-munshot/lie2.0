@@ -9,7 +9,7 @@
  *   node pipeline/test/p4.test.mjs
  */
 import { runExtraction } from "../lib/multi-llm.mjs";
-import { buildDocText, assemblePromises } from "../extract.mjs";
+import { buildDocText, assemblePromises, segmentText } from "../extract.mjs";
 import { deriveTestDate } from "../lib/test-date.mjs";
 import { SYSTEM_PROMPT } from "../lib/extract-prompt.mjs";
 import { evalExtraction } from "../eval-extraction.mjs";
@@ -145,6 +145,20 @@ const fixture = { company: { ticker: "TEST" }, promises: [
 const ev = evalExtraction(promises, fixture);
 ok(ev.known === 3 && ev.found === 2 && ev.recall > 0.6, `recall 2/3 (ebitda+capex matched, leverage missed) got ${ev.found}/${ev.known}`);
 ok(ev.missed.some((m) => m.category === "leverage"), "missed[] lists the leverage promise");
+
+// ---- 7) input segmentation (Groq TPM) --------------------------------------
+console.log("\nsegmentation:");
+const big = Array.from({ length: 20 }, (_, i) => `Speaker ${i}: ${"word ".repeat(400)}`).join("\n\n"); // ~40k chars
+const segs = segmentText(big, 12000);
+ok(segs.length >= 3 && segs.every((s) => s.length <= 12000), `splits oversized text into ≤cap segments (${segs.length})`);
+ok(segmentText(big, Infinity).length === 1, "no cap → single segment");
+ok(segmentText("short text", 12000).length === 1, "text under cap → single segment");
+ok(segs.join("").includes("Speaker 19:"), "segmentation preserves all turns");
+
+// ---- 8) rubric: forward-looking only ---------------------------------------
+console.log("\nrubric (reject reported actuals):");
+ok(/FORWARD-LOOKING/i.test(SYSTEM_PROMPT) && /REPORTED ACTUALS|already happened/i.test(SYSTEM_PROMPT), "prompt rejects reported actuals, keeps forward guidance");
+ok(/each distinct commitment ONCE|do not split|quality over quantity/i.test(SYSTEM_PROMPT), "prompt discourages over-splitting / padding");
 
 console.log(fails === 0 ? "\nALL P4 UNIT TESTS PASSED" : `\n${fails} TEST(S) FAILED`);
 process.exit(fails ? 1 : 0);

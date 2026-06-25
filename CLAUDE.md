@@ -93,8 +93,19 @@ degradation); per (doc×model) caching makes re-runs ~free.
 | Groq | `llama-3.3-70b-versatile` (`GROQ_MODEL`) | 30 RPM · 12K TPM · 1,000 RPD (TPM is the binding limit for whole-doc calls → backoff) |
 | Mistral | `mistral-large-latest` (`MISTRAL_MODEL`) | free "Experiment" tier, all models, RPS/TPM-limited, ~1B tok/mo |
 
-Ensemble over a ~6-doc corpus ≈ 18 calls — within all three RPD caps; Groq's 12K
-TPM means big-doc calls back off and run roughly serial, which is fine.
+**Provider quirks (handled in code):**
+- **Gemini** uses `json_object` response_format (its OpenAI-compat endpoint is
+  flaky with `json_schema`); `completeJSON` also auto-falls-back json_schema →
+  json_object on a 4xx. Schema is enforced by ajv + the repair retry regardless.
+- **Groq's 12K TPM** (input+output combined) can't fit a whole ~13K-token doc in
+  one call — so `extract.mjs` **segments** each doc to `maxInputTokens` (preset
+  7500) per call; Groq therefore makes ~2 calls/doc and is the wall-clock long
+  pole (~corpus-tokens ÷ TPM ≈ several minutes). Use `partition`, or unset
+  `GROQ_API_KEY`, if you want a faster run.
+
+Ensemble over a ~6-doc corpus ≈ 24 calls (gemini 6, groq ~12 segmented, mistral
+6) — within all three RPD caps. A provider that contributes 0 promises is now
+called out in the summary so a degraded ensemble is never silent.
 
 ## Ingestion & normalization (Prompt 3)
 

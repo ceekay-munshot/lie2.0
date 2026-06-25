@@ -5,7 +5,7 @@
  *
  * Bump PROMPT_VERSION whenever the prompt or schema changes (invalidates caches).
  */
-export const PROMPT_VERSION = "p4-2026-06";
+export const PROMPT_VERSION = "p4-2026-06b";
 
 // Mirrors the company schema's promise.category enum.
 export const CATEGORIES = [
@@ -55,7 +55,11 @@ A commitment is MEASURABLE only if it has a number, percent, ratio, ₹/$ amount
 
 Typical measurable categories: revenue · ebitda · margin · pat · capex (amount + timeline) · capacity (commissioning timelines) · working_capital · leverage (net-debt, net-debt/EBITDA) · roce · volume · orderbook · timeline (project/listing milestones) · cost (unit cost guidance) · capital_allocation (dividend/buyback/stake) · other.
 
-REJECT vague or non-measurable statements with NO number/date — e.g. "we are confident", "we will grow strongly", "focused on execution", "well positioned". If it has no checkable number or date, it is NOT a promise: return nothing for it.
+A promise is FORWARD-LOOKING — a target/guidance for a future period ("we expect / target / guide / will / plan to / by <date> / going forward"). REPORTED ACTUALS and historical results are NOT promises: "Q3 EBITDA was Rs 15,171 crore", "we delivered 800 KT this quarter", "9M capex of $1.3bn", "revenue grew 12% YoY" describe what already happened — REJECT them. Only extract a number/date the company is COMMITTING to deliver in the future.
+
+REJECT vague or non-measurable statements with NO number/date — e.g. "we are confident", "we will grow strongly", "focused on execution", "well positioned". If it has no checkable forward number or date, it is NOT a promise: return nothing for it.
+
+Extract each distinct commitment ONCE, at the most consolidated level stated (prefer the company/guidance figure over restating it per sub-business). Do NOT split one piece of guidance into several near-duplicate rows, and do NOT pad the list — a typical call yields a handful to ~15 real commitments, not dozens. Quality over quantity.
 
 For each promise:
 - quarter_context: the fiscal quarter the statement was made (given to you; default to it).
@@ -110,6 +114,31 @@ const FEW_SHOTS = [
       "Rajiv Kumar: Our teams are doing a great job and we are very optimistic about the future of the aluminium business.",
   },
   { role: "assistant", content: JSON.stringify({ promises: [] }) },
+  {
+    role: "user",
+    content:
+      "Quarter: Q3FY26. Text:\n" +
+      "Ajay Goel: Our 9M FY26 EBITDA stood at Rs 37,529 crore and we did about 800 KT of aluminium in Q3. " +
+      "Going forward, we continue to guide FY26 capex of $1.7 to $1.9 billion.",
+  },
+  {
+    role: "assistant",
+    content: JSON.stringify({
+      // The Rs 37,529 cr 9M EBITDA and 800 KT Q3 are REPORTED ACTUALS → rejected.
+      // Only the forward FY26 capex guidance is a promise.
+      promises: [
+        {
+          quarter_context: "Q3FY26",
+          category: "capex",
+          promise: "FY26 growth capex of $1.7-1.9bn",
+          quote: "we continue to guide FY26 capex of $1.7 to $1.9 billion",
+          metric: "FY26 capex $1.7-1.9 bn",
+          target: { text: "FY26 capex $1.7-1.9 bn", value: 1.7, value_high: 1.9, unit: "USD_bn", period: "FY26" },
+          confidence: "H",
+        },
+      ],
+    }),
+  },
 ];
 
 /**

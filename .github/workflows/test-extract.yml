@@ -39,6 +39,7 @@ jobs:
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
       LLM_CONCURRENCY: "2"
+      DEBUG: "1"
     steps:
       - uses: actions/checkout@v4
 
@@ -68,6 +69,13 @@ jobs:
               console.log("after_dedup:", s.after_dedup, "| agreement_2plus:", s.agreement_2plus, "| ungrounded_dropped:", s.rejected_ungrounded);
               console.log("by_category:", JSON.stringify(s.by_category));
               if (e) console.log("RECALL:", (e.recall*100).toFixed(1)+"%", "("+e.found+"/"+e.known+")", "| missed:", e.missed.length);
+              const errs = s.provider_errors || [];
+              if (errs.length) {
+                const g = {};
+                for (const x of errs) { const k = x.provider+": "+String(x.reason).slice(0,160); g[k]=(g[k]||0)+1; }
+                console.log("PROVIDER ERRORS:");
+                for (const k in g) console.log("  ["+g[k]+"x] "+k);
+              }
             ' "$f"
           else
             echo "no promises.json produced"; exit 1
