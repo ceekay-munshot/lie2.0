@@ -13,6 +13,7 @@ import { buildDocText, assemblePromises, segmentText } from "../extract.mjs";
 import { deriveTestDate } from "../lib/test-date.mjs";
 import { SYSTEM_PROMPT } from "../lib/extract-prompt.mjs";
 import { evalExtraction } from "../eval-extraction.mjs";
+import { isDailyLimit } from "../lib/llm.mjs";
 
 let fails = 0;
 const ok = (cond, label) => {
@@ -170,6 +171,13 @@ ok(segs.join("").includes("Speaker 19:"), "segmentation preserves all turns");
 console.log("\nrubric (reject reported actuals):");
 ok(/FORWARD-LOOKING/i.test(SYSTEM_PROMPT) && /REPORTED ACTUALS|already happened/i.test(SYSTEM_PROMPT), "prompt rejects reported actuals, keeps forward guidance");
 ok(/each distinct commitment ONCE|do not split|quality over quantity/i.test(SYSTEM_PROMPT), "prompt discourages over-splitting / padding");
+
+// ---- 9) daily vs per-minute rate-limit classification ----------------------
+console.log("\nrate-limit classification:");
+ok(isDailyLimit(429, 6226, "Rate limit reached ... on tokens per day (TPD): Limit 100000") === true, "TPD 429 (long Retry-After + 'per day') → daily, fail fast");
+ok(isDailyLimit(429, 0, "tokens per day (TPD): Limit 100000, Used 91594") === true, "TPD 429 by body marker → daily");
+ok(isDailyLimit(429, 30, "Rate limit reached: tokens per minute") === false, "per-minute 429 → transient, retry");
+ok(isDailyLimit(500, 9999, "") === false, "non-429 → not a daily limit");
 
 console.log(fails === 0 ? "\nALL P4 UNIT TESTS PASSED" : `\n${fails} TEST(S) FAILED`);
 process.exit(fails ? 1 : 0);

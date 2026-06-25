@@ -90,18 +90,21 @@ degradation); per (doc×model) caching makes re-runs ~free.
 | Provider | Default model (env override) | Free-tier limits |
 | --- | --- | --- |
 | Gemini | `gemini-2.5-flash` (`GEMINI_MODEL`) | 10 RPM · ~250K TPM · 1,500 RPD; free tier = Flash/Flash-Lite |
-| Groq | `llama-3.3-70b-versatile` (`GROQ_MODEL`) | 30 RPM · 12K TPM · 1,000 RPD (TPM is the binding limit for whole-doc calls → backoff) |
+| Groq | `llama-3.3-70b-versatile` (`GROQ_MODEL`) | 30 RPM · 12K TPM · **100K tokens/day** · 1,000 RPD |
 | Mistral | `mistral-large-latest` (`MISTRAL_MODEL`) | free "Experiment" tier, all models, RPS/TPM-limited, ~1B tok/mo |
 
 **Provider quirks (handled in code):**
 - **Gemini** uses `json_object` response_format (its OpenAI-compat endpoint is
-  flaky with `json_schema`); `completeJSON` also auto-falls-back json_schema →
-  json_object on a 4xx. Schema is enforced by ajv + the repair retry regardless.
-- **Groq's 12K TPM** (input+output combined) can't fit a whole ~13K-token doc in
-  one call — so `extract.mjs` **segments** each doc to `maxInputTokens` (preset
-  7500) per call; Groq therefore makes ~2 calls/doc and is the wall-clock long
-  pole (~corpus-tokens ÷ TPM ≈ several minutes). Use `partition`, or unset
-  `GROQ_API_KEY`, if you want a faster run.
+  flaky with `json_schema`; `completeJSON` also auto-falls-back json_schema →
+  json_object on a 4xx). Output cap is generous (16K) so a long doc's JSON isn't
+  truncated; schema enforced by ajv + the repair retry regardless.
+- **Groq** has two binding free-tier limits: **12K TPM** (so `extract.mjs`
+  **segments** each doc to `maxInputTokens` − prompt overhead per call → ~2
+  calls/doc) and **100K tokens/day**, which a ~70K-token corpus exhausts in about
+  one ensemble pass. A per-MINUTE 429 backs off and retries; a per-DAY/quota 429
+  (`isDailyLimit`) **fails fast** (no wasted retries) and the ensemble continues
+  on Gemini+Mistral. For repeated runs the same day, use `partition` or unset
+  `GROQ_API_KEY`; Groq's TPD resets at midnight UTC.
 
 Ensemble over a ~6-doc corpus ≈ 24 calls (gemini 6, groq ~12 segmented, mistral
 6) — within all three RPD caps. A provider that contributes 0 promises is now

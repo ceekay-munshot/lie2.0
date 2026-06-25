@@ -154,6 +154,17 @@ export function resolveChain(env = process.env) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+/**
+ * A 429 that won't recover within this run — a per-DAY token/request quota (TPD/
+ * RPD), signalled by a long Retry-After (> 2 min) or "per day"/daily wording.
+ * Per-MINUTE limits (short Retry-After) are transient and worth retrying.
+ */
+export function isDailyLimit(status, retryAfterSecs = 0, body = "") {
+  if (status !== 429) return false;
+  if (retryAfterSecs > 120) return true;
+  return /per day|per-day|daily|\bTPD\b|\bRPD\b|quota|tokens per day|requests per day/i.test(body || "");
+}
+
 function joinURL(base, path) {
   return base.replace(/\/+$/, "") + "/" + path.replace(/^\/+/, "");
 }
@@ -226,15 +237,30 @@ async function callChat(cfg, messages, opts = {}) {
       return { content, raw: data, provider: cfg.provider, model: body.model };
     }
 
-    const retryable = res.status === 429 || res.status >= 500;
-    if (!retryable || attempt >= maxRetries) {
-      const text = await res.text().catch(() => "");
-      throw new LLMError(
-        `${cfg.provider} HTTP ${res.status}: ${text.slice(0, 300)}`,
-        { status: res.status, provider: cfg.provider },
-      );
+    // Classify rate limits: a per-MINUTE 429 is transient (back off + retry); a
+    // per-DAY/quota 429 (long Retry-After or "per day"/TPD/RPD in the body) won't
+    // recover within this run, so fail fast instead of burning retries.
+    if (res.status === 429 || res.status >= 500) {
+      const retryAfter = Number(res.headers.get("retry-after")) || 0;
+      const body429 = res.status === 429 ? await res.text().catch(() => "") : "";
+      const daily = isDailyLimit(res.status, retryAfter, body429);
+      if (daily || !(res.status === 429 || res.status >= 500) || attempt >= maxRetries) {
+        const text = body429 || (await res.text().catch(() => ""));
+        throw new LLMError(
+          `${cfg.provider} HTTP ${res.status}${daily ? " (daily/quota limit — not retrying)" : ""}: ${text.slice(0, 300)}`,
+          { status: res.status, provider: cfg.provider },
+        );
+      }
+      await sleep(backoffMs(attempt, res));
+      continue;
     }
-    await sleep(backoffMs(attempt, res));
+
+    // Other non-2xx → not retryable.
+    const text = await res.text().catch(() => "");
+    throw new LLMError(`${cfg.provider} HTTP ${res.status}: ${text.slice(0, 300)}`, {
+      status: res.status,
+      provider: cfg.provider,
+    });
   }
 }
 
