@@ -13,6 +13,7 @@ import { buildDocText, assemblePromises, segmentText } from "../extract.mjs";
 import { deriveTestDate } from "../lib/test-date.mjs";
 import { SYSTEM_PROMPT } from "../lib/extract-prompt.mjs";
 import { evalExtraction } from "../eval-extraction.mjs";
+import { isDailyLimit } from "../lib/llm.mjs";
 
 let fails = 0;
 const ok = (cond, label) => {
@@ -132,6 +133,119 @@ const par = await runExtraction({ docs: [d1], providers: [{ provider: "groq", mo
 ok(par.stats.errors.length === 1 && /segment 2\/2/.test(par.stats.errors[0].reason), "partial-segment failure recorded in stats.errors");
 ok(par.promises.length === 1, "partial success still keeps the segment that succeeded");
 
+// failover: one combined quota pool, used in priority order; a daily-limited
+// provider is dropped for the remaining docs; each doc extracted exactly once.
+console.log("\nfailover (sequential quota pool):");
+const fdocs = [d1, d2, { id: "d3", quarter: "Q4FY26", type: "transcript", date: "2026-04-29", text: "x", sections: [] }];
+let geminiTries = 0;
+const failMock = async (cfg, doc) => {
+  if (cfg.provider === "gemini") {
+    geminiTries++;
+    const e = new Error("gemini HTTP 429 (daily/quota limit — not retrying)");
+    e.daily = true;
+    throw e;
+  }
+  return { promises: [{ quarter_context: doc.quarter, category: "revenue", promise: "x", quote: "q", metric: "m", target: { period: "FY26" }, confidence: "M" }], calls: 1 };
+};
+const fo = await runExtraction({
+  docs: fdocs,
+  providers: [{ provider: "gemini", model: "g" }, { provider: "groq", model: "q" }, { provider: "mistral", model: "m" }],
+  extractOne: failMock,
+  strategy: "failover",
+  concurrency: 1,
+});
+ok(geminiTries === 1, "daily-limited gemini dropped after its first failure (not retried per-doc)");
+ok(fo.stats.by_model.groq === fdocs.length && !fo.stats.by_model.mistral, "groq picks up every remaining doc; mistral never touched");
+ok(fo.contributors.length === 1 && fo.contributors[0] === "groq", "only one provider does the work per doc (no redundant extraction)");
+
+// failover, MID-DOC daily limit: a provider that does some segments then 429s
+// returns a PARTIAL result carrying `daily`. It must still be dropped, and the
+// next provider must cover that doc's remainder (else those commitments vanish).
+console.log("\nfailover (mid-doc daily limit → partial, drop + cover remainder):");
+let midGemini = 0, midGroq = 0;
+const midMock = async (cfg, doc) => {
+  if (cfg.provider === "gemini") {
+    midGemini++;
+    return { promises: [{ quarter_context: doc.quarter, category: "revenue", promise: "g", quote: "q", metric: "m", target: { period: "FY26" }, confidence: "M" }], calls: 2, errors: ["part 2/2: 429 daily/quota limit"], daily: true };
+  }
+  if (cfg.provider === "groq") midGroq++;
+  return { promises: [{ quarter_context: doc.quarter, category: "capex", promise: "k", quote: "q", metric: "m", target: { period: "FY26" }, confidence: "M" }], calls: 1 };
+};
+const mid = await runExtraction({
+  docs: [d1, d2],
+  providers: [{ provider: "gemini", model: "g" }, { provider: "groq", model: "q" }, { provider: "mistral", model: "m" }],
+  extractOne: midMock,
+  strategy: "failover",
+  concurrency: 1,
+});
+ok(midGemini === 1, "mid-doc daily: gemini tried once then dropped for the remaining doc");
+ok(midGroq === 2, "mid-doc daily: groq covers the partial doc's remainder AND the next doc");
+ok(mid.stats.by_model.gemini === 1 && mid.stats.by_model.groq === 2, "partial gemini promises kept AND the groq fallback recorded");
+ok(mid.stats.errors.some((e) => /daily\/quota/i.test(e.reason)), "the mid-doc daily error is surfaced in stats.errors");
+
+// failover under the DEFAULT concurrency (>1): the daily-limited provider is still
+// dropped and every doc still covered — the race only costs ≤(concurrency) extra
+// fast-failing probes, never a lost or unhandled document.
+console.log("\nfailover (concurrent drop at default concurrency=2):");
+let cGemini = 0;
+const cMock = async (cfg, doc) => {
+  if (cfg.provider === "gemini") { cGemini++; const e = new Error("gemini HTTP 429 (daily/quota limit)"); e.daily = true; throw e; }
+  return { promises: [{ quarter_context: doc.quarter, category: "revenue", promise: "x", quote: "q", metric: "m", target: { period: "FY26" }, confidence: "M" }], calls: 1 };
+};
+const cfo = await runExtraction({
+  docs: fdocs,
+  providers: [{ provider: "gemini", model: "g" }, { provider: "groq", model: "q" }, { provider: "mistral", model: "m" }],
+  extractOne: cMock,
+  strategy: "failover",
+  concurrency: 2,
+});
+ok(cfo.stats.by_model.groq === fdocs.length && !cfo.stats.by_model.mistral, "concurrency=2: groq still covers every doc; no document lost");
+ok(cGemini >= 1 && cGemini <= 2, `concurrency=2: gemini probed ≤ concurrency times then dropped (got ${cGemini})`);
+
+// failover, PARTIAL non-daily failure (a segment exhausts its retries): keep what
+// we got but still fall through so the next provider covers the failed segment(s).
+// The provider is NOT dropped — only this one doc gave it trouble.
+console.log("\nfailover (partial non-daily → fall through, provider kept):");
+let ppGemini = 0, ppGroq = 0;
+const ppMock = async (cfg, doc) => {
+  if (cfg.provider === "gemini") {
+    ppGemini++;
+    if (doc.id === d1.id) // d1: one segment failed (non-daily) → partial
+      return { promises: [{ quarter_context: doc.quarter, category: "revenue", promise: "g", quote: "q", metric: "m", target: { period: "FY26" }, confidence: "M" }], calls: 2, errors: ["part 2/2: 500 after retries"] };
+    return { promises: [{ quarter_context: doc.quarter, category: "ebitda", promise: "e", quote: "q", metric: "m", target: { period: "FY26" }, confidence: "M" }], calls: 1 }; // d2 clean
+  }
+  if (cfg.provider === "groq") ppGroq++;
+  return { promises: [{ quarter_context: doc.quarter, category: "capex", promise: "k", quote: "q", metric: "m", target: { period: "FY26" }, confidence: "M" }], calls: 1 };
+};
+const pp = await runExtraction({
+  docs: [d1, d2],
+  providers: [{ provider: "gemini", model: "g" }, { provider: "groq", model: "q" }, { provider: "mistral", model: "m" }],
+  extractOne: ppMock,
+  strategy: "failover",
+  concurrency: 1,
+});
+ok(ppGemini === 2, "partial non-daily: gemini NOT dropped — it still extracts the clean d2");
+ok(ppGroq === 1, "partial non-daily: groq covers ONLY the doc gemini couldn't finish (d1)");
+ok(pp.stats.by_model.gemini === 2 && pp.stats.by_model.groq === 1, "partial promises kept AND the fallback's recorded");
+ok(!pp.contributors.includes("mistral"), "mistral untouched (failover still conserves quota)");
+
+// failover, ALL providers exhausted: remaining docs must be REPORTED (a doc-level
+// "(none)" error), never silently absent from the output.
+console.log("\nfailover (all providers exhausted → docs reported, not silent):");
+const exDocs = [d1, d2, { id: "d3", quarter: "Q4FY26", type: "transcript", date: "2026-04-29", text: "x", sections: [] }];
+const exMock = async (cfg) => { const e = new Error(`${cfg.provider} HTTP 429 (daily/quota limit)`); e.daily = true; throw e; };
+const ex = await runExtraction({
+  docs: exDocs,
+  providers: [{ provider: "gemini", model: "g" }, { provider: "groq", model: "q" }, { provider: "mistral", model: "m" }],
+  extractOne: exMock,
+  strategy: "failover",
+  concurrency: 1,
+});
+ok(ex.promises.length === 0, "all-exhausted: no promises produced");
+const skipped = ex.stats.errors.filter((e) => e.provider === "(none)");
+ok(skipped.length === exDocs.length, `every doc reported (got ${skipped.length}/${exDocs.length} doc-level notes)`);
+ok(skipped.every((e) => /exhaust|incomplete|skip/i.test(e.reason)), "each doc-level note explains it was not extracted");
+
 // ---- 4) reject-vague rubric + vague→none -----------------------------------
 console.log("\nreject-vague:");
 ok(/REJECT/i.test(SYSTEM_PROMPT) && /confiden|grow strongly|well positioned/i.test(SYSTEM_PROMPT), "system prompt instructs rejecting vague statements");
@@ -170,6 +284,15 @@ ok(segs.join("").includes("Speaker 19:"), "segmentation preserves all turns");
 console.log("\nrubric (reject reported actuals):");
 ok(/FORWARD-LOOKING/i.test(SYSTEM_PROMPT) && /REPORTED ACTUALS|already happened/i.test(SYSTEM_PROMPT), "prompt rejects reported actuals, keeps forward guidance");
 ok(/each distinct commitment ONCE|do not split|quality over quantity/i.test(SYSTEM_PROMPT), "prompt discourages over-splitting / padding");
+
+// ---- 9) daily vs per-minute rate-limit classification ----------------------
+console.log("\nrate-limit classification:");
+ok(isDailyLimit(429, 6226, "Rate limit reached ... on tokens per day (TPD): Limit 100000") === true, "TPD 429 (long Retry-After + 'per day') → daily, fail fast");
+ok(isDailyLimit(429, 0, "tokens per day (TPD): Limit 100000, Used 91594") === true, "TPD 429 by body marker → daily");
+ok(isDailyLimit(429, 30, "Rate limit reached: tokens per minute") === false, "per-minute 429 → transient, retry");
+ok(isDailyLimit(429, 0, "Quota exceeded for quota metric 'GenerateRequestsPerMinute', limit per minute") === false, "per-minute message that says 'quota' → transient, NOT daily");
+ok(isDailyLimit(429, 0, "Requests per day (RPD) limit reached") === true, "RPD body marker → daily");
+ok(isDailyLimit(500, 9999, "") === false, "non-429 → not a daily limit");
 
 console.log(fails === 0 ? "\nALL P4 UNIT TESTS PASSED" : `\n${fails} TEST(S) FAILED`);
 process.exit(fails ? 1 : 0);

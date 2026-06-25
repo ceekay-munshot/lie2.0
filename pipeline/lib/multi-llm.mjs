@@ -16,10 +16,12 @@
 export const EXTRACTION_PROVIDERS = ["gemini", "groq", "mistral"];
 
 /** Build the (doc, provider) task list for a strategy. */
-export function planTasks(docs, providers, strategy = "ensemble") {
+export function planTasks(docs, providers, strategy = "failover") {
   const tasks = [];
   if (providers.length === 0) return tasks;
-  if (strategy === "single") {
+  if (strategy === "single" || strategy === "failover") {
+    // failover's best case (and single) = the primary provider does every doc;
+    // failover only spills to the next provider when one's quota is exhausted.
     const p = providers[0];
     docs.forEach((doc) => tasks.push({ doc, provider: p }));
   } else if (strategy === "partition") {
@@ -56,10 +58,128 @@ async function runPool(tasks, cap, worker) {
  * @param {number} o.concurrency per-provider concurrency cap
  * @returns {Promise<{promises:Array, stats:object, contributors:string[]}>}
  */
-export async function runExtraction({ docs, providers, extractOne, strategy = "ensemble", concurrency = 2, debug = false }) {
-  const tasks = planTasks(docs, providers, strategy);
+const newStats = (strategy, docs) => ({
+  docs: docs.length,
+  strategy,
+  raw_candidates: 0,
+  llm_calls: 0,
+  cache_hits: 0,
+  by_model: {},
+  errors: [],
+});
 
-  // Group by provider so each provider gets its own concurrency-capped pool.
+/** Fold a successful extractOne result into the run's stats + tagged promises. */
+function recordResult(stats, promises, providerName, doc, res, debug) {
+  const got = Array.isArray(res?.promises) ? res.promises : [];
+  if (res?.cached) stats.cache_hits += 1;
+  else stats.llm_calls += res?.calls ?? 1;
+  // Partial failures (e.g. one segment of a multi-segment doc) are not thrown —
+  // record them so a degraded result is never silent.
+  for (const reason of res?.errors || []) {
+    stats.errors.push({ provider: providerName, doc: doc.id, reason });
+    if (debug) console.error(`  ! ${providerName} ${doc.id} (partial): ${reason}`);
+  }
+  stats.by_model[providerName] = (stats.by_model[providerName] || 0) + got.length;
+  stats.raw_candidates += got.length;
+  for (const p of got) {
+    promises.push({
+      ...p,
+      model: providerName,
+      source_id: doc.id,
+      source_label: doc.label || `${doc.quarter} ${doc.type}`,
+      date: doc.date ?? null,
+      doc_quarter: doc.quarter,
+    });
+  }
+}
+
+/**
+ * Sequential pool — treat the providers as ONE combined free-tier quota, used in
+ * priority order. Each document is extracted ONCE, by the first provider with
+ * budget; a provider that hits a per-DAY/quota limit is dropped for the remaining
+ * documents (so we don't redundantly re-extract, and we don't waste a model's
+ * budget on work another already did). Cross-model agreement is intentionally not
+ * used here — accuracy is a separate, later verification step.
+ *
+ * A document falls through to the next provider whenever the current one did NOT
+ * fully cover it:
+ *   - thrown error            → that provider failed the whole doc (see catch);
+ *   - partial result + daily  → quota ran out mid-doc; keep what we got, DROP the
+ *                               provider for later docs, cover the remainder next;
+ *   - partial result + errors → a segment failed for a non-daily reason; keep what
+ *                               we got, but KEEP the provider (only this doc had
+ *                               trouble) and let the next provider cover the rest.
+ * Dedup later merges any overlap from a doc covered by more than one provider. If
+ * no provider fully covers a doc (all errored/exhausted), a doc-level "(none)"
+ * error is recorded so the run reads as INCOMPLETE, never silently short.
+ *
+ * Concurrency note: with concurrency > 1, up to (concurrency − 1) in-flight docs
+ * may already have passed the `dead` check at the instant a provider exhausts its
+ * quota, so they probe it once more. Those probes simply fail fast — a quota-spent
+ * 429 is rejected, costing a round-trip, not token budget — and then fall through
+ * to the next provider, so no document is ever lost. The drop is fully effective
+ * for every doc that STARTS after the failure is observed.
+ */
+async function runFailover({ docs, providers, extractOne, concurrency, debug }) {
+  const stats = newStats("failover", docs);
+  const promises = [];
+  const dead = new Set(); // providers whose daily quota is spent
+  const dropProvider = (name, note) => {
+    dead.add(name);
+    if (debug) console.error(`  ⓧ ${name} daily/quota limit${note} — dropping for remaining docs`);
+  };
+  await runPool(docs, concurrency, async (doc) => {
+    let triedAny = false; // did at least one non-dead provider get a turn at this doc?
+    for (const provider of providers) {
+      if (dead.has(provider.provider)) continue;
+      triedAny = true;
+      try {
+        const res = await extractOne(provider, doc);
+        recordResult(stats, promises, provider.provider, doc, res, debug);
+        if (res?.daily) {
+          // Quota ran out MID-document: keep the segments we got, drop the
+          // provider, and fall through so the next one covers the remainder
+          // (dedup merges any overlap with what this provider already returned).
+          dropProvider(provider.provider, " (mid-doc)");
+          continue;
+        }
+        if (res?.errors?.length) {
+          // Partial NON-daily failure (a segment exhausted its retries): keep what
+          // we got, but fall through so another provider can cover the failed
+          // segment(s). The provider is healthy — do NOT drop it for other docs.
+          if (debug) console.error(`  ! ${provider.provider} ${doc.id}: partial (${res.errors.length} segment error(s)) → next provider covers the rest`);
+          continue;
+        }
+        return; // fully extracted — do not spend another provider on this doc
+      } catch (err) {
+        stats.errors.push({ provider: provider.provider, doc: doc.id, reason: err.message });
+        if (err.daily) {
+          dropProvider(provider.provider, "");
+        } else if (debug) {
+          console.error(`  ! ${provider.provider} ${doc.id}: ${err.message} → next provider`);
+        }
+        // fall through to the next provider for this doc
+      }
+    }
+    // Reached here ⇒ no provider FULLY extracted this doc. Record a doc-level note
+    // so it surfaces as incomplete/skipped rather than being silently absent from
+    // promises.json (it may still carry partial promises from a fallen-through
+    // provider; the note flags that the document was not fully covered).
+    const reason = triedAny
+      ? "no provider fully extracted this document (providers errored or exhausted mid-document)"
+      : "skipped — every provider was already exhausted before this document";
+    stats.errors.push({ provider: "(none)", doc: doc.id, reason });
+    if (debug) console.error(`  ⓧ ${doc.id}: ${reason}`);
+  });
+  const contributors = Object.keys(stats.by_model).filter((m) => stats.by_model[m] > 0);
+  return { promises, stats, contributors };
+}
+
+export async function runExtraction({ docs, providers, extractOne, strategy = "failover", concurrency = 2, debug = false }) {
+  if (strategy === "failover") return runFailover({ docs, providers, extractOne, concurrency, debug });
+
+  // ensemble / partition / single: a fixed (doc, provider) plan run per provider.
+  const tasks = planTasks(docs, providers, strategy);
   const byProvider = new Map();
   tasks.forEach((t) => {
     const k = t.provider.provider;
@@ -67,43 +187,13 @@ export async function runExtraction({ docs, providers, extractOne, strategy = "e
     byProvider.get(k).push(t);
   });
 
-  const stats = {
-    docs: docs.length,
-    strategy,
-    raw_candidates: 0,
-    llm_calls: 0,
-    cache_hits: 0,
-    by_model: {},
-    errors: [],
-  };
+  const stats = newStats(strategy, docs);
   const promises = [];
-
   await Promise.all(
     [...byProvider.entries()].map(([providerName, provTasks]) =>
       runPool(provTasks, concurrency, async ({ doc, provider }) => {
         try {
-          const res = await extractOne(provider, doc);
-          const got = Array.isArray(res?.promises) ? res.promises : [];
-          if (res?.cached) stats.cache_hits += 1;
-          else stats.llm_calls += res?.calls ?? 1;
-          // Partial failures (e.g. one segment of a multi-segment doc) are not
-          // thrown — record them so a degraded result is never silent.
-          for (const reason of res?.errors || []) {
-            stats.errors.push({ provider: providerName, doc: doc.id, reason });
-            if (debug) console.error(`  ! ${providerName} ${doc.id} (partial): ${reason}`);
-          }
-          stats.by_model[providerName] = (stats.by_model[providerName] || 0) + got.length;
-          stats.raw_candidates += got.length;
-          for (const p of got) {
-            promises.push({
-              ...p,
-              model: providerName,
-              source_id: doc.id,
-              source_label: doc.label || `${doc.quarter} ${doc.type}`,
-              date: doc.date ?? null,
-              doc_quarter: doc.quarter,
-            });
-          }
+          recordResult(stats, promises, provider.provider, doc, await extractOne(provider, doc), debug);
         } catch (err) {
           stats.errors.push({ provider: providerName, doc: doc.id, reason: err.message });
           if (debug) console.error(`  ! ${providerName} ${doc.id}: ${err.message}`);

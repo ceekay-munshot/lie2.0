@@ -160,23 +160,26 @@ The first LLM step: read `corpus.json` and extract every **measurable management
 commitment** → `pipeline/output/<ticker>/promises.json`. Company-agnostic (no
 hardcoded metric set). **No verification/status/variance — that's Prompt 5.**
 
-An **ensemble** of Gemini + Groq + Mistral (all first-class, all free-tier) each
-extract management-only text; results are unioned, every quote is grounded to a
-verbatim substring (snap-or-drop), cross-model-merged + deduped (`found_by` ≥2 =
-agreement; `reaffirmed_on`/`revisions` track a commitment across quarters), and
-each gets a derived `test_date`. Recall is scored against the golden fixture.
+Gemini + Groq + Mistral (all free-tier) extract management-only text. By default
+(`LLM_STRATEGY=failover`) the three keys are **one combined quota pool used in
+order** — each doc extracted once by the first provider with budget; a provider
+that hits its daily quota is dropped for the rest. (`ensemble` re-extracts every
+doc with all three for max recall — 3× the quota; opt in when you can afford it.)
+Every quote is grounded to a verbatim substring (snap-or-drop), deduped, and given
+a derived `test_date`; recall is scored against the golden fixture. **Accuracy is a
+separate, later data-verification step — not cross-model agreement.**
 
 ```bash
 # In-session (no keys): estimate + mock-LLM unit tests
-DRY_RUN=1 TICKER=vedl npm run extract        # planned calls/tokens (ensemble → docs×3)
+DRY_RUN=1 TICKER=vedl npm run extract        # planned calls/tokens (failover → ~docs calls)
 npm run test:extract                         # mock-LLM unit tests
 
 # Live 3-model run happens in CI (keys in GitHub Secrets) — see test-extract.yml
 CORPUS=pipeline/fixtures/vedl.corpus.json TICKER=vedl npm run extract
 ```
 
-**Env knobs:** `TICKER` · `CORPUS=<path>` · `LLM_STRATEGY` (`ensemble` |
-`partition` | `single`) · `GEMINI_API_KEY`/`GROQ_API_KEY`/`MISTRAL_API_KEY`
+**Env knobs:** `TICKER` · `CORPUS=<path>` · `LLM_STRATEGY` (`failover` default |
+`ensemble` | `partition` | `single`) · `GEMINI_API_KEY`/`GROQ_API_KEY`/`MISTRAL_API_KEY`
 (+ optional `<PROVIDER>_MODEL`) · `LLM_CONCURRENCY` (2) · `EXTRACT_SCOPE`
 (`management` | `all`) · `EVAL` · `LIMIT` · `DRY_RUN` · `DEBUG`. A throttled
 provider is skipped (graceful degradation); per (doc×model) caching makes re-runs

@@ -154,6 +154,25 @@ export function resolveChain(env = process.env) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+/**
+ * A 429 that won't recover within this run — a per-DAY token/request quota (TPD/
+ * RPD), signalled by a long Retry-After (> 2 min) or "per day"/daily wording.
+ * Per-MINUTE limits (short Retry-After) are transient and worth retrying.
+ */
+export function isDailyLimit(status, retryAfterSecs = 0, body = "") {
+  if (status !== 429) return false;
+  // An explicit long wait from the server is authoritative — a per-day/quota reset.
+  if (retryAfterSecs > 120) return true;
+  const b = String(body || "");
+  // Per-MINUTE throttles are transient (the token bucket refills in <60s): keep
+  // them on the retry/backoff path even when the body also says "quota" (e.g.
+  // Gemini's "Quota exceeded for quota metric '…requests per minute'").
+  if (/per[\s-]?minute|\bRPM\b|\bTPM\b/i.test(b)) return false;
+  // Otherwise only genuine per-DAY / quota-reset wording fails fast. (Bare "quota"
+  // is deliberately NOT a trigger — it appears in per-minute messages too.)
+  return /per[\s-]?day|\bdaily\b|\bTPD\b|\bRPD\b|tokens per day|requests per day/i.test(b);
+}
+
 function joinURL(base, path) {
   return base.replace(/\/+$/, "") + "/" + path.replace(/^\/+/, "");
 }
@@ -226,15 +245,32 @@ async function callChat(cfg, messages, opts = {}) {
       return { content, raw: data, provider: cfg.provider, model: body.model };
     }
 
-    const retryable = res.status === 429 || res.status >= 500;
-    if (!retryable || attempt >= maxRetries) {
-      const text = await res.text().catch(() => "");
-      throw new LLMError(
-        `${cfg.provider} HTTP ${res.status}: ${text.slice(0, 300)}`,
-        { status: res.status, provider: cfg.provider },
-      );
+    // Classify rate limits: a per-MINUTE 429 is transient (back off + retry); a
+    // per-DAY/quota 429 (long Retry-After or "per day"/TPD/RPD in the body) won't
+    // recover within this run, so fail fast instead of burning retries.
+    if (res.status === 429 || res.status >= 500) {
+      const retryAfter = Number(res.headers.get("retry-after")) || 0;
+      const body429 = res.status === 429 ? await res.text().catch(() => "") : "";
+      const daily = isDailyLimit(res.status, retryAfter, body429);
+      if (daily || !(res.status === 429 || res.status >= 500) || attempt >= maxRetries) {
+        const text = body429 || (await res.text().catch(() => ""));
+        const e = new LLMError(
+          `${cfg.provider} HTTP ${res.status}${daily ? " (daily/quota limit — not retrying)" : ""}: ${text.slice(0, 300)}`,
+          { status: res.status, provider: cfg.provider },
+        );
+        if (daily) e.daily = true; // lets a sequential runner drop this provider for the rest of the run
+        throw e;
+      }
+      await sleep(backoffMs(attempt, res));
+      continue;
     }
-    await sleep(backoffMs(attempt, res));
+
+    // Other non-2xx → not retryable.
+    const text = await res.text().catch(() => "");
+    throw new LLMError(`${cfg.provider} HTTP ${res.status}: ${text.slice(0, 300)}`, {
+      status: res.status,
+      provider: cfg.provider,
+    });
   }
 }
 
