@@ -57,11 +57,13 @@ export const PROVIDER_PRESETS = {
     model: "llama-3.3-70b-versatile",
     structured: "json_schema",
     keyEnv: "GROQ_API_KEY",
-    // Free tier ≈ 12K tokens/min (input+output). Keep each request well under
-    // that so it's a valid call (transient 429s recover on backoff) rather than
-    // one that can never fit. Callers segment input to this budget.
-    maxInputTokens: 7500,
-    maxOutputTokens: 3500,
+    // Free tier ≈ 12K tokens/min (input+output combined). maxInputTokens is the
+    // TOTAL input budget per request (the caller reserves prompt overhead from
+    // it before sizing a segment); input + output must stay under the TPM cap, so
+    // 8000 + 3000 = 11000 < 12000 with margin. Keeps every call a valid one that
+    // recovers on backoff rather than one that can never fit.
+    maxInputTokens: 8000,
+    maxOutputTokens: 3000,
   },
   cerebras: {
     baseURL: "https://api.cerebras.ai/v1",

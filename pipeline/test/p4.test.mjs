@@ -53,6 +53,7 @@ ok(!d1.text.includes("DROPPEDANALYSTONLY"), "standalone analyst turn (no mgmt re
 ok(!/\bAmit Kumar:/.test(d1.text), "analyst is not emitted as a speaker turn");
 ok(d1.text.includes("[Analyst context:") && d1.text.includes("ANALYSTQUESTIONMARKER"), "preceding analyst Q kept inline as [context]");
 ok(d1.text.includes("Ajay Goel:") && d1.text.includes("Arun Misra:"), "management turns kept");
+ok(/\n\n/.test(d1.text), "turns separated by blank lines so segmentText can split on boundaries");
 
 // ---- 2) mock ensemble + grounding + merge + reaffirm/revision --------------
 const mock = async (cfg, doc) => {
@@ -120,6 +121,16 @@ const flaky = async (cfg, doc) => {
 const deg = await runExtraction({ docs: [d1], providers, extractOne: flaky, strategy: "ensemble", concurrency: 2 });
 ok(deg.stats.errors.length === 1 && deg.stats.errors[0].provider === "groq", "throttled provider recorded as error");
 ok(deg.contributors.includes("gemini") && deg.contributors.includes("mistral") && !deg.contributors.includes("groq"), "run continues on the other providers");
+
+// partial-segment failure must surface (not silently drop a segment's commitments)
+const partial = async (cfg, doc) => ({
+  promises: [{ quarter_context: doc.quarter, category: "revenue", promise: "x", quote: "q", metric: "m", target: { period: "FY26" }, confidence: "M" }],
+  calls: 2,
+  errors: ["segment 2/2 failed: 429 throttled"],
+});
+const par = await runExtraction({ docs: [d1], providers: [{ provider: "groq", model: "g" }], extractOne: partial, strategy: "single" });
+ok(par.stats.errors.length === 1 && /segment 2\/2/.test(par.stats.errors[0].reason), "partial-segment failure recorded in stats.errors");
+ok(par.promises.length === 1, "partial success still keeps the segment that succeeded");
 
 // ---- 4) reject-vague rubric + vague→none -----------------------------------
 console.log("\nreject-vague:");

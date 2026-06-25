@@ -86,6 +86,12 @@ export async function runExtraction({ docs, providers, extractOne, strategy = "e
           const got = Array.isArray(res?.promises) ? res.promises : [];
           if (res?.cached) stats.cache_hits += 1;
           else stats.llm_calls += res?.calls ?? 1;
+          // Partial failures (e.g. one segment of a multi-segment doc) are not
+          // thrown — record them so a degraded result is never silent.
+          for (const reason of res?.errors || []) {
+            stats.errors.push({ provider: providerName, doc: doc.id, reason });
+            if (debug) console.error(`  ! ${providerName} ${doc.id} (partial): ${reason}`);
+          }
           stats.by_model[providerName] = (stats.by_model[providerName] || 0) + got.length;
           stats.raw_candidates += got.length;
           for (const p of got) {
