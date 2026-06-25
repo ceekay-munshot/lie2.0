@@ -161,8 +161,16 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
  */
 export function isDailyLimit(status, retryAfterSecs = 0, body = "") {
   if (status !== 429) return false;
+  // An explicit long wait from the server is authoritative — a per-day/quota reset.
   if (retryAfterSecs > 120) return true;
-  return /per day|per-day|daily|\bTPD\b|\bRPD\b|quota|tokens per day|requests per day/i.test(body || "");
+  const b = String(body || "");
+  // Per-MINUTE throttles are transient (the token bucket refills in <60s): keep
+  // them on the retry/backoff path even when the body also says "quota" (e.g.
+  // Gemini's "Quota exceeded for quota metric '…requests per minute'").
+  if (/per[\s-]?minute|\bRPM\b|\bTPM\b/i.test(b)) return false;
+  // Otherwise only genuine per-DAY / quota-reset wording fails fast. (Bare "quota"
+  // is deliberately NOT a trigger — it appears in per-minute messages too.)
+  return /per[\s-]?day|\bdaily\b|\bTPD\b|\bRPD\b|tokens per day|requests per day/i.test(b);
 }
 
 function joinURL(base, path) {

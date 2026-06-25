@@ -100,23 +100,46 @@ function recordResult(stats, promises, providerName, doc, res, debug) {
  * documents (so we don't redundantly re-extract, and we don't waste a model's
  * budget on work another already did). Cross-model agreement is intentionally not
  * used here — accuracy is a separate, later verification step.
+ *
+ * A daily limit can surface two ways: a thrown error (the whole doc failed — see
+ * the catch) or a PARTIAL result that did some segments then 429'd (`res.daily`).
+ * Both drop the provider for later docs; the partial case also falls through so
+ * the next provider covers the doc's remainder (otherwise those commitments are
+ * lost when quota runs out mid-document).
+ *
+ * Concurrency note: with concurrency > 1, up to (concurrency − 1) in-flight docs
+ * may already have passed the `dead` check at the instant a provider exhausts its
+ * quota, so they probe it once more. Those probes simply fail fast — a quota-spent
+ * 429 is rejected, costing a round-trip, not token budget — and then fall through
+ * to the next provider, so no document is ever lost. The drop is fully effective
+ * for every doc that STARTS after the failure is observed.
  */
 async function runFailover({ docs, providers, extractOne, concurrency, debug }) {
   const stats = newStats("failover", docs);
   const promises = [];
   const dead = new Set(); // providers whose daily quota is spent
+  const dropProvider = (name, note) => {
+    dead.add(name);
+    if (debug) console.error(`  ⓧ ${name} daily/quota limit${note} — dropping for remaining docs`);
+  };
   await runPool(docs, concurrency, async (doc) => {
     for (const provider of providers) {
       if (dead.has(provider.provider)) continue;
       try {
         const res = await extractOne(provider, doc);
         recordResult(stats, promises, provider.provider, doc, res, debug);
-        return; // handled — do not call the other providers for this doc
+        if (res?.daily) {
+          // Quota ran out MID-document: keep the segments we got, drop the
+          // provider, and fall through so the next one covers the remainder
+          // (dedup merges any overlap with what this provider already returned).
+          dropProvider(provider.provider, " (mid-doc)");
+          continue;
+        }
+        return; // fully handled — do not call the other providers for this doc
       } catch (err) {
         stats.errors.push({ provider: provider.provider, doc: doc.id, reason: err.message });
         if (err.daily) {
-          dead.add(provider.provider);
-          if (debug) console.error(`  ⓧ ${provider.provider} daily/quota limit — dropping for remaining docs`);
+          dropProvider(provider.provider, "");
         } else if (debug) {
           console.error(`  ! ${provider.provider} ${doc.id}: ${err.message} → next provider`);
         }
