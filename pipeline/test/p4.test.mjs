@@ -202,6 +202,50 @@ const cfo = await runExtraction({
 ok(cfo.stats.by_model.groq === fdocs.length && !cfo.stats.by_model.mistral, "concurrency=2: groq still covers every doc; no document lost");
 ok(cGemini >= 1 && cGemini <= 2, `concurrency=2: gemini probed ≤ concurrency times then dropped (got ${cGemini})`);
 
+// failover, PARTIAL non-daily failure (a segment exhausts its retries): keep what
+// we got but still fall through so the next provider covers the failed segment(s).
+// The provider is NOT dropped — only this one doc gave it trouble.
+console.log("\nfailover (partial non-daily → fall through, provider kept):");
+let ppGemini = 0, ppGroq = 0;
+const ppMock = async (cfg, doc) => {
+  if (cfg.provider === "gemini") {
+    ppGemini++;
+    if (doc.id === d1.id) // d1: one segment failed (non-daily) → partial
+      return { promises: [{ quarter_context: doc.quarter, category: "revenue", promise: "g", quote: "q", metric: "m", target: { period: "FY26" }, confidence: "M" }], calls: 2, errors: ["part 2/2: 500 after retries"] };
+    return { promises: [{ quarter_context: doc.quarter, category: "ebitda", promise: "e", quote: "q", metric: "m", target: { period: "FY26" }, confidence: "M" }], calls: 1 }; // d2 clean
+  }
+  if (cfg.provider === "groq") ppGroq++;
+  return { promises: [{ quarter_context: doc.quarter, category: "capex", promise: "k", quote: "q", metric: "m", target: { period: "FY26" }, confidence: "M" }], calls: 1 };
+};
+const pp = await runExtraction({
+  docs: [d1, d2],
+  providers: [{ provider: "gemini", model: "g" }, { provider: "groq", model: "q" }, { provider: "mistral", model: "m" }],
+  extractOne: ppMock,
+  strategy: "failover",
+  concurrency: 1,
+});
+ok(ppGemini === 2, "partial non-daily: gemini NOT dropped — it still extracts the clean d2");
+ok(ppGroq === 1, "partial non-daily: groq covers ONLY the doc gemini couldn't finish (d1)");
+ok(pp.stats.by_model.gemini === 2 && pp.stats.by_model.groq === 1, "partial promises kept AND the fallback's recorded");
+ok(!pp.contributors.includes("mistral"), "mistral untouched (failover still conserves quota)");
+
+// failover, ALL providers exhausted: remaining docs must be REPORTED (a doc-level
+// "(none)" error), never silently absent from the output.
+console.log("\nfailover (all providers exhausted → docs reported, not silent):");
+const exDocs = [d1, d2, { id: "d3", quarter: "Q4FY26", type: "transcript", date: "2026-04-29", text: "x", sections: [] }];
+const exMock = async (cfg) => { const e = new Error(`${cfg.provider} HTTP 429 (daily/quota limit)`); e.daily = true; throw e; };
+const ex = await runExtraction({
+  docs: exDocs,
+  providers: [{ provider: "gemini", model: "g" }, { provider: "groq", model: "q" }, { provider: "mistral", model: "m" }],
+  extractOne: exMock,
+  strategy: "failover",
+  concurrency: 1,
+});
+ok(ex.promises.length === 0, "all-exhausted: no promises produced");
+const skipped = ex.stats.errors.filter((e) => e.provider === "(none)");
+ok(skipped.length === exDocs.length, `every doc reported (got ${skipped.length}/${exDocs.length} doc-level notes)`);
+ok(skipped.every((e) => /exhaust|incomplete|skip/i.test(e.reason)), "each doc-level note explains it was not extracted");
+
 // ---- 4) reject-vague rubric + vague→none -----------------------------------
 console.log("\nreject-vague:");
 ok(/REJECT/i.test(SYSTEM_PROMPT) && /confiden|grow strongly|well positioned/i.test(SYSTEM_PROMPT), "system prompt instructs rejecting vague statements");

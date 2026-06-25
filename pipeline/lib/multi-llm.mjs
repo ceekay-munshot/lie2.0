@@ -101,11 +101,17 @@ function recordResult(stats, promises, providerName, doc, res, debug) {
  * budget on work another already did). Cross-model agreement is intentionally not
  * used here — accuracy is a separate, later verification step.
  *
- * A daily limit can surface two ways: a thrown error (the whole doc failed — see
- * the catch) or a PARTIAL result that did some segments then 429'd (`res.daily`).
- * Both drop the provider for later docs; the partial case also falls through so
- * the next provider covers the doc's remainder (otherwise those commitments are
- * lost when quota runs out mid-document).
+ * A document falls through to the next provider whenever the current one did NOT
+ * fully cover it:
+ *   - thrown error            → that provider failed the whole doc (see catch);
+ *   - partial result + daily  → quota ran out mid-doc; keep what we got, DROP the
+ *                               provider for later docs, cover the remainder next;
+ *   - partial result + errors → a segment failed for a non-daily reason; keep what
+ *                               we got, but KEEP the provider (only this doc had
+ *                               trouble) and let the next provider cover the rest.
+ * Dedup later merges any overlap from a doc covered by more than one provider. If
+ * no provider fully covers a doc (all errored/exhausted), a doc-level "(none)"
+ * error is recorded so the run reads as INCOMPLETE, never silently short.
  *
  * Concurrency note: with concurrency > 1, up to (concurrency − 1) in-flight docs
  * may already have passed the `dead` check at the instant a provider exhausts its
@@ -123,8 +129,10 @@ async function runFailover({ docs, providers, extractOne, concurrency, debug }) 
     if (debug) console.error(`  ⓧ ${name} daily/quota limit${note} — dropping for remaining docs`);
   };
   await runPool(docs, concurrency, async (doc) => {
+    let triedAny = false; // did at least one non-dead provider get a turn at this doc?
     for (const provider of providers) {
       if (dead.has(provider.provider)) continue;
+      triedAny = true;
       try {
         const res = await extractOne(provider, doc);
         recordResult(stats, promises, provider.provider, doc, res, debug);
@@ -135,7 +143,14 @@ async function runFailover({ docs, providers, extractOne, concurrency, debug }) 
           dropProvider(provider.provider, " (mid-doc)");
           continue;
         }
-        return; // fully handled — do not call the other providers for this doc
+        if (res?.errors?.length) {
+          // Partial NON-daily failure (a segment exhausted its retries): keep what
+          // we got, but fall through so another provider can cover the failed
+          // segment(s). The provider is healthy — do NOT drop it for other docs.
+          if (debug) console.error(`  ! ${provider.provider} ${doc.id}: partial (${res.errors.length} segment error(s)) → next provider covers the rest`);
+          continue;
+        }
+        return; // fully extracted — do not spend another provider on this doc
       } catch (err) {
         stats.errors.push({ provider: provider.provider, doc: doc.id, reason: err.message });
         if (err.daily) {
@@ -146,6 +161,15 @@ async function runFailover({ docs, providers, extractOne, concurrency, debug }) 
         // fall through to the next provider for this doc
       }
     }
+    // Reached here ⇒ no provider FULLY extracted this doc. Record a doc-level note
+    // so it surfaces as incomplete/skipped rather than being silently absent from
+    // promises.json (it may still carry partial promises from a fallen-through
+    // provider; the note flags that the document was not fully covered).
+    const reason = triedAny
+      ? "no provider fully extracted this document (providers errored or exhausted mid-document)"
+      : "skipped — every provider was already exhausted before this document";
+    stats.errors.push({ provider: "(none)", doc: doc.id, reason });
+    if (debug) console.error(`  ⓧ ${doc.id}: ${reason}`);
   });
   const contributors = Object.keys(stats.by_model).filter((m) => stats.by_model[m] > 0);
   return { promises, stats, contributors };
