@@ -23,6 +23,11 @@ on:
         type: choice
         options: [failover, ensemble, partition, single]
         default: failover
+      gemini_model:
+        description: "Gemini model (flash-lite = cheap free-tier full run; flash = higher quality)"
+        type: choice
+        options: [gemini-2.5-flash-lite, gemini-2.5-flash]
+        default: gemini-2.5-flash-lite
 
 permissions:
   contents: read
@@ -35,6 +40,7 @@ jobs:
       TICKER: ${{ inputs.ticker }}
       LLM_STRATEGY: ${{ inputs.strategy }}
       CORPUS: pipeline/fixtures/${{ inputs.ticker }}.corpus.json
+      GEMINI_MODEL: ${{ inputs.gemini_model }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
@@ -69,6 +75,14 @@ jobs:
               console.log("after_dedup:", s.after_dedup, "| agreement_2plus:", s.agreement_2plus, "| ungrounded_dropped:", s.rejected_ungrounded);
               console.log("by_category:", JSON.stringify(s.by_category));
               if (e) console.log("RECALL:", (e.recall*100).toFixed(1)+"%", "("+e.found+"/"+e.known+")", "| missed:", e.missed.length);
+              console.log("llm_calls:", s.llm_calls, "| cache_hits:", s.cache_hits, "| docs:", s.docs);
+              console.log("\nSAMPLE ROWS (first 5):");
+              for (const p of (o.promises||[]).slice(0,5)) {
+                const t = p.target||{};
+                console.log("  ["+p.category+"] "+String(p.promise||"").slice(0,72));
+                console.log("     quote : \""+String(p.quote||"").slice(0,96)+"\"");
+                console.log("     target: "+(t.text||"")+" | period "+(t.period||"?")+" | test_date "+(p.test_date||"?")+" | conf "+p.confidence+" | found_by "+(p.found_by||[]).join("+")+" | figure_in_quote "+p.figure_in_quote);
+              }
               const errs = s.provider_errors || [];
               if (errs.length) {
                 const g = {};
