@@ -31,7 +31,7 @@ const d1 = {
     { kind: "prepared_remarks", role: "moderator", speaker: "Moderator", page: 1, text: "Welcome to the call." },
     { kind: "prepared_remarks", role: "management", speaker: "Ajay Goel", page: 1, text: "We are confident in achieving an annual EBITDA of more than $6 billion in FY26. We are well on track to achieve capex of between $1.7 to $1.9 billion." },
     { kind: "qa", role: "analyst", speaker: "Amit Kumar", page: 2, text: "What about your alumina cost? ANALYSTQUESTIONMARKER" },
-    { kind: "qa", role: "management", speaker: "Arun Misra", page: 2, text: "Alumina cost will be sub $750 per ton by Q1FY27." },
+    { kind: "qa", role: "management", speaker: "Arun Misra", page: 2, text: "It will be sub $750 per ton by Q1FY27." },
     { kind: "qa", role: "analyst", speaker: "Lone Analyst", page: 3, text: "DROPPEDANALYSTONLY no management reply follows" },
   ],
 };
@@ -121,6 +121,22 @@ const bleedDoc = {
 const bt = buildDocText(bleedDoc);
 ok(bt.split("captive alumina").length - 1 === 1, "analyst question attaches to its answer only, not the next unrelated turn");
 ok(bt.includes("CEO: On a separate note"), "the unrelated management turn is still kept (on its own merit)");
+// Codex round 5 #1: a figure+period question with no guidance keyword is measurable
+ok(qaTurnIsGuidance("Correct.", "80% in 1Q'27, right?") === true, "affirmation to a keyword-less figure+period question is kept");
+// Codex round 5 #5: month-year milestone ("complete in March 2026")
+ok(qaTurnIsGuidance("The expansion will complete in March 2026.") === true, "month-year milestone is kept");
+// Codex round 5 #3: BOTH co-answers to one multi-part question keep the context
+const coDoc = {
+  id: "co", quarter: "Q2FY26", type: "transcript", date: "2025-10-31",
+  sections: [
+    { kind: "qa", role: "analyst", speaker: "An", page: 1, text: "Where should aluminium cost and zinc cost land?" },
+    { kind: "qa", role: "management", speaker: "CEO", page: 1, text: "Aluminium is around $1,750." },
+    { kind: "qa", role: "management", speaker: "CFO", page: 1, text: "Zinc would be around $1,050." },
+  ],
+};
+const ct = buildDocText(coDoc);
+ok(ct.includes("$1,750") && ct.includes("$1,050"), "both co-answers to one question are kept");
+ok(ct.split("aluminium cost and zinc cost").length - 1 === 2, "each co-answer carries the shared question context");
 
 // ---- 2) mock ensemble + grounding + merge + reaffirm/revision --------------
 const mock = async (cfg, doc) => {
@@ -216,6 +232,15 @@ const bigFig = assemblePromises(
   { docTextById: new Map([["b", "we will add capacity of 2000 MW"]]) },
 );
 ok(bigFig.promises[0].figure_in_quote === true, "a real 1900–2099 figure (2000 MW) survives the period strip");
+// Codex round 5 #2 (temporal 'half') + #4 (month-year deadline) must NOT count as the figure
+for (const [q, label] of [["margins will improve in the second half of FY26", "temporal 'second half'"], ["margins will expand by March 2030", "month-year deadline 'March 2030'"]]) {
+  const r = assemblePromises(
+    [{ model: "gemini", source_id: "k", source_label: "K", date: "2025-07-31", quarter_context: "Q1FY26",
+       category: "margin", promise: "margin up", quote: q, metric: "margin", target: { text: "to 20%", value: 20, value_high: null, unit: "%", period: "FY26" }, confidence: "M" }],
+    { docTextById: new Map([["k", q]]) },
+  );
+  ok(r.promises[0] && r.promises[0].figure_in_quote === false, `${label} is not mistaken for the target figure`);
+}
 // relative target ("double") with no digit → counts via the quantity word
 const relFig = assemblePromises(
   [{ model: "gemini", source_id: "y", source_label: "Y", date: "2025-07-31", quarter_context: "Q1FY26",

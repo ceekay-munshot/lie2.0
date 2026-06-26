@@ -64,12 +64,16 @@ const QTY_WORD_RE = /\b(doubl|tripl|quadrupl|halv|half|two[\s-]?fold|three[\s-]?
 // NB: "plans?|planned|planning" (not plan\w*) so "plant"/"plants" don't match.
 const GUIDANCE_RE =
   /\b(guidance|outlook|expect\w*|target\w*|aim\w*|guid\w*|plans?|planned|planning|intend\w*|going forward|next year|next fiscal|by fy|by q[1-4]|margin|ebitda|revenue|pat|profit|capex|capacity|commission\w*|ramp\w*|volume|order ?book|working capital|net debt|leverage|debt[\s/]*ebitda|roce|cost|dividend|payout|deleverag\w*|doubl\w*|tripl\w*|quadrupl\w*|halv\w*|fold)\b/i;
-// Shared fiscal-period notation — incl. Indian call forms (1Q'27, 2HFY26) and slide
-// notation. Used by the Q&A filter (to recognise) and figure_in_quote (to strip).
+// Month-name + year ("March 2026", "Dec 2026") — a forward period and a deadline.
+const MONTH_YEAR =
+  "(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|jul(?:y)?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\\s+(?:19|20)\\d{2}";
+// Shared fiscal-period notation — Indian call forms (1Q'27, 2HFY26), slide notation,
+// month-year deadlines, and first/second-half. Used by the Q&A filter (to recognise)
+// and figure_in_quote (to strip).
 const PERIOD_NOTATION =
   "q[1-4]\\s*fy\\s*'?\\d{2,4}|[1-4]q\\s*fy\\s*'?\\d{2,4}|[1-4]q\\s*'?\\d{2,4}" +
-  "|[12]h\\s*fy\\s*'?\\d{2,4}|h[12]\\s*fy\\s*'?\\d{2,4}|[12]h\\s*'?\\d{2,4}" +
-  "|fy\\s*'?\\d{2,4}|quarter\\s*[1-4]|q[1-4]\\b|'\\d{2}\\b";
+  "|[12]h\\s*fy\\s*'?\\d{2,4}|h[12]\\s*fy\\s*'?\\d{2,4}|[12]h\\s*'?\\d{2,4}|(?:first|second|1st|2nd)\\s+half" +
+  "|fy\\s*'?\\d{2,4}|quarter\\s*[1-4]|q[1-4]\\b|'\\d{2}\\b|" + MONTH_YEAR;
 const FWD_PERIOD_RE = new RegExp(
   "\\b(" + PERIOD_NOTATION +
     "|next\\s+(?:year|quarter|fiscal)|this\\s+(?:year|fiscal)|full[\\s-]?year" +
@@ -81,7 +85,9 @@ const MILESTONE_RE = /\b(complet\w*|approv\w*|start\w*|begin\w*|finish\w*|launch
 // Plain affirmations — management confirming a target that was stated in the question.
 const AFFIRM_RE = /\b(yes|yeah|yep|correct|absolutely|exactly|indeed|that'?s right|that is right|you'?re right|on[\s-]?track|on[\s-]?schedule|confirm\w*)\b/i;
 /** Is an analyst question itself a MEASURABLE guidance prompt (target lives in the Q)? */
-const isMeasurableQ = (q) => GUIDANCE_RE.test(q) && (/\d/.test(q) || FWD_PERIOD_RE.test(q) || QTY_WORD_RE.test(q));
+const isMeasurableQ = (q) =>
+  (GUIDANCE_RE.test(q) && (/\d/.test(q) || FWD_PERIOD_RE.test(q) || QTY_WORD_RE.test(q))) ||
+  (/\d/.test(q) && FWD_PERIOD_RE.test(q)); // a concrete figure + dated period, e.g. "80% in 1Q'27?"
 /**
  * Does a management Q&A answer carry forward-looking guidance worth keeping?
  * Also weighs the analyst question, so the filter keeps: terse numeric/relative
@@ -127,11 +133,14 @@ export function buildDocText(doc, scope = "management") {
     if (QA_FILTER && scope !== "all" && s.kind === "qa" && !qaTurnIsGuidance(s.text, lastQ)) {
       continue;
     }
-    const ctx = lastQ ? `[Analyst context: ${clip(lastQ, 300)}]\n` : "";
+    // Attach the analyst question only to a DEPENDENT answer (terse/numeric, with no
+    // guidance keyword of its own). A self-contained guidance turn stands alone, so it
+    // never inherits a stale question — which stops context bleeding into an unrelated
+    // later turn, while still feeding co-answers (a 2nd/3rd reply to the same multi-part
+    // question) the context they need. lastQ is NOT cleared; the next analyst turn resets it.
+    const dependent = !GUIDANCE_RE.test(s.text);
+    const ctx = lastQ && dependent ? `[Analyst context: ${clip(lastQ, 300)}]\n` : "";
     blocks.push(`${ctx}${s.speaker || "Management"}: ${s.text}`);
-    lastQ = null; // consumed by a substantive answer — don't bleed context into the
-    // next (possibly unrelated) management turn. A DROPPED handoff above keeps lastQ
-    // (it `continue`s without clearing), so the real follow-up answer still gets it.
   }
   return blocks.join("\n\n");
 }
@@ -155,7 +164,7 @@ function attributeSpeaker(quote, sections) {
 // bare 1900–2099 is stripped ONLY with a period cue (by/during/CY/…), so a real
 // figure like "2000 MW" or "below 2000/t" survives.
 const PERIOD_TOK_RE = new RegExp(
-  "(?:" + PERIOD_NOTATION + "|(?:by|during|end\\s+of|calendar|cy)\\s+'?(?:19|20)\\d{2})",
+  "(?:" + PERIOD_NOTATION + "|(?:by|during|end\\s+of|calendar|cy)\\s+(?:\\w+\\s+)?'?(?:19|20)\\d{2})",
   "gi",
 );
 function figureInQuote(target, quote) {
