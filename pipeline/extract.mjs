@@ -36,6 +36,8 @@ const LIMIT = Number(process.env.LIMIT || Infinity);
 const DRY_RUN = !!process.env.DRY_RUN && process.env.DRY_RUN !== "0";
 const DEBUG = !!process.env.DEBUG && process.env.DEBUG !== "0";
 const EVAL = process.env.EVAL ? process.env.EVAL !== "0" : true;
+// Offline, $0 wiring/shape validation — no API call, no spend, no key needed.
+const MOCK = process.env.PROVIDER === "mock" || (!!process.env.MOCK && process.env.MOCK !== "0");
 
 function die(msg) {
   console.error(`extract: ${msg}`);
@@ -58,12 +60,17 @@ const PROMPT_OVERHEAD_CHARS = buildMessages("", { quarter: "Q0FY00", type: "tran
 const QA_FILTER = process.env.QA_FILTER ? process.env.QA_FILTER !== "0" : true;
 const GUIDANCE_RE =
   /\b(guidance|outlook|expect\w*|target\w*|aim\w*|guid\w*|plan\w*|intend\w*|going forward|next year|next fiscal|by fy|by q[1-4]|margin|ebitda|revenue|pat|profit|capex|capacity|commission\w*|ramp\w*|volume|order ?book|working capital|net debt|leverage|debt[\s/]*ebitda|roce|cost|dividend|payout|deleverag\w*|double|tripl\w*)\b/i;
-const FWD_PERIOD_RE = /\b(fy\s*'?\d{2,4}|q[1-4]\s*fy\s*'?\d{2,4}|by\s+(?:end\s+of\s+)?(?:\w+\s+)?\d{4}|by\s+(?:end\s+of\s+)?(?:fy|q[1-4]))/i;
-/** Does a management Q&A answer carry forward-looking guidance worth keeping? */
-export function qaTurnIsGuidance(text) {
+const FWD_PERIOD_RE = /\b(fy\s*'?\d{2,4}|q[1-4]\s*fy\s*'?\d{2,4}|q[1-4]\b|quarter\s*[1-4]|next\s+(?:year|quarter|fiscal)|this\s+(?:year|fiscal)|full[\s-]?year|h[12]\s*fy|by\s+(?:end\s+of\s+)?(?:\w+\s+)?\d{4}|by\s+(?:end\s+of\s+)?(?:fy|q[1-4]))/i;
+/**
+ * Does a management Q&A answer carry forward-looking guidance worth keeping?
+ * Considers the preceding analyst question too, so a terse numeric answer
+ * ("$50/t in Quarter 3") to a guidance-bearing question survives the filter.
+ */
+export function qaTurnIsGuidance(text, question = "") {
   const t = String(text || "");
   if (GUIDANCE_RE.test(t)) return true;
-  return FWD_PERIOD_RE.test(t) && /\d/.test(t); // a forward period AND a number
+  if (FWD_PERIOD_RE.test(t) && /\d/.test(t)) return true; // a forward period AND a number
+  return /\d/.test(t) && GUIDANCE_RE.test(String(question || "")); // numeric answer to a guidance Q
 }
 
 /** Build the text shown to the model for one document. */
@@ -82,19 +89,21 @@ export function buildDocText(doc, scope = "management") {
   let lastQ = null;
   for (const s of doc.sections || []) {
     if (scope !== "all" && s.role === "analyst") {
-      lastQ = s.text;
+      lastQ = s.text; // a new question resets the context
       continue;
     }
     if (scope !== "all" && s.role !== "management") continue; // skip moderator/front_matter
     // Drop operational Q&A answers with no guidance signal (prepared remarks are
-    // always kept). Reset the analyst context so it doesn't bleed into the next turn.
-    if (QA_FILTER && scope !== "all" && s.kind === "qa" && !qaTurnIsGuidance(s.text)) {
-      lastQ = null;
+    // always kept). KEEP lastQ on a drop so a handoff/courtesy turn doesn't strip
+    // the analyst context from the substantive answer that follows. Classification
+    // also sees the question, so a terse numeric answer to a guidance Q survives.
+    if (QA_FILTER && scope !== "all" && s.kind === "qa" && !qaTurnIsGuidance(s.text, lastQ)) {
       continue;
     }
     const ctx = lastQ ? `[Analyst context: ${clip(lastQ, 300)}]\n` : "";
     blocks.push(`${ctx}${s.speaker || "Management"}: ${s.text}`);
-    lastQ = null;
+    // Keep lastQ across consecutive management turns (a handoff + the follow-up
+    // answer in the same exchange both get context); the next analyst turn resets it.
   }
   return blocks.join("\n\n");
 }
@@ -114,9 +123,12 @@ function attributeSpeaker(quote, sections) {
 // digit and no quantity word like "double"); never drops — formatting varies too
 // much (₹1,700 vs "1,700 crores") to reject on. The downstream can weight on it.
 const QTY_WORD_RE = /\b(doubl|tripl|quadrupl|halv|half|two[\s-]?fold|three[\s-]?fold|four[\s-]?fold|fold)\w*/i;
+// Fiscal-period tokens whose digits must NOT be mistaken for the target figure
+// (e.g. "FY26", "Q4", "Quarter 3", "2030") when checking a quote for the number.
+const PERIOD_TOK_RE = /\bq[1-4]\s*fy\s*'?\d{2,4}\b|\bq[1-4]\b|\bquarter\s*[1-4]\b|\bfy\s*'?\d{2,4}\b|\bh[12]\s*(?:fy)?\s*'?\d{0,4}\b|\b(?:19|20)\d{2}\b|'\d{2}\b/gi;
 function figureInQuote(target, quote) {
   if (!target || (target.value == null && target.value_high == null)) return true; // nothing numeric to ground
-  const q = String(quote || "");
+  const q = String(quote || "").replace(PERIOD_TOK_RE, " "); // strip period digits first
   return /\d/.test(q) || QTY_WORD_RE.test(q);
 }
 
@@ -197,6 +209,60 @@ export function segmentText(text, maxChars) {
   return segs;
 }
 
+/** Rough category guess for the offline mock (real extraction uses the LLM). */
+function guessCategory(s) {
+  const t = s.toLowerCase();
+  if (/ebitda/.test(t)) return "ebitda";
+  if (/\bmargin/.test(t)) return "margin";
+  if (/\bpat\b|profit after tax/.test(t)) return "pat";
+  if (/capex|capital expenditure/.test(t)) return "capex";
+  if (/capacit|mtpa|ktpa|commission|ramp[- ]?up|expansion/.test(t)) return "capacity";
+  if (/net debt|leverage|debt[\s/]*ebitda|deleverag/.test(t)) return "leverage";
+  if (/revenue|top[- ]?line|turnover/.test(t)) return "revenue";
+  if (/roce|return on capital/.test(t)) return "roce";
+  if (/order ?book/.test(t)) return "orderbook";
+  if (/volume|\bkt\b|tonnes|tpa|production/.test(t)) return "volume";
+  if (/\bcost\b|cop\b|per ton/.test(t)) return "cost";
+  if (/dividend|buyback|payout|stake/.test(t)) return "capital_allocation";
+  return "other";
+}
+
+/**
+ * Offline mock extractor: derive plausibly-shaped promises straight from the
+ * corpus text with NO API call (for $0 wiring/shape validation). Surfaces
+ * guidance-bearing sentences with VERBATIM ≤25-word quotes so the full pipeline
+ * (ground → dedup → test_date → promise_key → figure_in_quote) runs end-to-end.
+ */
+export function mockExtract(doc) {
+  const promises = [];
+  const seen = new Set();
+  const sents = String(doc.text || "").split(/(?<=[.!?])\s+|\n+/);
+  for (const raw of sents) {
+    if (promises.length >= 8) break;
+    const s = raw.replace(/^\[Analyst context:[^\]]*\]\s*/i, "").replace(/^[A-Z][\w .'-]*:\s*/, "").trim();
+    if (s.length < 12 || !/\d/.test(s)) continue; // measurable → needs a number
+    if (!qaTurnIsGuidance(s)) continue;
+    const quote = s.split(/\s+/).slice(0, 25).join(" "); // ≤25-word verbatim prefix
+    if (seen.has(quote)) continue;
+    seen.add(quote);
+    const range = s.match(/(\d[\d,.]*)\s*(?:to|-|–|—)\s*(\d[\d,.]*)/);
+    const single = s.match(/-?\d[\d,]*\.?\d*/);
+    const value = range ? Number(range[1].replace(/,/g, "")) : single ? Number(single[0].replace(/,/g, "")) : null;
+    const value_high = range ? Number(range[2].replace(/,/g, "")) : null;
+    const period = (s.match(/q[1-4]\s*fy\s*'?\d{2,4}|fy\s*'?\d{2,4}|quarter\s*[1-4]|by\s+[A-Za-z]+\s*\d{4}/i) || [doc.quarter])[0];
+    promises.push({
+      quarter_context: doc.quarter,
+      category: guessCategory(s),
+      promise: quote.length > 70 ? quote.slice(0, 67) + "…" : quote,
+      quote,
+      metric: quote,
+      target: { text: quote.slice(0, 48), value, value_high, unit: /%/.test(s) ? "%" : "", period },
+      confidence: "M",
+    });
+  }
+  return { promises, calls: 0 };
+}
+
 function loadCorpus() {
   const path = process.env.CORPUS
     ? (process.env.CORPUS.startsWith("/") ? process.env.CORPUS : join(REPO_ROOT, process.env.CORPUS))
@@ -239,9 +305,12 @@ async function main() {
 
   if (!docs.length) die(`no usable documents in corpus (${corpusPath}).`);
 
-  // Resolve the provider panel (models from presets / <PROVIDER>_MODEL).
-  const panel = EXTRACTION_PROVIDERS.map((p) => providerConfig(p, process.env));
-  const available = panel.filter((c) => c.apiKey);
+  // Resolve the provider panel (models from presets / <PROVIDER>_MODEL). PROVIDER=mock
+  // (or MOCK=1) swaps in an offline mock provider so the whole pipeline runs for $0.
+  const panel = MOCK
+    ? [{ provider: "mock", model: "mock" }]
+    : EXTRACTION_PROVIDERS.map((p) => providerConfig(p, process.env));
+  const available = MOCK ? panel : panel.filter((c) => c.apiKey);
   const models = panel.map((c) => ({ provider: c.provider, model: c.model }));
 
   // ---- DRY RUN: estimate calls/tokens, no API ----
@@ -282,7 +351,9 @@ async function main() {
   const docTextById = new Map(docs.map((d) => [d.id, d.text]));
   const sectionsById = new Map(docs.map((d) => [d.id, d.sections]));
 
-  const extractOne = async (cfg, doc) => {
+  const extractOne = MOCK
+    ? async (_cfg, doc) => mockExtract(doc)
+    : async (cfg, doc) => {
     const hash = docHash(doc.text, cfg.provider);
     const cp = cachePath(doc.id, cfg.provider);
     if (existsSync(cp)) {
@@ -381,7 +452,7 @@ async function main() {
       rejected_ungrounded: rejectedUngrounded,
       llm_calls: runStats.llm_calls,
       cache_hits: runStats.cache_hits,
-      by_model: { gemini: runStats.by_model.gemini || 0, groq: runStats.by_model.groq || 0, mistral: runStats.by_model.mistral || 0 },
+      by_model: runStats.by_model,
       agreement_2plus: promises.filter((p) => (p.found_by || []).length >= 2).length,
       by_category: byCategory,
       provider_errors: runStats.errors,
@@ -394,7 +465,9 @@ async function main() {
   writeFileSync(outPath, JSON.stringify(out, null, 2) + "\n");
 
   console.log("\n──────── extract summary ────────");
-  console.log(`  raw candidates : ${out.stats.raw_candidates}  (gemini ${out.stats.by_model.gemini} / groq ${out.stats.by_model.groq} / mistral ${out.stats.by_model.mistral})`);
+  const bm = out.stats.by_model || {};
+  const bmStr = Object.keys(bm).length ? Object.entries(bm).map(([k, v]) => `${k} ${v}`).join(" / ") : "none";
+  console.log(`  raw candidates : ${out.stats.raw_candidates}  (${bmStr})`);
   console.log(`  ungrounded drop: ${rejectedUngrounded}`);
   console.log(`  after dedup    : ${promises.length}  (≥2-model agreement: ${out.stats.agreement_2plus})`);
   console.log(`  llm calls      : ${out.stats.llm_calls}  cache hits: ${out.stats.cache_hits}  provider errors: ${runStats.errors.length}`);

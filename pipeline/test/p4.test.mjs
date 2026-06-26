@@ -9,7 +9,7 @@
  *   node pipeline/test/p4.test.mjs
  */
 import { runExtraction } from "../lib/multi-llm.mjs";
-import { buildDocText, assemblePromises, segmentText } from "../extract.mjs";
+import { buildDocText, assemblePromises, segmentText, qaTurnIsGuidance, mockExtract } from "../extract.mjs";
 import { deriveTestDate } from "../lib/test-date.mjs";
 import { SYSTEM_PROMPT } from "../lib/extract-prompt.mjs";
 import { evalExtraction } from "../eval-extraction.mjs";
@@ -73,6 +73,23 @@ ok(qaText.includes("solid start to the year"), "prepared remarks always kept (ev
 ok(qaText.includes("FY26 EBITDA margin of 18 to 20"), "guidance-bearing Q&A answer kept");
 ok(!qaText.includes("weather has been pleasant"), "non-guidance Q&A chatter dropped");
 ok(buildDocText(qaDoc, "all").includes("weather has been pleasant"), "EXTRACT_SCOPE=all keeps all turns (filter off)");
+// Codex #1: spelled-out quarters + question-aware classification
+ok(qaTurnIsGuidance("It will be $50 per ton in Quarter 3 and $50 per ton in Quarter 4.") === true, "spelled-out 'Quarter 3/4' + number is kept");
+ok(qaTurnIsGuidance("Just about 25 of them.", "What is the capex guidance for next year?") === true, "terse numeric answer to a guidance question kept via context");
+ok(qaTurnIsGuidance("We felt good about the team's effort overall.") === false, "no number / period / keyword → dropped");
+// Codex #3: a dropped handoff turn must not strip the analyst context from the real answer
+const handoffDoc = {
+  id: "handoff", quarter: "Q2FY26", type: "transcript", date: "2025-10-31",
+  sections: [
+    { kind: "qa", role: "analyst", speaker: "An", page: 1, text: "On the aluminium cost of production, where do you see it landing?" },
+    { kind: "qa", role: "management", speaker: "CEO", page: 1, text: "Rajiv, I will go straight to you." },
+    { kind: "qa", role: "management", speaker: "Rajiv", page: 1, text: "It will be about $1,750 per ton." },
+  ],
+};
+const ht = buildDocText(handoffDoc);
+ok(!ht.includes("go straight to you"), "courtesy/handoff turn dropped");
+ok(ht.includes("$1,750 per ton"), "the substantive follow-up answer kept");
+ok(ht.includes("[Analyst context:") && ht.includes("cost of production"), "analyst context preserved across the dropped handoff");
 
 // ---- 2) mock ensemble + grounding + merge + reaffirm/revision --------------
 const mock = async (cfg, doc) => {
@@ -144,6 +161,14 @@ const noFig = assemblePromises(
   { docTextById: new Map([["x", "margins will expand meaningfully going forward"]]) },
 );
 ok(noFig.promises.length === 1 && noFig.promises[0].figure_in_quote === false, "numeric target with a digit-less quote → figure_in_quote=false (flagged, not dropped)");
+// Codex #2: a fiscal-period digit (FY26) must not count as the target figure
+const periodOnly = assemblePromises(
+  [{ model: "gemini", source_id: "z", source_label: "Z", date: "2025-07-31", quarter_context: "Q1FY26",
+     category: "margin", promise: "margin up", quote: "margins will expand in FY26",
+     metric: "margin", target: { text: "to 20%", value: 20, value_high: null, unit: "%", period: "FY26" }, confidence: "M" }],
+  { docTextById: new Map([["z", "margins will expand in FY26"]]) },
+);
+ok(periodOnly.promises[0].figure_in_quote === false, "period digit (FY26) alone → figure_in_quote=false");
 // relative target ("double") with no digit → counts via the quantity word
 const relFig = assemblePromises(
   [{ model: "gemini", source_id: "y", source_label: "Y", date: "2025-07-31", quarter_context: "Q1FY26",
@@ -152,6 +177,16 @@ const relFig = assemblePromises(
   { docTextById: new Map([["y", "we will double our aluminium capacity going forward"]]) },
 );
 ok(relFig.promises[0].figure_in_quote === true, "relative target ('double') counts as figure-in-quote via a quantity word");
+
+// ---- 2c) offline mock extractor (PROVIDER=mock, $0) ------------------------
+console.log("\nmock extractor (offline, no API):");
+const mres = mockExtract(d1);
+ok(Array.isArray(mres.promises) && mres.calls === 0, "mockExtract returns promises with calls=0 (no API call)");
+ok(mres.promises.length >= 1, "mockExtract surfaces ≥1 guidance sentence from the corpus");
+ok(mres.promises.every((p) => d1.text.includes(p.quote)), "every mock quote is a verbatim substring (so it grounds)");
+ok(mres.promises.every((p) => p.quote.split(/\s+/).length <= 25), "mock quotes are ≤25 words");
+const masm = assemblePromises(mres.promises.map((p) => ({ ...p, model: "mock", source_id: d1.id, source_label: d1.label, date: d1.date })), { docTextById: new Map([[d1.id, d1.text]]) });
+ok(masm.promises.length >= 1 && masm.promises.every((p) => p.promise_key && typeof p.figure_in_quote === "boolean" && /^p\d{3}$/.test(p.id)), "mock rows pass through the full pipeline with the canonical shape");
 
 // ---- 3) graceful degradation -----------------------------------------------
 console.log("\ngraceful degradation:");
