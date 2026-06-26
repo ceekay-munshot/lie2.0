@@ -64,13 +64,24 @@ const QTY_WORD_RE = /\b(doubl|tripl|quadrupl|halv|half|two[\s-]?fold|three[\s-]?
 // NB: "plans?|planned|planning" (not plan\w*) so "plant"/"plants" don't match.
 const GUIDANCE_RE =
   /\b(guidance|outlook|expect\w*|target\w*|aim\w*|guid\w*|plans?|planned|planning|intend\w*|going forward|next year|next fiscal|by fy|by q[1-4]|margin|ebitda|revenue|pat|profit|capex|capacity|commission\w*|ramp\w*|volume|order ?book|working capital|net debt|leverage|debt[\s/]*ebitda|roce|cost|dividend|payout|deleverag\w*|doubl\w*|tripl\w*|quadrupl\w*|halv\w*|fold)\b/i;
-const FWD_PERIOD_RE = /\b(fy\s*'?\d{2,4}|q[1-4]\s*fy\s*'?\d{2,4}|q[1-4]\b|quarter\s*[1-4]|next\s+(?:year|quarter|fiscal)|this\s+(?:year|fiscal)|full[\s-]?year|h[12]\s*fy|by\s+(?:end\s+of\s+)?(?:\w+\s+)?\d{4}|by\s+(?:end\s+of\s+)?(?:fy|q[1-4]))/i;
+// Shared fiscal-period notation — incl. Indian call forms (1Q'27, 2HFY26) and slide
+// notation. Used by the Q&A filter (to recognise) and figure_in_quote (to strip).
+const PERIOD_NOTATION =
+  "q[1-4]\\s*fy\\s*'?\\d{2,4}|[1-4]q\\s*fy\\s*'?\\d{2,4}|[1-4]q\\s*'?\\d{2,4}" +
+  "|[12]h\\s*fy\\s*'?\\d{2,4}|h[12]\\s*fy\\s*'?\\d{2,4}|[12]h\\s*'?\\d{2,4}" +
+  "|fy\\s*'?\\d{2,4}|quarter\\s*[1-4]|q[1-4]\\b|'\\d{2}\\b";
+const FWD_PERIOD_RE = new RegExp(
+  "\\b(" + PERIOD_NOTATION +
+    "|next\\s+(?:year|quarter|fiscal)|this\\s+(?:year|fiscal)|full[\\s-]?year" +
+    "|by\\s+(?:end\\s+of\\s+)?(?:\\w+\\s+)?\\d{4}|by\\s+(?:end\\s+of\\s+)?(?:fy|q[1-4]))",
+  "i",
+);
 // Milestone verbs that make a date-only timeline answer measurable (no digit needed).
 const MILESTONE_RE = /\b(complet\w*|approv\w*|start\w*|begin\w*|finish\w*|launch\w*|go[\s-]?live|on[\s-]?stream|operational|deliver\w*|first\s+production|achiev\w*)\b/i;
 // Plain affirmations — management confirming a target that was stated in the question.
 const AFFIRM_RE = /\b(yes|yeah|yep|correct|absolutely|exactly|indeed|that'?s right|that is right|you'?re right|on[\s-]?track|on[\s-]?schedule|confirm\w*)\b/i;
 /** Is an analyst question itself a MEASURABLE guidance prompt (target lives in the Q)? */
-const isMeasurableQ = (q) => GUIDANCE_RE.test(q) && (/\d/.test(q) || FWD_PERIOD_RE.test(q));
+const isMeasurableQ = (q) => GUIDANCE_RE.test(q) && (/\d/.test(q) || FWD_PERIOD_RE.test(q) || QTY_WORD_RE.test(q));
 /**
  * Does a management Q&A answer carry forward-looking guidance worth keeping?
  * Also weighs the analyst question, so the filter keeps: terse numeric/relative
@@ -118,8 +129,9 @@ export function buildDocText(doc, scope = "management") {
     }
     const ctx = lastQ ? `[Analyst context: ${clip(lastQ, 300)}]\n` : "";
     blocks.push(`${ctx}${s.speaker || "Management"}: ${s.text}`);
-    // Keep lastQ across consecutive management turns (a handoff + the follow-up
-    // answer in the same exchange both get context); the next analyst turn resets it.
+    lastQ = null; // consumed by a substantive answer — don't bleed context into the
+    // next (possibly unrelated) management turn. A DROPPED handoff above keeps lastQ
+    // (it `continue`s without clearing), so the real follow-up answer still gets it.
   }
   return blocks.join("\n\n");
 }
@@ -139,8 +151,13 @@ function attributeSpeaker(quote, sections) {
 // digit and no quantity word like "double"); never drops — formatting varies too
 // much (₹1,700 vs "1,700 crores") to reject on. The downstream can weight on it.
 // Fiscal-period tokens whose digits must NOT be mistaken for the target figure
-// (e.g. "FY26", "Q4", "Quarter 3", "2030") when checking a quote for the number.
-const PERIOD_TOK_RE = /\bq[1-4]\s*fy\s*'?\d{2,4}\b|\bq[1-4]\b|\bquarter\s*[1-4]\b|\bfy\s*'?\d{2,4}\b|\bh[12]\s*(?:fy)?\s*'?\d{0,4}\b|\b(?:19|20)\d{2}\b|'\d{2}\b/gi;
+// (e.g. "FY26", "Q4", "2HFY26", "by 2030") when checking a quote for the number. A
+// bare 1900–2099 is stripped ONLY with a period cue (by/during/CY/…), so a real
+// figure like "2000 MW" or "below 2000/t" survives.
+const PERIOD_TOK_RE = new RegExp(
+  "(?:" + PERIOD_NOTATION + "|(?:by|during|end\\s+of|calendar|cy)\\s+'?(?:19|20)\\d{2})",
+  "gi",
+);
 function figureInQuote(target, quote) {
   // A numeric target = a parsed value/range OR a figure/quantity word in target.text
   // (the schema permits text-only numeric targets with null value/value_high).

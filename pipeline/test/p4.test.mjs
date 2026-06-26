@@ -104,6 +104,23 @@ ok(qaTurnIsGuidance("Yes, absolutely.", "Did you enjoy the conference this year?
 ok(qaTurnIsGuidance("The expansion will complete next quarter.") === true, "date-only milestone 'complete next quarter' is kept");
 ok(qaTurnIsGuidance("We should get approval this fiscal.") === true, "date-only milestone 'approval this fiscal' is kept");
 ok(qaTurnIsGuidance("It looks good for next quarter.") === false, "forward period with no number/milestone verb → dropped");
+// Codex round 4 #4: Indian call notation (1Q'27, 2HFY26)
+ok(qaTurnIsGuidance("we will do 80% in 1Q'27") === true, "leading-digit quarter notation 1Q'27 recognised");
+ok(qaTurnIsGuidance("it finishes in 2HFY26") === true, "half-year notation 2HFY26 + milestone recognised");
+// Codex round 4 #1: a relative target stated in the question (no digit) is measurable
+ok(qaTurnIsGuidance("Yes, correct.", "You still intend to halve net debt, right?") === true, "affirmation of a digit-less relative target in the question is kept");
+// Codex round 4 #3: context must NOT bleed into the next (unrelated) management turn
+const bleedDoc = {
+  id: "bleed", quarter: "Q3FY26", type: "transcript", date: "2026-01-29",
+  sections: [
+    { kind: "qa", role: "analyst", speaker: "An", page: 1, text: "Is your captive alumina target 80% for 1Q'27?" },
+    { kind: "qa", role: "management", speaker: "CFO", page: 1, text: "Yes, that is right." },
+    { kind: "qa", role: "management", speaker: "CEO", page: 1, text: "On a separate note, our EBITDA outlook stays strong." },
+  ],
+};
+const bt = buildDocText(bleedDoc);
+ok(bt.split("captive alumina").length - 1 === 1, "analyst question attaches to its answer only, not the next unrelated turn");
+ok(bt.includes("CEO: On a separate note"), "the unrelated management turn is still kept (on its own merit)");
 
 // ---- 2) mock ensemble + grounding + merge + reaffirm/revision --------------
 const mock = async (cfg, doc) => {
@@ -191,6 +208,14 @@ const textNumeric = assemblePromises(
   { docTextById: new Map([["w", "margins will expand meaningfully"]]) },
 );
 ok(textNumeric.promises[0].figure_in_quote === false, "numeric target.text ('to 20%') with null value still flags a digit-less quote");
+// Codex round 4 #2: a real 1900–2099 figure must survive the period strip
+const bigFig = assemblePromises(
+  [{ model: "gemini", source_id: "b", source_label: "B", date: "2025-07-31", quarter_context: "Q1FY26",
+     category: "capacity", promise: "add capacity", quote: "we will add capacity of 2000 MW",
+     metric: "capacity", target: { text: "2000 MW", value: 2000, value_high: null, unit: "MW", period: "FY28" }, confidence: "M" }],
+  { docTextById: new Map([["b", "we will add capacity of 2000 MW"]]) },
+);
+ok(bigFig.promises[0].figure_in_quote === true, "a real 1900–2099 figure (2000 MW) survives the period strip");
 // relative target ("double") with no digit → counts via the quantity word
 const relFig = assemblePromises(
   [{ model: "gemini", source_id: "y", source_label: "Y", date: "2025-07-31", quarter_context: "Q1FY26",
