@@ -48,18 +48,39 @@ const fyOf = (p) => {
   const m = String(p).match(/fy(\d{2,4})/);
   return m ? m[1].slice(-2) : null;
 };
+/** Intra-year token (quarter/half) the period names, else null (annual/unspecified). */
+function intraYear(s) {
+  const q = s.match(/q([1-4])/) || s.match(/([1-4])q/);
+  if (q) return "q" + q[1];
+  const h = s.match(/h([12])/) || s.match(/([12])h/);
+  if (h) return "h" + h[1];
+  return null;
+}
 function periodCompat(kp, ep) {
   const k = normPeriod(kp), e = normPeriod(ep);
   if (!k || !e) return true; // an unspecified period can't disqualify a match
   if (k === e) return true;
   const kf = fyOf(k), ef = fyOf(e);
-  return !!(kf && ef && kf === ef); // Q4FY26 ≈ FY26 (same fiscal year)
+  if (!kf || !ef || kf !== ef) return false; // different/unknown fiscal year
+  // Same FY: compatible only if a side is annual/unspecified (FY26 covers Q2FY26),
+  // NOT when both name different quarters/halves (Q2FY26 ≠ Q4FY26).
+  const ki = intraYear(k), ei = intraYear(e);
+  if (!ki || !ei) return true;
+  return ki === ei;
 }
 function numClose(kt, et) {
   const kv = kt?.value, ev = et?.value;
   if (kv == null || ev == null) return false;
   const rel = Math.abs(kv - ev) / Math.max(Math.abs(kv), Math.abs(ev), 1e-9);
   return rel <= 0.05;
+}
+const normUnit = (u) =>
+  String(u || "").toLowerCase().replace(/\bbillion\b/g, "bn").replace(/\bmillion\b/g, "mn").replace(/[^a-z0-9%]/g, "");
+/** % vs non-% units are contradictory (20% ≠ $20bn). Missing/other units don't disqualify. */
+function unitNotContradictory(kt, et) {
+  const k = normUnit(kt?.unit), e = normUnit(et?.unit);
+  if (!k || !e) return true;
+  return k.includes("%") === e.includes("%");
 }
 
 /**
@@ -89,12 +110,14 @@ export function evalExtraction(extracted, fixture, { minSubject = 0.25, minConta
       if (used.has(i)) continue;
       const e = ex[i];
       if (!periodCompat(kper, e._per)) continue;
+      if (!unitNotContradictory(k.target, e.target)) continue; // a % target ≠ a non-% target
       const subj = jaccard(ksub, e._sub);
       const cont = containment(ksub, e._sub);
       const cat = catCompat(k.category, e.category);
       let score = 0;
       if (cat && (subj >= minSubject || cont >= minContain)) score = Math.max(subj, cont);
-      else if (cat && numClose(k.target, e.target)) score = 0.55; // same number, same kind
+      // numeric shortcut: same number under a compatible category, with SOME topic overlap
+      else if (cat && numClose(k.target, e.target) && (subj > 0 || cont > 0)) score = 0.55;
       else if (subj >= 0.5) score = subj; // strong topical overlap overrides category
       if (score > bestScore) {
         bestScore = score;

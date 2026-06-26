@@ -444,6 +444,13 @@ const fxFuzzy = { company: { ticker: "TEST" }, promises: [
 ok(evalExtraction([{ category: "volume", metric: "aluminium volume of 2.9 Mt", target: { period: "FY2026", value: 2.9 } }], fxFuzzy).found === 1, "fuzzy matches a cross-category paraphrase via compatible category + same number/period (capacity≈volume)");
 ok(evalExtraction([{ category: "timeline", metric: "plant commissioning by Dec 2027", target: { period: "FY28", value: null } }], fxFuzzy).found === 0, "fuzzy does NOT match an unrelated promise (different topic/period/number)");
 ok(evalExtraction(fxFuzzy.promises, fxFuzzy).recall === 1, "a fixture matched against itself is 100% recall");
+// PR#9 review #1: a % target must not match a non-% target on a coincident number
+const unitFx = { company: { ticker: "T" }, promises: [{ id: "u1", category: "margin", metric: "FY26 EBITDA margin 20%", target: { period: "FY26", value: 20, unit: "%" } }] };
+ok(evalExtraction([{ category: "ebitda", metric: "FY26 EBITDA target $20 bn", target: { period: "FY26", value: 20, unit: "USD_bn" } }], unitFx).found === 0, "20% margin is NOT matched by $20bn EBITDA (contradictory units)");
+// PR#9 review #2: different quarters in the same fiscal year are not compatible
+const perFx = { company: { ticker: "T" }, promises: [{ id: "t1", category: "timeline", metric: "commission smelter", target: { period: "Q2FY26" } }] };
+ok(evalExtraction([{ category: "timeline", metric: "commission smelter", target: { period: "Q4FY26" } }], perFx).found === 0, "Q2FY26 ≠ Q4FY26 (distinct quarters, same FY)");
+ok(evalExtraction([{ category: "timeline", metric: "commission smelter", target: { period: "FY26" } }], perFx).found === 1, "an annual period covers a same-FY quarter (Q2FY26 ≈ FY26)");
 
 // ---- 7) input segmentation (Groq TPM) --------------------------------------
 console.log("\nsegmentation:");
