@@ -160,14 +160,17 @@ The first LLM step: read `corpus.json` and extract every **measurable management
 commitment** → `pipeline/output/<ticker>/promises.json`. Company-agnostic (no
 hardcoded metric set). **No verification/status/variance — that's Prompt 5.**
 
-Gemini + Groq + Mistral (all free-tier) extract management-only text. By default
-(`LLM_STRATEGY=failover`) the three keys are **one combined quota pool used in
-order** — each doc extracted once by the first provider with budget; a provider
-that hits its daily quota is dropped for the rest. (`ensemble` re-extracts every
-doc with all three for max recall — 3× the quota; opt in when you can afford it.)
-Every quote is grounded to a verbatim substring (snap-or-drop), deduped, and given
-a derived `test_date`; recall is scored against the golden fixture. **Accuracy is a
-separate, later data-verification step — not cross-model agreement.**
+Gemini + Groq + Mistral (all free-tier) extract management-only text — prepared
+remarks in full, Q&A answers pre-filtered to guidance-bearing turns (`QA_FILTER`,
+~half the Q&A chatter dropped). By default (`LLM_STRATEGY=failover`) the three keys
+are **one combined quota pool used in order** — each doc extracted once by the
+first provider with budget; a provider that hits its daily quota is dropped for the
+rest. (`ensemble` re-extracts every doc with all three for max recall — 3× the
+quota; opt in when you can afford it.) Every quote is grounded to a verbatim
+substring (snap-or-drop), deduped, and given a derived `test_date`, a stable
+`promise_key` (groups restatements for the downstream verifier), and a lenient
+`figure_in_quote` flag; recall is scored against the golden fixture. **Accuracy is
+a separate, later data-verification step — not cross-model agreement.**
 
 ```bash
 # In-session (no keys): estimate + mock-LLM unit tests
@@ -181,7 +184,9 @@ CORPUS=pipeline/fixtures/vedl.corpus.json TICKER=vedl npm run extract
 **Env knobs:** `TICKER` · `CORPUS=<path>` · `LLM_STRATEGY` (`failover` default |
 `ensemble` | `partition` | `single`) · `GEMINI_API_KEY`/`GROQ_API_KEY`/`MISTRAL_API_KEY`
 (+ optional `<PROVIDER>_MODEL`) · `LLM_CONCURRENCY` (2) · `EXTRACT_SCOPE`
-(`management` | `all`) · `EVAL` · `LIMIT` · `DRY_RUN` · `DEBUG`. A throttled
+(`management` | `all`) · `QA_FILTER` (1; 0 keeps all Q&A) · `PROVIDER=mock`/`MOCK=1`
+($0 offline run — no key, validates wiring + JSON shape) · `EVAL` · `LIMIT` ·
+`DRY_RUN` · `DEBUG`. A throttled
 provider is skipped (graceful degradation); per (doc×model) caching makes re-runs
 nearly free. Confirmed free-tier models are documented in `CLAUDE.md`.
 

@@ -5,7 +5,7 @@
  *
  * Bump PROMPT_VERSION whenever the prompt or schema changes (invalidates caches).
  */
-export const PROMPT_VERSION = "p4-2026-06b";
+export const PROMPT_VERSION = "p4-2026-06c";
 
 // Mirrors the company schema's promise.category enum.
 export const CATEGORIES = [
@@ -60,6 +60,13 @@ A promise is FORWARD-LOOKING — a target/guidance for a future period ("we expe
 REJECT vague or non-measurable statements with NO number/date — e.g. "we are confident", "we will grow strongly", "focused on execution", "well positioned". If it has no checkable forward number or date, it is NOT a promise: return nothing for it.
 
 Extract each distinct commitment ONCE, at the most consolidated level stated (prefer the company/guidance figure over restating it per sub-business). Do NOT split one piece of guidance into several near-duplicate rows, and do NOT pad the list — a typical call yields a handful to ~15 real commitments, not dozens. Quality over quantity.
+
+EDGE CASES:
+- Range ("12 to 14%", "$1.7-1.9bn") → value = low end, value_high = high end.
+- Relative target ("double / triple capacity", "halve net debt") → value = 2 / 3 / 0.5, unit = "x".
+- Conditional ("if demand holds, we would…") → still extract it, but confidence = L.
+- "Maintain margins at ~18%" / "hold leverage around 1x" → extract with the stated number (value 18 / 1). If a "maintain"/"sustain" statement carries NO number, drop it.
+- A single sentence giving two distinct metrics (e.g. revenue AND margin) → two separate rows; one metric stated once → one row (never fragment it).
 
 For each promise:
 - quarter_context: the fiscal quarter the statement was made (given to you; default to it).

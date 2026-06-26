@@ -9,7 +9,7 @@
  *   node pipeline/test/p4.test.mjs
  */
 import { runExtraction } from "../lib/multi-llm.mjs";
-import { buildDocText, assemblePromises, segmentText } from "../extract.mjs";
+import { buildDocText, assemblePromises, segmentText, qaTurnIsGuidance, mockExtract } from "../extract.mjs";
 import { deriveTestDate } from "../lib/test-date.mjs";
 import { SYSTEM_PROMPT } from "../lib/extract-prompt.mjs";
 import { evalExtraction } from "../eval-extraction.mjs";
@@ -31,7 +31,7 @@ const d1 = {
     { kind: "prepared_remarks", role: "moderator", speaker: "Moderator", page: 1, text: "Welcome to the call." },
     { kind: "prepared_remarks", role: "management", speaker: "Ajay Goel", page: 1, text: "We are confident in achieving an annual EBITDA of more than $6 billion in FY26. We are well on track to achieve capex of between $1.7 to $1.9 billion." },
     { kind: "qa", role: "analyst", speaker: "Amit Kumar", page: 2, text: "What about your alumina cost? ANALYSTQUESTIONMARKER" },
-    { kind: "qa", role: "management", speaker: "Arun Misra", page: 2, text: "Alumina cost will be sub $750 per ton by Q1FY27." },
+    { kind: "qa", role: "management", speaker: "Arun Misra", page: 2, text: "It will be sub $750 per ton." },
     { kind: "qa", role: "analyst", speaker: "Lone Analyst", page: 3, text: "DROPPEDANALYSTONLY no management reply follows" },
   ],
 };
@@ -55,6 +55,100 @@ ok(!/\bAmit Kumar:/.test(d1.text), "analyst is not emitted as a speaker turn");
 ok(d1.text.includes("[Analyst context:") && d1.text.includes("ANALYSTQUESTIONMARKER"), "preceding analyst Q kept inline as [context]");
 ok(d1.text.includes("Ajay Goel:") && d1.text.includes("Arun Misra:"), "management turns kept");
 ok(/\n\n/.test(d1.text), "turns separated by blank lines so segmentText can split on boundaries");
+
+// ---- 1b) Q&A guidance pre-filter -------------------------------------------
+console.log("\nQ&A guidance pre-filter:");
+const qaDoc = {
+  id: "qfilter", quarter: "Q1FY26", type: "transcript", date: "2025-07-31",
+  sections: [
+    { kind: "prepared_remarks", role: "management", speaker: "CEO", page: 1, text: "Thank you all for joining; it has been a solid start to the year." },
+    { kind: "qa", role: "analyst", speaker: "A1", page: 2, text: "Congrats. How is the weather at the plant?" },
+    { kind: "qa", role: "management", speaker: "CFO", page: 2, text: "Thank you, the weather has been pleasant and the team is doing great work." },
+    { kind: "qa", role: "analyst", speaker: "A2", page: 3, text: "And on guidance?" },
+    { kind: "qa", role: "management", speaker: "CFO", page: 3, text: "We target FY26 EBITDA margin of 18 to 20 percent." },
+  ],
+};
+const qaText = buildDocText(qaDoc);
+ok(qaText.includes("solid start to the year"), "prepared remarks always kept (even with no number)");
+ok(qaText.includes("FY26 EBITDA margin of 18 to 20"), "guidance-bearing Q&A answer kept");
+ok(!qaText.includes("weather has been pleasant"), "non-guidance Q&A chatter dropped");
+ok(buildDocText(qaDoc, "all").includes("weather has been pleasant"), "EXTRACT_SCOPE=all keeps all turns (filter off)");
+// Codex #1: spelled-out quarters + question-aware classification
+ok(qaTurnIsGuidance("It will be $50 per ton in Quarter 3 and $50 per ton in Quarter 4.") === true, "spelled-out 'Quarter 3/4' + number is kept");
+ok(qaTurnIsGuidance("Just about 25 of them.", "What is the capex guidance for next year?") === true, "terse numeric answer to a guidance question kept via context");
+ok(qaTurnIsGuidance("We felt good about the team's effort overall.") === false, "no number / period / keyword → dropped");
+// Codex #3: a dropped handoff turn must not strip the analyst context from the real answer
+const handoffDoc = {
+  id: "handoff", quarter: "Q2FY26", type: "transcript", date: "2025-10-31",
+  sections: [
+    { kind: "qa", role: "analyst", speaker: "An", page: 1, text: "On the aluminium cost of production, where do you see it landing?" },
+    { kind: "qa", role: "management", speaker: "CEO", page: 1, text: "Rajiv, I will go straight to you." },
+    { kind: "qa", role: "management", speaker: "Rajiv", page: 1, text: "It will be about $1,750 per ton." },
+  ],
+};
+const ht = buildDocText(handoffDoc);
+ok(!ht.includes("go straight to you"), "courtesy/handoff turn dropped");
+ok(ht.includes("$1,750 per ton"), "the substantive follow-up answer kept");
+ok(ht.includes("[Analyst context:") && ht.includes("cost of production"), "analyst context preserved across the dropped handoff");
+// Codex round 2 #1: "plan" must not match "plant"/"plants" (industrial chatter)
+ok(qaTurnIsGuidance("the plant is running well at high utilisation") === false, "'plant' chatter is NOT kept (plan≠plant)");
+ok(qaTurnIsGuidance("we plan to get there") === true, "'plan' (planning word) is kept");
+// Codex round 2 #3: relative targets without a digit are kept (directly or via context)
+ok(qaTurnIsGuidance("we will halve net debt over time") === true, "relative target 'halve net debt' kept");
+ok(qaTurnIsGuidance("we should bring it down by half", "what about net debt?") === true, "digit-less relative answer to a guidance question kept via context");
+ok(qaTurnIsGuidance("we should bring it down meaningfully", "what about net debt?") === false, "no number / quantity word → still dropped");
+// Codex round 3 #1: a plain affirmation of a measurable target stated in the question
+ok(qaTurnIsGuidance("Yes, Rashi, that is right.", "Your captive alumina target for 1Q'27 is 80%, right?") === true, "affirmation of a measurable target in the question is kept");
+ok(qaTurnIsGuidance("Yes, absolutely.", "Did you enjoy the conference this year?") === false, "affirmation to a NON-measurable question is dropped");
+// Codex round 3 #2: date-only timeline milestones (forward period + milestone verb, no digit)
+ok(qaTurnIsGuidance("The expansion will complete next quarter.") === true, "date-only milestone 'complete next quarter' is kept");
+ok(qaTurnIsGuidance("We should get approval this fiscal.") === true, "date-only milestone 'approval this fiscal' is kept");
+ok(qaTurnIsGuidance("It looks good for next quarter.") === false, "forward period with no number/milestone verb → dropped");
+// Codex round 4 #4: Indian call notation (1Q'27, 2HFY26)
+ok(qaTurnIsGuidance("we will do 80% in 1Q'27") === true, "leading-digit quarter notation 1Q'27 recognised");
+ok(qaTurnIsGuidance("it finishes in 2HFY26") === true, "half-year notation 2HFY26 + milestone recognised");
+// Codex round 4 #1: a relative target stated in the question (no digit) is measurable
+ok(qaTurnIsGuidance("Yes, correct.", "You still intend to halve net debt, right?") === true, "affirmation of a digit-less relative target in the question is kept");
+// Codex round 4 #3: context must NOT bleed into the next (unrelated) management turn
+const bleedDoc = {
+  id: "bleed", quarter: "Q3FY26", type: "transcript", date: "2026-01-29",
+  sections: [
+    { kind: "qa", role: "analyst", speaker: "An", page: 1, text: "Is your captive alumina target 80% for 1Q'27?" },
+    { kind: "qa", role: "management", speaker: "CFO", page: 1, text: "Yes, that is right." },
+    { kind: "qa", role: "management", speaker: "CEO", page: 1, text: "On a separate note, our EBITDA outlook stays strong." },
+  ],
+};
+const bt = buildDocText(bleedDoc);
+ok(bt.split("captive alumina").length - 1 === 1, "analyst question attaches to its answer only, not the next unrelated turn");
+ok(bt.includes("CEO: On a separate note"), "the unrelated management turn is still kept (on its own merit)");
+// Codex round 5 #1: a figure+period question with no guidance keyword is measurable
+ok(qaTurnIsGuidance("Correct.", "80% in 1Q'27, right?") === true, "affirmation to a keyword-less figure+period question is kept");
+// Codex round 5 #5: month-year milestone ("complete in March 2026")
+ok(qaTurnIsGuidance("The expansion will complete in March 2026.") === true, "month-year milestone is kept");
+// Codex round 5 #3: BOTH co-answers to one multi-part question keep the context
+const coDoc = {
+  id: "co", quarter: "Q2FY26", type: "transcript", date: "2025-10-31",
+  sections: [
+    { kind: "qa", role: "analyst", speaker: "An", page: 1, text: "Where should aluminium cost and zinc cost land?" },
+    { kind: "qa", role: "management", speaker: "CEO", page: 1, text: "Aluminium is around $1,750." },
+    { kind: "qa", role: "management", speaker: "CFO", page: 1, text: "Zinc would be around $1,050." },
+  ],
+};
+const ct = buildDocText(coDoc);
+ok(ct.includes("$1,750") && ct.includes("$1,050"), "both co-answers to one question are kept");
+ok(ct.split("aluminium cost and zinc cost").length - 1 === 2, "each co-answer carries the shared question context");
+// Codex round 6 #1: a self-sufficient date-milestone after a dependent answer must NOT inherit the stale target
+const mbDoc = {
+  id: "mb", quarter: "Q2FY26", type: "transcript", date: "2025-10-31",
+  sections: [
+    { kind: "qa", role: "analyst", speaker: "An", page: 1, text: "On the captive alumina target of 80% for 1Q'27?" },
+    { kind: "qa", role: "management", speaker: "CFO", page: 1, text: "Yes, that is right." },
+    { kind: "qa", role: "management", speaker: "CEO", page: 1, text: "Separately, the expansion will complete next quarter." },
+  ],
+};
+const mbt = buildDocText(mbDoc);
+ok(mbt.includes("complete next quarter"), "the date-only milestone turn is kept on its own merit");
+ok(mbt.split("captive alumina").length - 1 === 1, "the stale alumina target is NOT attached to the unrelated milestone turn");
 
 // ---- 2) mock ensemble + grounding + merge + reaffirm/revision --------------
 const mock = async (cfg, doc) => {
@@ -112,6 +206,79 @@ ok(capex && capex.revisions.length === 1 && capex.revisions[0].date === "2026-01
 ok(ebitda && ebitda.quote_grounded === true && ebitda.speaker === "Ajay Goel", "grounded quote + speaker attributed");
 ok(ebitda && ebitda.test_date === "2026-05-15", `deriveTestDate FY26 → 2026-05-15 (got ${ebitda && ebitda.test_date})`);
 ok(promises.every((p) => /^p\d{3}$/.test(p.id)), "ids p001… assigned");
+
+// ---- 2b) promise_key + figure_in_quote -------------------------------------
+console.log("\npromise_key + figure_in_quote:");
+ok(promises.every((p) => typeof p.promise_key === "string" && p.promise_key.split("|").length === 3), "every row carries a promise_key (category|period|subject)");
+ok(ebitda.promise_key.startsWith("ebitda|"), "promise_key starts with the category");
+ok(promises.every((p) => p.figure_in_quote === true), "numeric targets here all have their figure in the grounded quote");
+// numeric target whose quote has NO figure → flagged false, but kept (never dropped)
+const noFig = assemblePromises(
+  [{ model: "gemini", source_id: "x", source_label: "X", date: "2025-07-31", quarter_context: "Q1FY26",
+     category: "margin", promise: "margin up", quote: "margins will expand meaningfully going forward",
+     metric: "margin expansion", target: { text: "to 20%", value: 20, value_high: null, unit: "%", period: "FY26" }, confidence: "M" }],
+  { docTextById: new Map([["x", "margins will expand meaningfully going forward"]]) },
+);
+ok(noFig.promises.length === 1 && noFig.promises[0].figure_in_quote === false, "numeric target with a digit-less quote → figure_in_quote=false (flagged, not dropped)");
+// Codex #2: a fiscal-period digit (FY26) must not count as the target figure
+const periodOnly = assemblePromises(
+  [{ model: "gemini", source_id: "z", source_label: "Z", date: "2025-07-31", quarter_context: "Q1FY26",
+     category: "margin", promise: "margin up", quote: "margins will expand in FY26",
+     metric: "margin", target: { text: "to 20%", value: 20, value_high: null, unit: "%", period: "FY26" }, confidence: "M" }],
+  { docTextById: new Map([["z", "margins will expand in FY26"]]) },
+);
+ok(periodOnly.promises[0].figure_in_quote === false, "period digit (FY26) alone → figure_in_quote=false");
+// Codex round 2 #2: a numeric target.text with null value still triggers the check
+const textNumeric = assemblePromises(
+  [{ model: "gemini", source_id: "w", source_label: "W", date: "2025-07-31", quarter_context: "Q1FY26",
+     category: "margin", promise: "margin up", quote: "margins will expand meaningfully",
+     metric: "margin", target: { text: "to 20%", value: null, value_high: null, unit: "%", period: "FY26" }, confidence: "M" }],
+  { docTextById: new Map([["w", "margins will expand meaningfully"]]) },
+);
+ok(textNumeric.promises[0].figure_in_quote === false, "numeric target.text ('to 20%') with null value still flags a digit-less quote");
+// Codex round 4 #2: a real 1900–2099 figure must survive the period strip
+const bigFig = assemblePromises(
+  [{ model: "gemini", source_id: "b", source_label: "B", date: "2025-07-31", quarter_context: "Q1FY26",
+     category: "capacity", promise: "add capacity", quote: "we will add capacity of 2000 MW",
+     metric: "capacity", target: { text: "2000 MW", value: 2000, value_high: null, unit: "MW", period: "FY28" }, confidence: "M" }],
+  { docTextById: new Map([["b", "we will add capacity of 2000 MW"]]) },
+);
+ok(bigFig.promises[0].figure_in_quote === true, "a real 1900–2099 figure (2000 MW) survives the period strip");
+// Codex round 5 #2 (temporal 'half') + #4 (month-year deadline) must NOT count as the figure
+for (const [q, label] of [["margins will improve in the second half of FY26", "temporal 'second half'"], ["margins will expand by March 2030", "month-year deadline 'March 2030'"]]) {
+  const r = assemblePromises(
+    [{ model: "gemini", source_id: "k", source_label: "K", date: "2025-07-31", quarter_context: "Q1FY26",
+       category: "margin", promise: "margin up", quote: q, metric: "margin", target: { text: "to 20%", value: 20, value_high: null, unit: "%", period: "FY26" }, confidence: "M" }],
+    { docTextById: new Map([["k", q]]) },
+  );
+  ok(r.promises[0] && r.promises[0].figure_in_quote === false, `${label} is not mistaken for the target figure`);
+}
+// Codex round 6 #2: an open-ended temporal "latter half" must not count as the figure
+const latterHalf = assemblePromises(
+  [{ model: "gemini", source_id: "lh", source_label: "LH", date: "2025-07-31", quarter_context: "Q1FY26",
+     category: "margin", promise: "margin up", quote: "margins will expand in the latter half of FY26",
+     metric: "margin", target: { text: "to 20%", value: 20, value_high: null, unit: "%", period: "FY26" }, confidence: "M" }],
+  { docTextById: new Map([["lh", "margins will expand in the latter half of FY26"]]) },
+);
+ok(latterHalf.promises[0].figure_in_quote === false, "temporal 'latter half' is not mistaken for the target figure");
+// relative target ("double") with no digit → counts via the quantity word
+const relFig = assemblePromises(
+  [{ model: "gemini", source_id: "y", source_label: "Y", date: "2025-07-31", quarter_context: "Q1FY26",
+     category: "capacity", promise: "double capacity", quote: "we will double our aluminium capacity going forward",
+     metric: "capacity doubles", target: { text: "2x", value: 2, value_high: null, unit: "x", period: "FY28" }, confidence: "M" }],
+  { docTextById: new Map([["y", "we will double our aluminium capacity going forward"]]) },
+);
+ok(relFig.promises[0].figure_in_quote === true, "relative target ('double') counts as figure-in-quote via a quantity word");
+
+// ---- 2c) offline mock extractor (PROVIDER=mock, $0) ------------------------
+console.log("\nmock extractor (offline, no API):");
+const mres = mockExtract(d1);
+ok(Array.isArray(mres.promises) && mres.calls === 0, "mockExtract returns promises with calls=0 (no API call)");
+ok(mres.promises.length >= 1, "mockExtract surfaces ≥1 guidance sentence from the corpus");
+ok(mres.promises.every((p) => d1.text.includes(p.quote)), "every mock quote is a verbatim substring (so it grounds)");
+ok(mres.promises.every((p) => p.quote.split(/\s+/).length <= 25), "mock quotes are ≤25 words");
+const masm = assemblePromises(mres.promises.map((p) => ({ ...p, model: "mock", source_id: d1.id, source_label: d1.label, date: d1.date })), { docTextById: new Map([[d1.id, d1.text]]) });
+ok(masm.promises.length >= 1 && masm.promises.every((p) => p.promise_key && typeof p.figure_in_quote === "boolean" && /^p\d{3}$/.test(p.id)), "mock rows pass through the full pipeline with the canonical shape");
 
 // ---- 3) graceful degradation -----------------------------------------------
 console.log("\ngraceful degradation:");
