@@ -90,6 +90,13 @@ const ht = buildDocText(handoffDoc);
 ok(!ht.includes("go straight to you"), "courtesy/handoff turn dropped");
 ok(ht.includes("$1,750 per ton"), "the substantive follow-up answer kept");
 ok(ht.includes("[Analyst context:") && ht.includes("cost of production"), "analyst context preserved across the dropped handoff");
+// Codex round 2 #1: "plan" must not match "plant"/"plants" (industrial chatter)
+ok(qaTurnIsGuidance("the plant is running well at high utilisation") === false, "'plant' chatter is NOT kept (plan≠plant)");
+ok(qaTurnIsGuidance("we plan to get there") === true, "'plan' (planning word) is kept");
+// Codex round 2 #3: relative targets without a digit are kept (directly or via context)
+ok(qaTurnIsGuidance("we will halve net debt over time") === true, "relative target 'halve net debt' kept");
+ok(qaTurnIsGuidance("we should bring it down by half", "what about net debt?") === true, "digit-less relative answer to a guidance question kept via context");
+ok(qaTurnIsGuidance("we should bring it down meaningfully", "what about net debt?") === false, "no number / quantity word → still dropped");
 
 // ---- 2) mock ensemble + grounding + merge + reaffirm/revision --------------
 const mock = async (cfg, doc) => {
@@ -169,6 +176,14 @@ const periodOnly = assemblePromises(
   { docTextById: new Map([["z", "margins will expand in FY26"]]) },
 );
 ok(periodOnly.promises[0].figure_in_quote === false, "period digit (FY26) alone → figure_in_quote=false");
+// Codex round 2 #2: a numeric target.text with null value still triggers the check
+const textNumeric = assemblePromises(
+  [{ model: "gemini", source_id: "w", source_label: "W", date: "2025-07-31", quarter_context: "Q1FY26",
+     category: "margin", promise: "margin up", quote: "margins will expand meaningfully",
+     metric: "margin", target: { text: "to 20%", value: null, value_high: null, unit: "%", period: "FY26" }, confidence: "M" }],
+  { docTextById: new Map([["w", "margins will expand meaningfully"]]) },
+);
+ok(textNumeric.promises[0].figure_in_quote === false, "numeric target.text ('to 20%') with null value still flags a digit-less quote");
 // relative target ("double") with no digit → counts via the quantity word
 const relFig = assemblePromises(
   [{ model: "gemini", source_id: "y", source_label: "Y", date: "2025-07-31", quarter_context: "Q1FY26",

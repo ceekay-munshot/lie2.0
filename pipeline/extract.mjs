@@ -58,19 +58,24 @@ const PROMPT_OVERHEAD_CHARS = buildMessages("", { quarter: "Q0FY00", type: "tran
 // operational Q&A chatter that inflates raw candidates without adding promises.
 // Set QA_FILTER=0 to disable (or EXTRACT_SCOPE=all, which keeps everything).
 const QA_FILTER = process.env.QA_FILTER ? process.env.QA_FILTER !== "0" : true;
+// Quantity words for a relative target ("double"/"halve") — a guidance signal even
+// without a digit. Shared by the Q&A filter and figure_in_quote.
+const QTY_WORD_RE = /\b(doubl|tripl|quadrupl|halv|half|two[\s-]?fold|three[\s-]?fold|four[\s-]?fold|fold)\w*/i;
+// NB: "plans?|planned|planning" (not plan\w*) so "plant"/"plants" don't match.
 const GUIDANCE_RE =
-  /\b(guidance|outlook|expect\w*|target\w*|aim\w*|guid\w*|plan\w*|intend\w*|going forward|next year|next fiscal|by fy|by q[1-4]|margin|ebitda|revenue|pat|profit|capex|capacity|commission\w*|ramp\w*|volume|order ?book|working capital|net debt|leverage|debt[\s/]*ebitda|roce|cost|dividend|payout|deleverag\w*|double|tripl\w*)\b/i;
+  /\b(guidance|outlook|expect\w*|target\w*|aim\w*|guid\w*|plans?|planned|planning|intend\w*|going forward|next year|next fiscal|by fy|by q[1-4]|margin|ebitda|revenue|pat|profit|capex|capacity|commission\w*|ramp\w*|volume|order ?book|working capital|net debt|leverage|debt[\s/]*ebitda|roce|cost|dividend|payout|deleverag\w*|doubl\w*|tripl\w*|quadrupl\w*|halv\w*|fold)\b/i;
 const FWD_PERIOD_RE = /\b(fy\s*'?\d{2,4}|q[1-4]\s*fy\s*'?\d{2,4}|q[1-4]\b|quarter\s*[1-4]|next\s+(?:year|quarter|fiscal)|this\s+(?:year|fiscal)|full[\s-]?year|h[12]\s*fy|by\s+(?:end\s+of\s+)?(?:\w+\s+)?\d{4}|by\s+(?:end\s+of\s+)?(?:fy|q[1-4]))/i;
 /**
  * Does a management Q&A answer carry forward-looking guidance worth keeping?
- * Considers the preceding analyst question too, so a terse numeric answer
- * ("$50/t in Quarter 3") to a guidance-bearing question survives the filter.
+ * Considers the preceding analyst question too, so a terse numeric OR relative
+ * answer ("$50/t in Quarter 3", "we'll halve it") to a guidance-bearing question
+ * survives the filter.
  */
 export function qaTurnIsGuidance(text, question = "") {
   const t = String(text || "");
   if (GUIDANCE_RE.test(t)) return true;
   if (FWD_PERIOD_RE.test(t) && /\d/.test(t)) return true; // a forward period AND a number
-  return /\d/.test(t) && GUIDANCE_RE.test(String(question || "")); // numeric answer to a guidance Q
+  return (/\d/.test(t) || QTY_WORD_RE.test(t)) && GUIDANCE_RE.test(String(question || "")); // numeric/relative answer to a guidance Q
 }
 
 /** Build the text shown to the model for one document. */
@@ -122,12 +127,15 @@ function attributeSpeaker(quote, sections) {
 // cited quote. Flags only the clear misses (numeric target, but the quote has no
 // digit and no quantity word like "double"); never drops — formatting varies too
 // much (₹1,700 vs "1,700 crores") to reject on. The downstream can weight on it.
-const QTY_WORD_RE = /\b(doubl|tripl|quadrupl|halv|half|two[\s-]?fold|three[\s-]?fold|four[\s-]?fold|fold)\w*/i;
 // Fiscal-period tokens whose digits must NOT be mistaken for the target figure
 // (e.g. "FY26", "Q4", "Quarter 3", "2030") when checking a quote for the number.
 const PERIOD_TOK_RE = /\bq[1-4]\s*fy\s*'?\d{2,4}\b|\bq[1-4]\b|\bquarter\s*[1-4]\b|\bfy\s*'?\d{2,4}\b|\bh[12]\s*(?:fy)?\s*'?\d{0,4}\b|\b(?:19|20)\d{2}\b|'\d{2}\b/gi;
 function figureInQuote(target, quote) {
-  if (!target || (target.value == null && target.value_high == null)) return true; // nothing numeric to ground
+  // A numeric target = a parsed value/range OR a figure/quantity word in target.text
+  // (the schema permits text-only numeric targets with null value/value_high).
+  const tText = String(target?.text || "").replace(PERIOD_TOK_RE, " ");
+  const numericTarget = !!target && (target.value != null || target.value_high != null || /\d/.test(tText) || QTY_WORD_RE.test(tText));
+  if (!numericTarget) return true; // nothing numeric to ground
   const q = String(quote || "").replace(PERIOD_TOK_RE, " "); // strip period digits first
   return /\d/.test(q) || QTY_WORD_RE.test(q);
 }
