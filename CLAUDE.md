@@ -70,13 +70,18 @@ free tiers.
 
 Company-agnostic: never hardcode a metric set — models return whatever measurable
 guidance the company gives (bank→NIM/GNPA, IT→margin/TCV, metals→cost/capacity).
-Per doc the engine builds **management-only** text (prepared remarks + management
-answers, the preceding analyst Q kept inline as `[context]`), calls each provider
-with the same rubric+schema (`extract-prompt.mjs`), then: grounds every quote to a
-verbatim substring (snap-or-drop — `ground-quote.mjs`), cross-model-merges +
-dedups (`dedup.mjs`: `found_by` ≥2 = agreement, `reaffirmed_on`/`revisions` across
-quarters), and derives `test_date` (`test-date.mjs`). `eval-extraction.mjs` scores
-recall vs the fixture. **No verification/status/variance here — that's Prompt 5.**
+Per doc the engine builds **management-only** text (prepared remarks in full +
+the *guidance-bearing* management Q&A answers — operational Q&A chatter is
+pre-filtered out via `QA_FILTER`, ~half the Q&A turns — with the preceding analyst
+Q kept inline as `[context]`), calls each provider with the same rubric+schema
+(`extract-prompt.mjs`), then: grounds every quote to a verbatim substring
+(snap-or-drop — `ground-quote.mjs`), cross-model-merges + dedups (`dedup.mjs`:
+`found_by` ≥2 = agreement, `reaffirmed_on`/`revisions` across quarters), and
+derives `test_date` (`test-date.mjs`), a stable `promise_key` (`category|period|
+metric-subject`, so the downstream verifier can group restatements), and a lenient
+`figure_in_quote` flag (numeric target whose quote lacks any figure → flagged, not
+dropped). `eval-extraction.mjs` scores recall vs the fixture. **No verification/
+status/variance here — that's Prompt 5.**
 
 Strategies (`LLM_STRATEGY`):
 - **`failover` (default)** — treat the three free tiers as ONE combined quota pool,

@@ -56,6 +56,24 @@ ok(d1.text.includes("[Analyst context:") && d1.text.includes("ANALYSTQUESTIONMAR
 ok(d1.text.includes("Ajay Goel:") && d1.text.includes("Arun Misra:"), "management turns kept");
 ok(/\n\n/.test(d1.text), "turns separated by blank lines so segmentText can split on boundaries");
 
+// ---- 1b) Q&A guidance pre-filter -------------------------------------------
+console.log("\nQ&A guidance pre-filter:");
+const qaDoc = {
+  id: "qfilter", quarter: "Q1FY26", type: "transcript", date: "2025-07-31",
+  sections: [
+    { kind: "prepared_remarks", role: "management", speaker: "CEO", page: 1, text: "Thank you all for joining; it has been a solid start to the year." },
+    { kind: "qa", role: "analyst", speaker: "A1", page: 2, text: "Congrats. How is the weather at the plant?" },
+    { kind: "qa", role: "management", speaker: "CFO", page: 2, text: "Thank you, the weather has been pleasant and the team is doing great work." },
+    { kind: "qa", role: "analyst", speaker: "A2", page: 3, text: "And on guidance?" },
+    { kind: "qa", role: "management", speaker: "CFO", page: 3, text: "We target FY26 EBITDA margin of 18 to 20 percent." },
+  ],
+};
+const qaText = buildDocText(qaDoc);
+ok(qaText.includes("solid start to the year"), "prepared remarks always kept (even with no number)");
+ok(qaText.includes("FY26 EBITDA margin of 18 to 20"), "guidance-bearing Q&A answer kept");
+ok(!qaText.includes("weather has been pleasant"), "non-guidance Q&A chatter dropped");
+ok(buildDocText(qaDoc, "all").includes("weather has been pleasant"), "EXTRACT_SCOPE=all keeps all turns (filter off)");
+
 // ---- 2) mock ensemble + grounding + merge + reaffirm/revision --------------
 const mock = async (cfg, doc) => {
   const p = cfg.provider;
@@ -112,6 +130,28 @@ ok(capex && capex.revisions.length === 1 && capex.revisions[0].date === "2026-01
 ok(ebitda && ebitda.quote_grounded === true && ebitda.speaker === "Ajay Goel", "grounded quote + speaker attributed");
 ok(ebitda && ebitda.test_date === "2026-05-15", `deriveTestDate FY26 → 2026-05-15 (got ${ebitda && ebitda.test_date})`);
 ok(promises.every((p) => /^p\d{3}$/.test(p.id)), "ids p001… assigned");
+
+// ---- 2b) promise_key + figure_in_quote -------------------------------------
+console.log("\npromise_key + figure_in_quote:");
+ok(promises.every((p) => typeof p.promise_key === "string" && p.promise_key.split("|").length === 3), "every row carries a promise_key (category|period|subject)");
+ok(ebitda.promise_key.startsWith("ebitda|"), "promise_key starts with the category");
+ok(promises.every((p) => p.figure_in_quote === true), "numeric targets here all have their figure in the grounded quote");
+// numeric target whose quote has NO figure → flagged false, but kept (never dropped)
+const noFig = assemblePromises(
+  [{ model: "gemini", source_id: "x", source_label: "X", date: "2025-07-31", quarter_context: "Q1FY26",
+     category: "margin", promise: "margin up", quote: "margins will expand meaningfully going forward",
+     metric: "margin expansion", target: { text: "to 20%", value: 20, value_high: null, unit: "%", period: "FY26" }, confidence: "M" }],
+  { docTextById: new Map([["x", "margins will expand meaningfully going forward"]]) },
+);
+ok(noFig.promises.length === 1 && noFig.promises[0].figure_in_quote === false, "numeric target with a digit-less quote → figure_in_quote=false (flagged, not dropped)");
+// relative target ("double") with no digit → counts via the quantity word
+const relFig = assemblePromises(
+  [{ model: "gemini", source_id: "y", source_label: "Y", date: "2025-07-31", quarter_context: "Q1FY26",
+     category: "capacity", promise: "double capacity", quote: "we will double our aluminium capacity going forward",
+     metric: "capacity doubles", target: { text: "2x", value: 2, value_high: null, unit: "x", period: "FY28" }, confidence: "M" }],
+  { docTextById: new Map([["y", "we will double our aluminium capacity going forward"]]) },
+);
+ok(relFig.promises[0].figure_in_quote === true, "relative target ('double') counts as figure-in-quote via a quantity word");
 
 // ---- 3) graceful degradation -----------------------------------------------
 console.log("\ngraceful degradation:");
