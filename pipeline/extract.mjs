@@ -65,17 +65,28 @@ const QTY_WORD_RE = /\b(doubl|tripl|quadrupl|halv|half|two[\s-]?fold|three[\s-]?
 const GUIDANCE_RE =
   /\b(guidance|outlook|expect\w*|target\w*|aim\w*|guid\w*|plans?|planned|planning|intend\w*|going forward|next year|next fiscal|by fy|by q[1-4]|margin|ebitda|revenue|pat|profit|capex|capacity|commission\w*|ramp\w*|volume|order ?book|working capital|net debt|leverage|debt[\s/]*ebitda|roce|cost|dividend|payout|deleverag\w*|doubl\w*|tripl\w*|quadrupl\w*|halv\w*|fold)\b/i;
 const FWD_PERIOD_RE = /\b(fy\s*'?\d{2,4}|q[1-4]\s*fy\s*'?\d{2,4}|q[1-4]\b|quarter\s*[1-4]|next\s+(?:year|quarter|fiscal)|this\s+(?:year|fiscal)|full[\s-]?year|h[12]\s*fy|by\s+(?:end\s+of\s+)?(?:\w+\s+)?\d{4}|by\s+(?:end\s+of\s+)?(?:fy|q[1-4]))/i;
+// Milestone verbs that make a date-only timeline answer measurable (no digit needed).
+const MILESTONE_RE = /\b(complet\w*|approv\w*|start\w*|begin\w*|finish\w*|launch\w*|go[\s-]?live|on[\s-]?stream|operational|deliver\w*|first\s+production|achiev\w*)\b/i;
+// Plain affirmations — management confirming a target that was stated in the question.
+const AFFIRM_RE = /\b(yes|yeah|yep|correct|absolutely|exactly|indeed|that'?s right|that is right|you'?re right|on[\s-]?track|on[\s-]?schedule|confirm\w*)\b/i;
+/** Is an analyst question itself a MEASURABLE guidance prompt (target lives in the Q)? */
+const isMeasurableQ = (q) => GUIDANCE_RE.test(q) && (/\d/.test(q) || FWD_PERIOD_RE.test(q));
 /**
  * Does a management Q&A answer carry forward-looking guidance worth keeping?
- * Considers the preceding analyst question too, so a terse numeric OR relative
- * answer ("$50/t in Quarter 3", "we'll halve it") to a guidance-bearing question
- * survives the filter.
+ * Also weighs the analyst question, so the filter keeps: terse numeric/relative
+ * answers to a guidance Q, date-only timeline milestones ("complete next quarter"),
+ * and plain affirmations of a measurable target stated in the question.
  */
 export function qaTurnIsGuidance(text, question = "") {
   const t = String(text || "");
+  const q = String(question || "");
   if (GUIDANCE_RE.test(t)) return true;
-  if (FWD_PERIOD_RE.test(t) && /\d/.test(t)) return true; // a forward period AND a number
-  return (/\d/.test(t) || QTY_WORD_RE.test(t)) && GUIDANCE_RE.test(String(question || "")); // numeric/relative answer to a guidance Q
+  // a forward period + a number, OR a date-only milestone (complete/approval/start…)
+  if (FWD_PERIOD_RE.test(t) && (/\d/.test(t) || MILESTONE_RE.test(t))) return true;
+  // a numeric/relative answer to a guidance-bearing question
+  if ((/\d/.test(t) || QTY_WORD_RE.test(t)) && GUIDANCE_RE.test(q)) return true;
+  // a plain affirmation/on-track answer to a MEASURABLE question (target is in the Q)
+  return AFFIRM_RE.test(t) && isMeasurableQ(q);
 }
 
 /** Build the text shown to the model for one document. */

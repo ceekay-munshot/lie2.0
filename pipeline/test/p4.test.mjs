@@ -97,6 +97,13 @@ ok(qaTurnIsGuidance("we plan to get there") === true, "'plan' (planning word) is
 ok(qaTurnIsGuidance("we will halve net debt over time") === true, "relative target 'halve net debt' kept");
 ok(qaTurnIsGuidance("we should bring it down by half", "what about net debt?") === true, "digit-less relative answer to a guidance question kept via context");
 ok(qaTurnIsGuidance("we should bring it down meaningfully", "what about net debt?") === false, "no number / quantity word → still dropped");
+// Codex round 3 #1: a plain affirmation of a measurable target stated in the question
+ok(qaTurnIsGuidance("Yes, Rashi, that is right.", "Your captive alumina target for 1Q'27 is 80%, right?") === true, "affirmation of a measurable target in the question is kept");
+ok(qaTurnIsGuidance("Yes, absolutely.", "Did you enjoy the conference this year?") === false, "affirmation to a NON-measurable question is dropped");
+// Codex round 3 #2: date-only timeline milestones (forward period + milestone verb, no digit)
+ok(qaTurnIsGuidance("The expansion will complete next quarter.") === true, "date-only milestone 'complete next quarter' is kept");
+ok(qaTurnIsGuidance("We should get approval this fiscal.") === true, "date-only milestone 'approval this fiscal' is kept");
+ok(qaTurnIsGuidance("It looks good for next quarter.") === false, "forward period with no number/milestone verb → dropped");
 
 // ---- 2) mock ensemble + grounding + merge + reaffirm/revision --------------
 const mock = async (cfg, doc) => {
