@@ -31,7 +31,7 @@ const d1 = {
     { kind: "prepared_remarks", role: "moderator", speaker: "Moderator", page: 1, text: "Welcome to the call." },
     { kind: "prepared_remarks", role: "management", speaker: "Ajay Goel", page: 1, text: "We are confident in achieving an annual EBITDA of more than $6 billion in FY26. We are well on track to achieve capex of between $1.7 to $1.9 billion." },
     { kind: "qa", role: "analyst", speaker: "Amit Kumar", page: 2, text: "What about your alumina cost? ANALYSTQUESTIONMARKER" },
-    { kind: "qa", role: "management", speaker: "Arun Misra", page: 2, text: "It will be sub $750 per ton by Q1FY27." },
+    { kind: "qa", role: "management", speaker: "Arun Misra", page: 2, text: "It will be sub $750 per ton." },
     { kind: "qa", role: "analyst", speaker: "Lone Analyst", page: 3, text: "DROPPEDANALYSTONLY no management reply follows" },
   ],
 };
@@ -137,6 +137,18 @@ const coDoc = {
 const ct = buildDocText(coDoc);
 ok(ct.includes("$1,750") && ct.includes("$1,050"), "both co-answers to one question are kept");
 ok(ct.split("aluminium cost and zinc cost").length - 1 === 2, "each co-answer carries the shared question context");
+// Codex round 6 #1: a self-sufficient date-milestone after a dependent answer must NOT inherit the stale target
+const mbDoc = {
+  id: "mb", quarter: "Q2FY26", type: "transcript", date: "2025-10-31",
+  sections: [
+    { kind: "qa", role: "analyst", speaker: "An", page: 1, text: "On the captive alumina target of 80% for 1Q'27?" },
+    { kind: "qa", role: "management", speaker: "CFO", page: 1, text: "Yes, that is right." },
+    { kind: "qa", role: "management", speaker: "CEO", page: 1, text: "Separately, the expansion will complete next quarter." },
+  ],
+};
+const mbt = buildDocText(mbDoc);
+ok(mbt.includes("complete next quarter"), "the date-only milestone turn is kept on its own merit");
+ok(mbt.split("captive alumina").length - 1 === 1, "the stale alumina target is NOT attached to the unrelated milestone turn");
 
 // ---- 2) mock ensemble + grounding + merge + reaffirm/revision --------------
 const mock = async (cfg, doc) => {
@@ -241,6 +253,14 @@ for (const [q, label] of [["margins will improve in the second half of FY26", "t
   );
   ok(r.promises[0] && r.promises[0].figure_in_quote === false, `${label} is not mistaken for the target figure`);
 }
+// Codex round 6 #2: an open-ended temporal "latter half" must not count as the figure
+const latterHalf = assemblePromises(
+  [{ model: "gemini", source_id: "lh", source_label: "LH", date: "2025-07-31", quarter_context: "Q1FY26",
+     category: "margin", promise: "margin up", quote: "margins will expand in the latter half of FY26",
+     metric: "margin", target: { text: "to 20%", value: 20, value_high: null, unit: "%", period: "FY26" }, confidence: "M" }],
+  { docTextById: new Map([["lh", "margins will expand in the latter half of FY26"]]) },
+);
+ok(latterHalf.promises[0].figure_in_quote === false, "temporal 'latter half' is not mistaken for the target figure");
 // relative target ("double") with no digit → counts via the quantity word
 const relFig = assemblePromises(
   [{ model: "gemini", source_id: "y", source_label: "Y", date: "2025-07-31", quarter_context: "Q1FY26",

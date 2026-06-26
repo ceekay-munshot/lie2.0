@@ -59,8 +59,11 @@ const PROMPT_OVERHEAD_CHARS = buildMessages("", { quarter: "Q0FY00", type: "tran
 // Set QA_FILTER=0 to disable (or EXTRACT_SCOPE=all, which keeps everything).
 const QA_FILTER = process.env.QA_FILTER ? process.env.QA_FILTER !== "0" : true;
 // Quantity words for a relative target ("double"/"halve") — a guidance signal even
-// without a digit. Shared by the Q&A filter and figure_in_quote.
+// without a digit. The broad form (incl. bare "half") gates the Q&A keep-decision;
+// figure_in_quote uses the STRICT form (no bare "half") so a temporal "second/latter
+// half" of a period is never mistaken for a grounded target figure.
 const QTY_WORD_RE = /\b(doubl|tripl|quadrupl|halv|half|two[\s-]?fold|three[\s-]?fold|four[\s-]?fold|fold)\w*/i;
+const FIGURE_QTY_RE = /\b(doubl|tripl|quadrupl|halv|two[\s-]?fold|three[\s-]?fold|four[\s-]?fold|fold)\w*/i;
 // NB: "plans?|planned|planning" (not plan\w*) so "plant"/"plants" don't match.
 const GUIDANCE_RE =
   /\b(guidance|outlook|expect\w*|target\w*|aim\w*|guid\w*|plans?|planned|planning|intend\w*|going forward|next year|next fiscal|by fy|by q[1-4]|margin|ebitda|revenue|pat|profit|capex|capacity|commission\w*|ramp\w*|volume|order ?book|working capital|net debt|leverage|debt[\s/]*ebitda|roce|cost|dividend|payout|deleverag\w*|doubl\w*|tripl\w*|quadrupl\w*|halv\w*|fold)\b/i;
@@ -133,12 +136,13 @@ export function buildDocText(doc, scope = "management") {
     if (QA_FILTER && scope !== "all" && s.kind === "qa" && !qaTurnIsGuidance(s.text, lastQ)) {
       continue;
     }
-    // Attach the analyst question only to a DEPENDENT answer (terse/numeric, with no
-    // guidance keyword of its own). A self-contained guidance turn stands alone, so it
-    // never inherits a stale question — which stops context bleeding into an unrelated
-    // later turn, while still feeding co-answers (a 2nd/3rd reply to the same multi-part
-    // question) the context they need. lastQ is NOT cleared; the next analyst turn resets it.
-    const dependent = !GUIDANCE_RE.test(s.text);
+    // Attach the analyst question only to a DEPENDENT answer — one that is NOT guidance
+    // on its own (`qaTurnIsGuidance` with no question is false): a terse value or
+    // affirmation that needs the question to be understood. A self-sufficient turn (own
+    // keyword, a figure+period, or a dated milestone) stands alone and never inherits a
+    // stale question, so context can't bleed into an unrelated later turn (rounds 4 & 6)
+    // while genuine co-answers (round 5) still get it. lastQ resets on the next analyst turn.
+    const dependent = !qaTurnIsGuidance(s.text);
     const ctx = lastQ && dependent ? `[Analyst context: ${clip(lastQ, 300)}]\n` : "";
     blocks.push(`${ctx}${s.speaker || "Management"}: ${s.text}`);
   }
@@ -171,10 +175,10 @@ function figureInQuote(target, quote) {
   // A numeric target = a parsed value/range OR a figure/quantity word in target.text
   // (the schema permits text-only numeric targets with null value/value_high).
   const tText = String(target?.text || "").replace(PERIOD_TOK_RE, " ");
-  const numericTarget = !!target && (target.value != null || target.value_high != null || /\d/.test(tText) || QTY_WORD_RE.test(tText));
+  const numericTarget = !!target && (target.value != null || target.value_high != null || /\d/.test(tText) || FIGURE_QTY_RE.test(tText));
   if (!numericTarget) return true; // nothing numeric to ground
   const q = String(quote || "").replace(PERIOD_TOK_RE, " "); // strip period digits first
-  return /\d/.test(q) || QTY_WORD_RE.test(q);
+  return /\d/.test(q) || FIGURE_QTY_RE.test(q);
 }
 
 /**
