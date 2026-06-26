@@ -22,7 +22,7 @@ import { subjectTokens, normPeriod } from "./lib/dedup.mjs";
 // a model labels. (schema categories only; "other" is treated as compatible-with-all.)
 const CAT_GROUPS = [
   ["ebitda", "margin", "pat"],
-  ["capex", "capacity", "volume"],
+  ["capacity", "volume"], // capex ($) is its OWN metric — tonnes ≠ rupees, keep it separate
   ["leverage", "working_capital"],
   ["revenue", "orderbook"],
 ];
@@ -109,16 +109,21 @@ export function evalExtraction(extracted, fixture, { minSubject = 0.25, minConta
     for (let i = 0; i < ex.length; i++) {
       if (used.has(i)) continue;
       const e = ex[i];
-      if (!periodCompat(kper, e._per)) continue;
-      if (!unitNotContradictory(k.target, e.target)) continue; // a % target ≠ a non-% target
+      if (!unitNotContradictory(k.target, e.target)) continue; // a % target ≠ a non-% target (clear clash)
       const subj = jaccard(ksub, e._sub);
       const cont = containment(ksub, e._sub);
       const cat = catCompat(k.category, e.category);
-      let score = 0;
-      if (cat && (subj >= minSubject || cont >= minContain)) score = Math.max(subj, cont);
+      let base = 0;
+      if (cat && (subj >= minSubject || cont >= minContain)) base = Math.max(subj, cont);
       // numeric shortcut: same number under a compatible category, with SOME topic overlap
-      else if (cat && numClose(k.target, e.target) && (subj > 0 || cont > 0)) score = 0.55;
-      else if (subj >= 0.5) score = subj; // strong topical overlap overrides category
+      else if (cat && numClose(k.target, e.target) && (subj > 0 || cont > 0)) base = 0.55;
+      else if (subj >= 0.5) base = subj; // strong topical overlap overrides category
+      if (base <= 0) continue;
+      // Period is a SOFT tiebreaker, NOT a gate: the fixture stores the SOURCE quarter in
+      // target.period (e.g. p027 "+20 GW by 2030" → Q2FY26) while a correct extraction emits
+      // the deadline, so a hard period match would falsely miss it. Compatible period just
+      // breaks ties between candidates with equal subject score.
+      const score = base + (periodCompat(kper, e._per) ? 0.1 : 0);
       if (score > bestScore) {
         bestScore = score;
         best = i;

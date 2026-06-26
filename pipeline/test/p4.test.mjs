@@ -447,10 +447,16 @@ ok(evalExtraction(fxFuzzy.promises, fxFuzzy).recall === 1, "a fixture matched ag
 // PR#9 review #1: a % target must not match a non-% target on a coincident number
 const unitFx = { company: { ticker: "T" }, promises: [{ id: "u1", category: "margin", metric: "FY26 EBITDA margin 20%", target: { period: "FY26", value: 20, unit: "%" } }] };
 ok(evalExtraction([{ category: "ebitda", metric: "FY26 EBITDA target $20 bn", target: { period: "FY26", value: 20, unit: "USD_bn" } }], unitFx).found === 0, "20% margin is NOT matched by $20bn EBITDA (contradictory units)");
-// PR#9 review #2: different quarters in the same fiscal year are not compatible
-const perFx = { company: { ticker: "T" }, promises: [{ id: "t1", category: "timeline", metric: "commission smelter", target: { period: "Q2FY26" } }] };
-ok(evalExtraction([{ category: "timeline", metric: "commission smelter", target: { period: "Q4FY26" } }], perFx).found === 0, "Q2FY26 ≠ Q4FY26 (distinct quarters, same FY)");
-ok(evalExtraction([{ category: "timeline", metric: "commission smelter", target: { period: "FY26" } }], perFx).found === 1, "an annual period covers a same-FY quarter (Q2FY26 ≈ FY26)");
+// PR#9 round-2 #1/#3: the fixture stores the SOURCE quarter in target.period, so period
+// is a soft tiebreaker — a correct deadline extraction still matches across the difference.
+const srcQ = { company: { ticker: "T" }, promises: [{ id: "t1", category: "capacity", metric: "+20 GW merchant power", target: { period: "Q2FY26" } }] };
+ok(evalExtraction([{ category: "capacity", metric: "+20 GW merchant power", target: { period: "2030" } }], srcQ).found === 1, "source-quarter fixture period (Q2FY26) doesn't reject a correct deadline extraction (2030)");
+// PR#9 round-2 #2: capex ($) is its own metric — not satisfied by a same-number capacity target
+const capexFx = { company: { ticker: "T" }, promises: [{ id: "c1", category: "capacity", metric: "FY26 aluminium production 20 Mnt", target: { period: "FY26", value: 20, unit: "Mnt" } }] };
+ok(evalExtraction([{ category: "capex", metric: "FY26 aluminium capex $20 bn", target: { period: "FY26", value: 20, unit: "USD_bn" } }], capexFx).found === 0, "aluminium capex $20bn does NOT satisfy aluminium production 20 Mnt (capex ≠ capacity)");
+// PR#9 round-2 #4: unit/period fragments (h from H2, t from $/t) don't fake topic overlap
+const fillFx = { company: { ticker: "T" }, promises: [{ id: "p1", category: "cost", metric: "Power cost < $500/t (H2)", target: { period: "H2FY26" } }] };
+ok(evalExtraction([{ category: "cost", metric: "Hot-metal CoP < $1,650/t (H2)", target: { period: "H2FY26" } }], fillFx).found === 0, "filler fragments (h, t) don't fake a power-cost ≈ hot-metal-CoP match");
 
 // ---- 7) input segmentation (Groq TPM) --------------------------------------
 console.log("\nsegmentation:");
