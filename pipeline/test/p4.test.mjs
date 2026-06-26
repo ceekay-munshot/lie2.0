@@ -437,6 +437,13 @@ const fixture = { company: { ticker: "TEST" }, promises: [
 const ev = evalExtraction(promises, fixture);
 ok(ev.known === 3 && ev.found === 2 && ev.recall > 0.6, `recall 2/3 (ebitda+capex matched, leverage missed) got ${ev.found}/${ev.known}`);
 ok(ev.missed.some((m) => m.category === "leverage"), "missed[] lists the leverage promise");
+// fuzzy/semantic matcher: cross-category paraphrase matches; unrelated does not
+const fxFuzzy = { company: { ticker: "TEST" }, promises: [
+  { id: "f1", category: "capacity", metric: "FY26 aluminium production 2.9 Mnt", target: { period: "FY26", value: 2.9 } },
+] };
+ok(evalExtraction([{ category: "volume", metric: "aluminium volume of 2.9 Mt", target: { period: "FY2026", value: 2.9 } }], fxFuzzy).found === 1, "fuzzy matches a cross-category paraphrase via compatible category + same number/period (capacity≈volume)");
+ok(evalExtraction([{ category: "timeline", metric: "plant commissioning by Dec 2027", target: { period: "FY28", value: null } }], fxFuzzy).found === 0, "fuzzy does NOT match an unrelated promise (different topic/period/number)");
+ok(evalExtraction(fxFuzzy.promises, fxFuzzy).recall === 1, "a fixture matched against itself is 100% recall");
 
 // ---- 7) input segmentation (Groq TPM) --------------------------------------
 console.log("\nsegmentation:");
