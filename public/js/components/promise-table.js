@@ -33,9 +33,18 @@ const COLS = [
   { key: "root", label: "Root-Cause", get: (p) => txt(p.root_cause) },
 ];
 
+const absNums = (s) => (String(s || "").replace(/,/g, "").match(/-?\d+(?:\.\d+)?/g) || []).map((n) => Math.abs(Number(n)));
+// magnitude of the variance for sorting. Many ledgers (incl. the curated golden) carry
+// only `variance.text` with the numeric fields null, so fall back to the largest number
+// in the text; -1 marks rows with no variance at all so they group distinctly.
 const varMag = (p) => {
   const v = p.variance || {};
-  return Math.abs(v.pct ?? v.bps ?? v.days ?? v.absolute ?? 0);
+  if (v.pct != null) return Math.abs(v.pct);
+  if (v.bps != null) return Math.abs(v.bps);
+  if (v.days != null) return Math.abs(v.days);
+  if (v.absolute != null) return Math.abs(v.absolute);
+  const ns = absNums(v.text);
+  return ns.length ? Math.max(...ns) : -1;
 };
 const COMPARE = {
   date: (a, b) => (Date.parse(a.date) || 0) - (Date.parse(b.date) || 0),
