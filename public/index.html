@@ -48,9 +48,8 @@
     };
   </script>
 
-  <!-- Icons + charts (charts unused on the home page; wired in later prompts) -->
+  <!-- Icons (ECharts is lazy-loaded on the company view by js/lib/echarts.js) -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 
   <style>
     /* ---- Design tokens (mirror of ui.js `tokens`) ---------------------- */
@@ -535,6 +534,44 @@
     }
     @media (max-width: 440px) {
       .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ==================================================================
+     * P7 — Charts (#charts): responsive ECharts panels.
+     * ================================================================== */
+    .charts-section { margin-top: 2px; }
+    .charts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .chart-panel { padding: 16px 16px 12px; display: grid; gap: 10px; align-content: start; }
+    .chart-panel.wide { grid-column: 1 / -1; }
+    .chart-head { display: flex; align-items: center; gap: 9px; }
+    .chart-head i { width: 17px; height: 17px; color: var(--accent-violet); flex: none; }
+    .chart-head h3 { margin: 0; font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+    .chart-sub { margin-left: auto; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+    .chart-canvas { width: 100%; min-height: 240px; }
+
+    /* chart states */
+    .chart-loading { height: 100%; min-height: 200px; display: grid; place-items: center; }
+    .chart-spinner { width: 26px; height: 26px; border-radius: 50%; border: 3px solid var(--line); border-top-color: var(--accent-violet); animation: chart-spin 0.8s linear infinite; }
+    @keyframes chart-spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .chart-spinner { animation: none; } }
+    .chart-empty, .chart-degrade {
+      height: 100%; min-height: 200px; display: grid; place-items: center; gap: 8px;
+      grid-auto-flow: row; text-align: center; color: var(--muted); font-size: 13.5px; padding: 16px;
+    }
+    .chart-degrade { grid-auto-flow: row; }
+    .chart-degrade i { width: 22px; height: 22px; opacity: 0.7; }
+
+    /* momentum: stat trio + chart */
+    .mom-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .mom-stat { padding: 10px 12px; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--ink2) 60%, transparent); border: 1px solid var(--line); display: grid; gap: 2px; }
+    .mom-stat-val { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+    .mom-stat-label { font-size: 11px; color: var(--muted); }
+    .mom-chart { width: 100%; min-height: 230px; }
+    @media (max-width: 520px) { .mom-stats { grid-template-columns: 1fr; } }
+
+    @media (max-width: 720px) {
+      .charts-grid { grid-template-columns: 1fr; }
+      .chart-panel.wide { grid-column: auto; }
     }
   </style>
 </head>

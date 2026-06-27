@@ -29,10 +29,13 @@ public/                   Static site (zero build step; CDN libs only)
                           provenanceBadge (honesty guard), ECharts theme, loadCompany/loadIndex
   js/app.js               Shell + router: home (hero search + company grid) ↔ company view
   js/lib/router.js        ?c=<ticker> query-param router (shareable URLs, back/fwd)
+  js/lib/fiscal.js        Browser fiscal-quarter math (periodIndex/maxPeriodIndex/quarterLabel)
+  js/lib/echarts.js       Lazy-load ECharts + dark theme; mountChart (loading/empty/offline states)
   js/components/search.js Company search autocomplete (fuzzy, keyboard nav, request CTA)
   js/components/credibility-hero.js  Score ring + delivery-vs-timeline split + status mix + provenance badge
   js/components/kpi-strip.js         Promises/testable/MET/PARTIAL/MISSED/NYT + credibility chips
-  js/views/company.js     Company view: header search · hero · KPI strip · P7–P9 placeholders
+  js/components/charts/   5 ECharts panels: status-donut · slippage-timeline · by-quarter · root-cause · momentum
+  js/views/company.js     Company view: header search · hero · KPI strip · #charts (P7) · P8–P9 placeholders
   data/companies/
     <ticker>.json         One ledger per company (validated against the schema)
     index.json            Generated card-sized summaries for the home page
@@ -76,6 +79,30 @@ fixtures/<ticker>.golden.json  Committed golden ledger — the verification eval
 pipeline/output/<ticker>/ Acquisition + corpus + promises + ledger artifacts (gitignored): manifest.json,
                           raw/*.pdf, corpus.json, promises.json, cache/{extract,verify}/
 ```
+
+## Charts (Prompt 7)
+
+Fills the company view's `#charts` anchor with **five ECharts panels driven entirely by
+the ledger** (`js/components/charts/`), matching the PDF report's aesthetic. ECharts is
+**lazy-loaded** on the company view (`js/lib/echarts.js`); every panel goes through
+`mountChart`, which shows a loading state, an empty state (builder returns null), or a
+graceful **"charts unavailable offline"** note if the CDN is blocked — it never throws.
+Generic + null-safe: panels read `aggregates` / `financial_trend` / `promises` of any
+`<ticker>.json` and self-hide when their data is absent.
+
+- **slippage-timeline** (the signature) — a floating bar per timeline promise from the
+  **PROMISED** quarter (amber dot, parsed from the commitment text via `lib/fiscal.js#maxPeriodIndex`)
+  to the **RE-SET/actual** quarter (red dot, parsed from the retrieved actual's wording, e.g.
+  "re-set to 1HFY27"), coloured by status. Empty state when nothing slipped.
+- **status-donut** — MET/PARTIAL/MISSED/NYT from `status_counts`, total in the centre.
+- **by-quarter** — stacked status bars from `aggregates.by_quarter`.
+- **root-cause** — horizontal bars from `aggregates.root_causes` (hidden if empty).
+- **momentum** — EBITDA columns + margin line from `financial_trend`, with a net-debt/EBITDA ·
+  ROCE · revenue stat trio (panel hidden entirely if `financial_trend` is empty).
+
+Charts are read-only (no schema change). Resize-aware (ResizeObserver). In-session: `npm
+run validate` + a Playwright pass (render with ECharts served locally · offline-degrade ·
+empty/hidden states · zero console errors).
 
 ## Dashboard shell (Prompt 6)
 
@@ -446,8 +473,10 @@ npm run eval:verify public/data/companies/vedl.json pipeline/fixtures/vedl.golde
       delivery-vs-timeline split, status mix) + KPI strip rendered from the ledger.
       **Provenance guard** stamps + badges mock/incomplete data so a truncated run
       never reads as a real verdict. Vanilla, schema-valid, browser-verified. *(this prompt)*
-- [ ] **P7 — Charts.** Status donut, slippage/timeline, financial-trend
-      (ECharts, dark theme).
+- [x] **P7 — Charts.** Five ledger-driven ECharts panels fill `#charts`: status donut,
+      the **slippage timeline** (promised→re-set, the signature), by-quarter stacked bars,
+      root-cause bars, financial momentum (EBITDA/margin + leverage/ROCE). Lazy-loaded with
+      a graceful offline-degrade; null-safe + responsive. Browser-verified. *(this prompt)*
 - [ ] **P8 — Track-record cards + master promise table.** Filter / sort / drill.
 - [ ] **P9 — PDF export.** Polished, multi-page report.
 - [ ] **P10 — Pipeline orchestration + multi-company.** Batch build, caching,

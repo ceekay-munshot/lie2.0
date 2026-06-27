@@ -10,14 +10,15 @@ delivery reliability, and exports a polished multi-page PDF.
 **Search a company → dashboard** (credibility score, status donut, slippage
 timeline, track-record cards, master promise table) **→ Export PDF.**
 
-This repo is being built in ~12 prompts. **Status: Prompts 1–6 complete** — the
+This repo is being built in ~12 prompts. **Status: Prompts 1–7 complete** — the
 foundation, document acquisition, ingestion & normalization, the extraction
 engine, **verification & credibility** (promises scored into the final ledger, the
-LLM retrieving while deterministic rules decide), and now the **dashboard shell**
-(search a company → a credibility hero rendered from the ledger, with a provenance
-guard that disclaims mock/incomplete data). Charts, track-record cards and PDF
-export land in later prompts. See [`CLAUDE.md`](./CLAUDE.md) for architecture, the
-data contract and the roadmap.
+LLM retrieving while deterministic rules decide), the **dashboard shell** (search a
+company → a credibility hero, with a provenance guard that disclaims mock/incomplete
+data), and now **charts** (five ledger-driven ECharts panels — including the signature
+promised→re-set **slippage timeline**). Track-record cards and PDF export land in later
+prompts. See [`CLAUDE.md`](./CLAUDE.md) for architecture, the data contract and the
+roadmap.
 
 ## Stack
 
@@ -301,6 +302,18 @@ The committed `vedl.json` is the curated golden (grey). A real incomplete live r
 — like the quota-truncated 61/B Vedanta pass — shows amber automatically, and flips
 to green once the complete re-run is committed. `npm run test:ui` proves the mapping.
 
+### Charts (Prompt 7)
+
+The company view's `#charts` section renders five themed, responsive ECharts panels
+straight from the ledger — **status donut**, the signature **slippage timeline**
+(promised → re-set, parsed from each timeline promise's commitment text and its
+retrieved actual), **by-quarter** stacked bars, **root-cause** bars, and **financial
+momentum** (EBITDA + margin, with a net-debt/EBITDA · ROCE · revenue stat trio).
+ECharts is lazy-loaded; if the CDN is blocked the panels show a graceful "charts
+unavailable offline" note rather than throwing, and panels self-hide when their data
+is absent (no `financial_trend` → no momentum; no slips → slippage empty state).
+Charts are read-only — no schema change.
+
 ## Layout
 
 ```
@@ -310,9 +323,9 @@ public/                    Static dashboard (zero build step)
   index.html               Shell: design system <style>, boot loader, header, OG/favicon
   js/ui.js                 Design system + provenanceBadge (honesty guard) + data loaders
   js/app.js                Shell + router: home ↔ company view
-  js/lib/router.js         ?c=<ticker> query-param router
-  js/components/           search · credibility-hero · kpi-strip
-  js/views/company.js      Company view (hero + KPI + P7–P9 placeholders)
+  js/lib/                  router (?c=ticker) · fiscal (quarter math) · echarts (lazy-load + mountChart)
+  js/components/           search · credibility-hero · kpi-strip · charts/ (5 ECharts panels)
+  js/views/company.js      Company view (hero + KPI + #charts + P8–P9 placeholders)
 pipeline/
   lib/llm.mjs              Provider-agnostic LLM client
   lib/manifest.mjs         Acquisition contract (fiscal-quarter, sha256, paths)
