@@ -128,6 +128,14 @@ function momentumChart(ft, w = 360, h = 170) {
   // scale off the largest non-negative value (floored to 1) and clamp every bar at ≥0.
   const maxv = Math.max(1, ...vals.map((x) => Math.max(0, x[1] ?? 0))) * 1.12;
   const pad = 30, gw = (w - pad - 12) / vals.length, bw = gw * 0.46, base = h - 24, top = 14;
+  // margin line: scale from the data (a fixed 0–50% scale clips high-margin or loss-making
+  // ledgers off the chart) but anchored to 0 so a small fluctuation isn't visually exaggerated;
+  // padded so points never sit on the very edge.
+  const ms = vals.map((x) => x[2]).filter((v) => v != null);
+  let mLo = Math.min(0, ...(ms.length ? ms : [0])), mHi = Math.max(0, ...(ms.length ? ms : [1]));
+  if (mHi - mLo < 1e-9) mHi = mLo + 1;
+  const mpad = (mHi - mLo) * 0.12; mLo -= mpad; mHi += mpad;
+  const mY = (m) => base - ((m - mLo) / (mHi - mLo)) * (base - top);
   const s = [`<svg viewBox="0 0 ${w} ${h}" class="eb">`];
   const pts = [];
   vals.forEach(([lab, v, m], i) => {
@@ -139,7 +147,7 @@ function momentumChart(ft, w = 360, h = 170) {
       s.push(`<text x="${x + bw / 2}" y="${y - 6}" class="eb-v">${v.toLocaleString("en-IN")}</text>`);
     }
     s.push(`<text x="${x + bw / 2}" y="${base + 16}" class="eb-x">${esc(shortQ(lab))}</text>`);
-    if (m != null) pts.push([x + bw / 2, base - (m / 50) * (base - top), m]);
+    if (m != null) pts.push([x + bw / 2, mY(m), m]);
   });
   if (pts.length > 1) s.push(`<polyline points="${pts.map((p) => `${p[0]},${p[1]}`).join(" ")}" fill="none" stroke="${T.TEAL}" stroke-width="2.5"/>`);
   for (const [x, y, m] of pts) {
@@ -382,7 +390,13 @@ function masterTable(promises, total, info) {
 }
 
 function methodology(vw, docs, info) {
-  const src = docs.map((d) => `<div class="scard"><div class="t">${esc(d.quarter)} ${esc(DOC_TYPE[d.type] || "Document")}</div><div class="d">${esc(d.date)}${d.role ? ` · ${esc(d.role)}` : ""}</div></div>`).join("");
+  // the methodology page is a single fixed (overflow:hidden) slide, so a many-document ledger
+  // would silently clip later sources. Cap the cards and surface the remainder as an explicit count.
+  const MAXSRC = 12;
+  const shownDocs = docs.slice(0, MAXSRC);
+  const moreDocs = docs.length - shownDocs.length;
+  const src = shownDocs.map((d) => `<div class="scard"><div class="t">${esc(d.quarter)} ${esc(DOC_TYPE[d.type] || "Document")}</div><div class="d">${esc(d.date)}${d.role ? ` · ${esc(d.role)}` : ""}</div></div>`).join("")
+    + (moreDocs > 0 ? `<div class="scard"><div class="t">+${moreDocs} more</div><div class="d">source document${moreDocs === 1 ? "" : "s"} (see the master table)</div></div>` : "");
   return `<div class="slide">${watermarkHTML(info)}<div class="bg" style="opacity:.55"></div><div class="pad">
     <div class="sec-h"><span class="ix">04</span><h2 style="color:#fff">Methodology &amp; Sources</h2><span class="tl"></span></div>
     <div class="mlist">

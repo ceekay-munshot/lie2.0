@@ -51,6 +51,9 @@ jobs:
           npm i -D playwright --no-save
           npx playwright install --with-deps chromium
 
+      - name: Remove any previously-committed report (a refused build must not ship a stale PDF)
+        run: rm -f "public/reports/${{ steps.t.outputs.lc }}.pdf"
+
       - name: Build the report PDF (refuses mock/provisional unless force)
         run: npm run report
 
@@ -75,17 +78,23 @@ jobs:
         shell: bash
         run: |
           f="public/reports/${{ steps.t.outputs.lc }}.pdf"
+          ledger="public/data/companies/${{ steps.t.outputs.lc }}.json"
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "$f"
           if git diff --cached --quiet; then echo "no change to $f — nothing to commit"; exit 0; fi
           git commit -m "build: ${{ steps.t.outputs.lc }} PDF report"
+          ledger_sha="$(git rev-parse "HEAD:$ledger")"   # the exact ledger this PDF was built + guarded against
           # Push with rebase-retry against a possibly-moving branch.
           for i in 1 2 3 4 5; do
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then echo "pushed"; exit 0; fi
             echo "push rejected — rebasing (attempt $i)"; sleep $((i * 2))
             git fetch origin "$GITHUB_REF_NAME"
-            git rebase "origin/$GITHUB_REF_NAME" || git rebase --abort
+            git rebase "origin/$GITHUB_REF_NAME" || { git rebase --abort; echo "::error::rebase failed"; exit 1; }
+            # If a concurrent push changed the ledger, our PDF was built against a stale one — don't publish it.
+            if [ "$(git rev-parse "HEAD:$ledger")" != "$ledger_sha" ]; then
+              echo "::error::$ledger changed during the run — refusing to publish a PDF built against a stale ledger. Re-run the workflow."; exit 1
+            fi
           done
           echo "push failed after retries"; exit 1
 
