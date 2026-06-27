@@ -6,9 +6,14 @@
  * + ESC + focus-restore + scroll-lock (no leak). Null-safe — NYT promises just show less.
  */
 import { statusColor, confColor, escapeHTML } from "../ui.js";
+import { onRoute } from "../lib/router.js";
 
 const LABEL = { MET: "Met", PARTIAL: "Partial", MISSED: "Missed", NYT: "NYT" };
 let current = null; // { overlay, trigger, onKey, prevOverflow }
+
+// A route change (navigate() or browser Back/Forward) swaps #app underneath the modal,
+// which lives on document.body — close it so no stale receipt or scroll-lock survives.
+onRoute(() => closeDrill());
 
 function row(label, value, cls = "") {
   if (value == null || value === "") return "";
