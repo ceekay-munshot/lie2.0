@@ -27,8 +27,10 @@ const die = (m) => { console.error(`build-report: ${m}`); process.exit(1); };
 function riskLabel(prov) {
   const mode = prov?.mode || "unknown";
   if (mode === "mock") return "MOCK";
-  if (mode === "live" && prov.complete === false) return "PROVISIONAL (incomplete retrieval)";
-  return null; // manual / complete-live / unknown → safe to build
+  // `complete` is optional/nullable; the report template watermarks any live ledger that isn't
+  // explicitly complete, so a missing/null `complete` is provisional too — only complete:true is safe.
+  if (mode === "live" && prov.complete !== true) return "PROVISIONAL (incomplete retrieval)";
+  return null; // manual / complete-live → safe to build
 }
 
 async function main() {

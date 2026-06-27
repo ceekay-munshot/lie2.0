@@ -120,19 +120,24 @@ function gantt(rows, qs, w = 580, rh = 34) {
 }
 
 function momentumChart(ft, w = 360, h = 170) {
-  const vals = ft.map((q) => [q.quarter, num(q.ebitda), num(q.ebitda_margin)]).filter((x) => x[1] != null);
+  // keep any quarter that reports EITHER absolute EBITDA or a margin (the schema allows
+  // ebitda:null) — a margin-only ledger still renders its line series instead of an empty page.
+  const vals = ft.map((q) => [q.quarter, num(q.ebitda), num(q.ebitda_margin)]).filter((x) => x[1] != null || x[2] != null);
   if (!vals.length) return "";
   // guard against all-zero (NaN) and loss-making/negative EBITDA (negative bar heights):
   // scale off the largest non-negative value (floored to 1) and clamp every bar at ≥0.
-  const maxv = Math.max(1, ...vals.map((x) => Math.max(0, x[1]))) * 1.12;
+  const maxv = Math.max(1, ...vals.map((x) => Math.max(0, x[1] ?? 0))) * 1.12;
   const pad = 30, gw = (w - pad - 12) / vals.length, bw = gw * 0.46, base = h - 24, top = 14;
   const s = [`<svg viewBox="0 0 ${w} ${h}" class="eb">`];
   const pts = [];
   vals.forEach(([lab, v, m], i) => {
-    const x = pad + gw * i + (gw - bw) / 2, bh = Math.max(0, (v / maxv) * (base - top)), y = base - bh;
-    s.push(`<defs><linearGradient id="g${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.GOLD}"/><stop offset="1" stop-color="${T.RED}"/></linearGradient></defs>`);
-    s.push(`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="4" fill="url(#g${i})"/>`);
-    s.push(`<text x="${x + bw / 2}" y="${y - 6}" class="eb-v">${v.toLocaleString("en-IN")}</text>`);
+    const x = pad + gw * i + (gw - bw) / 2;
+    if (v != null) { // a bar only when this quarter reports an absolute EBITDA
+      const bh = Math.max(0, (v / maxv) * (base - top)), y = base - bh;
+      s.push(`<defs><linearGradient id="g${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.GOLD}"/><stop offset="1" stop-color="${T.RED}"/></linearGradient></defs>`);
+      s.push(`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="4" fill="url(#g${i})"/>`);
+      s.push(`<text x="${x + bw / 2}" y="${y - 6}" class="eb-v">${v.toLocaleString("en-IN")}</text>`);
+    }
     s.push(`<text x="${x + bw / 2}" y="${base + 16}" class="eb-x">${esc(shortQ(lab))}</text>`);
     if (m != null) pts.push([x + bw / 2, base - (m / 50) * (base - top), m]);
   });

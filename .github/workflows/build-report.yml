@@ -63,7 +63,9 @@ jobs:
           node -e '
             const o = require("./public/data/companies/" + process.argv[1] + ".json");
             const p = o.provenance || {};
-            const risky = p.mode === "mock" || (p.mode === "live" && p.complete === false);
+            // complete is optional/nullable; a live ledger is committable ONLY when complete:true.
+            // mock, and live with complete false/null/omitted (watermarked provisional), stay artifact-only.
+            const risky = p.mode === "mock" || (p.mode === "live" && p.complete !== true);
             console.log("provenance:", p.mode || "unknown", "· complete:", p.complete, "→", risky ? "RISKY (artifact only)" : "committable");
             require("fs").appendFileSync(process.env.GITHUB_OUTPUT, "committable=" + (risky ? "false" : "true") + "\n");
           ' "${{ steps.t.outputs.lc }}"
