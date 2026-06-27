@@ -1,0 +1,117 @@
+# Verification & credibility (Prompt 5) — live run, CI-only.
+#
+# Turns the committed corpus fixture into the final schema-valid company ledger:
+# extract (if needed) → retrieve each ACTUAL from later docs (the ONLY LLM step) →
+# DETERMINISTIC status/variance → financial trend → aggregates + credibility. The
+# model never decides pass/fail. API keys live ONLY in GitHub Secrets, so the live
+# retrieval runs here; in-session we run the $0 mock path + deterministic unit
+# tests. Validates the engine's ledger against the schema and evaluates it against
+# the golden fixture. Nothing is committed.
+#
+# Required repo secrets: GEMINI_API_KEY, GROQ_API_KEY, MISTRAL_API_KEY
+# Egress: generativelanguage.googleapis.com · api.groq.com · api.mistral.ai
+#
+# Needs (committed): pipeline/fixtures/<ticker>.corpus.json  (extract/verify input)
+#                    pipeline/fixtures/<ticker>.golden.json  (eval target)
+
+name: Test verification (credibility)
+
+on:
+  workflow_dispatch:
+    inputs:
+      ticker:
+        description: "Ticker (pipeline/fixtures/<ticker>.corpus.json + <ticker>.golden.json must exist)"
+        required: true
+        default: "vedl"
+      strategy:
+        description: "Extract LLM strategy (failover = quota-efficient default; ensemble = 3× quota, max recall)"
+        type: choice
+        options: [failover, ensemble, partition, single]
+        default: failover
+      partial_tol:
+        description: "PARTIAL band as a fraction (just-missed within this of target → PARTIAL)"
+        required: false
+        default: "0.05"
+      timeline_grace_qtrs:
+        description: "Quarters a milestone may slip and still count PARTIAL (beyond → MISSED)"
+        required: false
+        default: "1"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TICKER: ${{ inputs.ticker }}
+      LLM_STRATEGY: ${{ inputs.strategy }}
+      CORPUS: pipeline/fixtures/${{ inputs.ticker }}.corpus.json
+      PARTIAL_TOL: ${{ inputs.partial_tol }}
+      TIMELINE_GRACE_QTRS: ${{ inputs.timeline_grace_qtrs }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+      LLM_CONCURRENCY: "2"
+      DEBUG: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install deps (--no-save)
+        run: npm install --no-save --no-audit --no-fund ajv ajv-formats
+
+      - name: Deterministic unit tests (no keys needed)
+        run: node pipeline/test/p5.test.mjs
+
+      - name: Verify (live — extract if needed → retrieve actuals → rules → score)
+        shell: bash
+        run: |
+          set -o pipefail   # without this the pipe masks a verify.mjs failure behind tee's exit 0
+          mkdir -p pipeline/output/${TICKER}
+          node pipeline/verify.mjs 2>&1 | tee pipeline/output/${TICKER}/verify-summary.txt
+
+      - name: Validate the engine ledger against the schema
+        run: node pipeline/validate.mjs
+
+      - name: Print credibility + verdict mix
+        if: ${{ always() }}
+        run: |
+          f="public/data/companies/${TICKER}.json"
+          if [ -f "$f" ]; then
+            node -e '
+              const o = require("./"+process.argv[1]);
+              const a = o.aggregates || {}, c = o.credibility || {}, sc = a.status_counts || {};
+              console.log("company    :", o.company?.name, "("+o.company?.ticker+")");
+              console.log("window     : latest_reported", o.verification_window?.latest_reported, "("+o.verification_window?.latest_reported_date+")");
+              console.log("promises   :", a.total, "| MET", sc.MET, "/ PARTIAL", sc.PARTIAL, "/ MISSED", sc.MISSED, "/ NYT", sc.NYT);
+              console.log("testable   :", a.testable, "| credibility", c.score, "("+c.grade+")  timeline", c.timeline_score, "delivery", c.delivery_score);
+              console.log("headline   :", c.headline);
+              console.log("\nVERDICT SAMPLE (first 8 testable):");
+              let n = 0;
+              for (const p of (o.promises||[])) {
+                if (p.status === "NYT") continue;
+                const v = p.variance || {};
+                console.log("  ["+p.status+"] ("+p.category+") "+String(p.promise||"").slice(0,64));
+                console.log("     actual:", String(p.actual?.what_happened || p.actual?.text || "—").slice(0,80), "| var:", v.text || "—");
+                if (++n >= 8) break;
+              }
+            ' "$f"
+          else
+            echo "no ledger produced"; exit 1
+          fi
+
+      - name: Upload artifacts (ledger + promises + eval summary)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: verify-${{ inputs.ticker }}-${{ inputs.strategy }}
+          path: |
+            public/data/companies/${{ inputs.ticker }}.json
+            pipeline/output/${{ inputs.ticker }}/promises.json
+            pipeline/output/${{ inputs.ticker }}/verify-summary.txt
+          if-no-files-found: warn
