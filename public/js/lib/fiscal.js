@@ -11,16 +11,31 @@ export function periodIndex(s) {
   const raw = String(s ?? "").toLowerCase();
   let t = raw.replace(/[.\s]/g, ""); // keep apostrophes — they mark a year shorthand (1Q'27)
   if (!t) return null;
-  let fy = null;
+  let fy = null, q = null;
   const fym = t.match(/fy'?(\d{2,4})/);
   if (fym) { fy = Number(fym[1].slice(-2)); t = t.replace(/fy'?\d{2,4}/, " "); }
   else {
-    const apos = t.match(/['’](\d{2,4})/); // 1Q'27 / Q1'27 / 2H'26 / '27
-    if (apos) { fy = Number(apos[1].slice(-2)); t = t.replace(/['’]\d{2,4}/, " "); }
+    // 1Q'27 / Q1'27 / 2H'26 / '27 → fiscal year; but a month + apostrophe year (Apr'26)
+    // is a CALENDAR date — derive the fiscal quarter from the month.
+    const apos = t.match(/['’](\d{2,4})/);
+    if (apos) {
+      const yy = Number(apos[1].slice(-2));
+      t = t.replace(/['’]\d{2,4}/, " ");
+      const mIdx = MON.findIndex((m) => t.includes(m));
+      const hasQH = /q[1-4]|[1-4]q|h[12]|[12]h/.test(t);
+      if (mIdx >= 0 && !hasQH) {
+        const mn = mIdx + 1, cy = 2000 + yy;
+        fy = (mn <= 3 ? cy : cy + 1) % 100;
+        q = mn <= 3 ? 4 : mn <= 6 ? 1 : mn <= 9 ? 2 : 3;
+      } else {
+        fy = yy;
+      }
+    }
   }
-  let q = null;
-  const qm = t.match(/q([1-4])/) || t.match(/([1-4])q/);
-  if (qm) q = Number(qm[1]);
+  if (q == null) {
+    const qm = t.match(/q([1-4])/) || t.match(/([1-4])q/);
+    if (qm) q = Number(qm[1]);
+  }
   if (q == null) {
     const hm = t.match(/h([12])/) || t.match(/([12])h/);
     if (hm) q = hm[1] === "1" ? 2 : 4; // half-year → its closing quarter
@@ -43,6 +58,7 @@ const PERIOD_RE = new RegExp(
     "fy\\s*'?\\d{2,4}",
     "(?:[1-4]q|q[1-4]|[12]h|h[12])\\s*'\\s*\\d{2}",
     "(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\\w*\\s+(?:19|20)\\d{2}",
+    "(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\\w*\\s*['’]\\s*\\d{2}",
     "(?:19|20)\\d{2}",
   ].join("|"),
   "gi",

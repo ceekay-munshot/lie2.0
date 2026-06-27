@@ -27,6 +27,10 @@ const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "
 const num = (v) => (v != null && v !== "" && !Number.isNaN(Number(v)) ? Number(v) : null);
 const chunk = (arr, n) => { const out = []; for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n)); return out; };
 const fmtINRcr = (n) => (n == null ? "—" : `₹${Number(n).toLocaleString("en-IN")} cr`);
+// financial_trend carries a per-row unit; don't assume ₹ crore. Label + format from the ledger's unit.
+const isCrUnit = (u) => { const s = String(u || "").toLowerCase().replace(/[^a-z]/g, ""); return s === "" || s === "cr" || s === "crore" || s === "crores" || s === "inrcr" || s === "inrcrore"; };
+const trendUnitLabel = (ft) => { const u = (ft.find((q) => q && q.unit)?.unit) || ""; return isCrUnit(u) ? "₹ cr" : String(u).replace(/_/g, " "); };
+const fmtTrendVal = (v, label) => (v == null ? "—" : label === "₹ cr" ? fmtINRcr(v) : `${Number(v).toLocaleString("en-IN")} ${label}`);
 const DOC_TYPE = { transcript: "Call", presentation: "Presn", press_release: "PR", annual_report: "AR", other: "Doc" };
 const shortQ = (q) => String(q || "").replace(/\s*FY\s*\d+/i, "").trim() || q;
 
@@ -118,12 +122,14 @@ function gantt(rows, qs, w = 580, rh = 34) {
 function momentumChart(ft, w = 360, h = 170) {
   const vals = ft.map((q) => [q.quarter, num(q.ebitda), num(q.ebitda_margin)]).filter((x) => x[1] != null);
   if (!vals.length) return "";
-  const maxv = Math.max(...vals.map((x) => x[1])) * 1.12;
+  // guard against all-zero (NaN) and loss-making/negative EBITDA (negative bar heights):
+  // scale off the largest non-negative value (floored to 1) and clamp every bar at ≥0.
+  const maxv = Math.max(1, ...vals.map((x) => Math.max(0, x[1]))) * 1.12;
   const pad = 30, gw = (w - pad - 12) / vals.length, bw = gw * 0.46, base = h - 24, top = 14;
   const s = [`<svg viewBox="0 0 ${w} ${h}" class="eb">`];
   const pts = [];
   vals.forEach(([lab, v, m], i) => {
-    const x = pad + gw * i + (gw - bw) / 2, bh = (v / maxv) * (base - top), y = base - bh;
+    const x = pad + gw * i + (gw - bw) / 2, bh = Math.max(0, (v / maxv) * (base - top)), y = base - bh;
     s.push(`<defs><linearGradient id="g${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.GOLD}"/><stop offset="1" stop-color="${T.RED}"/></linearGradient></defs>`);
     s.push(`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="4" fill="url(#g${i})"/>`);
     s.push(`<text x="${x + bw / 2}" y="${y - 6}" class="eb-v">${v.toLocaleString("en-IN")}</text>`);
@@ -151,6 +157,21 @@ function provInfo(prov) {
   return { tone: "provisional", label: "Provisional — incomplete retrieval", watermark: { text: `PROVISIONAL — INCOMPLETE RETRIEVAL${forced ? ` (${forced} FORCED-NYT)` : ""}`, color: T.GOLD }, banner: `PROVISIONAL — retrieval did not complete${bits ? ` (${bits})` : ""}. Treat the score as indicative, not a final verdict.` };
 }
 const watermarkHTML = (info) => (info.watermark ? `<div class="wmark" style="--wc:${info.watermark.color}"><span>${esc(info.watermark.text)}</span></div>` : "");
+// The master table auto-paginates (one flowing block, not discrete .slide pages), so it can't carry a
+// per-page .wmark. Tile a diagonal warning as a repeating background instead, so EVERY printed table page
+// still shows the mock/provisional provenance overlay — a downloaded PDF can't be split free of it.
+function tableWatermark(info) {
+  const wm = info && info.watermark;
+  if (!wm) return "";
+  // opacity is high enough to read through the dense table cells (zebra rows are near-opaque),
+  // so no table page can be extracted free of the mock/provisional warning.
+  const txt = esc(wm.text);
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='360' height='250'><text x='180' y='125' transform='rotate(-25 180 125)' text-anchor='middle' font-family='Inter,Arial,sans-serif' font-size='25' font-weight='800' fill='${wm.color}' fill-opacity='0.22'>${txt}</text></svg>`;
+  // base64 (not percent-encoding): the SVG's rotate(...) parens and quotes would otherwise
+  // terminate an unquoted CSS url() early, so the watermark would silently fail to load.
+  const uri = `data:image/svg+xml;base64,${Buffer.from(svg, "utf8").toString("base64")}`;
+  return `background-image:url(${uri});background-repeat:repeat;`;
+}
 
 /* ---------- the report ---------- */
 export function reportHTML(ledger) {
@@ -228,7 +249,7 @@ export function reportHTML(ledger) {
       <h1>${esc(name.toUpperCase())}<br><span class="grad">Lie Detector</span></h1>
       <div class="sub">Every <b>measurable</b> management commitment${co.sector ? ` for this ${esc(co.sector)} company` : ""} — extracted from the earnings calls and investor decks, then verified against reported actuals${cov.from && cov.to ? ` across <b>${esc(cov.from)}–${esc(cov.to)}</b>` : ""}.</div>
       <div class="cover-cred">
-        <div class="cc-ring" style="--gc:${gradeColor(grade)}"><div class="cc-grade">${esc(grade)}</div><div class="cc-score">${cred.score ?? "—"}<small>/100</small></div></div>
+        <div class="cc-ring" style="--gc:${gradeColor(grade)};--p:${num(cred.score) ?? 0}"><div class="cc-grade">${esc(grade)}</div><div class="cc-score">${cred.score ?? "—"}<small>/100</small></div></div>
         <div class="cc-split"><div class="cc-split-h">Delivery vs. deadlines</div>${splitBar("Delivery", cred.delivery_score)}${splitBar("Timelines", cred.timeline_score)}</div>
         <div class="cc-prov prov-${info.tone}">${esc(info.label)}</div>
       </div>
@@ -271,6 +292,7 @@ export function reportHTML(ledger) {
   if (ganttSVG || momoSVG) {
     const latest = (key) => { for (let i = ft.length - 1; i >= 0; i--) { const v = num(ft[i][key]); if (v != null) return { v, q: ft[i].quarter }; } return null; };
     const lev = latest("net_debt_ebitda"), roce = latest("roce"), rev = latest("revenue");
+    const unitLabel = trendUnitLabel(ft);
     const stat = (val, lab, color) => (val == null ? "" : `<div class="kpi" style="flex:1;padding:11px 13px"><div class="kpi-n" style="font-size:24px;color:${color}">${val}</div><div class="kpi-l">${lab}</div></div>`);
     H.push(`<div class="slide light">${watermarkHTML(info)}<div class="pad">
       <div class="sec-h"><span class="ix">02</span><h2>Deadline Slippage &amp; Execution Momentum</h2><span class="tl"></span></div>
@@ -278,7 +300,7 @@ export function reportHTML(ledger) {
       <div class="row2">
         <div class="panel" style="flex:1.55"><h3>Timeline commitments — promised → revised</h3>${ganttSVG || `<div class="empty-pan">No slipped timelines — deadlines held.</div>`}
           <div style="display:flex;gap:18px;margin-top:6px;font-size:11px;color:#5b677f"><span><span class="legdot" style="background:${T.GOLD}"></span> Promised window</span><span><span class="legdot" style="background:${T.MISSED}"></span> Re-set / actual window</span></div></div>
-        ${momoSVG ? `<div class="panel" style="flex:1"><h3>EBITDA (₹ cr) &amp; margin</h3>${momoSVG}<div style="display:flex;gap:10px;margin-top:10px">${stat(lev ? `${lev.v.toFixed(2)}×` : null, `Net debt / EBITDA${lev ? ` · ${shortQ(lev.q)}` : ""}`, "#2563eb")}${stat(roce ? `${roce.v}%` : null, `ROCE${roce ? ` · ${shortQ(roce.q)}` : ""}`, "#7c3aed")}${stat(rev ? fmtINRcr(rev.v) : null, `Revenue${rev ? ` · ${shortQ(rev.q)}` : ""}`, "#16a34a")}</div></div>` : ""}
+        ${momoSVG ? `<div class="panel" style="flex:1"><h3>EBITDA (${esc(unitLabel)}) &amp; margin</h3>${momoSVG}<div style="display:flex;gap:10px;margin-top:10px">${stat(lev ? `${lev.v.toFixed(2)}×` : null, `Net debt / EBITDA${lev ? ` · ${shortQ(lev.q)}` : ""}`, "#2563eb")}${stat(roce ? `${roce.v}%` : null, `ROCE${roce ? ` · ${shortQ(roce.q)}` : ""}`, "#7c3aed")}${stat(rev ? fmtTrendVal(rev.v, unitLabel) : null, `Revenue${rev ? ` · ${shortQ(rev.q)}` : ""}`, "#16a34a")}</div></div>` : ""}
       </div>
       ${foot()}</div></div>`);
   }
@@ -301,7 +323,7 @@ export function reportHTML(ledger) {
   }
 
   /* MASTER TABLE (auto-paginates; header repeats) */
-  H.push(masterTable(promises, total));
+  H.push(masterTable(promises, total, info));
 
   /* METHODOLOGY & SOURCES */
   H.push(methodology(vw, docs, info));
@@ -326,7 +348,7 @@ function card(p) {
 }
 
 const TBL_COLS = ["Date", "Qtr/FY", "Source", "Promise", "Exact Quote", "Metric + Target", "Test Date", "Conf.", "What Happened", "Status", "Variance", "Mgmt Explanation", "Root-Cause"];
-function masterTable(promises, total) {
+function masterTable(promises, total, info) {
   const rows = promises.slice().sort((a, b) => (periodIndex(a.quarter_context) ?? 0) - (periodIndex(b.quarter_context) ?? 0) || String(a.date).localeCompare(String(b.date)) || String(a.id).localeCompare(String(b.id)));
   const confBadge = (c) => (c ? `<span class="cf" style="background:${{ H: T.RED, M: T.GOLD, L: T.NYT }[c] || T.NYT}">${esc(c)}</span>` : "");
   const metricTarget = (p) => [p.metric, p.target?.text].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(" · ");
@@ -351,12 +373,12 @@ function masterTable(promises, total) {
   }).join("");
   const colgroup = `<colgroup><col class="c-date"><col class="c-qtr"><col class="c-src"><col class="c-prom"><col class="c-quote"><col class="c-metric"><col class="c-test"><col class="c-conf"><col class="c-act"><col class="c-stat"><col class="c-var"><col class="c-mgmt"><col class="c-tag"></colgroup>`;
   const thead = `<thead><tr>${TBL_COLS.map((c) => `<th>${esc(c)}</th>`).join("")}</tr></thead>`;
-  return `<div class="table-wrap"><div class="tbl-head"><h2>Master Table — all ${total} measurable commitments</h2><span>Chronological · oldest first · colour = delivery status</span></div><table>${colgroup}${thead}<tbody>${tr}</tbody></table></div>`;
+  return `<div class="table-wrap" style="${tableWatermark(info)}"><div class="tbl-head"><h2>Master Table — all ${total} measurable commitments</h2><span>Chronological · oldest first · colour = delivery status</span></div><table>${colgroup}${thead}<tbody>${tr}</tbody></table></div>`;
 }
 
 function methodology(vw, docs, info) {
   const src = docs.map((d) => `<div class="scard"><div class="t">${esc(d.quarter)} ${esc(DOC_TYPE[d.type] || "Document")}</div><div class="d">${esc(d.date)}${d.role ? ` · ${esc(d.role)}` : ""}</div></div>`).join("");
-  return `<div class="slide"><div class="bg" style="opacity:.55"></div><div class="pad">
+  return `<div class="slide">${watermarkHTML(info)}<div class="bg" style="opacity:.55"></div><div class="pad">
     <div class="sec-h"><span class="ix">04</span><h2 style="color:#fff">Methodology &amp; Sources</h2><span class="tl"></span></div>
     <div class="mlist">
       <div class="mbox"><h4>What qualifies as a commitment</h4><p>Only <b>measurable</b> statements — a number, %, ratio, ₹/$ figure or a dated milestone. Generic or aspirational commentary is rejected. One promise per row, with a verbatim ≤25-word quote.</p></div>
@@ -496,8 +518,7 @@ const EXTRA_CSS = `
 .empty-pan{padding:40px;text-align:center;color:#8893a8;font-size:13px}
 /* cover credibility ring + split */
 .cover-cred{display:flex;align-items:center;gap:22px;margin-top:24px}
-.cc-ring{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--gc) calc(1%*var(--p,0)),rgba(255,255,255,.08) 0);box-shadow:0 0 0 1px ${T.LINE} inset;position:relative}
-.cc-ring{background:radial-gradient(circle at center, ${T.INK2} 56%, transparent 57%), conic-gradient(var(--gc) 0, var(--gc) 100%, rgba(255,255,255,.08) 0)}
+.cc-ring{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 0 1px ${T.LINE} inset;position:relative;background:radial-gradient(circle at center, ${T.INK2} 56%, transparent 57%), conic-gradient(var(--gc) calc(1%*var(--p,0)), rgba(255,255,255,.10) 0)}
 .cc-grade{font-size:40px;font-weight:800;color:var(--gc);line-height:1}
 .cc-score{position:absolute;bottom:14px;font-size:11px;color:${T.MUT};font-weight:700}
 .cc-score small{opacity:.7}

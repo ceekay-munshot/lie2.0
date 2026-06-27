@@ -100,7 +100,13 @@ async function mountExport(ledger) {
   const ticker = String(ledger.company?.ticker || "").toLowerCase();
   const url = `/reports/${ticker}.pdf`;
   let ok = false;
-  try { const r = await fetch(url, { method: "HEAD", cache: "no-cache" }); ok = r.ok; } catch { ok = false; }
+  // A missing asset falls through to index.html (the Worker's single-page-app not_found_handling) with a
+  // 200, so r.ok alone would offer HTML as a ".pdf". Require the response to actually be a PDF.
+  try {
+    const r = await fetch(url, { method: "HEAD", cache: "no-cache" });
+    const ct = (r.headers.get("content-type") || "").toLowerCase();
+    ok = r.ok && ct.includes("pdf");
+  } catch { ok = false; }
   if (ok) {
     body.innerHTML = `
       <p class="export-note">A polished multi-page PDF — cover · executive dashboard · slippage &amp; momentum · track record · master table · methodology.</p>
