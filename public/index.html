@@ -677,6 +677,26 @@
       .drill-rows { grid-template-columns: 1fr; }
       .fb-statuses { flex-wrap: wrap; }
     }
+
+    /* ==================================================================
+     * P9 — Export PDF section (#export).
+     * ================================================================== */
+    .export-section { padding: 18px 22px; display: grid; gap: 12px; }
+    .export-head { display: flex; align-items: center; gap: 10px; }
+    .export-head i { width: 18px; height: 18px; color: var(--accent-violet); }
+    .export-head h2 { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: -0.01em; }
+    .export-body { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    .export-note { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.5; max-width: 660px; }
+    .export-note code { font-family: var(--font-mono); font-size: 12px; background: var(--ink2); padding: 2px 6px; border-radius: 6px; color: var(--text); }
+    .export-status { color: var(--muted); font-size: 13px; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px; flex: none; cursor: pointer; text-decoration: none;
+      font: inherit; font-size: 14px; font-weight: 700; color: var(--ink); padding: 11px 18px; border-radius: 999px;
+      border: 0; background: linear-gradient(92deg, var(--accent-gold), var(--accent-red));
+      box-shadow: 0 12px 28px -14px var(--accent-red);
+    }
+    .btn-primary:hover { filter: brightness(1.06); }
+    .btn-primary i { width: 16px; height: 16px; }
   </style>
 </head>
 <body>

@@ -10,16 +10,18 @@ delivery reliability, and exports a polished multi-page PDF.
 **Search a company → dashboard** (credibility score, status donut, slippage
 timeline, track-record cards, master promise table) **→ Export PDF.**
 
-This repo is being built in ~12 prompts. **Status: Prompts 1–8 complete** — the
+This repo is being built in ~12 prompts. **Status: Prompts 1–9 complete** — the
 foundation, document acquisition, ingestion & normalization, the extraction
 engine, **verification & credibility** (promises scored into the final ledger, the
 LLM retrieving while deterministic rules decide), the **dashboard** (search → a
 credibility hero with a provenance guard, five ledger-driven charts incl. the
-signature promised→re-set **slippage timeline**), and now the **track-record cards +
+signature promised→re-set **slippage timeline**), the **track-record cards +
 13-column master table + per-promise drill modal** — every verdict auditable down to
-its verbatim, quote-grounded receipt. PDF export and multi-company automation land in
-later prompts. See [`CLAUDE.md`](./CLAUDE.md) for architecture, the data contract and
-the roadmap.
+its verbatim, quote-grounded receipt — and now **one-click PDF export**: a polished,
+multi-page A4 report pre-built by the pipeline (headless Chromium) and committed to
+`public/reports/`, where the dashboard's Export button serves it. Multi-company
+automation lands in later prompts. See [`CLAUDE.md`](./CLAUDE.md) for architecture,
+the data contract and the roadmap.
 
 ## Stack
 
@@ -327,6 +329,29 @@ the integrity layer: the verbatim, quote-grounded **receipt** + source doc/date
 every verdict is auditable. Focus-trapped, ESC-to-close, focus-restored; null-safe on
 NYT rows. Read-only — no schema change.
 
+### PDF export (Prompt 9)
+
+The `#export` section turns the ledger into a **polished, multi-page A4-landscape PDF** —
+cover · executive dashboard · slippage & momentum · track-record cards · master table ·
+methodology — pre-built by the pipeline (not the browser). `report-template.mjs` renders the
+ledger to **one self-contained HTML string** (inline-SVG charts, no CDN), and
+`build-report.mjs` prints it to `public/reports/<ticker>.pdf` with the repo's **headless
+Chromium**; the Export button HEAD-checks that file and offers a download (or a graceful
+"run `npm run report`" note). Company-agnostic — every figure comes from `<ticker>.json`.
+
+```bash
+npm i -D playwright --no-save && npx playwright install chromium
+TICKER=vedl npm run report                   # ledger → public/reports/vedl.pdf
+FORCE=1 TICKER=vedl npm run report           # watermarked mock/provisional copy (inspection only)
+```
+
+**Provenance honesty extends to paper.** A PDF travels further than the dashboard, so
+`build-report.mjs` **refuses** a mock or incomplete-live ledger by default; `FORCE=1` produces
+a **watermarked** copy ("MOCK — NOT A REAL VERDICT" / "PROVISIONAL — INCOMPLETE RETRIEVAL"
+overlay + a cover banner). The `build-report.yml` workflow commits the PDF **only when the
+ledger is a real verdict** — a forced watermarked copy is an artifact, never committed — so
+`public/reports/` can only ever hold honest reports. No schema change.
+
 ## Layout
 
 ```
@@ -340,6 +365,7 @@ public/                    Static dashboard (zero build step)
   js/components/           search · credibility-hero · kpi-strip · charts/ (5 panels) ·
                            filter-bar · track-record-cards · promise-table · promise-drill
   js/views/company.js      Company view (hero · KPI · #charts · #track-record · #table · #export)
+  reports/<ticker>.pdf     Pre-built exportable PDF report (committed; served by the Export button)
 pipeline/
   lib/llm.mjs              Provider-agnostic LLM client
   lib/manifest.mjs         Acquisition contract (fiscal-quarter, sha256, paths)
@@ -360,11 +386,13 @@ pipeline/
   lib/find-actual.mjs      Retrieve each reported actual from later docs (the only LLM step)
   lib/financial-trend.mjs  Per-quarter reported headline financials (LLM-assisted)
   lib/aggregate.mjs        Aggregates + the credibility score/grade/headline
+  lib/report-template.mjs  Ledger → self-contained multi-page report HTML (inline-SVG charts)
   scrape-screener.mjs      Screener acquisition orchestrator (Playwright)
   ingest-upload.mjs        Manual-upload backend (content-detected, filename-agnostic)
   ingest.mjs               Manifest PDFs → corpus.json
   extract.mjs              Extraction engine: corpus → promises.json (first LLM step)
   verify.mjs               Verification orchestrator: promises → scored ledger (Prompt 5)
+  build-report.mjs         Ledger → report HTML → public/reports/<ticker>.pdf (headless Chromium)
   eval-extraction.mjs      Recall vs the golden fixture
   eval-verification.mjs    The data-verifier: align engine ledger ↔ golden, status agreement
   validate.mjs             Ledger ↔ schema validation
@@ -374,7 +402,7 @@ pipeline/
   test/p3 Ingestion · test/p4 Extraction · test/p5 Verification · test/p6 Provenance guard
   fixtures/<ticker>.corpus.json  Committed corpus for CI extract/verify
   fixtures/<ticker>.golden.json  Committed golden ledger (verification eval target)
-.github/workflows/         CI (acquire.yml · test-extract.yml · test-verify.yml)
+.github/workflows/         CI (acquire.yml · test-extract.yml · test-verify.yml · build-report.yml)
 wrangler.jsonc             Worker config
 ```
 

@@ -71,3 +71,13 @@ export function quartersBetween(a, b) {
   const ia = periodIndex(a), ib = periodIndex(b);
   return ia == null || ib == null ? null : ib - ia;
 }
+
+/** Inverse of periodIndex — a comparable index back to a "QnFYyy" label. */
+export function quarterLabel(idx) {
+  if (idx == null || Number.isNaN(Number(idx))) return "";
+  const i = Math.round(Number(idx));
+  const fy = Math.floor((i - 1) / 4);
+  const q = i - fy * 4;
+  if (q < 1 || q > 4) return "";
+  return `Q${q}FY${String(fy).padStart(2, "0")}`;
+}

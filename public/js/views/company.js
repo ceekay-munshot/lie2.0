@@ -84,20 +84,35 @@ function mountLedgerDetail(ledger) {
   if (tblHost) mountTable(tblHost, store, { onDrill });
 }
 
-// Anchored stub the later prompt fills in (P9 export).
-const PLACEHOLDERS = [
-  { id: "export", title: "Export report", icon: "file-down", note: "Polished multi-page PDF — arrives in P9." },
-];
+// #export (P9) — the pipeline pre-builds public/reports/<ticker>.pdf; this button
+// downloads it when present, or shows a graceful "not generated yet" state.
+function exportHTML() {
+  return `
+    <section id="export" class="export-section card" aria-label="Export report">
+      <div class="export-head"><i data-lucide="file-down" aria-hidden="true"></i><h2>Export report</h2></div>
+      <div class="export-body" id="export-body"><span class="export-status">Checking for a report…</span></div>
+    </section>`;
+}
+
+async function mountExport(ledger) {
+  const body = document.getElementById("export-body");
+  if (!body) return;
+  const ticker = String(ledger.company?.ticker || "").toLowerCase();
+  const url = `/reports/${ticker}.pdf`;
+  let ok = false;
+  try { const r = await fetch(url, { method: "HEAD", cache: "no-cache" }); ok = r.ok; } catch { ok = false; }
+  if (ok) {
+    body.innerHTML = `
+      <p class="export-note">A polished multi-page PDF — cover · executive dashboard · slippage &amp; momentum · track record · master table · methodology.</p>
+      <a class="btn-primary" href="${url}" download="${escapeHTML(ticker)}-lie-detector.pdf"><i data-lucide="download" aria-hidden="true"></i> Download PDF report</a>`;
+  } else {
+    body.innerHTML = `<p class="export-note">No PDF report has been generated for this company yet. Run <code>TICKER=${escapeHTML(ticker)} npm run report</code> (or the build-report workflow) to create one.</p>`;
+  }
+  drawIcons();
+}
 
 function placeholdersHTML() {
-  return `
-    <div class="ph-grid">
-      ${PLACEHOLDERS.map((p) => `
-        <section id="${p.id}" class="ph card" aria-label="${escapeHTML(p.title)} (coming soon)">
-          <div class="ph-head"><i data-lucide="${p.icon}" aria-hidden="true"></i><h2>${escapeHTML(p.title)}</h2><span class="ph-soon">Soon</span></div>
-          <p class="ph-note">${escapeHTML(p.note)}</p>
-        </section>`).join("")}
-    </div>`;
+  return exportHTML();
 }
 
 function skeletonHTML(ticker) {
@@ -170,5 +185,6 @@ export async function renderCompany(app, ticker, { headerHost } = {}) {
   drawIcons();
   mountCharts(ledger);              // async; each panel renders into its canvas
   mountLedgerDetail(ledger);        // filter bar + cards + table (shared store) + drill
+  mountExport(ledger);              // async; wires the Export PDF download (#export)
   window.scrollTo({ top: 0, behavior: "auto" });
 }

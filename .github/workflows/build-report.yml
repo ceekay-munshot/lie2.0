@@ -1,0 +1,100 @@
+# PDF export (Prompt 9) — manually triggered.
+#
+# Renders a committed company ledger (public/data/companies/<ticker>.json) into a
+# polished, multi-page A4-landscape PDF with the repo's headless Chromium and commits
+# it to public/reports/<ticker>.pdf, where the dashboard's Export button downloads it.
+# No LLM, no secrets — the input is the already-verified ledger.
+#
+# Provenance honesty (the load-bearing rule): a committed, shareable PDF must be a real
+# verdict. build-report.mjs REFUSES a mock or incomplete-live ledger unless force=true;
+# and even a force-built watermarked copy is uploaded as an artifact only — NEVER
+# committed. So the repo's reports/ can only ever hold honest, complete reports.
+
+name: Build PDF report
+
+on:
+  workflow_dispatch:
+    inputs:
+      ticker:
+        description: "Ticker (public/data/companies/<ticker>.json must exist)"
+        required: true
+        default: "vedl"
+      force:
+        description: "Build even if the ledger is mock/provisional (watermarked; uploaded as an artifact only — never committed)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write   # commit the generated PDF back to the branch
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      TICKER: ${{ inputs.ticker }}
+      FORCE: ${{ inputs.force && '1' || '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Normalize ticker (the ledger + report paths are lower-case)
+        id: t
+        shell: bash
+        run: echo "lc=$(echo "$TICKER" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
+      - name: Install Playwright + Chromium (skips download if preinstalled)
+        run: |
+          npm i -D playwright --no-save
+          npx playwright install --with-deps chromium
+
+      - name: Build the report PDF (refuses mock/provisional unless force)
+        run: npm run report
+
+      - name: Decide whether the PDF is committable (honesty guard)
+        id: guard
+        shell: bash
+        run: |
+          # A committed PDF must be a real verdict. Re-check the ledger's provenance here so
+          # a force-built watermarked mock/provisional copy is never committed (artifact only).
+          node -e '
+            const o = require("./public/data/companies/" + process.argv[1] + ".json");
+            const p = o.provenance || {};
+            const risky = p.mode === "mock" || (p.mode === "live" && p.complete === false);
+            console.log("provenance:", p.mode || "unknown", "· complete:", p.complete, "→", risky ? "RISKY (artifact only)" : "committable");
+            require("fs").appendFileSync(process.env.GITHUB_OUTPUT, "committable=" + (risky ? "false" : "true") + "\n");
+          ' "${{ steps.t.outputs.lc }}"
+
+      - name: Commit the PDF (only when it is a real verdict)
+        if: ${{ steps.guard.outputs.committable == 'true' }}
+        shell: bash
+        run: |
+          f="public/reports/${{ steps.t.outputs.lc }}.pdf"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$f"
+          if git diff --cached --quiet; then echo "no change to $f — nothing to commit"; exit 0; fi
+          git commit -m "build: ${{ steps.t.outputs.lc }} PDF report"
+          # Push with rebase-retry against a possibly-moving branch.
+          for i in 1 2 3 4 5; do
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then echo "pushed"; exit 0; fi
+            echo "push rejected — rebasing (attempt $i)"; sleep $((i * 2))
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME" || git rebase --abort
+          done
+          echo "push failed after retries"; exit 1
+
+      - name: Note when a PDF was built but withheld from the repo
+        if: ${{ steps.guard.outputs.committable != 'true' }}
+        run: echo "::warning::This ledger is mock/provisional — the watermarked PDF is uploaded as an artifact only and was NOT committed."
+
+      - name: Upload the PDF as an artifact (always)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ steps.t.outputs.lc }}
+          path: public/reports/${{ steps.t.outputs.lc }}.pdf
+          if-no-files-found: warn
