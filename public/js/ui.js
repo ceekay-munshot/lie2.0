@@ -95,6 +95,42 @@ export function gradeFromScore(score) {
 }
 
 /* ----------------------------------------------------------------------------
+ * Provenance guard — the product's honesty rule: never present a mock or
+ * quota-truncated ledger as a real verdict. Maps a ledger's `provenance` to a
+ * badge descriptor; `disclaim:true` means the UI must dim/qualify the score.
+ *   tone ∈ "live" (green) · "mock" (red) · "provisional" (amber) · "manual" (grey)
+ *        · "unknown" (neutral). Pure + deterministic (unit-tested).
+ * ------------------------------------------------------------------------- */
+export function provenanceBadge(provenance) {
+  const p = provenance && typeof provenance === "object" ? provenance : null;
+  if (!p || !p.mode) {
+    return { tone: "unknown", label: "Unverified", detail: "No provenance recorded for this ledger.", disclaim: false };
+  }
+  if (p.mode === "mock") {
+    return { tone: "mock", label: "Mock data — not a real verdict", detail: "Built offline with canned actuals ($0); the score is illustrative only.", disclaim: true };
+  }
+  if (p.mode === "manual") {
+    return { tone: "manual", label: "Curated", detail: "Hand-verified reference ledger.", disclaim: false };
+  }
+  // live
+  if (p.complete) {
+    const models = (Array.isArray(p.models_used) ? p.models_used : []).filter((m) => m && m !== "mock");
+    return { tone: "live", label: "Live · complete", detail: models.length ? `Full retrieval · ${models.join(", ")}.` : "Full live retrieval.", disclaim: false };
+  }
+  const forced = Number(p.forced_nyt || 0);
+  const errs = Number(p.retrieval_errors || 0);
+  const bits = [];
+  if (forced) bits.push(`${forced} due promise${forced === 1 ? "" : "s"} unverified`);
+  if (errs) bits.push(`${errs} retrieval error${errs === 1 ? "" : "s"}`);
+  return {
+    tone: "provisional",
+    label: "Provisional — incomplete retrieval",
+    detail: `${bits.join(" · ") || "Run did not complete"}. The score will move once retrieval finishes — treat it as indicative.`,
+    disclaim: true,
+  };
+}
+
+/* ----------------------------------------------------------------------------
  * Formatters
  * ------------------------------------------------------------------------- */
 
@@ -126,6 +162,12 @@ export function fmtSigned(n, digits = 0) {
   const v = Number(n);
   const body = v.toFixed(digits);
   return v > 0 ? `+${body}` : body;
+}
+
+const HTML_ESCAPES = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+/** Escape a value for safe interpolation into innerHTML. */
+export function escapeHTML(s) {
+  return String(s ?? "").replace(/[&<>"']/g, (c) => HTML_ESCAPES[c]);
 }
 
 /* ----------------------------------------------------------------------------
@@ -223,6 +265,8 @@ if (typeof window !== "undefined") {
     confColor,
     gradeColor,
     gradeFromScore,
+    provenanceBadge,
+    escapeHTML,
     fmtINRcr,
     fmtPct,
     fmtSigned,

@@ -24,10 +24,15 @@ worker/index.js           Worker: serves ./public via ASSETS; reserves /api/*
 schema/
   lie-detector.schema.json  THE DATA CONTRACT — JSON Schema (draft 2020-12)
 public/                   Static site (zero build step; CDN libs only)
-  index.html              Shell + design-system <style> + boot loader
-  js/ui.js                Design system: tokens, colour helpers, formatters,
-                          ECharts dark theme, data loaders (loadCompany/loadIndex)
-  js/app.js               Home page: render company cards from index.json
+  index.html              Shell: design-system <style>, boot loader, header, OG/favicon
+  js/ui.js                Design system: tokens, colour helpers, formatters, escapeHTML,
+                          provenanceBadge (honesty guard), ECharts theme, loadCompany/loadIndex
+  js/app.js               Shell + router: home (hero search + company grid) ↔ company view
+  js/lib/router.js        ?c=<ticker> query-param router (shareable URLs, back/fwd)
+  js/components/search.js Company search autocomplete (fuzzy, keyboard nav, request CTA)
+  js/components/credibility-hero.js  Score ring + delivery-vs-timeline split + status mix + provenance badge
+  js/components/kpi-strip.js         Promises/testable/MET/PARTIAL/MISSED/NYT + credibility chips
+  js/views/company.js     Company view: header search · hero · KPI strip · P7–P9 placeholders
   data/companies/
     <ticker>.json         One ledger per company (validated against the schema)
     index.json            Generated card-sized summaries for the home page
@@ -71,6 +76,42 @@ fixtures/<ticker>.golden.json  Committed golden ledger — the verification eval
 pipeline/output/<ticker>/ Acquisition + corpus + promises + ledger artifacts (gitignored): manifest.json,
                           raw/*.pdf, corpus.json, promises.json, cache/{extract,verify}/
 ```
+
+## Dashboard shell (Prompt 6)
+
+The **first UI**: it turns a committed `<ticker>.json` ledger into a screen.
+Framework-free (vanilla ES modules + the P1 design system), zero build step.
+
+- **Routing** (`js/lib/router.js`) — the company in view is the `?c=<ticker>` query
+  param (no param = home). History API → shareable URLs + back/forward. `app.js` is
+  the shell: it swaps `<main id="app">` between the home view (hero search + a grid
+  of covered companies from `index.json`) and the company view.
+- **Search** (`js/components/search.js`) — index-driven autocomplete: fuzzy match on
+  ticker/name/sector, full keyboard nav (↑↓/Enter/Esc), grade chip per result, and a
+  "Request this company" CTA on no-match (stub; P10 wires the dispatch).
+- **Credibility hero** (`js/components/credibility-hero.js`) — score ring (grade-banded
+  colour), the deterministic headline, the **DELIVERY-vs-TIMELINE split** (the product's
+  signature insight — "hits its numbers, misses its deadlines" — two grade-coloured
+  bars from `delivery_score`/`timeline_score`), a compact status-mix bar, and a meta row.
+- **KPI strip** (`js/components/kpi-strip.js`) — Promises · Testable · MET · PARTIAL ·
+  MISSED · NYT (status-coloured) + the credibility score/grade.
+- **Company view** (`js/views/company.js`) — composes header search · hero · KPI strip ·
+  anchored placeholders (`#charts` `#track-record` `#table` `#export`) that P7–P9 fill;
+  loading skeleton + a graceful "no ledger — request it" on an unknown ticker.
+
+**The provenance guard (this prompt's safety goal): never present a mock or
+quota-truncated ledger as a real verdict.** `verify.mjs` stamps `provenance`
+(`mode` live/mock/manual · `complete` · `retrieval_errors` · `forced_nyt` =
+due-but-unverified promises · `models_used` · `run_id`); `ui.js#provenanceBadge`
+(pure, unit-tested) maps it to a badge + a `disclaim` flag the hero honours:
+**complete live → green "Live · complete"; `mode:mock` → red "Mock data — not a
+real verdict" (ring dimmed + disclaimer); `!complete` → amber "Provisional —
+incomplete retrieval"; manual → grey "Curated".** The committed `vedl.json` is the
+curated golden (grey); a real incomplete live run shows amber automatically. No
+company/ticker/sector is hardcoded — the UI renders any `<ticker>.json`.
+
+In-session: `npm run test:ui` (provenance-guard unit test) + a Playwright pass
+(home/company/badges/unknown-ticker, zero console errors) + `npm run validate`.
 
 ## Verification & credibility (Prompt 5)
 
@@ -278,6 +319,9 @@ re-run). One object per company. Top-level keys:
   `root_causes`, `confidence_mix`, `timeline_commitments`.
 - `credibility` — `score`, `grade`, `timeline_score`, `delivery_score`,
   `method`, `headline`.
+- `provenance` (optional) — `mode` (`live`|`mock`|`manual`), `complete`,
+  `retrieval_errors`, `forced_nyt`, `models_used`, `generated_at`, `run_id`. The
+  honesty stamp the dashboard badges (P6); `verify.mjs` populates it.
 
 **NYT = "not yet tested"**: a promise whose `test_date` hasn't passed within the
 verification window. NYT promises are *excluded* from scoring — you cannot fail a
@@ -337,9 +381,10 @@ Formatters: `fmtINRcr(n)` (Indian grouping + " cr", e.g. `₹1,37,529 cr`),
 ## Commands
 
 ```bash
-npm run dev           # wrangler dev — serve the site + worker locally
+npm run dev           # wrangler dev — serve the site + worker locally (home → ?c=<ticker> dashboard)
 npm run validate      # ajv-validate every public/data/companies/*.json (auto-installs ajv --no-save)
 npm run gen:index     # regenerate public/data/companies/index.json
+npm run test:ui       # provenance-guard unit test (mock/incomplete never reads as a real verdict)
 npm run llm:selftest  # print resolved LLM provider/model/baseURL + "config OK" (no key needed)
 
 # Document acquisition (Prompt 2) — needs Playwright + a browser
@@ -396,7 +441,11 @@ npm run eval:verify public/data/companies/vedl.json pipeline/fixtures/vedl.golde
       **deterministic rules** (`status-variance.mjs`, `aggregate.mjs`) — the model
       never decides pass/fail. Data-verifier eval vs the golden, $0 mock + unit tests
       in-session, live run CI-only. *(this prompt)*
-- [ ] **P6 — Dashboard shell.** Company route, header, search, credibility hero.
+- [x] **P6 — Dashboard shell.** First UI: `?c=<ticker>` router, header + company
+      search (autocomplete, keyboard nav), and the credibility hero (score ring,
+      delivery-vs-timeline split, status mix) + KPI strip rendered from the ledger.
+      **Provenance guard** stamps + badges mock/incomplete data so a truncated run
+      never reads as a real verdict. Vanilla, schema-valid, browser-verified. *(this prompt)*
 - [ ] **P7 — Charts.** Status donut, slippage/timeline, financial-trend
       (ECharts, dark theme).
 - [ ] **P8 — Track-record cards + master promise table.** Filter / sort / drill.

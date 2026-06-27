@@ -14,6 +14,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { spawnSync } from "node:child_process";
 import { verificationWindow } from "./lib/verification-window.mjs";
+import { periodIndex } from "./lib/fiscal.mjs";
 import { statusVariance } from "./lib/status-variance.mjs";
 import { findActuals } from "./lib/find-actual.mjs";
 import { financialTrend } from "./lib/financial-trend.mjs";
@@ -141,10 +142,35 @@ async function main() {
   const aggregates = aggregate(verified);
   const cred = credibility(verified, aggregates);
 
+  // 6. provenance — the honesty stamp the UI badges. forced_nyt = promises whose deadline
+  // is within the window yet were left NYT for want of a retrieved actual (a truncation
+  // signal, e.g. a provider's daily quota cut retrieval short). The UI disclaims/warns when
+  // the run isn't a complete live one. (Refuse-to-commit lands in P10; here we only stamp.)
+  const lriIdx = periodIndex(vw.latest_reported);
+  const forced_nyt = verified.filter((p) => {
+    if (p.status !== "NYT") return false;
+    const ti = periodIndex(p.test_date);
+    return ti != null && lriIdx != null && ti <= lriIdx;
+  }).length;
+  const retrieval_errors = (faStats.errors?.length || 0) + (ftStats.errors?.length || 0);
+  const models_used = MOCK
+    ? ["mock"]
+    : EXTRACTION_PROVIDERS.filter((pr) => providerConfig(pr, process.env).apiKey);
+  const generatedAt = new Date().toISOString();
+  const provenance = {
+    mode: MOCK ? "mock" : "live",
+    complete: retrieval_errors === 0 && forced_nyt === 0,
+    retrieval_errors,
+    forced_nyt,
+    models_used,
+    generated_at: generatedAt,
+    run_id: process.env.GITHUB_RUN_ID || null,
+  };
+
   const out = {
     schema_version: "1.0",
     company: companyBlock(),
-    generated_at: new Date().toISOString(),
+    generated_at: generatedAt,
     coverage: coverageBlock(corpus),
     verification_window: vw,
     documents: documentsBlock(corpus),
@@ -152,6 +178,7 @@ async function main() {
     financial_trend: trend,
     aggregates,
     credibility: cred,
+    provenance,
   };
 
   const outPath = join(REPO, "public", "data", "companies", `${TICKER.toLowerCase()}.json`);
@@ -164,6 +191,7 @@ async function main() {
   console.log(`  promises   : ${verified.length}  (MET ${sc.MET} / PARTIAL ${sc.PARTIAL} / MISSED ${sc.MISSED} / NYT ${sc.NYT})`);
   console.log(`  testable   : ${aggregates.testable}  · credibility ${cred.score} (${cred.grade})  [timeline ${cred.timeline_score} · delivery ${cred.delivery_score}]`);
   console.log(`  actuals    : llm_calls ${faStats.calls} · cache ${faStats.cache_hits} · no_evidence ${faStats.no_evidence} · errors ${faStats.errors.length}  | fin_trend calls ${ftStats.calls}`);
+  console.log(`  provenance : ${provenance.mode}${provenance.complete ? " · complete" : ` · INCOMPLETE (retrieval_errors ${retrieval_errors}, forced_nyt ${forced_nyt})`}  [${provenance.mode === "live" ? "honesty: " + (provenance.complete ? "green/Live" : "amber/Provisional") : provenance.mode === "mock" ? "red/Mock — not a real verdict" : "grey/Curated"}]`);
   console.log(`  headline   : ${cred.headline}`);
   console.log(`  ledger     : ${outPath}`);
 

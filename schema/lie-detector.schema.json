@@ -81,6 +81,15 @@
       "properties":{
         "score":{"type":["number","null"]},"grade":{"type":["string","null"]},
         "timeline_score":{"type":["number","null"]},"delivery_score":{"type":["number","null"]},
-        "method":{"type":["string","null"]},"headline":{"type":["string","null"]}}}
+        "method":{"type":["string","null"]},"headline":{"type":["string","null"]}}},
+    "provenance":{"type":["object","null"],"description":"how this ledger was produced — drives the UI's honesty badge; optional",
+      "properties":{
+        "mode":{"enum":["live","mock","manual"],"description":"live = real LLM retrieval; mock = $0 canned; manual = hand-curated"},
+        "complete":{"type":["boolean","null"],"description":"true iff retrieval_errors===0 && forced_nyt===0"},
+        "retrieval_errors":{"type":["integer","null"],"description":"LLM retrieval failures during this run"},
+        "forced_nyt":{"type":["integer","null"],"description":"promises due within the window left NYT for lack of an actual (truncation signal)"},
+        "models_used":{"type":"array","items":{"type":"string"}},
+        "generated_at":{"type":["string","null"]},
+        "run_id":{"type":["string","null"]}}}
   }
 }
