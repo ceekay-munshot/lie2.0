@@ -10,15 +10,16 @@ delivery reliability, and exports a polished multi-page PDF.
 **Search a company → dashboard** (credibility score, status donut, slippage
 timeline, track-record cards, master promise table) **→ Export PDF.**
 
-This repo is being built in ~12 prompts. **Status: Prompts 1–7 complete** — the
+This repo is being built in ~12 prompts. **Status: Prompts 1–8 complete** — the
 foundation, document acquisition, ingestion & normalization, the extraction
 engine, **verification & credibility** (promises scored into the final ledger, the
-LLM retrieving while deterministic rules decide), the **dashboard shell** (search a
-company → a credibility hero, with a provenance guard that disclaims mock/incomplete
-data), and now **charts** (five ledger-driven ECharts panels — including the signature
-promised→re-set **slippage timeline**). Track-record cards and PDF export land in later
-prompts. See [`CLAUDE.md`](./CLAUDE.md) for architecture, the data contract and the
-roadmap.
+LLM retrieving while deterministic rules decide), the **dashboard** (search → a
+credibility hero with a provenance guard, five ledger-driven charts incl. the
+signature promised→re-set **slippage timeline**), and now the **track-record cards +
+13-column master table + per-promise drill modal** — every verdict auditable down to
+its verbatim, quote-grounded receipt. PDF export and multi-company automation land in
+later prompts. See [`CLAUDE.md`](./CLAUDE.md) for architecture, the data contract and
+the roadmap.
 
 ## Stack
 
@@ -314,6 +315,18 @@ unavailable offline" note rather than throwing, and panels self-hide when their 
 is absent (no `financial_trend` → no momentum; no slips → slippage empty state).
 Charts are read-only — no schema change.
 
+### Track record, master table & drill (Prompt 8)
+
+Under the charts, `#track-record` shows the **testable** verdicts as worst-first
+colour cards (MISSED → PARTIAL → MET) and `#table` shows the **full 13-column** promise
+ledger (frozen Promise column, status pills + confidence badges, sortable headers,
+pagination). A **shared filter bar** (status · category · quarter · confidence ·
+free-text) filters both at once. Clicking any card or row opens the **drill modal** —
+the integrity layer: the verbatim, quote-grounded **receipt** + source doc/date
+(copyable), the actual, the variance, the explanation, and any guidance revisions, so
+every verdict is auditable. Focus-trapped, ESC-to-close, focus-restored; null-safe on
+NYT rows. Read-only — no schema change.
+
 ## Layout
 
 ```
@@ -324,8 +337,9 @@ public/                    Static dashboard (zero build step)
   js/ui.js                 Design system + provenanceBadge (honesty guard) + data loaders
   js/app.js                Shell + router: home ↔ company view
   js/lib/                  router (?c=ticker) · fiscal (quarter math) · echarts (lazy-load + mountChart)
-  js/components/           search · credibility-hero · kpi-strip · charts/ (5 ECharts panels)
-  js/views/company.js      Company view (hero + KPI + #charts + P8–P9 placeholders)
+  js/components/           search · credibility-hero · kpi-strip · charts/ (5 panels) ·
+                           filter-bar · track-record-cards · promise-table · promise-drill
+  js/views/company.js      Company view (hero · KPI · #charts · #track-record · #table · #export)
 pipeline/
   lib/llm.mjs              Provider-agnostic LLM client
   lib/manifest.mjs         Acquisition contract (fiscal-quarter, sha256, paths)

@@ -15,6 +15,10 @@ import { statusDonut } from "../components/charts/status-donut.js";
 import { byQuarter } from "../components/charts/by-quarter.js";
 import { momentum } from "../components/charts/momentum.js";
 import { rootCause } from "../components/charts/root-cause.js";
+import { createFilterStore, mountFilterBar } from "../components/filter-bar.js";
+import { mountTrackRecord } from "../components/track-record-cards.js";
+import { mountTable } from "../components/promise-table.js";
+import { openDrill } from "../components/promise-drill.js";
 
 const drawIcons = () => { if (window.lucide?.createIcons) window.lucide.createIcons(); };
 
@@ -57,10 +61,31 @@ function mountCharts(ledger) {
   }
 }
 
-// Anchored stubs the later prompts fill in (P8 cards/table, P9 export).
+// The #track-record + #table sections (P8) share one filter store. The filter bar sits
+// above both; cards and table subscribe to the same filtered list, and both open the
+// shared drill modal.
+function ledgerDetailHTML() {
+  return `
+    <section class="ledger-detail" aria-label="Promise ledger">
+      <div id="filter-bar" class="filter-bar-host"></div>
+      <section id="track-record" class="track-record"></section>
+      <section id="table" class="promise-table-section"></section>
+    </section>`;
+}
+
+function mountLedgerDetail(ledger) {
+  const store = createFilterStore(ledger.promises || []);
+  const fbHost = document.getElementById("filter-bar");
+  const trHost = document.getElementById("track-record");
+  const tblHost = document.getElementById("table");
+  const onDrill = (p, el) => openDrill(p, el);
+  if (fbHost) mountFilterBar(fbHost, store);
+  if (trHost) mountTrackRecord(trHost, store, { onDrill });
+  if (tblHost) mountTable(tblHost, store, { onDrill });
+}
+
+// Anchored stub the later prompt fills in (P9 export).
 const PLACEHOLDERS = [
-  { id: "track-record", title: "Track record", icon: "layout-grid", note: "Per-promise cards with filter / sort / drill — arrives in P8." },
-  { id: "table", title: "Master promise table", icon: "table", note: "Every measurable commitment, sortable & filterable — arrives in P8." },
   { id: "export", title: "Export report", icon: "file-down", note: "Polished multi-page PDF — arrives in P9." },
 ];
 
@@ -139,9 +164,11 @@ export async function renderCompany(app, ticker, { headerHost } = {}) {
       ${credibilityHeroHTML(ledger)}
       ${kpiStripHTML(ledger)}
       ${chartsHTML(ledger)}
+      ${ledgerDetailHTML()}
       ${placeholdersHTML()}
     </div>`;
   drawIcons();
   mountCharts(ledger);              // async; each panel renders into its canvas
+  mountLedgerDetail(ledger);        // filter bar + cards + table (shared store) + drill
   window.scrollTo({ top: 0, behavior: "auto" });
 }
