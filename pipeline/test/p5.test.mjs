@@ -7,7 +7,7 @@
  *   node pipeline/test/p5.test.mjs
  */
 import { statusVariance } from "../lib/status-variance.mjs";
-import { directionFor, numericDirection, parseTarget } from "../lib/metric-direction.mjs";
+import { directionFor, numericDirection, parseTarget, actualNumber } from "../lib/metric-direction.mjs";
 import { periodIndex, maxPeriodIndex } from "../lib/fiscal.mjs";
 import { verificationWindow, isNotYetTestable } from "../lib/verification-window.mjs";
 import { aggregate, credibility, gradeFromScore } from "../lib/aggregate.mjs";
@@ -90,6 +90,26 @@ ok(credibility(set).score === 50 && credibility(set).grade === "C", "credibility
 ok(credibility([P("MISSED", "H"), P("MISSED", "M")]).score === 0 && credibility([P("MISSED", "H")]).grade === "E", "all-missed → 0 / grade E");
 // PARTIAL counts as 0.5
 ok(credibility([P("PARTIAL", "H")]).score === 50, "a lone PARTIAL (H) → 50");
+
+// ---- 10) Codex review regressions (hardening generic parsing/verdicts) ------
+console.log("\nCodex-review regressions:");
+// fiscal apostrophe shorthand (1Q'27 / 2H'26) — previously returned null
+ok(periodIndex("1Q'27") === 109 && periodIndex("Q1'27") === 109, "apostrophe shorthand 1Q'27 / Q1'27 → FY27 Q1 (109)");
+ok(periodIndex("2H'26") === 108, "apostrophe half-year 2H'26 → FY26 year-end (108)");
+ok(maxPeriodIndex("commissioned Q4FY26 milestone now expected 1Q'27") === 109, "maxPeriodIndex reads 1Q'27 as the latest period");
+// range targets with thousands separators
+ok((() => { const t = parseTarget({ text: "$1,700-1,750/t" }); return t.lo === 1700 && t.hi === 1750 && t.op === "range"; })(), "range target keeps commas: $1,700-1,750/t → 1700-1750");
+// actualNumber must ignore leading period labels (Q3, 9M FY26, …)
+ok(actualNumber({ text: "Q3 $1,674/t" }) === 1674, "actualNumber ignores period label: 'Q3 $1,674/t' → 1674");
+ok(actualNumber({ what_happened: "9M FY26 revenue 12,345" }) === 12345, "actualNumber strips '9M FY26' → 12345");
+// negated milestone outcome must NOT read as delivered/MET
+ok(tl("X by Q2FY26", "not commissioned").status === "MISSED", "negated milestone 'not commissioned' → MISSED (not MET)");
+ok(tl("Plant by Q2FY26", "yet to be commissioned").status === "MISSED", "‘yet to be commissioned’ → MISSED");
+ok(tl("X by Q2FY26", "commissioned in Q2FY26").status === "MET", "positive milestone still MET (negation guard doesn't over-trigger)");
+// non-ISO future horizon (2030, FY30) stays NYT even with an interim actual
+const CTXP = { ...CTX, latestReportedPeriod: "Q4FY26" };
+ok(sv({ category: "ebitda", target: { value: 6 }, test_date: "2030", confidence: "H", revisions: [] }, { value: 4 }, CTXP).status === "NYT", "non-ISO 2030 target + interim actual → NYT (not scored in 2026)");
+ok(sv({ category: "capacity", target: { value: 20, unit: "GW" }, test_date: "FY30", confidence: "H", revisions: [] }, { value: 5 }, CTXP).status === "NYT", "FY30 capacity target stays NYT vs Q4FY26 window");
 
 console.log(fails === 0 ? "\nALL P5 UNIT TESTS PASSED" : `\n${fails} TEST(S) FAILED`);
 process.exit(fails ? 1 : 0);

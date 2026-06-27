@@ -80,7 +80,11 @@ function buildMessages(promise, evidence) {
 
 /** Shape an LLM/mock result into {actual, mgmt_explanation, root_cause}. */
 function shape(data, evidence) {
-  if (!data || !data.actual_text) return { actual: null, mgmt_explanation: null, root_cause: null };
+  // keep the result if it carries ANY usable signal — a structured value or a milestone
+  // status — not only a text field (timeline actuals often report status with no figure).
+  if (!data || (data.actual_text == null && data.actual_value == null && data.what_happened == null)) {
+    return { actual: null, mgmt_explanation: null, root_cause: null };
+  }
   const top = evidence[0] || {};
   const actual = {
     text: data.actual_text ?? null,
@@ -122,7 +126,10 @@ export async function findActuals({ promises, corpus, mock = false, providers = 
       if (!mock) return { actual: null, mgmt_explanation: null, root_cause: null }; // non-mock, no keys → leave NYT
       return mockResult(promise, evidence);
     }
-    const key = createHash("sha256").update(`${FIND_ACTUAL_VERSION}|${promise.promise_key || promise.id}|${evidence.map((e) => e.doc_id + ":" + e.overlap).join(",")}`).digest("hex");
+    // include each evidence doc's DATE and TEXT (not just id/overlap) so a re-ingested or
+    // corrected corpus with the same doc ids busts stale cached actuals instead of reusing them.
+    const evSig = evidence.map((e) => `${e.doc_id}:${e.date}:${e.text}`).join("");
+    const key = createHash("sha256").update(`${FIND_ACTUAL_VERSION}|${promise.promise_key || promise.id}|${evSig}`).digest("hex");
     const cp = cacheDir ? join(cacheDir, `${String(promise.id || promise.promise_key || "p").replace(/[^\w-]/g, "_")}.json`) : null;
     if (cp && existsSync(cp)) {
       try { const c = JSON.parse(readFileSync(cp, "utf8")); if (c.key === key) { stats.cache_hits += 1; return c.value; } } catch { /* re-fetch */ }

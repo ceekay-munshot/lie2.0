@@ -124,11 +124,12 @@ export async function evalVerification(engine, golden, { mock = false, cacheDir 
   };
 }
 
-// CLI: node pipeline/eval-verification.mjs <engine.json> <golden.json>
+// CLI: node pipeline/eval-verification.mjs <engine.json> <golden.json>   (or TICKER=<t> for defaults)
 const invokedDirectly = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
 if (invokedDirectly) {
-  const [enginePath, goldenPath] = process.argv.slice(2);
-  if (!enginePath || !goldenPath) { console.error("usage: node pipeline/eval-verification.mjs <engine.json> <golden.json>"); process.exit(1); }
+  const T = (process.env.TICKER || "").trim().toLowerCase();
+  const [enginePath = T ? `public/data/companies/${T}.json` : null, goldenPath = T ? `pipeline/fixtures/${T}.golden.json` : null] = process.argv.slice(2);
+  if (!enginePath || !goldenPath) { console.error("usage: node pipeline/eval-verification.mjs <engine.json> <golden.json>   (or set TICKER=<ticker> to use public/data/companies/<ticker>.json + pipeline/fixtures/<ticker>.golden.json)"); process.exit(1); }
   const engine = JSON.parse(readFileSync(enginePath, "utf8"));
   const golden = JSON.parse(readFileSync(goldenPath, "utf8"));
   const r = await evalVerification(engine, golden, { mock: !!process.env.MOCK });

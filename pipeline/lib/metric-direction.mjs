@@ -36,7 +36,8 @@ export function parseTarget(target = {}) {
   let lo = target.value ?? null;
   let hi = target.value_high ?? null;
   if (lo == null && hi == null) {
-    const range = text.match(/(-?\d[\d.]*)\s*(?:to|-|–|—)\s*(-?\d[\d.]*)/);
+    // allow thousands separators inside each bound ("1,700-1,750/t"); commas are stripped below
+    const range = text.match(/(-?\d[\d.,]*)\s*(?:to|-|–|—)\s*(-?\d[\d.,]*)/);
     if (range) {
       lo = Number(range[1].replace(/,/g, ""));
       hi = Number(range[2].replace(/,/g, ""));
@@ -53,9 +54,15 @@ export function parseTarget(target = {}) {
   return { lo, hi, op, unit };
 }
 
+// Leading period/horizon labels whose digits must NOT be read as the metric value
+// ("Q3 $1,674/t" → 1674, not 3). Only the unambiguous period forms (Q1-4, H1-2,
+// 3M/6M/9M/12M year-to-date, FYnn/CYnn) — NOT bare "5m" magnitudes.
+const PERIOD_LABEL_RE = /\b(?:q[1-4]|[1-4]q|h[12]|[12]h|(?:3|6|9|12)m|fy'?\d{2,4}|cy'?\d{2,4})\b/gi;
+
 /** Best single number from a retrieved actual (structured value, else parsed text). */
 export function actualNumber(actual = {}) {
   if (actual && actual.value != null) return actual.value;
-  const ns = nums(actual?.text ?? actual?.what_happened ?? "");
+  const text = String(actual?.text ?? actual?.what_happened ?? "").replace(PERIOD_LABEL_RE, " ");
+  const ns = nums(text);
   return ns.length ? ns[0] : null;
 }

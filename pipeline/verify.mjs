@@ -19,6 +19,8 @@ import { findActuals } from "./lib/find-actual.mjs";
 import { financialTrend } from "./lib/financial-trend.mjs";
 import { aggregate, credibility } from "./lib/aggregate.mjs";
 import { outputDir } from "./lib/manifest.mjs";
+import { providerConfig } from "./lib/llm.mjs";
+import { EXTRACTION_PROVIDERS } from "./lib/multi-llm.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO = join(__dirname, "..");
@@ -104,6 +106,11 @@ function shapePromise(p, found, status, variance, was_revised) {
 
 async function main() {
   if (!TICKER) die("set TICKER=<ticker>.");
+  // A live run with no provider keys would silently retrieve nothing and emit an all-NYT
+  // ledger that still validates — making a missing-secrets run look successful. Fail fast.
+  if (!MOCK && !EXTRACTION_PROVIDERS.map((p) => providerConfig(p, process.env)).some((c) => c.apiKey)) {
+    die("live verify needs at least one provider key (GEMINI_API_KEY / GROQ_API_KEY / MISTRAL_API_KEY). Set one, or run with PROVIDER=mock for a $0 offline pass.");
+  }
   const corpusPath = resolveIn(process.env.CORPUS) || join(outputDir(TICKER), "corpus.json");
   if (!existsSync(corpusPath)) die(`corpus not found: ${corpusPath}. Run ingest first or set CORPUS=<path>.`);
   const corpus = loadJSON(corpusPath);
@@ -120,7 +127,7 @@ async function main() {
   const { results: found, stats: faStats } = await findActuals({ promises, corpus, mock: MOCK, concurrency: CONCURRENCY, cacheDir, debug: DEBUG });
 
   // 3. deterministic verdicts
-  const ctx = { latestReportedDate: vw.latest_reported_date, partialTol: PARTIAL_TOL, timelineGraceQtrs: TIMELINE_GRACE_QTRS };
+  const ctx = { latestReportedDate: vw.latest_reported_date, latestReportedPeriod: vw.latest_reported, partialTol: PARTIAL_TOL, timelineGraceQtrs: TIMELINE_GRACE_QTRS };
   const verified = promises.map((p, i) => {
     const f = found[i] || { actual: null, mgmt_explanation: null, root_cause: null };
     const { status, variance, was_revised } = statusVariance(p, f.actual, ctx);

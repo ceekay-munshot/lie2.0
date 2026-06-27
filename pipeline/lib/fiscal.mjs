@@ -8,10 +8,19 @@ const MON = "jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec".split("|");
 
 /** Fiscal index (FYyy*4 + quarter 1-4) from a period/deadline string, else null. */
 export function periodIndex(s) {
-  const t = String(s ?? "").toLowerCase().replace(/['’.\s]/g, "");
+  const raw = String(s ?? "").toLowerCase();
+  let t = raw.replace(/[.\s]/g, ""); // keep apostrophes — they mark a year shorthand (1Q'27)
   if (!t) return null;
-  const fym = t.match(/fy(\d{2,4})/);
-  let fy = fym ? Number(fym[1].slice(-2)) : null;
+  let fy = null;
+  const fym = t.match(/fy'?(\d{2,4})/);
+  if (fym) { fy = Number(fym[1].slice(-2)); t = t.replace(/fy'?\d{2,4}/, " "); }
+  else {
+    // apostrophe shorthand: 1Q'27 / Q1'27 / 2H'26 / '27 → fiscal year, no "FY"
+    const apos = t.match(/['’](\d{2,4})/);
+    if (apos) { fy = Number(apos[1].slice(-2)); t = t.replace(/['’]\d{2,4}/, " "); }
+  }
+  // quarter / half-year (the year is already removed, so an adjacent year digit
+  // like the "27" in "1q'27" can't be misread as the quarter).
   let q = null;
   const qm = t.match(/q([1-4])/) || t.match(/([1-4])q/);
   if (qm) q = Number(qm[1]);
@@ -21,10 +30,10 @@ export function periodIndex(s) {
   }
   if (fy == null) {
     // calendar year ("2030", "by mar 2026", "dec 2026") → the FY it falls in.
-    const ym = t.match(/(?:19|20)\d{2}/);
+    const ym = raw.match(/(?:19|20)\d{2}/);
     if (!ym) return null;
     const cy = Number(ym[0]);
-    const monIdx = MON.findIndex((m) => t.includes(m)); // 0=jan … 11=dec; -1 if none
+    const monIdx = MON.findIndex((m) => raw.includes(m)); // 0=jan … 11=dec; -1 if none
     const monNum = monIdx >= 0 ? monIdx + 1 : 3; // bare year → treat as FY-end (Mar)
     fy = (monNum <= 3 ? cy : cy + 1) % 100; // Jan-Mar belong to the FY ending that Mar
     if (q == null) q = monNum <= 3 ? 4 : monNum <= 6 ? 1 : monNum <= 9 ? 2 : 3;

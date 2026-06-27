@@ -17,17 +17,25 @@ import { maxPeriodIndex, periodIndex } from "./fiscal.mjs";
 
 const DELIVERED_RE = /\b(commission\w*|complet\w*|\blive\b|operational|on stream|started?|begun|began|achiev\w*|delivered|first oil|first production|ramp(?:ed|ing|-?up)?|in operation|done)\b/i;
 const SLIPPED_RE = /\b(re-?set\w*|re-?guid\w*|push\w*|defer\w*|delay\w*|slip\w*|moved? to|now expect\w*|re-?schedul\w*|postpon\w*|behind schedule)\b/i;
+// Negated delivery ("not commissioned", "yet to be completed", "failed to deliver"):
+// a delivery verb within a short span of a negator — must NOT read as delivered.
+const NEG_DELIVERY_RE = /\b(?:not|yet to|unable to|failed to|behind schedule|no longer|won'?t|will not|did\s?n'?t|have\s?n'?t|has\s?n'?t)\b[\s\w-]{0,18}?(?:commission|complet|operational|deliver|achiev|start|\blive\b|on\s?stream|done|ramp|first oil|first production)/i;
 
 const round = (n, d = 2) => (n == null || Number.isNaN(n) ? null : Number(n.toFixed(d)));
 const isISO = (s) => /^\d{4}-\d{2}-\d{2}/.test(String(s || ""));
 const blankVar = () => ({ absolute: null, pct: null, bps: null, days: null, text: null });
 const tvar = (qtrs, text) => ({ absolute: null, pct: null, bps: null, days: qtrs == null ? null : round(qtrs * 91, 0), text });
 
-/** test_date is in the future relative to the latest reported date (ISO compare). */
-function isFuture(testDate, latestReportedDate) {
-  if (!testDate || !latestReportedDate) return false;
+/** test_date is in the future relative to the latest reported period. ISO dates compare
+ *  directly; a non-ISO horizon ("2030", "FY30", "2HFY27") compares by fiscal period so a
+ *  long-dated target stays NYT even after an interim actual shows up. */
+function isFuture(testDate, latestReportedDate, latestReportedPeriod = null) {
+  if (!testDate) return false;
   if (isISO(testDate) && isISO(latestReportedDate)) return testDate.slice(0, 10) > latestReportedDate.slice(0, 10);
-  return false; // non-ISO test_date can't be future-compared here; rules fall through to NYT on no actual
+  const ti = periodIndex(testDate);
+  const li = periodIndex(latestReportedPeriod) ?? periodIndex(latestReportedDate);
+  if (ti != null && li != null) return ti > li;
+  return false; // truly unparseable horizon ("medium term"): rules fall through to NYT on no actual
 }
 
 /** Numeric comparison on the favourable side of the (possibly ranged) target. */
@@ -53,8 +61,9 @@ function timelineStatus(promise, actual, grace) {
   const what = String(actual?.what_happened || actual?.text || "");
   if (!actual || !what) return { status: "NYT", variance: { ...blankVar(), text: "no outcome reported" } };
 
-  const delivered = DELIVERED_RE.test(what);
-  const slipped = SLIPPED_RE.test(what);
+  const negated = NEG_DELIVERY_RE.test(what);
+  const delivered = DELIVERED_RE.test(what) && !negated;
+  const slipped = SLIPPED_RE.test(what) || negated; // a negated milestone is a non-delivery → treat it as a slip
   const outcomeIdx = maxPeriodIndex(what);
 
   if (promisedIdx == null) {
@@ -83,7 +92,7 @@ function timelineStatus(promise, actual, grace) {
  * @returns {{status, variance, was_revised}}
  */
 export function statusVariance(promise, actual, ctx = {}) {
-  const { latestReportedDate = null, partialTol = 0.05, timelineGraceQtrs = 1 } = ctx;
+  const { latestReportedDate = null, latestReportedPeriod = null, partialTol = 0.05, timelineGraceQtrs = 1 } = ctx;
   const was_revised = Array.isArray(promise.revisions) && promise.revisions.length > 0;
 
   if (directionFor(promise.category) === "timeline") {
@@ -95,7 +104,7 @@ export function statusVariance(promise, actual, ctx = {}) {
   if (aVal == null) return { status: "NYT", variance: { ...blankVar(), text: actual?.what_happened ? actual.what_happened.slice(0, 60) : "no actual reported" }, was_revised };
 
   // Future test_date → the figure is interim (e.g. 9M of an annual target) → NYT.
-  if (isFuture(promise.test_date, latestReportedDate)) {
+  if (isFuture(promise.test_date, latestReportedDate, latestReportedPeriod)) {
     const ref = numericDirection(promise.category) === "lower" ? (target.hi ?? target.lo) : (target.lo ?? target.hi);
     const txt = ref != null ? `interim ${aVal} (target ${target.op === "range" ? `${target.lo}-${target.hi}` : ref})` : `interim ${aVal}`;
     return { status: "NYT", variance: { ...blankVar(), text: txt }, was_revised };
