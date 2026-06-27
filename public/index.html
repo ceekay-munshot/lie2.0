@@ -6,6 +6,13 @@
   <title>Lie Detector — do management teams keep their promises?</title>
   <meta name="description" content="Extract every measurable management commitment from Indian companies' earnings calls, verify each against reported actuals, and score delivery reliability." />
   <meta name="color-scheme" content="dark" />
+
+  <!-- Open Graph / Twitter (shareable company URLs) -->
+  <meta property="og:title" content="Lie Detector — do management teams keep their promises?" />
+  <meta property="og:description" content="Search any Indian listed company → a credibility score that verifies every measurable management promise against what was later reported." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF4D5E' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12h4l2 6 4-14 3 9 2-4h5'/%3E%3C/svg%3E" />
+  <meta name="twitter:card" content="summary" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FF4D5E' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12h4l2 6 4-14 3 9 2-4h5'/%3E%3C/svg%3E" />
 
   <!-- Fonts -->
@@ -13,10 +20,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- Tailwind Play CDN (utilities for later prompts; core styling is in <style> below) -->
+  <!-- Tailwind Play CDN (utilities for later prompts; core styling is in <style> below).
+       Guarded so a blocked/slow CDN never throws — the app styles itself without it. -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = {
+    if (window.tailwind) tailwind.config = {
       darkMode: "class",
       theme: {
         extend: {
@@ -313,6 +321,221 @@
     .legend .swatch { width: 10px; height: 10px; border-radius: 3px; }
 
     noscript .empty { margin: 60px auto; max-width: 520px; }
+
+    /* ==================================================================
+     * P6 — Dashboard shell: header tools, search autocomplete, the
+     * credibility hero, KPI strip, placeholders, and view states.
+     * ================================================================== */
+    .app { min-height: calc(100vh - 64px - 100px); }
+    a.brand { text-decoration: none; cursor: pointer; }
+    .site-header .bar { gap: 16px; }
+    .header-tools { margin-left: auto; min-width: 0; flex: 0 1 320px; display: none; }
+    body.view-company .header-tools { display: block; }
+    body.view-company .header-note { display: none; }
+    @media (max-width: 560px) { .header-note { display: none; } }
+
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: transparent; color: var(--text); cursor: pointer;
+      border: 1px solid var(--line); border-radius: 999px; padding: 9px 16px;
+      font: inherit; font-size: 14px; font-weight: 600;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .btn-ghost:hover { border-color: color-mix(in srgb, var(--accent-violet) 55%, var(--line)); background: color-mix(in srgb, var(--card) 70%, transparent); }
+    .btn-ghost i { width: 16px; height: 16px; }
+
+    /* ---- Home hero (rendered by app.js) -------------------------------- */
+    .hero-home { padding: 56px 0 12px; }
+    .hero-home h1 { margin: 0; font-size: clamp(34px, 5.4vw, 60px); line-height: 1.04; letter-spacing: -0.03em; font-weight: 800; }
+    .hero-home h1 .accent { background: linear-gradient(92deg, var(--accent-red), var(--accent-gold)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero-home p.lede { margin: 20px 0 0; max-width: 640px; color: var(--muted); font-size: clamp(15px, 1.6vw, 18px); line-height: 1.6; }
+    .home-search { margin: 30px 0 8px; max-width: 560px; }
+    .hero-home .count { display: block; }
+
+    /* ---- Search autocomplete ------------------------------------------ */
+    .ld-search { position: relative; }
+    .ld-search-box { position: relative; display: flex; align-items: center; }
+    .ld-search-box > i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); width: 18px; height: 18px; pointer-events: none; }
+    .ld-search-input {
+      width: 100%; height: 52px; padding: 0 18px 0 46px;
+      border-radius: 999px; border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--card) 80%, transparent);
+      color: var(--text); font: inherit; font-size: 15px; outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .ld-search-input::placeholder { color: var(--muted); }
+    .ld-search-input:focus { border-color: color-mix(in srgb, var(--accent-violet) 60%, var(--line)); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-violet) 18%, transparent); }
+    .ld-search.is-compact .ld-search-input { height: 40px; font-size: 14px; }
+    .ld-search.is-compact .ld-search-box > i { width: 16px; height: 16px; }
+
+    .ld-search-panel {
+      list-style: none; margin: 8px 0 0; padding: 6px;
+      position: absolute; left: 0; right: 0; top: 100%; z-index: 40;
+      background: color-mix(in srgb, var(--card) 96%, black 4%);
+      border: 1px solid var(--line); border-radius: var(--radius-sm);
+      box-shadow: 0 26px 50px -24px rgba(0,0,0,0.95);
+      max-height: 360px; overflow-y: auto;
+    }
+    .ld-result {
+      display: flex; align-items: center; gap: 12px; justify-content: space-between;
+      padding: 9px 12px; border-radius: 8px; cursor: pointer;
+    }
+    .ld-result.is-active { background: color-mix(in srgb, var(--accent-violet) 16%, transparent); }
+    .ld-result.is-empty { cursor: default; flex-wrap: wrap; gap: 10px; }
+    .ld-result-id { display: grid; gap: 1px; min-width: 0; }
+    .ld-result-ticker { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--accent-cyan); }
+    .ld-result-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ld-result-meta { font-size: 12px; color: var(--muted); }
+    .ld-result-grade {
+      flex: none; width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center;
+      font-weight: 800; font-size: 14px; color: var(--grade-color, var(--muted));
+      background: color-mix(in srgb, var(--grade-color, var(--muted)) 14%, transparent);
+      border: 1px solid color-mix(in srgb, var(--grade-color, var(--muted)) 45%, transparent);
+    }
+    .ld-request {
+      font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+      color: var(--ink); background: var(--accent-gold); border: 0;
+      border-radius: 999px; padding: 7px 14px;
+    }
+
+    /* ---- Company view layout ------------------------------------------ */
+    .company-view { padding: 26px 0 12px; display: grid; gap: 18px; }
+
+    /* ---- Credibility hero --------------------------------------------- */
+    .hero-card { padding: 22px 22px 20px; display: grid; gap: 20px; }
+    .hero-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .hero-eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-cyan); }
+    .hero-name { margin: 4px 0 2px; font-size: clamp(24px, 3.4vw, 34px); letter-spacing: -0.02em; font-weight: 800; line-height: 1.05; }
+    .hero-sub { color: var(--muted); font-size: 13px; font-family: var(--font-mono); }
+
+    .prov-badge {
+      display: inline-flex; align-items: center; gap: 7px; align-self: flex-start;
+      font-size: 12.5px; font-weight: 700; padding: 7px 12px; border-radius: 999px;
+      border: 1px solid var(--tone, var(--line));
+      color: var(--tone, var(--muted));
+      background: color-mix(in srgb, var(--tone, var(--muted)) 12%, transparent);
+    }
+    .prov-badge i { width: 15px; height: 15px; }
+    .prov-live { --tone: var(--status-met); }
+    .prov-mock { --tone: var(--status-missed); }
+    .prov-provisional { --tone: var(--accent-gold); }
+    .prov-manual { --tone: var(--status-nyt); }
+    .prov-unknown { --tone: var(--muted); }
+
+    .hero-body { display: grid; grid-template-columns: auto 1fr; gap: 26px; align-items: center; }
+
+    .ring-wrap { position: relative; width: 168px; height: 168px; }
+    .ring { width: 100%; height: 100%; transition: opacity 0.2s ease; }
+    .ring-track { stroke: var(--ink2); }
+    .ring-fill { transition: stroke-dasharray 0.7s cubic-bezier(0.22, 1, 0.36, 1); filter: drop-shadow(0 0 7px color-mix(in srgb, currentColor 0%, transparent)); }
+    .ring-center { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 0; text-align: center; }
+    .ring-grade { font-size: 46px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+    .ring-score { color: var(--muted); font-size: 14px; font-weight: 600; margin-top: 4px; }
+    .ring-score small { opacity: 0.7; }
+    .ring-flag {
+      position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%);
+      font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ink); background: var(--accent-gold); padding: 2px 8px; border-radius: 999px;
+    }
+    .hero-card.is-disclaimed .ring { opacity: 0.5; }
+    .hero-card.is-disclaimed .ring-grade, .hero-card.is-disclaimed .ring-score { opacity: 0.6; }
+
+    .hero-readout { display: grid; gap: 16px; min-width: 0; }
+    .hero-headline { margin: 0; font-size: clamp(16px, 2vw, 20px); line-height: 1.5; font-weight: 600; letter-spacing: -0.01em; }
+
+    /* Delivery vs deadlines — the signature split */
+    .split { display: grid; gap: 10px; padding: 14px; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--ink2) 60%, transparent); border: 1px solid var(--line); }
+    .split-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .split-head > span:first-child { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .split-insight { font-size: 13px; font-weight: 700; color: var(--text); }
+    .split-bars { display: grid; gap: 12px; margin-top: 2px; }
+    .split-row { display: grid; gap: 6px; }
+    .split-row-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+    .split-row-label { font-size: 13px; color: var(--muted); }
+    .split-row-val { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+    .split-row-val small { font-size: 11px; font-weight: 600; opacity: 0.6; }
+    .split-track { height: 9px; border-radius: 999px; background: var(--ink); overflow: hidden; }
+    .split-fill { display: block; height: 100%; border-radius: 999px; transition: width 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+    .split-row.is-empty .split-track { background: repeating-linear-gradient(90deg, var(--ink), var(--ink) 6px, var(--ink2) 6px, var(--ink2) 12px); }
+    .split-empty-note { font-size: 11px; color: var(--muted); }
+
+    /* Status mix */
+    .statusmix { display: grid; gap: 9px; }
+    .sm-bar { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--ink2); }
+    .sm-seg { display: block; height: 100%; }
+    .sm-seg + .sm-seg { box-shadow: -1px 0 0 var(--ink); }
+    .sm-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; }
+    .sm-leg { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); }
+    .sm-leg b { color: var(--text); font-weight: 700; }
+    .sm-dot { width: 9px; height: 9px; border-radius: 3px; }
+
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 7px 14px; color: var(--muted); font-size: 12.5px; }
+    .hero-meta span { position: relative; }
+    .hero-meta span + span::before { content: "·"; margin-right: 14px; opacity: 0.6; }
+
+    .hero-disclaimer, .hero-note {
+      display: flex; align-items: flex-start; gap: 9px; font-size: 13px; line-height: 1.5;
+      padding: 11px 13px; border-radius: var(--radius-sm);
+    }
+    .hero-disclaimer i, .hero-note i { width: 16px; height: 16px; flex: none; margin-top: 2px; }
+    .hero-card.tone-mock .hero-disclaimer { color: #ffd7dc; background: color-mix(in srgb, var(--status-missed) 16%, transparent); border: 1px solid color-mix(in srgb, var(--status-missed) 45%, transparent); }
+    .hero-card.tone-mock .hero-disclaimer i { color: var(--status-missed); }
+    .hero-card.tone-provisional .hero-disclaimer { color: #ffe6bf; background: color-mix(in srgb, var(--accent-gold) 14%, transparent); border: 1px solid color-mix(in srgb, var(--accent-gold) 42%, transparent); }
+    .hero-card.tone-provisional .hero-disclaimer i { color: var(--accent-gold); }
+    .hero-note { color: var(--muted); background: color-mix(in srgb, var(--ink2) 60%, transparent); border: 1px solid var(--line); }
+    .hero-note i { color: var(--status-nyt); }
+
+    /* ---- KPI strip ----------------------------------------------------- */
+    .kpi-strip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
+    .kpi {
+      display: grid; gap: 3px; padding: 13px 14px; border-radius: var(--radius-sm);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--card) 96%, white 4%), var(--card));
+      border: 1px solid var(--line);
+    }
+    .kpi-val { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+    .kpi-grade { font-size: 13px; font-weight: 800; margin-left: 5px; }
+    .kpi-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .kpi-cred { background: linear-gradient(180deg, color-mix(in srgb, var(--accent-violet) 12%, var(--card)), var(--card)); border-color: color-mix(in srgb, var(--accent-violet) 35%, var(--line)); }
+
+    /* ---- Placeholder sections (P7–P9) --------------------------------- */
+    .ph-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 4px; }
+    .ph { padding: 22px; min-height: 132px; display: grid; align-content: start; gap: 8px; border-style: dashed; }
+    .ph-head { display: flex; align-items: center; gap: 10px; }
+    .ph-head i { width: 18px; height: 18px; color: var(--accent-violet); }
+    .ph-head h2 { margin: 0; font-size: 16px; font-weight: 700; }
+    .ph-soon { margin-left: auto; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-gold); border: 1px solid color-mix(in srgb, var(--accent-gold) 40%, transparent); padding: 2px 7px; border-radius: 999px; }
+    .ph-note { margin: 0; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+
+    /* ---- Empty / error + skeleton ------------------------------------- */
+    .empty-state { display: grid; justify-items: center; gap: 12px; text-align: center; padding: 40px 20px; }
+    .empty-state i { width: 34px; height: 34px; color: var(--muted); }
+    .empty-state h1 { margin: 4px 0 0; font-size: clamp(20px, 3vw, 26px); }
+    .empty-state p { margin: 0; color: var(--muted); max-width: 460px; }
+    .empty-search { width: 100%; max-width: 440px; margin: 6px 0 4px; }
+
+    .skel { background: linear-gradient(90deg, var(--ink2), color-mix(in srgb, var(--card) 80%, white 6%), var(--ink2)); background-size: 200% 100%; animation: skel 1.3s ease-in-out infinite; border-radius: 8px; }
+    .skel-ring { width: 168px; height: 168px; border-radius: 50%; }
+    .skel-line { height: 16px; width: 70%; }
+    .skel-line.short { width: 40%; }
+    .skel-block { height: 96px; width: 100%; border-radius: var(--radius-sm); }
+    @keyframes skel { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    @media (prefers-reduced-motion: reduce) { .skel { animation: none; } }
+
+    /* ---- Responsive ---------------------------------------------------- */
+    @media (max-width: 720px) {
+      .hero-body { grid-template-columns: 1fr; justify-items: center; text-align: left; }
+      .ring-wrap { width: 150px; height: 150px; }
+      .hero-readout { width: 100%; }
+      .kpi-strip { grid-template-columns: repeat(3, 1fr); }
+      .ph-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 440px) {
+      .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+    }
   </style>
 </head>
 <body>
@@ -329,41 +552,20 @@
 
   <header class="site-header">
     <div class="wrap bar">
-      <div class="brand">
+      <a class="brand" id="brand" href="?" aria-label="Lie Detector — home">
         <span class="glyph"><i data-lucide="scan-line"></i></span>
         Lie Detector
         <span class="tag">Beta</span>
-      </div>
+      </a>
       <div class="header-note">Promises vs. delivery · Indian listed companies</div>
+      <div class="header-tools" id="header-tools"></div>
     </div>
   </header>
 
-  <main>
-    <section class="wrap hero">
-      <span class="eyebrow">Earnings-call accountability</span>
-      <h1>Do management teams<br />actually <span class="accent">keep their promises?</span></h1>
-      <p class="lede">
-        Lie Detector extracts every <strong>measurable</strong> commitment from a company's earnings
-        calls and investor decks, verifies each against what was later reported, and scores delivery
-        reliability — promise by promise.
-      </p>
-
-      <div class="search-row">
-        <label class="search">
-          <i data-lucide="search"></i>
-          <input id="search" type="search" autocomplete="off" spellcheck="false"
-                 placeholder="Search a company (e.g. Vedanta, VEDL)…" aria-label="Search companies" />
-        </label>
-        <span class="count" id="company-count">Loading…</span>
-      </div>
-    </section>
-
-    <section class="wrap">
-      <div class="grid" id="company-grid"></div>
-      <noscript>
-        <p class="empty">Lie Detector needs JavaScript enabled to load the company index.</p>
-      </noscript>
-    </section>
+  <main id="app" class="app">
+    <noscript>
+      <p class="empty" style="margin:60px auto;max-width:520px">Lie Detector needs JavaScript enabled to load the company ledgers.</p>
+    </noscript>
   </main>
 
   <footer class="site-footer">

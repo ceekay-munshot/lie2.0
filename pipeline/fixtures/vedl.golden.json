@@ -1753,5 +1753,14 @@
     "delivery_score": 42,
     "method": "Conf-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6). Bands A>=75 B>=60 C>=45 D>=30 E<30.",
     "headline": "Most already-testable promises missed — chiefly slipped project deadlines; the beating full-year cost/profit guidance is still NYT."
+  },
+  "provenance": {
+    "mode": "manual",
+    "complete": true,
+    "retrieval_errors": 0,
+    "forced_nyt": 0,
+    "models_used": ["curated"],
+    "generated_at": "2026-06-24T00:00:00Z",
+    "run_id": null
   }
 }

@@ -10,14 +10,14 @@ delivery reliability, and exports a polished multi-page PDF.
 **Search a company → dashboard** (credibility score, status donut, slippage
 timeline, track-record cards, master promise table) **→ Export PDF.**
 
-This repo is being built in ~12 prompts. **Status: Prompts 1–5 complete** — the
-foundation (scaffold, Worker + static shell, design system, the data contract,
-a provider-agnostic LLM client, the golden fixture), document acquisition,
-ingestion & normalization, the extraction engine, and now **verification &
-credibility** (promises scored into the final ledger, the LLM retrieving while
-deterministic rules decide). The dashboard, charts and PDF export land in later
-prompts. See [`CLAUDE.md`](./CLAUDE.md) for architecture, the data contract and
-the roadmap.
+This repo is being built in ~12 prompts. **Status: Prompts 1–6 complete** — the
+foundation, document acquisition, ingestion & normalization, the extraction
+engine, **verification & credibility** (promises scored into the final ledger, the
+LLM retrieving while deterministic rules decide), and now the **dashboard shell**
+(search a company → a credibility hero rendered from the ledger, with a provenance
+guard that disclaims mock/incomplete data). Charts, track-record cards and PDF
+export land in later prompts. See [`CLAUDE.md`](./CLAUDE.md) for architecture, the
+data contract and the roadmap.
 
 ## Stack
 
@@ -262,12 +262,57 @@ provider priority; default `mistral,gemini,groq`) · `LLM_CONCURRENCY` (2) · `E
 (1) · `LIMIT` · `DEBUG`. The model never assigns a status and never invents a
 number — those are the rules' job.
 
+## Dashboard (Prompt 6)
+
+The first UI: it turns a committed `<ticker>.json` ledger into a screen.
+Framework-free (vanilla ES modules + the P1 design system), zero build step.
+
+```bash
+npm run dev          # wrangler dev → http://127.0.0.1:8787
+#   home  → search a company (autocomplete, ↑↓/Enter) + a grid of covered companies
+#   ?c=<ticker>  → the company dashboard (credibility hero + KPI strip)
+npm run test:ui      # the provenance-guard unit test (no browser, no keys)
+```
+
+- **`?c=<ticker>` route** (`js/lib/router.js`) — the company in view is a query param;
+  URLs are shareable and back/forward work. No param = home.
+- **Credibility hero** (`js/components/credibility-hero.js`) — a grade-banded score
+  ring, the deterministic headline, and the **delivery-vs-timeline split** — the
+  product's signature insight (*"hits its numbers, misses its deadlines"*) — plus a
+  status-mix bar and a meta row. A **KPI strip** tallies MET/PARTIAL/MISSED/NYT.
+- **Company-agnostic** — the UI renders any `<ticker>.json` and searches `index.json`;
+  no company names, tickers or sectors live in the code.
+
+### The provenance guard
+
+The product's premise is *verifiability*, so the UI must never present a mock or
+quota-truncated ledger as a real verdict. `verify.mjs` stamps each ledger with
+`provenance` (`mode` · `complete` · `retrieval_errors` · `forced_nyt` · `models_used`),
+and the hero badges it:
+
+| Ledger | Badge | Score |
+| --- | --- | --- |
+| complete live run | 🟢 **Live · complete** | shown |
+| `mode:"mock"` | 🔴 **Mock data — not a real verdict** | dimmed + disclaimed |
+| incomplete live (`forced_nyt`>0) | 🟠 **Provisional — incomplete retrieval** | dimmed + disclaimed |
+| hand-curated golden | ⚪ **Curated** | shown |
+
+The committed `vedl.json` is the curated golden (grey). A real incomplete live run
+— like the quota-truncated 61/B Vedanta pass — shows amber automatically, and flips
+to green once the complete re-run is committed. `npm run test:ui` proves the mapping.
+
 ## Layout
 
 ```
 worker/index.js            Cloudflare Worker (ASSETS + /api/*)
 schema/                    The data contract (JSON Schema, draft 2020-12)
-public/                    Static dashboard (index.html, js/, data/)
+public/                    Static dashboard (zero build step)
+  index.html               Shell: design system <style>, boot loader, header, OG/favicon
+  js/ui.js                 Design system + provenanceBadge (honesty guard) + data loaders
+  js/app.js                Shell + router: home ↔ company view
+  js/lib/router.js         ?c=<ticker> query-param router
+  js/components/           search · credibility-hero · kpi-strip
+  js/views/company.js      Company view (hero + KPI + P7–P9 placeholders)
 pipeline/
   lib/llm.mjs              Provider-agnostic LLM client
   lib/manifest.mjs         Acquisition contract (fiscal-quarter, sha256, paths)
@@ -299,7 +344,7 @@ pipeline/
   validate-manifest.mjs    Acquisition-manifest validation
   validate-corpus.mjs      Corpus validation (chunks, boilerplate, roles)
   gen-index.mjs            Home-page index.json generator
-  test/p3.test.mjs  Ingestion · test/p4.test.mjs  Extraction · test/p5.test.mjs  Verification
+  test/p3 Ingestion · test/p4 Extraction · test/p5 Verification · test/p6 Provenance guard
   fixtures/<ticker>.corpus.json  Committed corpus for CI extract/verify
   fixtures/<ticker>.golden.json  Committed golden ledger (verification eval target)
 .github/workflows/         CI (acquire.yml · test-extract.yml · test-verify.yml)
