@@ -9,12 +9,56 @@ import { toHome } from "../lib/router.js";
 import { mountSearch } from "../components/search.js";
 import { credibilityHeroHTML } from "../components/credibility-hero.js";
 import { kpiStripHTML } from "../components/kpi-strip.js";
+import { disposeCharts } from "../lib/echarts.js";
+import { slippageTimeline } from "../components/charts/slippage-timeline.js";
+import { statusDonut } from "../components/charts/status-donut.js";
+import { byQuarter } from "../components/charts/by-quarter.js";
+import { momentum } from "../components/charts/momentum.js";
+import { rootCause } from "../components/charts/root-cause.js";
 
 const drawIcons = () => { if (window.lucide?.createIcons) window.lucide.createIcons(); };
 
-// Anchored stubs the later prompts fill in (P7 charts, P8 cards/table, P9 export).
+// The #charts section (P7). Each panel renders only when its data is present; the
+// chart components own their own loading / empty / offline-degrade states.
+const CHART_PANELS = [
+  { id: "chart-slippage", title: "Slippage timeline", sub: "Promised → re-set", icon: "calendar-clock", wide: true, mount: slippageTimeline, show: (l) => (l.promises || []).some((p) => p.category === "timeline") },
+  { id: "chart-donut", title: "Promise status mix", icon: "chart-pie", mount: statusDonut, show: (l) => !!l.aggregates?.status_counts },
+  { id: "chart-quarter", title: "By quarter", icon: "chart-column-big", mount: byQuarter, show: (l) => Object.keys(l.aggregates?.by_quarter || {}).length > 0 },
+  { id: "chart-momentum", title: "Financial momentum", sub: "EBITDA · margin · leverage · ROCE", icon: "trending-up", wide: true, mount: momentum, show: (l) => (l.financial_trend || []).length > 0 },
+  { id: "chart-root", title: "Why promises slipped", icon: "list-tree", wide: true, mount: rootCause, show: (l) => Object.keys(l.aggregates?.root_causes || {}).length > 0 },
+];
+
+function chartsHTML(ledger) {
+  const panels = CHART_PANELS.filter((p) => p.show(ledger));
+  if (!panels.length) return `<section id="charts"></section>`;
+  return `
+    <section id="charts" class="charts-section" aria-label="Charts">
+      <div class="charts-grid">
+        ${panels.map((p) => `
+          <section class="chart-panel card${p.wide ? " wide" : ""}">
+            <div class="chart-head">
+              <i data-lucide="${p.icon}" aria-hidden="true"></i>
+              <h3>${escapeHTML(p.title)}</h3>
+              ${p.sub ? `<span class="chart-sub">${escapeHTML(p.sub)}</span>` : ""}
+            </div>
+            <div class="chart-canvas" id="${p.id}-canvas"></div>
+          </section>`).join("")}
+      </div>
+    </section>`;
+}
+
+/** Mount each visible panel's chart (fire-and-forget; each manages its own states). */
+function mountCharts(ledger) {
+  disposeCharts();
+  for (const p of CHART_PANELS) {
+    if (!p.show(ledger)) continue;
+    const el = document.getElementById(`${p.id}-canvas`);
+    if (el) p.mount(el, ledger);
+  }
+}
+
+// Anchored stubs the later prompts fill in (P8 cards/table, P9 export).
 const PLACEHOLDERS = [
-  { id: "charts", title: "Charts", icon: "chart-pie", note: "Status donut, slippage timeline & financial-trend — arrives in P7." },
   { id: "track-record", title: "Track record", icon: "layout-grid", note: "Per-promise cards with filter / sort / drill — arrives in P8." },
   { id: "table", title: "Master promise table", icon: "table", note: "Every measurable commitment, sortable & filterable — arrives in P8." },
   { id: "export", title: "Export report", icon: "file-down", note: "Polished multi-page PDF — arrives in P9." },
@@ -94,8 +138,10 @@ export async function renderCompany(app, ticker, { headerHost } = {}) {
     <div class="company-view wrap">
       ${credibilityHeroHTML(ledger)}
       ${kpiStripHTML(ledger)}
+      ${chartsHTML(ledger)}
       ${placeholdersHTML()}
     </div>`;
   drawIcons();
+  mountCharts(ledger);              // async; each panel renders into its canvas
   window.scrollTo({ top: 0, behavior: "auto" });
 }
