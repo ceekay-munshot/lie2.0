@@ -35,7 +35,11 @@ public/                   Static site (zero build step; CDN libs only)
   js/components/credibility-hero.js  Score ring + delivery-vs-timeline split + status mix + provenance badge
   js/components/kpi-strip.js         Promises/testable/MET/PARTIAL/MISSED/NYT + credibility chips
   js/components/charts/   5 ECharts panels: status-donut · slippage-timeline · by-quarter · root-cause · momentum
-  js/views/company.js     Company view: header search · hero · KPI strip · #charts (P7) · P8–P9 placeholders
+  js/components/filter-bar.js        Shared filter store + controls (status/category/quarter/conf/search)
+  js/components/track-record-cards.js  Worst-first testable verdict cards (#track-record)
+  js/components/promise-table.js     13-column master ledger table (sortable/paginated, frozen Promise col)
+  js/components/promise-drill.js     Per-promise evidence modal (verbatim quote receipt; focus-trap/ESC)
+  js/views/company.js     Company view: header search · hero · KPI strip · #charts · #track-record · #table · #export
   data/companies/
     <ticker>.json         One ledger per company (validated against the schema)
     index.json            Generated card-sized summaries for the home page
@@ -79,6 +83,35 @@ fixtures/<ticker>.golden.json  Committed golden ledger — the verification eval
 pipeline/output/<ticker>/ Acquisition + corpus + promises + ledger artifacts (gitignored): manifest.json,
                           raw/*.pdf, corpus.json, promises.json, cache/{extract,verify}/
 ```
+
+## Track record + master table + drill (Prompt 8)
+
+Fills `#track-record` and `#table` — the drill-down detail under the hero/charts. Cards,
+table and a per-promise evidence modal all read `promises[]` of any `<ticker>.json`,
+null-safe (NYT promises have no actual/variance/explanation). The on-screen dashboard
+now has everything the PDF will (P9 reuses this exact layout + column order).
+
+- **`filter-bar.js`** — one shared filter store (status chips · category · quarter ·
+  confidence · free-text over promise/metric/quote), removable active chips + clear-all.
+  Both the cards and the table subscribe, so filtering one filters the other.
+- **`track-record-cards.js`** (`#track-record`) — TESTABLE promises (status ≠ NYT),
+  **worst-first** (MISSED → PARTIAL → MET): a status-coloured left-border card with
+  Target/Actual/Variance + mgmt_explanation + root-cause chip. All-NYT → "N awaiting
+  their test date" empty state; "X of Y testable" header respects the filter.
+- **`promise-table.js`** (`#table`) — ALL filtered promises in the strict 13-column order
+  (Date · Qtr · Source · Promise · Quote · Metric+Target · Test Date · Conf · What
+  Happened · Status · Variance · Mgmt Explanation · Root-Cause), status pills + conf
+  badges, a **frozen Promise column**, sortable headers (date/quarter/confidence/
+  status-severity/variance), and pagination for long ledgers.
+- **`promise-drill.js`** — the integrity layer: a modal showing the **verbatim,
+  quote-grounded receipt** + source doc/date (copyable), the actual + source, the
+  variance, the explanation, any guidance revisions (`was_revised`), and provenance chips
+  (`found_by`/`figure_in_quote`/confidence — rendered only when present). Focus-trap +
+  ESC + focus-restore to the trigger; scroll-lock with no leak.
+
+Read-only (no schema change). In-session: `npm run validate` + a Playwright pass (cards
+worst-first · 13-col table · filter both + filter-to-zero · sort · drill open/ESC/restore
+· all-NYT + null-safe NYT rows · zero console errors).
 
 ## Charts (Prompt 7)
 
@@ -477,7 +510,11 @@ npm run eval:verify public/data/companies/vedl.json pipeline/fixtures/vedl.golde
       the **slippage timeline** (promised→re-set, the signature), by-quarter stacked bars,
       root-cause bars, financial momentum (EBITDA/margin + leverage/ROCE). Lazy-loaded with
       a graceful offline-degrade; null-safe + responsive. Browser-verified. *(this prompt)*
-- [ ] **P8 — Track-record cards + master promise table.** Filter / sort / drill.
+- [x] **P8 — Track-record cards + master promise table.** Worst-first verdict cards
+      (`#track-record`), the 13-column sortable/paginated master table (`#table`, frozen
+      Promise column), a shared filter bar (status/category/quarter/conf/search), and a
+      per-promise **drill modal** (the verbatim-quote receipt — every verdict auditable;
+      focus-trap/ESC/restore). Null-safe, browser-verified. *(this prompt)*
 - [ ] **P9 — PDF export.** Polished, multi-page report.
 - [ ] **P10 — Pipeline orchestration + multi-company.** Batch build, caching,
       `index.json` at scale.
