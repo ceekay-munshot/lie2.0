@@ -1,0 +1,53 @@
+# Re-run ONLY the extraction eval over an already-produced promises.json artifact,
+# with the fuzzy/semantic matcher. NO LLM keys, NO API calls — it just downloads the
+# artifact from a prior "Test extraction" run and scores recall against the golden
+# fixture. Use this to re-measure recall after a matcher change without re-extracting.
+#
+# Inputs: the run_id of the prior run + the artifact name it uploaded
+# (e.g. promises-vedl-failover).
+
+name: Re-run eval (no API)
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "Run ID of a prior 'Test extraction' run (whose promises artifact to score)"
+        required: true
+      ticker:
+        description: "Ticker (golden fixture public/data/companies/<ticker>.json)"
+        required: true
+        default: "vedl"
+      artifact:
+        description: "Artifact name from that run"
+        required: true
+        default: "promises-vedl-failover"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Download promises.json from the prior run
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.artifact }}
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: dl
+
+      - name: Re-evaluate with the fuzzy matcher (no LLM, no API calls)
+        run: |
+          f="dl/promises.json"
+          [ -f "$f" ] || { echo "no promises.json in artifact ${{ inputs.artifact }}"; exit 1; }
+          node -e 'const o=require("./"+process.argv[1]); console.log("source run:", "${{ inputs.run_id }}", "| strategy:", o.strategy, "| by_model:", JSON.stringify(o.stats?.by_model||{}), "| OLD (strict) recall:", o.eval?(o.eval.recall*100).toFixed(1)+"%":"n/a");' "$f"
+          node pipeline/eval-extraction.mjs "$f" "${{ inputs.ticker }}"

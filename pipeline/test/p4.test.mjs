@@ -437,6 +437,26 @@ const fixture = { company: { ticker: "TEST" }, promises: [
 const ev = evalExtraction(promises, fixture);
 ok(ev.known === 3 && ev.found === 2 && ev.recall > 0.6, `recall 2/3 (ebitda+capex matched, leverage missed) got ${ev.found}/${ev.known}`);
 ok(ev.missed.some((m) => m.category === "leverage"), "missed[] lists the leverage promise");
+// fuzzy/semantic matcher: cross-category paraphrase matches; unrelated does not
+const fxFuzzy = { company: { ticker: "TEST" }, promises: [
+  { id: "f1", category: "capacity", metric: "FY26 aluminium production 2.9 Mnt", target: { period: "FY26", value: 2.9 } },
+] };
+ok(evalExtraction([{ category: "volume", metric: "aluminium volume of 2.9 Mt", target: { period: "FY2026", value: 2.9 } }], fxFuzzy).found === 1, "fuzzy matches a cross-category paraphrase via compatible category + same number/period (capacity≈volume)");
+ok(evalExtraction([{ category: "timeline", metric: "plant commissioning by Dec 2027", target: { period: "FY28", value: null } }], fxFuzzy).found === 0, "fuzzy does NOT match an unrelated promise (different topic/period/number)");
+ok(evalExtraction(fxFuzzy.promises, fxFuzzy).recall === 1, "a fixture matched against itself is 100% recall");
+// PR#9 review #1: a % target must not match a non-% target on a coincident number
+const unitFx = { company: { ticker: "T" }, promises: [{ id: "u1", category: "margin", metric: "FY26 EBITDA margin 20%", target: { period: "FY26", value: 20, unit: "%" } }] };
+ok(evalExtraction([{ category: "ebitda", metric: "FY26 EBITDA target $20 bn", target: { period: "FY26", value: 20, unit: "USD_bn" } }], unitFx).found === 0, "20% margin is NOT matched by $20bn EBITDA (contradictory units)");
+// PR#9 round-2 #1/#3: the fixture stores the SOURCE quarter in target.period, so period
+// is a soft tiebreaker — a correct deadline extraction still matches across the difference.
+const srcQ = { company: { ticker: "T" }, promises: [{ id: "t1", category: "capacity", metric: "+20 GW merchant power", target: { period: "Q2FY26" } }] };
+ok(evalExtraction([{ category: "capacity", metric: "+20 GW merchant power", target: { period: "2030" } }], srcQ).found === 1, "source-quarter fixture period (Q2FY26) doesn't reject a correct deadline extraction (2030)");
+// PR#9 round-2 #2: capex ($) is its own metric — not satisfied by a same-number capacity target
+const capexFx = { company: { ticker: "T" }, promises: [{ id: "c1", category: "capacity", metric: "FY26 aluminium production 20 Mnt", target: { period: "FY26", value: 20, unit: "Mnt" } }] };
+ok(evalExtraction([{ category: "capex", metric: "FY26 aluminium capex $20 bn", target: { period: "FY26", value: 20, unit: "USD_bn" } }], capexFx).found === 0, "aluminium capex $20bn does NOT satisfy aluminium production 20 Mnt (capex ≠ capacity)");
+// PR#9 round-2 #4: unit/period fragments (h from H2, t from $/t) don't fake topic overlap
+const fillFx = { company: { ticker: "T" }, promises: [{ id: "p1", category: "cost", metric: "Power cost < $500/t (H2)", target: { period: "H2FY26" } }] };
+ok(evalExtraction([{ category: "cost", metric: "Hot-metal CoP < $1,650/t (H2)", target: { period: "H2FY26" } }], fillFx).found === 0, "filler fragments (h, t) don't fake a power-cost ≈ hot-metal-CoP match");
 
 // ---- 7) input segmentation (Groq TPM) --------------------------------------
 console.log("\nsegmentation:");

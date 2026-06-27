@@ -183,12 +183,19 @@ CORPUS=pipeline/fixtures/vedl.corpus.json TICKER=vedl npm run extract
 
 **Env knobs:** `TICKER` · `CORPUS=<path>` · `LLM_STRATEGY` (`failover` default |
 `ensemble` | `partition` | `single`) · `GEMINI_API_KEY`/`GROQ_API_KEY`/`MISTRAL_API_KEY`
-(+ optional `<PROVIDER>_MODEL`) · `LLM_CONCURRENCY` (2) · `EXTRACT_SCOPE`
-(`management` | `all`) · `QA_FILTER` (1; 0 keeps all Q&A) · `PROVIDER=mock`/`MOCK=1`
-($0 offline run — no key, validates wiring + JSON shape) · `EVAL` · `LIMIT` ·
-`DRY_RUN` · `DEBUG`. A throttled
-provider is skipped (graceful degradation); per (doc×model) caching makes re-runs
-nearly free. Confirmed free-tier models are documented in `CLAUDE.md`.
+(+ optional `<PROVIDER>_MODEL`) · `EXTRACTION_ORDER` (failover priority; default
+`mistral,gemini,groq` while Gemini's free quota is exhausted) · `LLM_CONCURRENCY`
+(2) · `EXTRACT_SCOPE` (`management` | `all`) · `QA_FILTER` (1; 0 keeps all Q&A) ·
+`PROVIDER=mock`/`MOCK=1` ($0 offline run — no key, validates wiring + JSON shape) ·
+`EVAL` · `LIMIT` · `DRY_RUN` · `DEBUG`. A throttled provider is skipped (graceful
+degradation); per (doc×model) caching makes re-runs nearly free. Confirmed free-tier
+models are documented in `CLAUDE.md`.
+
+Recall uses a **fuzzy/semantic matcher** (compatible categories, subject overlap,
+number+period agreement). To re-score an already-produced `promises.json` with **no
+API calls**, run `node pipeline/eval-extraction.mjs <promises.json> [ticker]` — or in
+CI, the **"Re-run eval (no API)"** workflow, which downloads a prior run's artifact
+and re-evaluates it.
 
 ## Layout
 

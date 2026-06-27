@@ -134,9 +134,11 @@ export function dedup(promises) {
   return out;
 }
 
-/** The set of topic tokens for a metric (used by the recall eval's fuzzy match). */
+/** The set of topic tokens for a metric (used by the recall eval's fuzzy match).
+ *  Drops 1-char leftovers (e.g. "h" from H2, "t" from $/t) so unit/period fragments
+ *  don't create spurious topic overlap. */
 export function subjectTokens(metric) {
-  return new Set(metricSubject(metric).split(" ").filter(Boolean));
+  return new Set(metricSubject(metric).split(" ").filter((w) => w.length > 1));
 }
 
 export { keyOf, targetSig, metricSubject, normPeriod };

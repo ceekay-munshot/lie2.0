@@ -13,7 +13,14 @@
  * actual model call is injected as `extractOne` so this module is pure and
  * unit-testable with a mock.
  */
-export const EXTRACTION_PROVIDERS = ["gemini", "groq", "mistral"];
+// Failover priority. Mistral-first by default: Gemini's free-tier key is currently
+// quota-exhausted, so leading with the live provider avoids burning a fail-fast probe
+// on it each run. Override with EXTRACTION_ORDER (e.g. "gemini,groq,mistral") once
+// Gemini quota is healthy again.
+export const EXTRACTION_PROVIDERS = (process.env.EXTRACTION_ORDER || "mistral,gemini,groq")
+  .split(",")
+  .map((s) => s.trim().toLowerCase())
+  .filter(Boolean);
 
 /** Build the (doc, provider) task list for a strategy. */
 export function planTasks(docs, providers, strategy = "failover") {

@@ -53,7 +53,8 @@ pipeline/                 Node ESM (.mjs) build/verify scripts (run locally)
   lib/dedup.mjs           Cross-model merge (found_by), reaffirmed_on, revisions, ids
   lib/test-date.mjs       deriveTestDate from a target period
   extract.mjs             Extraction engine: corpus → promises.json (FIRST LLM step)
-  eval-extraction.mjs     Recall of extracted promises vs the golden fixture
+  eval-extraction.mjs     Recall vs the golden fixture (fuzzy/semantic matcher); also
+                          a standalone CLI: node eval-extraction.mjs <promises.json> [ticker]
   test/p4.test.mjs        Extraction unit tests (mock LLM)
 fixtures/<ticker>.corpus.json  Committed corpus for CI extraction (recall eval; NOT gitignored)
 pipeline/output/<ticker>/ Acquisition + corpus + promises artifacts (gitignored): manifest.json,
@@ -85,10 +86,12 @@ status/variance here — that's Prompt 5.**
 
 Strategies (`LLM_STRATEGY`):
 - **`failover` (default)** — treat the three free tiers as ONE combined quota pool,
-  used in priority order (Gemini → Groq → Mistral). Each doc is extracted **once**,
-  by the first provider with budget; a provider that hits its per-day quota is
-  dropped for the remaining docs. A 6-doc corpus = ~6 calls, all Gemini (Groq/
-  Mistral held in reserve) — no redundant work, no 3× quota burn.
+  used in priority order (set by `EXTRACTION_ORDER`; **default Mistral → Gemini →
+  Groq** while Gemini's free-tier key is quota-exhausted — flip back to
+  `gemini,groq,mistral` once it's healthy). Each doc is extracted **once**, by the
+  first provider with budget; a provider that hits its per-day quota is dropped for
+  the remaining docs. A 6-doc corpus = ~6 calls, all on the lead provider (the rest
+  held in reserve) — no redundant work, no 3× quota burn.
 - `ensemble` — every doc × all 3 (≈ docs×3 calls) for max recall + cross-model
   agreement. Use only when you have quota to spare.
 - `partition` — round-robin docs across providers (~1/3 each). `single` — one (debug).
