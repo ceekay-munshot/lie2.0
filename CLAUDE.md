@@ -81,11 +81,60 @@ pipeline/                 Node ESM (.mjs) build/verify scripts (run locally)
   test/p5.test.mjs        Verification unit tests (status/variance, integrity, credibility banding)
   lib/report-template.mjs ledger → self-contained multi-page A4 report HTML (inline-SVG charts, no CDN)
   build-report.mjs        Render the report HTML → public/reports/<ticker>.pdf (headless Chromium)
+  run-pipeline.mjs        Orchestrator (P10): acquire→ingest→extract→verify→build-report→guarded commit
+  lib/commit.mjs          THE shipping guard (P10): stage ledger+pdf+index · refuse mock/!complete/downgrade · rebase-push
+  universe.json           Curated coverage list [{ticker,name,sector,fy_end_month}] (P10)
+  test/p10.test.mjs       Commit-guard unit tests (P10): refuse mock/incomplete/downgrade · allow upgrade · FORCE
 fixtures/<ticker>.corpus.json  Committed corpus for CI extract+verify (recall eval; NOT gitignored)
 fixtures/<ticker>.golden.json  Committed golden ledger — the verification eval target (NOT gitignored)
 pipeline/output/<ticker>/ Acquisition + corpus + promises + ledger artifacts (gitignored): manifest.json,
                           raw/*.pdf, corpus.json, promises.json, cache/{extract,verify}/
 ```
+
+## Orchestration & multi-company (Prompt 10)
+
+Makes it **any** company, automated. One command runs the whole loop for a ticker, a guard
+makes shipping data **honest by construction**, a curated universe + a monthly cron keep
+coverage fresh, and a "request this company" path lets a visitor pull a new company into
+coverage. Everything is keyed on `TICKER` — **no company is hardcoded** (the only inputs are
+`universe.json` + the request/dispatch ticker).
+
+- **`run-pipeline.mjs`** (`npm run pipeline`) — the one-command orchestrator. Runs each stage
+  as a child process (env forwarded): **acquire** (Screener scrape · `SOURCE=upload`) →
+  **ingest** → **extract** → **verify** → **build-report** → **guarded commit**. acquire…verify
+  are required (a failure aborts and names the stage); build-report is non-fatal. Idempotent +
+  monotonic: a stage whose output exists is skipped (the caches make a re-run cheap and
+  byte-identical). Prints a summary (company · promises · credibility · forced_nyt · elapsed).
+- **`lib/commit.mjs`** — **THE provenance commit guard, the enforcement point** (the "Vedanta
+  61/B lesson" made structural). A pure, unit-tested `guardCommit({nextProv, priorProv, force})`
+  ranks ledgers (complete-live `2` > curated manual `1` > mock/incomplete `0`) and:
+  **REFUSES** a mock or incomplete-live ledger; **never downgrades** a stronger committed ledger
+  to a lesser one (so a quota-truncated re-run keeps the prior good ledger — and a refused run
+  even restores the working tree); **allows the curated→live UPGRADE** (DoD #1). The prior ledger
+  is captured from HEAD and **re-checked after every rebase**, and a timestamps-only diff is
+  skipped (idempotent). `FORCE=1` bypasses (debugging only). It stages `<ticker>.json` +
+  `<ticker>.pdf` + the regenerated `index.json` and pushes with a rebase-retry.
+- **`universe.json`** — the curated coverage list `[{ticker,name,sector,fy_end_month}]`.
+- **`.github/workflows/process-company.yml`** — `repository_dispatch` (type `process-company`,
+  payload `{ticker}`) **and** `workflow_dispatch` (ticker + source). Runs the pipeline with the
+  Screener + LLM-pool secrets and commits via the guard. **Concurrency-group per ticker.**
+- **`.github/workflows/monthly-refresh.yml`** — `cron` (monthly) + manual. Walks `universe.json`
+  **sequentially** (shared free-tier pool · cache · backoff), pipeline + guard per company; a
+  truncated company keeps its prior ledger. The monthly commit keeps the repo active.
+- **Worker `/api/request/:ticker`** (`worker/index.js`) — POST validates the ticker, rate-limits
+  per IP, is idempotent (covered/queued), and fires the `repository_dispatch` with the
+  `GH_DISPATCH_TOKEN` Worker secret (wired at deploy P11; until then it safely mock-queues so the
+  flow still works). `GET /api/status/:ticker` reports ready/processing/unknown.
+- **Dashboard "Request this company"** (`components/search.js`) — a no-match query → POST
+  `/api/request/:ticker` → a "Processing — pulling filings & scoring" state → polls `index.json`
+  (the ground truth) until the ledger appears, then routes; an already-covered ticker just opens.
+
+**The provenance commit guard is the load-bearing safety property: shipped data
+(`public/data/`) can only ever be a real, complete verdict — a mock/incomplete/stale run never
+replaces a good ledger, and never silently downgrades one.** In-session: `npm run test:pipeline`
+(17 guard assertions) + an offline Worker test (9) + a `$0` mock end-to-end run that the guard
+correctly **refuses** (and self-cleans); the live "any company" runs (acquire + LLM pool) are
+CI-only. `npm run validate` is unaffected (no schema change).
 
 ## PDF export (Prompt 9)
 
@@ -381,7 +430,11 @@ the egress allowlist live in the README.
   routes fall through to `index.html`. `/api/*` is reserved:
   - `GET /api/health` → `{ ok: true }`
   - `GET /api/company/:ticker` → 501 (served from static JSON until wired up)
-  - `GET /api/report/:ticker` → 501 (wired up in a later prompt)
+  - `GET /api/report/:ticker` → 501 (served from static `/reports/<ticker>.pdf`)
+  - `POST /api/request/:ticker` → queue an uncovered company (P10): per-IP rate-limit,
+    idempotent (covered/queued), fires a GitHub `repository_dispatch` (→ `process-company.yml`)
+    via the `GH_DISPATCH_TOKEN` Worker secret (set at deploy P11; mock-queued until then)
+  - `GET /api/status/:ticker` → `{ status: ready | processing | unknown }` (P10)
 - **Pipeline** scripts are Node ESM `.mjs`. Dependencies are installed
   `--no-save` (e.g. `npm install --no-save ajv ajv-formats`); `node_modules/` is
   gitignored and never committed. Generated ledgers are written under
@@ -519,6 +572,13 @@ npm i -D playwright --no-save && npx playwright install chromium
 TICKER=vedl npm run report                   # ledger → public/reports/vedl.pdf (headless Chromium)
 FORCE=1 TICKER=vedl npm run report           # watermarked copy of a mock/provisional ledger (inspection only)
 # commit-on-real-verdict-only build runs in CI (build-report.yml, workflow_dispatch: ticker + force)
+
+# Orchestration & multi-company (Prompt 10) — one command per ticker; guard ships only real verdicts
+npm run test:pipeline                        # commit-guard unit tests (refuse mock/incomplete/downgrade; FORCE)
+CORPUS=pipeline/fixtures/vedl.corpus.json PROVIDER=mock DRY_RUN=1 TICKER=vedl npm run pipeline  # $0 offline run; guard refuses the mock
+TICKER=infy npm run pipeline                 # full live run (acquire→…→build-report→guarded commit) — CI (secrets)
+DRY_RUN=1 TICKER=vedl npm run commit:guarded # guard decision (stage, never push); FORCE=1 bypasses
+# live "any company": process-company.yml (repository_dispatch / workflow_dispatch) · monthly-refresh.yml (cron)
 ```
 
 ## Roadmap (≈12 prompts)
@@ -565,8 +625,13 @@ FORCE=1 TICKER=vedl npm run report           # watermarked copy of a mock/provis
       Export button downloads it. Company-agnostic from the ledger; the **provenance honesty
       rule** extends to paper — mock/provisional reports are watermarked and never committed
       (CI commits only a real verdict). Browser-verified. *(this prompt)*
-- [ ] **P10 — Pipeline orchestration + multi-company.** Batch build, caching,
-      `index.json` at scale.
+- [x] **P10 — Orchestration + multi-company.** One-command `run-pipeline.mjs`
+      (acquire→…→build-report→**guarded commit**) for any ticker; the **provenance commit guard**
+      (`lib/commit.mjs`) makes shipped data honest by construction — a mock/incomplete/stale run
+      never replaces a good ledger, never downgrades one, but the curated→live upgrade is allowed.
+      A curated `universe.json`, `process-company.yml` (repository_dispatch + dispatch) and a
+      monthly `monthly-refresh.yml` cron; the Worker's `/api/request/:ticker` + dashboard "Request
+      this company" pull any company into coverage. Guard + Worker unit-tested; live runs CI-only. *(this prompt)*
 - [ ] **P11 — Polish / QA / deploy.** A11y, performance, Cloudflare deploy.
 
 ## Do / Don't (P1)

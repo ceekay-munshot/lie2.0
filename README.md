@@ -10,18 +10,19 @@ delivery reliability, and exports a polished multi-page PDF.
 **Search a company → dashboard** (credibility score, status donut, slippage
 timeline, track-record cards, master promise table) **→ Export PDF.**
 
-This repo is being built in ~12 prompts. **Status: Prompts 1–9 complete** — the
+This repo is being built in ~12 prompts. **Status: Prompts 1–10 complete** — the
 foundation, document acquisition, ingestion & normalization, the extraction
 engine, **verification & credibility** (promises scored into the final ledger, the
 LLM retrieving while deterministic rules decide), the **dashboard** (search → a
 credibility hero with a provenance guard, five ledger-driven charts incl. the
 signature promised→re-set **slippage timeline**), the **track-record cards +
 13-column master table + per-promise drill modal** — every verdict auditable down to
-its verbatim, quote-grounded receipt — and now **one-click PDF export**: a polished,
-multi-page A4 report pre-built by the pipeline (headless Chromium) and committed to
-`public/reports/`, where the dashboard's Export button serves it. Multi-company
-automation lands in later prompts. See [`CLAUDE.md`](./CLAUDE.md) for architecture,
-the data contract and the roadmap.
+its verbatim, quote-grounded receipt — **one-click PDF export** (a polished multi-page
+A4 report pre-built by the pipeline), and now **orchestration & multi-company
+automation**: one command runs the whole loop for *any* ticker, a **provenance commit
+guard** makes shipped data honest by construction, and a "request this company" path
+pulls new companies into coverage. Only deploy + final polish (P11) remain. See
+[`CLAUDE.md`](./CLAUDE.md) for architecture, the data contract and the roadmap.
 
 ## Stack
 
@@ -352,10 +353,33 @@ overlay + a cover banner). The `build-report.yml` workflow commits the PDF **onl
 ledger is a real verdict** — a forced watermarked copy is an artifact, never committed — so
 `public/reports/` can only ever hold honest reports. No schema change.
 
+### Orchestration & multi-company (Prompt 10)
+
+One command runs the whole loop for **any** ticker, and a guard makes shipping data honest:
+
+```bash
+TICKER=infy npm run pipeline                  # acquire → ingest → extract → verify → build-report → guarded commit
+npm run test:pipeline                         # commit-guard unit tests (refuse mock/incomplete/downgrade; FORCE)
+CORPUS=pipeline/fixtures/vedl.corpus.json PROVIDER=mock DRY_RUN=1 TICKER=vedl npm run pipeline  # $0 offline; guard refuses
+```
+
+`run-pipeline.mjs` chains the stages (acquire…verify required; build-report non-fatal),
+idempotent + monotonic via the stage caches, and ends in the **provenance commit guard**
+(`lib/commit.mjs`) — the enforcement point. The guard ranks ledgers (complete-live > curated
+manual > mock/incomplete) and **refuses** a mock or incomplete-live ledger, **never downgrades**
+a stronger committed ledger to a lesser one (a quota-truncated re-run keeps the prior good
+ledger — the "Vedanta 61/B lesson"), but **allows the curated→live upgrade**; it captures the
+prior ledger from HEAD and re-checks it after every rebase, and skips a timestamps-only diff.
+`FORCE=1` bypasses (debugging only). A curated `universe.json` plus `process-company.yml`
+(`repository_dispatch` + manual) and a monthly `monthly-refresh.yml` cron keep coverage fresh.
+The Worker's **`POST /api/request/:ticker`** (rate-limited, idempotent) fires the dispatch via a
+`GH_DISPATCH_TOKEN` secret (wired at deploy, P11), and the dashboard's **"Request this company"**
+shows a processing state then opens the company once `index.json` lists it. No hardcoded tickers.
+
 ## Layout
 
 ```
-worker/index.js            Cloudflare Worker (ASSETS + /api/*)
+worker/index.js            Cloudflare Worker (ASSETS + /api/* incl. POST /api/request/:ticker, /api/status)
 schema/                    The data contract (JSON Schema, draft 2020-12)
 public/                    Static dashboard (zero build step)
   index.html               Shell: design system <style>, boot loader, header, OG/favicon
@@ -393,6 +417,9 @@ pipeline/
   extract.mjs              Extraction engine: corpus → promises.json (first LLM step)
   verify.mjs               Verification orchestrator: promises → scored ledger (Prompt 5)
   build-report.mjs         Ledger → report HTML → public/reports/<ticker>.pdf (headless Chromium)
+  run-pipeline.mjs         Orchestrator (P10): acquire→ingest→extract→verify→build-report→guarded commit
+  lib/commit.mjs           THE commit guard (P10): refuse mock/incomplete/downgrade · rebase-retry push
+  universe.json            Curated coverage list [{ticker,name,sector,fy_end_month}]
   eval-extraction.mjs      Recall vs the golden fixture
   eval-verification.mjs    The data-verifier: align engine ledger ↔ golden, status agreement
   validate.mjs             Ledger ↔ schema validation
@@ -402,7 +429,7 @@ pipeline/
   test/p3 Ingestion · test/p4 Extraction · test/p5 Verification · test/p6 Provenance guard
   fixtures/<ticker>.corpus.json  Committed corpus for CI extract/verify
   fixtures/<ticker>.golden.json  Committed golden ledger (verification eval target)
-.github/workflows/         CI (acquire.yml · test-extract.yml · test-verify.yml · build-report.yml)
+.github/workflows/         CI (acquire · test-extract · test-verify · build-report · process-company · monthly-refresh)
 wrangler.jsonc             Worker config
 ```
 

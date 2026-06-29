@@ -1,0 +1,71 @@
+# Monthly refresh (Prompt 10) — walk the covered universe and re-score each company.
+#
+# Sequential by design: the free-tier LLM pool is shared, so companies are processed one at
+# a time with backoff between them. Each company goes through the same pipeline + honesty
+# guard as process-company.yml, so a quota-truncated run keeps the prior good ledger on main
+# (never a downgrade). A monthly commit also keeps the repository active.
+#
+# Secrets: SCREENER_EMAIL/PASSWORD · GEMINI/GROQ/MISTRAL_API_KEY.
+
+name: Monthly refresh
+
+on:
+  schedule:
+    - cron: "0 6 1 * *"   # 06:00 UTC on the 1st of every month
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Optional space-separated ticker subset (default: the whole universe)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: monthly-refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    env:
+      ONLY: ${{ github.event.inputs.only }}
+      REFRESH: "1"            # re-acquire so new quarters are picked up
+      SCREENER_EMAIL: ${{ secrets.SCREENER_EMAIL }}
+      SCREENER_PASSWORD: ${{ secrets.SCREENER_PASSWORD }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+      LLM_CONCURRENCY: "2"
+      DEBUG: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pipeline deps (--no-save) + Chromium
+        run: |
+          npm i -D ajv ajv-formats unpdf playwright --no-save --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: Walk the universe sequentially (guarded commit per company)
+        shell: bash
+        run: |
+          set -u
+          tickers="${ONLY:-$(node -e 'for (const c of require("./pipeline/universe.json")) console.log(c.ticker)')}"
+          echo "Refreshing: $(echo $tickers | tr "\n" " ")"
+          for t in $tickers; do
+            echo "::group::$t"
+            # one company at a time; a failure must not stop the walk (the guard kept the prior ledger)
+            TICKER="$t" node pipeline/run-pipeline.mjs || echo "::warning::$t failed — prior ledger kept, continuing"
+            echo "::endgroup::"
+            sleep 30   # polite backoff between companies (free-tier discipline)
+          done
+
+      - name: Validate every committed ledger against the schema
+        if: ${{ always() }}
+        run: node pipeline/validate.mjs
