@@ -29,7 +29,7 @@ const tvar = (qtrs, text) => ({ absolute: null, pct: null, bps: null, days: qtrs
 /** test_date is in the future relative to the latest reported period. ISO dates compare
  *  directly; a non-ISO horizon ("2030", "FY30", "2HFY27") compares by fiscal period so a
  *  long-dated target stays NYT even after an interim actual shows up. */
-function isFuture(testDate, latestReportedDate, latestReportedPeriod = null) {
+export function isFuture(testDate, latestReportedDate, latestReportedPeriod = null) {
   if (!testDate) return false;
   if (isISO(testDate) && isISO(latestReportedDate)) return testDate.slice(0, 10) > latestReportedDate.slice(0, 10);
   const ti = periodIndex(testDate);
