@@ -43,6 +43,7 @@ public/                   Static site (zero build step; CDN libs only)
   data/companies/
     <ticker>.json         One ledger per company (validated against the schema)
     index.json            Generated card-sized summaries for the home page
+  reports/<ticker>.pdf    Pre-built exportable PDF report (committed; the Export button serves it)
 pipeline/                 Node ESM (.mjs) build/verify scripts (run locally)
   lib/llm.mjs             Provider-agnostic, OpenAI-compatible LLM client
   lib/manifest.mjs        Acquisition contract: fiscal-quarter, sha256, %PDF, paths
@@ -78,11 +79,48 @@ pipeline/                 Node ESM (.mjs) build/verify scripts (run locally)
   verify.mjs              Verification orchestrator: promises.json → scored ledger (SECOND LLM step)
   eval-verification.mjs   Data-verifier: align engine↔golden, status agreement, newly_resolved/extra
   test/p5.test.mjs        Verification unit tests (status/variance, integrity, credibility banding)
+  lib/report-template.mjs ledger → self-contained multi-page A4 report HTML (inline-SVG charts, no CDN)
+  build-report.mjs        Render the report HTML → public/reports/<ticker>.pdf (headless Chromium)
 fixtures/<ticker>.corpus.json  Committed corpus for CI extract+verify (recall eval; NOT gitignored)
 fixtures/<ticker>.golden.json  Committed golden ledger — the verification eval target (NOT gitignored)
 pipeline/output/<ticker>/ Acquisition + corpus + promises + ledger artifacts (gitignored): manifest.json,
                           raw/*.pdf, corpus.json, promises.json, cache/{extract,verify}/
 ```
+
+## PDF export (Prompt 9)
+
+One click turns a committed ledger into a **polished, multi-page A4-landscape PDF** — the
+shareable artifact the whole product builds toward. The report is **pre-built by the
+pipeline** (not rendered in the browser) and committed to `public/reports/<ticker>.pdf`; the
+dashboard's Export button (`#export`) simply downloads it.
+
+- **`lib/report-template.mjs`** (`reportHTML(ledger)`) — a Node port of the approved
+  reference: **one self-contained HTML string** (no CDN/external assets,
+  `print-color-adjust:exact`, **inline-SVG** donut/bars/gantt/momentum charts) laid out as
+  cover · executive dashboard · slippage & momentum · track-record cards · master table ·
+  methodology. Parametrised **entirely** from `<ticker>.json` — no company/ticker/sector/
+  number is hardcoded — and null-safe (a panel hides when its data is absent). Reuses the
+  dashboard's palette, 13-column order and worst-first cards, so screen and paper agree.
+- **`build-report.mjs`** (`npm run report`) — reads the ledger, builds the HTML, renders it
+  to `public/reports/<ticker>.pdf` with the repo's **headless Chromium** (Playwright
+  `page.pdf`, landscape, `printBackground`, `preferCSSPageSize`); prints page count + provenance.
+- **Export button** (`js/views/company.js#mountExport`) — HEAD-checks `/reports/<ticker>.pdf`:
+  present → a "Download PDF report" button; absent → a graceful "not generated yet — run
+  `TICKER=x npm run report`" note.
+
+**The provenance honesty rule extends to paper (this prompt's safety goal): a PDF travels
+further than the dashboard, so it must never pass a non-real verdict as authoritative.**
+`build-report.mjs` **REFUSES** a `mode:mock` or incomplete-live ledger by default (exit 1);
+`FORCE=1` builds a **watermarked** copy (diagonal "MOCK — NOT A REAL VERDICT" / "PROVISIONAL
+— INCOMPLETE RETRIEVAL" overlay + a cover banner) for inspection only. `report-template.mjs`'s
+`provInfo` mirrors `ui.js#provenanceBadge`: complete-live → clean · mock → red watermark +
+banner · `!complete` → amber watermark + banner · manual → a grey "Curated" note. The CI
+workflow (`build-report.yml`) goes further — it commits the PDF **only when the ledger is a
+real verdict**; a force-built watermarked copy is uploaded as an artifact but never committed,
+so `public/reports/` can only ever hold honest reports.
+
+In-session: `TICKER=vedl npm run report` (the 9-page golden PDF) + the refuse-guard and both
+watermark paths exercised; `npm run validate` is unaffected (no schema change).
 
 ## Track record + master table + drill (Prompt 8)
 
@@ -475,6 +513,12 @@ npm run validate                             # the engine's ledger validates aga
 # live retrieval runs in CI (test-verify.yml) with GEMINI/GROQ/MISTRAL_API_KEY secrets:
 CORPUS=pipeline/fixtures/vedl.corpus.json TICKER=vedl npm run verify
 npm run eval:verify public/data/companies/vedl.json pipeline/fixtures/vedl.golden.json  # data-verifier CLI
+
+# PDF export (Prompt 9) — needs Playwright + a browser; no LLM, no secrets
+npm i -D playwright --no-save && npx playwright install chromium
+TICKER=vedl npm run report                   # ledger → public/reports/vedl.pdf (headless Chromium)
+FORCE=1 TICKER=vedl npm run report           # watermarked copy of a mock/provisional ledger (inspection only)
+# commit-on-real-verdict-only build runs in CI (build-report.yml, workflow_dispatch: ticker + force)
 ```
 
 ## Roadmap (≈12 prompts)
@@ -515,7 +559,12 @@ npm run eval:verify public/data/companies/vedl.json pipeline/fixtures/vedl.golde
       Promise column), a shared filter bar (status/category/quarter/conf/search), and a
       per-promise **drill modal** (the verbatim-quote receipt — every verdict auditable;
       focus-trap/ESC/restore). Null-safe, browser-verified. *(this prompt)*
-- [ ] **P9 — PDF export.** Polished, multi-page report.
+- [x] **P9 — PDF export.** One-click polished, **multi-page A4 PDF** pre-built by the
+      pipeline (`report-template.mjs` → self-contained inline-SVG HTML → headless Chromium
+      `build-report.mjs`) and committed to `public/reports/<ticker>.pdf`; the dashboard's
+      Export button downloads it. Company-agnostic from the ledger; the **provenance honesty
+      rule** extends to paper — mock/provisional reports are watermarked and never committed
+      (CI commits only a real verdict). Browser-verified. *(this prompt)*
 - [ ] **P10 — Pipeline orchestration + multi-company.** Batch build, caching,
       `index.json` at scale.
 - [ ] **P11 — Polish / QA / deploy.** A11y, performance, Cloudflare deploy.
