@@ -18,10 +18,13 @@
     "verify": "node pipeline/verify.mjs",
     "eval:verify": "node pipeline/eval-verification.mjs",
     "report": "node pipeline/build-report.mjs",
+    "pipeline": "node pipeline/run-pipeline.mjs",
+    "commit:guarded": "node pipeline/lib/commit.mjs",
     "test:ingest": "node pipeline/test/p3.test.mjs",
     "test:extract": "node pipeline/test/p4.test.mjs",
     "test:verify": "node pipeline/test/p5.test.mjs",
     "test:ui": "node pipeline/test/p6.test.mjs",
+    "test:pipeline": "node pipeline/test/p10.test.mjs",
     "llm:selftest": "node pipeline/lib/llm.mjs --selftest"
   },
   "engines": {

@@ -1,13 +1,22 @@
 /**
  * search.js — company search autocomplete. Loads the committed index, fuzzy-filters
  * by ticker / name / sector, supports full keyboard nav (↑ ↓ Enter Esc), and routes
- * to the company view on select. No match → a "Request this company" CTA (stubbed
- * here; P10 wires the actual dispatch). Company-agnostic — purely index-driven.
+ * to the company view on select. No match → a "Request this company" CTA that fires the
+ * Worker's /api/request/:ticker (P10), shows a processing state, then polls index.json and
+ * opens the company once its ledger is scored. Company-agnostic — purely index-driven.
  *
  *   mountSearch(hostEl, { compact, autofocus, onRequest });
  */
 import { loadIndex, gradeFromScore, gradeColor, escapeHTML } from "../ui.js";
 import { navigate } from "../lib/router.js";
+
+/** Best-effort ticker from a free-text query (Screener resolves names server-side anyway). */
+const sanitizeTicker = (q) => String(q ?? "").trim().toUpperCase().replace(/[^A-Z0-9.&-]+/g, "").slice(0, 24);
+/** Re-render a result row as a status line (request progress). */
+function setReqState(li, title, meta) {
+  if (!li) return;
+  li.innerHTML = `<span class="ld-result-id"><span class="ld-result-name">${escapeHTML(title)}</span>${meta ? `<span class="ld-result-meta">${escapeHTML(meta)}</span>` : ""}</span>`;
+}
 
 let _indexPromise = null;
 /** Module-cached index load (shared across every mounted search). */
@@ -130,10 +139,40 @@ export function mountSearch(host, { compact = false, autofocus = false, onReques
     navigate(ticker);
   }
 
-  function requestCompany(q, btn) {
+  async function requestCompany(q, btn) {
     if (typeof onRequest === "function") onRequest(q);
     const li = btn.closest(".ld-result");
-    if (li) li.innerHTML = `<span class="ld-result-id"><span class="ld-result-name">Thanks — noted “${escapeHTML(q)}”.</span><span class="ld-result-meta">Company requests go live in a later build.</span></span>`;
+    const ticker = sanitizeTicker(q);
+    if (!ticker) { setReqState(li, `Couldn’t read a ticker from “${q}”`, "Try the NSE/BSE symbol, e.g. INFY."); return; }
+    setReqState(li, `Requesting “${ticker}”…`, "");
+    let data = {};
+    try {
+      const r = await fetch(`/api/request/${encodeURIComponent(ticker)}`, { method: "POST", headers: { "content-type": "application/json" }, body: "{}" });
+      data = await r.json().catch(() => ({}));
+      if (r.status === 429) { setReqState(li, "Too many requests", "Please try again in a few minutes."); return; }
+      if (!r.ok) { setReqState(li, "Couldn’t queue that company", "Please try again later."); return; }
+    } catch { setReqState(li, "Network error", "Couldn’t reach the request service."); return; }
+    if (data.status === "ready") { choose(ticker); return; } // already covered → just open it
+    setReqState(li, `Processing “${ticker}” — pulling filings & scoring`, "This takes a few minutes; we’ll open it automatically when it’s ready.");
+    pollUntilReady(ticker, li);
+  }
+
+  // Poll the committed index (the ground truth) until the requested ledger appears, then route.
+  function pollUntilReady(ticker, li) {
+    const T = ticker.toUpperCase();
+    const deadline = Date.now() + 6 * 60 * 1000;
+    const tick = async () => {
+      try {
+        const res = await fetch(`/data/companies/index.json?t=${Date.now()}`, { cache: "no-store" });
+        if (res.ok) {
+          const idx = await res.json();
+          if (Array.isArray(idx) && idx.some((c) => String(c.ticker).toUpperCase() === T)) { choose(ticker); return; }
+        }
+      } catch { /* transient — keep polling */ }
+      if (Date.now() < deadline) setTimeout(tick, 8000);
+      else setReqState(li, `Still processing “${ticker}”`, "Check back shortly — it’ll appear in search once scored.");
+    };
+    setTimeout(tick, 8000);
   }
 
   input.addEventListener("focus", update);

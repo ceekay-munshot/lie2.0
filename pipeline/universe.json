@@ -1,0 +1,6 @@
+[
+  { "ticker": "VEDL", "name": "Vedanta Limited", "sector": "Metals & Mining", "fy_end_month": 3 },
+  { "ticker": "INFY", "name": "Infosys Limited", "sector": "Information Technology", "fy_end_month": 3 },
+  { "ticker": "RELIANCE", "name": "Reliance Industries Limited", "sector": "Energy / Conglomerate", "fy_end_month": 3 },
+  { "ticker": "HDFCBANK", "name": "HDFC Bank Limited", "sector": "Banking", "fy_end_month": 3 }
+]

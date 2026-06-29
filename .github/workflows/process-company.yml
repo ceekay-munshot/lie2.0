@@ -1,0 +1,88 @@
+# Process one company (Prompt 10) — the "any company" entry point.
+#
+# Runs the full pipeline for a single ticker (acquire → ingest → extract → verify →
+# build-report) and commits the result through the P10 honesty guard (lib/commit.mjs):
+# a mock/incomplete run never replaces a good ledger on main.
+#
+# Triggered two ways:
+#   - repository_dispatch (type: process-company, client_payload {ticker[, source]}) — the
+#     Worker's /api/request/:ticker fires this when a visitor requests an uncovered company.
+#   - workflow_dispatch (manual) — ticker + optional source.
+#
+# Secrets: SCREENER_EMAIL/PASSWORD (acquire) · GEMINI/GROQ/MISTRAL_API_KEY (extract+verify pool).
+
+name: Process company
+
+on:
+  workflow_dispatch:
+    inputs:
+      ticker:
+        description: "Ticker or company name (e.g. INFY)"
+        required: true
+      source:
+        description: "Acquisition backend"
+        type: choice
+        options: [screener, upload]
+        default: screener
+      force:
+        description: "FORCE=1 — bypass the provenance commit guard (debugging only)"
+        type: boolean
+        default: false
+  repository_dispatch:
+    types: [process-company]
+
+permissions:
+  contents: write   # the guarded commit pushes the ledger + report to the branch
+
+concurrency:
+  # one in-flight run per ticker; a second request for the same ticker queues behind it
+  group: process-company-${{ github.event.inputs.ticker || github.event.client_payload.ticker }}
+  cancel-in-progress: false
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TICKER: ${{ github.event.inputs.ticker || github.event.client_payload.ticker }}
+      SOURCE: ${{ github.event.inputs.source || github.event.client_payload.source || 'screener' }}
+      FORCE: ${{ (github.event.inputs.force == 'true' || github.event.client_payload.force) && '1' || '' }}
+      SCREENER_EMAIL: ${{ secrets.SCREENER_EMAIL }}
+      SCREENER_PASSWORD: ${{ secrets.SCREENER_PASSWORD }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+      LLM_CONCURRENCY: "2"
+      DEBUG: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Guard — a ticker is required
+        run: '[ -n "$TICKER" ] || { echo "::error::no ticker supplied (workflow input or dispatch payload)"; exit 1; }'
+
+      - name: Install pipeline deps (--no-save) + Chromium
+        run: |
+          npm i -D ajv ajv-formats unpdf playwright --no-save --no-audit --no-fund
+          npx playwright install --with-deps chromium
+
+      - name: Run the pipeline (acquire → … → build-report → guarded commit)
+        run: node pipeline/run-pipeline.mjs
+
+      - name: Validate every committed ledger against the schema
+        if: ${{ always() }}
+        run: node pipeline/validate.mjs
+
+      - name: Upload artifacts (ledger + promises + corpus)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-${{ github.event.inputs.ticker || github.event.client_payload.ticker }}
+          path: |
+            public/data/companies/*.json
+            public/reports/*.pdf
+            pipeline/output/**/promises.json
+          if-no-files-found: warn
