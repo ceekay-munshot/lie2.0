@@ -14,7 +14,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { spawnSync } from "node:child_process";
 import { verificationWindow } from "./lib/verification-window.mjs";
-import { statusVariance, isFuture } from "./lib/status-variance.mjs";
+import { statusVariance, isFuture, isWithinWindow } from "./lib/status-variance.mjs";
 import { directionFor } from "./lib/metric-direction.mjs";
 import { findActuals } from "./lib/find-actual.mjs";
 import { financialTrend } from "./lib/financial-trend.mjs";
@@ -156,10 +156,10 @@ async function main() {
   // is within the window yet were left NYT for want of a retrieved actual (a truncation
   // signal, e.g. a provider's daily quota cut retrieval short). The UI disclaims/warns when
   // the run isn't a complete live one. (Refuse-to-commit lands in P10; here we only stamp.)
-  // A promise left NYT whose deadline is NOT in the future (by the SAME isFuture the verdict uses —
-  // ISO dates compared by date, not just fiscal period) is "forced": due, but no actual was
-  // retrieved. So an ISO target on/before the report date can't make an incomplete ledger look complete.
-  const forced_nyt = verified.filter((p) => p.status === "NYT" && !isFuture(p.test_date, vw.latest_reported_date, vw.latest_reported)).length;
+  // A promise left NYT whose deadline is provably WITHIN the window (parseable + not future, by the
+  // same date/period logic the verdict uses) is "forced": due, but no actual was retrieved. An
+  // unparseable long-dated horizon ("medium term", null) is NOT due, so it never flips complete→false.
+  const forced_nyt = verified.filter((p) => p.status === "NYT" && isWithinWindow(p.test_date, vw.latest_reported_date, vw.latest_reported)).length;
   const retrieval_errors = (faStats.errors?.length || 0) + (ftStats.errors?.length || 0);
   const models_used = MOCK
     ? ["mock"]
