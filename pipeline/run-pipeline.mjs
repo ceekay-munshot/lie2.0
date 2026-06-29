@@ -54,7 +54,7 @@ const STAGES = [
   },
   { name: "ingest", fatal: true, skip: () => haveCorpus(), run: () => node("ingest.mjs") },
   { name: "extract", fatal: true, skip: () => false, run: () => node("extract.mjs", { CORPUS: corpusPath }) },
-  { name: "verify", fatal: true, skip: () => false, capture: true, run: () => node("verify.mjs", { CORPUS: corpusPath }) },
+  { name: "verify", fatal: true, skip: () => false, run: () => node("verify.mjs", { CORPUS: corpusPath }) },
   { name: "build-report", fatal: false, skip: () => false, run: () => node("build-report.mjs") },
 ];
 
@@ -63,20 +63,18 @@ function node(script, extraEnv = {}) {
   // stage (e.g. extract.mjs has its own DRY_RUN estimate-only mode that writes no promises.json).
   const env = { ...process.env, TICKER, ...extraEnv };
   delete env.DRY_RUN;
-  return spawnSync("node", [P(script)], { cwd: REPO, env, encoding: "utf8", stdio: "pipe" });
+  // Stream the child's output LIVE — a long stage (verify makes many rate-limited LLM calls) must be
+  // visible as it runs, not buffered until it finishes (or gets killed by a job timeout).
+  return spawnSync("node", [P(script)], { cwd: REPO, env, stdio: "inherit" });
 }
 
 const t0 = Date.now();
-let recall = null;
 for (const stage of STAGES) {
   if (stage.skip()) { console.log(`▸ ${stage.name}: skipped (cached)`); continue; }
-  process.stdout.write(`▸ ${stage.name}: running…\n`);
-  const r = stage.run();
-  const log = `${r.stdout || ""}${r.stderr || ""}`;
-  if (DEBUG || r.status !== 0 || stage.capture) process.stdout.write(log.split("\n").map((l) => `    ${l}`).join("\n") + "\n");
-  if (stage.capture) { const m = log.match(/recall\s*:\s*lexical\s+([\d.]+%)/i); if (m) recall = m[1]; }
+  console.log(`\n▸ ${stage.name}: running…`);
+  const r = stage.run(); // streams live (stdio: inherit)
   if (r.status !== 0) {
-    if (stage.fatal) die(`stage '${stage.name}' FAILED (exit ${r.status}). Pipeline aborted — fix this stage and re-run (earlier stages are cached).`);
+    if (stage.fatal) die(`stage '${stage.name}' FAILED (exit ${r.status}). Pipeline aborted — earlier stages are cached, so fix this stage and re-run.`);
     console.log(`⚠ ${stage.name}: failed (exit ${r.status}) — non-fatal, continuing without it.`);
   } else {
     console.log(`✓ ${stage.name}: done`);
@@ -94,7 +92,6 @@ console.log(`  company    : ${L.company?.name} (${L.company?.ticker})  ·  ${L.c
 console.log(`  coverage   : ${L.coverage?.from || "?"}–${L.coverage?.to || "?"}  ·  window through ${L.verification_window?.latest_reported || "?"}`);
 console.log(`  promises   : ${agg.total ?? (L.promises || []).length}  (testable ${agg.testable ?? "?"})`);
 console.log(`  credibility: ${cred.score ?? "—"} (${cred.grade ?? "—"})  ·  delivery ${cred.delivery_score ?? "—"} / timeline ${cred.timeline_score ?? "—"}`);
-console.log(`  recall     : ${recall || "(n/a — see verify eval above)"}`);
 console.log(`  provenance : ${prov.mode || "?"}${prov.complete === true ? " · complete" : prov.complete === false ? ` · INCOMPLETE (forced_nyt ${prov.forced_nyt ?? "?"}, retrieval_errors ${prov.retrieval_errors ?? "?"})` : ""}`);
 console.log(`  report     : ${existsSync(join(REPO, "public", "reports", `${lc}.pdf`)) ? `public/reports/${lc}.pdf` : "— (not built)"}`);
 console.log(`  elapsed    : ${elapsed}s`);

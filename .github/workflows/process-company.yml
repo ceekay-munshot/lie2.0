@@ -42,7 +42,7 @@ concurrency:
 jobs:
   process:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 90   # a live verify retrieves an actual per in-window promise against free-tier rate limits
     env:
       TICKER: ${{ github.event.inputs.ticker || github.event.client_payload.ticker }}
       SOURCE: ${{ github.event.inputs.source || github.event.client_payload.source || 'screener' }}

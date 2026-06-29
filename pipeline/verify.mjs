@@ -14,8 +14,8 @@ import { join, dirname } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { spawnSync } from "node:child_process";
 import { verificationWindow } from "./lib/verification-window.mjs";
-import { periodIndex } from "./lib/fiscal.mjs";
-import { statusVariance } from "./lib/status-variance.mjs";
+import { statusVariance, isFuture, isWithinWindow } from "./lib/status-variance.mjs";
+import { directionFor } from "./lib/metric-direction.mjs";
 import { findActuals } from "./lib/find-actual.mjs";
 import { financialTrend } from "./lib/financial-trend.mjs";
 import { aggregate, credibility } from "./lib/aggregate.mjs";
@@ -124,8 +124,18 @@ async function main() {
   const cacheDir = join(outputDir(TICKER), "cache", "verify");
   console.log(`verify — ${TICKER.toUpperCase()} · ${promises.length} promises · latest_reported=${vw.latest_reported} (${vw.latest_reported_date}) · ${MOCK ? "MOCK" : "live"}`);
 
-  // 2. retrieve actuals (the only LLM step)
-  const { results: found, stats: faStats } = await findActuals({ promises, corpus, mock: MOCK, concurrency: CONCURRENCY, cacheDir, debug: DEBUG });
+  // 2. retrieve actuals (the ONLY LLM step) — skip ONLY promises whose verdict is already fixed at
+  // NYT no matter what an actual says: a NON-timeline whose test_date is in the future (an interim
+  // figure can't settle an annual target → statusVariance returns NYT regardless). Timeline promises
+  // are ALWAYS retrieved — a later doc can re-guide a still-future milestone into a MISS — and the
+  // EXACT isFuture() the verdict uses is reused here (ISO by date, else fiscal period), so this filter
+  // can never disagree with the rules. It just stops burning free-tier calls on un-scoreable targets.
+  const fixedNYT = (p) => directionFor(p.category) !== "timeline" && isFuture(p.test_date, vw.latest_reported_date, vw.latest_reported);
+  const toRetrieve = promises.filter((p) => !fixedNYT(p));
+  if (DEBUG) console.log(`verify: retrieving actuals for ${toRetrieve.length}/${promises.length} promises (${promises.length - toRetrieve.length} non-timeline forward-dated → NYT regardless, no LLM call)`);
+  const { results: retrieved, stats: faStats } = await findActuals({ promises: toRetrieve, corpus, mock: MOCK, concurrency: CONCURRENCY, cacheDir, debug: DEBUG });
+  const found = new Array(promises.length).fill(null);
+  for (let i = 0, k = 0; i < promises.length; i++) if (!fixedNYT(promises[i])) found[i] = retrieved[k++];
 
   // 3. deterministic verdicts
   const ctx = { latestReportedDate: vw.latest_reported_date, latestReportedPeriod: vw.latest_reported, partialTol: PARTIAL_TOL, timelineGraceQtrs: TIMELINE_GRACE_QTRS };
@@ -146,12 +156,10 @@ async function main() {
   // is within the window yet were left NYT for want of a retrieved actual (a truncation
   // signal, e.g. a provider's daily quota cut retrieval short). The UI disclaims/warns when
   // the run isn't a complete live one. (Refuse-to-commit lands in P10; here we only stamp.)
-  const lriIdx = periodIndex(vw.latest_reported);
-  const forced_nyt = verified.filter((p) => {
-    if (p.status !== "NYT") return false;
-    const ti = periodIndex(p.test_date);
-    return ti != null && lriIdx != null && ti <= lriIdx;
-  }).length;
+  // A promise left NYT whose deadline is provably WITHIN the window (parseable + not future, by the
+  // same date/period logic the verdict uses) is "forced": due, but no actual was retrieved. An
+  // unparseable long-dated horizon ("medium term", null) is NOT due, so it never flips complete→false.
+  const forced_nyt = verified.filter((p) => p.status === "NYT" && isWithinWindow(p.test_date, vw.latest_reported_date, vw.latest_reported)).length;
   const retrieval_errors = (faStats.errors?.length || 0) + (ftStats.errors?.length || 0);
   const models_used = MOCK
     ? ["mock"]

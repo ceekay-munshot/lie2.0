@@ -29,13 +29,25 @@ const tvar = (qtrs, text) => ({ absolute: null, pct: null, bps: null, days: qtrs
 /** test_date is in the future relative to the latest reported period. ISO dates compare
  *  directly; a non-ISO horizon ("2030", "FY30", "2HFY27") compares by fiscal period so a
  *  long-dated target stays NYT even after an interim actual shows up. */
-function isFuture(testDate, latestReportedDate, latestReportedPeriod = null) {
+export function isFuture(testDate, latestReportedDate, latestReportedPeriod = null) {
   if (!testDate) return false;
   if (isISO(testDate) && isISO(latestReportedDate)) return testDate.slice(0, 10) > latestReportedDate.slice(0, 10);
   const ti = periodIndex(testDate);
   const li = periodIndex(latestReportedPeriod) ?? periodIndex(latestReportedDate);
   if (ti != null && li != null) return ti > li;
   return false; // truly unparseable horizon ("medium term"): rules fall through to NYT on no actual
+}
+
+/** test_date provably WITHIN the window: parseable AND not in the future — i.e. a deadline we can
+ *  show is due. An unparseable horizon ("medium term", null) returns false (we can't prove it's due),
+ *  so it is never treated as a forced/incomplete signal. The exact mirror of isFuture(). */
+export function isWithinWindow(testDate, latestReportedDate, latestReportedPeriod = null) {
+  if (!testDate) return false;
+  if (isISO(testDate) && isISO(latestReportedDate)) return testDate.slice(0, 10) <= latestReportedDate.slice(0, 10);
+  const ti = periodIndex(testDate);
+  const li = periodIndex(latestReportedPeriod) ?? periodIndex(latestReportedDate);
+  if (ti != null && li != null) return ti <= li;
+  return false;
 }
 
 /** Numeric comparison on the favourable side of the (possibly ranged) target. */
