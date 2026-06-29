@@ -121,11 +121,20 @@ async function main() {
   if (!promises.length) die(`no promises in ${promisesPath}`);
 
   const vw = verificationWindow(corpus);
+  const lriIdx = periodIndex(vw.latest_reported) ?? periodIndex(vw.latest_reported_date);
   const cacheDir = join(outputDir(TICKER), "cache", "verify");
   console.log(`verify — ${TICKER.toUpperCase()} · ${promises.length} promises · latest_reported=${vw.latest_reported} (${vw.latest_reported_date}) · ${MOCK ? "MOCK" : "live"}`);
 
-  // 2. retrieve actuals (the only LLM step)
-  const { results: found, stats: faStats } = await findActuals({ promises, corpus, mock: MOCK, concurrency: CONCURRENCY, cacheDir, debug: DEBUG });
+  // 2. retrieve actuals (the ONLY LLM step) — but only for promises testable within the window. A
+  // promise whose test_date is after the latest reported period is NYT regardless of any actual
+  // ("you can't fail a test that hasn't happened yet"), so retrieving it would just burn free-tier
+  // calls. This keeps a live run tractable when extraction surfaces many forward-dated commitments.
+  const testableNow = (p) => { const ti = periodIndex(p.test_date); return ti == null || lriIdx == null || ti <= lriIdx; };
+  const toRetrieve = promises.filter(testableNow);
+  if (DEBUG) console.log(`verify: retrieving actuals for ${toRetrieve.length}/${promises.length} in-window promises (${promises.length - toRetrieve.length} forward-dated → NYT, no LLM call)`);
+  const { results: retrieved, stats: faStats } = await findActuals({ promises: toRetrieve, corpus, mock: MOCK, concurrency: CONCURRENCY, cacheDir, debug: DEBUG });
+  const found = new Array(promises.length).fill(null);
+  for (let i = 0, k = 0; i < promises.length; i++) if (testableNow(promises[i])) found[i] = retrieved[k++];
 
   // 3. deterministic verdicts
   const ctx = { latestReportedDate: vw.latest_reported_date, latestReportedPeriod: vw.latest_reported, partialTol: PARTIAL_TOL, timelineGraceQtrs: TIMELINE_GRACE_QTRS };
@@ -146,7 +155,6 @@ async function main() {
   // is within the window yet were left NYT for want of a retrieved actual (a truncation
   // signal, e.g. a provider's daily quota cut retrieval short). The UI disclaims/warns when
   // the run isn't a complete live one. (Refuse-to-commit lands in P10; here we only stamp.)
-  const lriIdx = periodIndex(vw.latest_reported);
   const forced_nyt = verified.filter((p) => {
     if (p.status !== "NYT") return false;
     const ti = periodIndex(p.test_date);
