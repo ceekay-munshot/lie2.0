@@ -101,6 +101,9 @@ async function handleApi(request, env, url) {
     let source = "screener";
     try { const body = await request.json(); if (body && typeof body.source === "string") source = body.source; } catch { /* no body */ }
     const result = await dispatchProcessCompany(env, ticker, source);
+    // A real dispatch that GitHub rejected (bad token/scope/repo, throttling) started no workflow —
+    // don't mark it queued or it would read as a stuck "processing" for the TTL. (No token → mock-queue.)
+    if (!result.mock && !result.dispatched) return json({ ok: false, error: "dispatch_failed", ticker, status: result.status || 0 }, 502);
     QUEUED.set(ticker, now);
     return json({ ok: true, queued: true, status: "processing", ticker, mock: !!result.mock });
   }

@@ -69,11 +69,12 @@ const git = (...args) => sh("git", args);
 const die = (m) => { console.error(`commit: ${m}`); process.exit(1); };
 const log = (m) => console.log(`commit: ${m}`);
 
-/** Read a committed file's content at HEAD (or null if absent / not tracked). */
-function showAtHead(relPath) {
-  const r = git("show", `HEAD:${relPath}`);
+/** Read a committed file's content at a git ref (or null if absent / not tracked). */
+function showAt(ref, relPath) {
+  const r = git("show", `${ref}:${relPath}`);
   return r.status === 0 ? r.stdout : null;
 }
+const showAtHead = (relPath) => showAt("HEAD", relPath);
 const provOf = (jsonText) => { try { return JSON.parse(jsonText).provenance || null; } catch { return null; } };
 /** Ledger text minus volatile fields, so a re-run that only re-stamps the time isn't a "change". */
 function stripVolatile(jsonText) {
@@ -115,12 +116,28 @@ async function main() {
   // Refresh the index from the new ledger (deterministic, offline).
   if (genIndex().status !== 0) die("gen-index failed.");
 
-  // Idempotency: a re-run with identical inputs differs only by generated_at/run_id — not a real
-  // change, so don't churn the repo (DoD: re-run byte-identical where unchanged).
+  // Shipped data must be schema-VALID too, not just provenance-complete — the guard is the single
+  // point that protects main, so validate the working-tree ledgers BEFORE the commit lands.
+  const val = sh("node", [join(REPO, "pipeline", "validate.mjs")]);
+  if (val.status !== 0) {
+    if (priorLedgerText !== null) git("checkout", "--", ledgerRel); else rmSync(ledgerAbs, { force: true });
+    genIndex();
+    die(`refusing to commit — ${TICKER} is schema-INVALID (prior ledger kept):\n${((val.stdout || "") + (val.stderr || "")).trim().slice(-700)}`);
+  }
+
+  // Idempotency: a re-run with identical inputs differs only by generated_at/run_id. Don't churn the
+  // ledger/index on timestamps alone — BUT still ship a (re)generated or previously-missing report.
   if (priorLedgerText !== null && stripVolatile(priorLedgerText) === stripVolatile(nextLedgerText)) {
-    git("checkout", "--", ledgerRel, indexRel);
-    log("no meaningful change vs the committed ledger (timestamps only) — nothing to commit (idempotent).");
-    return;
+    git("checkout", "--", ledgerRel, indexRel); // never churn the ledger/index on timestamps only
+    let reportChanged = false;
+    if (existsSync(join(REPO, reportRel))) { git("add", "--", reportRel); reportChanged = git("diff", "--cached", "--quiet", "HEAD", "--", reportRel).status !== 0; }
+    if (!reportChanged) {
+      git("reset", "--quiet", "HEAD", "--", reportRel);
+      log("no meaningful change vs the committed ledger (timestamps only) — nothing to commit (idempotent).");
+      return;
+    }
+    log("ledger unchanged (timestamps only) but the report changed — committing the regenerated report.");
+    // fall through: the report is staged; ledger/index sit at HEAD so they won't re-stage as a change.
   }
 
   // Stage exactly the shipped artifacts.
@@ -143,10 +160,11 @@ async function main() {
     sh("sleep", [String(i * 2)]);
     git("fetch", "origin", BRANCH);
     if (git("rebase", `origin/${BRANCH}`).status !== 0) { git("rebase", "--abort"); die("rebase failed; not pushing."); }
-    // The prior on the rebased branch may now be a better verdict — re-decide before re-pushing.
-    const rebasedPrior = provOf(showAtHead(`${ledgerRel}`));
+    // Re-decide against the ledger that just LANDED on origin — NOT our own replayed commit (HEAD now
+    // holds our ledger). Reading origin/<branch> is what makes the downgrade re-check meaningful.
+    const rebasedPrior = provOf(showAt(`origin/${BRANCH}`, ledgerRel));
     const re = guardCommit({ nextProv, priorProv: rebasedPrior, force: FORCE });
-    if (!re.commit) die(`after rebase: ${re.reason} (the branch gained a better ledger during this run) — not pushing.`);
+    if (!re.commit) die(`after rebase: ${re.reason} (origin/${BRANCH} gained a stronger ledger during this run) — not pushing.`);
   }
   die("push failed after retries.");
 }

@@ -142,8 +142,13 @@ export function mountSearch(host, { compact = false, autofocus = false, onReques
   async function requestCompany(q, btn) {
     if (typeof onRequest === "function") onRequest(q);
     const li = btn.closest(".ld-result");
-    const ticker = sanitizeTicker(q);
-    if (!ticker) { setReqState(li, `Couldn’t read a ticker from “${q}”`, "Try the NSE/BSE symbol, e.g. INFY."); return; }
+    const raw = String(q ?? "").trim();
+    const ticker = sanitizeTicker(raw);
+    // The request flow is keyed on the stock SYMBOL (the produced ledger and the index poll both use
+    // it). A free-text company name would be mangled — "Infosys Limited" → "INFOSYSLIMITED" → the wrong
+    // Screener URL — so require a symbol rather than silently dispatching the wrong company.
+    const isSymbol = ticker.length > 0 && !/\s/.test(raw) && ticker === raw.toUpperCase();
+    if (!isSymbol) { setReqState(li, "Enter the stock symbol to request a company", `e.g. INFY for Infosys — “${raw}” isn’t a symbol.`); return; }
     setReqState(li, `Requesting “${ticker}”…`, "");
     let data = {};
     try {
