@@ -43,6 +43,10 @@ function quartersWithPresentations(corpus) {
 
 export async function financialTrend({ corpus, mock = false, providers = null, cacheDir = null, debug = false }) {
   const chain = providers || EXTRACTION_PROVIDERS.map((p) => providerConfig(p, process.env)).filter((c) => c.apiKey);
+  // Resolved model chain → cache key, so a model / preset / order change invalidates persisted financials
+  // instead of serving old-model figures across runs (mirror of find-actual.mjs). Stable across a
+  // quota-truncation→resume cycle: derived from KEY presence, not runtime quota.
+  const modelSig = chain.map((c) => `${c.provider}:${c.model}`).join(",");
   const quarters = quartersWithPresentations(corpus);
   const stats = { calls: 0, cache_hits: 0, errors: [] };
   const trend = [];
@@ -54,7 +58,7 @@ export async function financialTrend({ corpus, mock = false, providers = null, c
     // Hash the actual snapshot TEXT, not just its length: a re-acquired filing or a parser change
     // can yield different financials at the same doc_id and identical length, and (with the cache now
     // persisted across CI runs) a length-only key would serve those stale quarterly figures.
-    const key = createHash("sha256").update(`${FIN_TREND_VERSION}|${q.doc_id}|${text}`).digest("hex");
+    const key = createHash("sha256").update(`${FIN_TREND_VERSION}|${modelSig}|${q.doc_id}|${text}`).digest("hex");
     const cp = cacheDir ? join(cacheDir, `fin-${q.quarter}.json`) : null;
     if (cp && existsSync(cp)) {
       try { const c = JSON.parse(readFileSync(cp, "utf8")); if (c.key === key) { stats.cache_hits += 1; trend.push({ ...base, ...c.value }); continue; } } catch { /* re-fetch */ }
