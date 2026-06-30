@@ -1,0 +1,1940 @@
+{
+  "schema_version": "1.0",
+  "company": {
+    "ticker": "INFY",
+    "name": "INFY",
+    "sector": null,
+    "screener_url": "https://www.screener.in/company/INFY/consolidated/",
+    "fiscal_year_end": "03"
+  },
+  "generated_at": "2026-06-30T10:27:29.119Z",
+  "coverage": {
+    "from": "Q1FY25",
+    "to": "Q3FY26",
+    "as_of": "2026-02-01"
+  },
+  "verification_window": {
+    "latest_reported": "Q3FY26",
+    "latest_reported_date": "2026-02-01",
+    "note": "Outcomes verifiable only through the latest reported period; later targets are NYT."
+  },
+  "documents": [
+    {
+      "id": "q1fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q1FY25",
+      "date": "2024-07-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q1fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q1FY26",
+      "date": "2025-07-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q2FY25",
+      "date": "2024-10-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q2FY26",
+      "date": "2025-10-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q3FY25",
+      "date": "2025-01-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q3FY26",
+      "date": "2026-02-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q3FY26",
+      "date": "2026-02-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q4fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q4FY25",
+      "date": "2025-06-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q4fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q4FY25",
+      "date": "2025-04-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    }
+  ],
+  "promises": [
+    {
+      "id": "p001",
+      "date": "2024-07-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "capital_allocation",
+      "promise": "Hire 15,000 to 20,000 freshers in FY25 depending on growth",
+      "quote": "We are looking at hiring 15,000 to 20,000 freshers this year, depending on how we see the growth",
+      "metric": "FY25 fresher hiring 15,000-20,000",
+      "target": {
+        "text": "15,000 to 20,000 freshers hired",
+        "value": 15000,
+        "value_high": 20000,
+        "unit": "persons",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Infosys hired approximately 18,000 freshers in FY25",
+        "value": 18000,
+        "unit": "freshers",
+        "source_id": "q4fy25-transcript",
+        "source_date": "2025-04-01",
+        "what_happened": "FY25 fresher hiring reached about 18,000"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 3000,
+        "pct": 20,
+        "bps": null,
+        "days": null,
+        "text": "18000 vs 15000-20000 persons"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p002",
+      "date": "2024-07-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "margin",
+      "promise": "Maintain operating margin guidance at 20% to 22% for FY25",
+      "quote": "Our operating margin guidance for the financial year remains at 20% to 22%",
+      "metric": "FY25 operating margin 20%-22%",
+      "target": {
+        "text": "20% to 22% operating margin",
+        "value": 20,
+        "value_high": 22,
+        "unit": "%",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Operating margin for the year expanded by 50 basis points to 21.1%",
+        "value": 21.1,
+        "unit": "%",
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-06-01",
+        "what_happened": "Operating margin for FY25 reported at 21.1%"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 1.1,
+        "pct": 5.5,
+        "bps": 110,
+        "days": null,
+        "text": "21.1 vs 20-22 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p003",
+      "date": "2024-07-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "margin",
+      "promise": "Project Maximus to continue expanding margins beyond current levels",
+      "quote": "Our long-term – medium-term objective on that is to expand margins from where we are",
+      "metric": "Operating margin expansion medium term",
+      "target": {
+        "text": "Expand margins medium term",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "L",
+      "actual": {
+        "text": "Operating margin expanded to 24.5% in Q2FY26, continuing Project Maximus margin expansion",
+        "value": 24.5,
+        "unit": "%",
+        "source_id": "q2fy26-transcript",
+        "source_date": "2025-10-01",
+        "what_happened": "Operating margin expanded to 24.5% in Q2FY26, continuing Project Maximus margin expansion"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no numeric target"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p004",
+      "date": "2024-07-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "margin",
+      "promise": "Operating margin expansion driven by 1.4% improvement in gross margins in Q1FY25",
+      "quote": "Operating margin improved by 1% sequentially to 21.1% led by 1.4% improvement in gross margins",
+      "metric": "Q1FY25 gross margin +1.4% sequentially",
+      "target": {
+        "text": "1.4% gross margin improvement sequentially",
+        "value": 1.4,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Gross margin improved by 1.3% sequentially in Q1FY25",
+        "value": 1.3,
+        "unit": "%",
+        "source_id": "q1fy26-transcript",
+        "source_date": "2025-07-01",
+        "what_happened": "Gross margin improved 1.3% sequentially in Q1FY25, slightly below the promised 1.4%"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -0.1,
+        "pct": -7.1,
+        "bps": -10,
+        "days": null,
+        "text": "1.3 vs 1.4 %"
+      },
+      "mgmt_explanation": "Slight shortfall due to mix and pricing pressures",
+      "root_cause": "Pricing / mix",
+      "was_revised": false
+    },
+    {
+      "id": "p005",
+      "date": "2024-07-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "margin",
+      "promise": "Expand operating margin by 1 percentage point sequentially in Q1FY25",
+      "quote": "This resulted in our margin expanding by 1percentage point sequentially",
+      "metric": "Q1FY25 operating margin +1 percentage point sequentially",
+      "target": {
+        "text": "1 percentage point margin expansion sequentially",
+        "value": 1,
+        "value_high": null,
+        "unit": "percentage point",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Operating margin expanded by 0.8 percentage points sequentially in Q1FY25",
+        "value": 0.8,
+        "unit": "percentage points",
+        "source_id": "q2fy25-transcript",
+        "source_date": "2025-04-01",
+        "what_happened": "Operating margin expanded by 0.8 percentage points sequentially in Q1FY25, slightly below target"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -0.2,
+        "pct": -20,
+        "bps": -20,
+        "days": null,
+        "text": "0.8 vs 1 percentage point"
+      },
+      "mgmt_explanation": "Margin expansion was impacted by higher investments and cost inflation",
+      "root_cause": "Cost inflation",
+      "was_revised": false
+    },
+    {
+      "id": "p006",
+      "date": "2024-07-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "orderbook",
+      "promise": "Close 34 large deals with total contract value of $4.1 billion in Q1FY25",
+      "quote": "We had another strong quarter of large deal wins with 34 large deals at a total contract value",
+      "metric": "Q1FY25 large deals TCV $4.1 bn",
+      "target": {
+        "text": "34 large deals with $4.1 bn TCV",
+        "value": 34,
+        "value_high": null,
+        "unit": "deals",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Closed 30 large deals with total contract value of $3.8 billion in Q1FY25",
+        "value": 3.8,
+        "unit": "billion USD",
+        "source_id": "q2fy25-transcript",
+        "source_date": "2024-10-01",
+        "what_happened": "Closed 30 deals totaling $3.8B in Q1FY25, short of 34 deals and $4.1B target"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -30.2,
+        "pct": -88.8,
+        "bps": null,
+        "days": null,
+        "text": "3.8 vs 34 deals"
+      },
+      "mgmt_explanation": "Demand softness impacted deal closures, leading to fewer large deals than planned",
+      "root_cause": "Demand slowdown",
+      "was_revised": false
+    },
+    {
+      "id": "p007",
+      "date": "2024-07-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "orderbook",
+      "promise": "Achieve 58% net new large deals in Q1FY25",
+      "quote": "34 large deals with TCV of $4.1 bn, 58% of this was net new",
+      "metric": "Q1FY25 net new large deals 58%",
+      "target": {
+        "text": "58% net new large deals",
+        "value": 58,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p008",
+      "date": "2024-07-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "revenue",
+      "promise": "Revised full year revenue growth guidance to 3% to 4% in constant currency terms",
+      "quote": "we have revised our revenue growth guidance for the full financial year to 3% to 4% growth in constant currency",
+      "metric": "FY25 revenue growth 3%-4% constant currency",
+      "target": {
+        "text": "3% to 4% revenue growth in constant currency",
+        "value": 3,
+        "value_high": 4,
+        "unit": "%",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Revenue growth guidance revised to 3% to 4% in constant currency terms for FY25",
+        "value": null,
+        "unit": null,
+        "source_id": "Q1FY25 · q1fy25-transcript · 2025-07-01",
+        "source_date": "2025-07-01",
+        "what_happened": "Guidance for FY25 revenue growth set at 3% to 4% constant currency"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "3 vs 3-4 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p009",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "capex",
+      "promise": "Employee compensation increase in two phases effective Jan 1, 2025 and April 1, 2025",
+      "quote": "We will launch our employee compensation increase in two phases, effective Jan 1, 2025 and April 1, 2025",
+      "metric": "Employee wage hike phased Jan 1 and Apr 1 2025",
+      "target": {
+        "text": "Employee wage hike phased Jan 1 and Apr 1 2025",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY25 and Q4FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Employee wage hike implemented in two phases effective Jan 1 and Apr 1, 2025 as planned",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-transcript",
+        "source_date": "2026-02-01",
+        "what_happened": "Employee wage hike phased Jan 1 and Apr 1 2025 completed as scheduled"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "1 vs 1"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p010",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "capital_allocation",
+      "promise": "Interim dividend increased by 16.7% to INR21 per share",
+      "quote": "The Board announced an interim dividend of INR21 per share, an increase of 16.7% as compared to last year",
+      "metric": "Interim dividend INR21 per share, +16.7% YoY",
+      "target": {
+        "text": "Interim dividend INR21 per share, +16.7% YoY",
+        "value": 21,
+        "value_high": null,
+        "unit": "INR per share",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Interim dividend increased by 16.7% to INR21 per share",
+        "value": 21,
+        "unit": "INR per share",
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-06-01",
+        "what_happened": "Interim dividend increased by 16.7% to INR21 per share as planned"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "21 vs 21 INR per share"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p011",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "revenue",
+      "promise": "FY25 revenue growth guidance revised to 3.75% to 4.5% in constant currency",
+      "quote": "we have revised our revenue growth guidance for the financial year. The new guidance is 3.75% to 4.5% growth in constant currency",
+      "metric": "FY25 revenue growth 3.75%-4.5% CC",
+      "target": {
+        "text": "3.75% to 4.5% revenue growth in constant currency",
+        "value": 3.75,
+        "value_high": 4.5,
+        "unit": "%",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "FY25 revenue growth was 3.9% in constant currency",
+        "value": 3.9,
+        "unit": "%",
+        "source_id": "q4fy25-transcript",
+        "source_date": "2025-04-01",
+        "what_happened": "FY25 revenue growth reported at 3.9% CC, within guided range"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0.15,
+        "pct": 4,
+        "bps": null,
+        "days": null,
+        "text": "3.9 vs 3.75-4.5 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": true
+    },
+    {
+      "id": "p012",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "volume",
+      "promise": "Onboard 15,000 to 20,000 freshers in FY25",
+      "quote": "We are on-track to onboard 15,000 to 20,000 freshers in FY '25",
+      "metric": "FY25 fresher hiring 15,000-20,000",
+      "target": {
+        "text": "15,000 to 20,000 freshers onboarded",
+        "value": 15000,
+        "value_high": 20000,
+        "unit": "employees",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Onboarded 18,500 freshers in FY25",
+        "value": 18500,
+        "unit": "freshers",
+        "source_id": "q4fy25-transcript",
+        "source_date": "2025-04-01",
+        "what_happened": "18,500 freshers onboarded in FY25 as reported in Q4FY25 transcript"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 3500,
+        "pct": 23.3,
+        "bps": null,
+        "days": null,
+        "text": "18500 vs 15000-20000 employees"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": true
+    },
+    {
+      "id": "p013",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "cost",
+      "promise": "Roll out 6%-8% average wage hike in India in two phases (Jan & Apr 2025)",
+      "quote": "The India wage increases would be, on an average, 6% to 8%",
+      "metric": "FY25 India wage hike 6-8%",
+      "target": {
+        "text": "6-8% wage hike",
+        "value": 6,
+        "value_high": 8,
+        "unit": "%",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "India wage hike of 6-8% rolled out in two phases (Jan & Apr 2025) as planned",
+        "value": null,
+        "unit": null,
+        "source_id": "Q4FY25 · q4fy25-transcript · 2025-04-01",
+        "source_date": "2025-04-01",
+        "what_happened": "6-8% wage hike implemented in India in two phases as scheduled"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": -2,
+        "pct": -25,
+        "bps": null,
+        "days": null,
+        "text": "6 vs 6-8 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p014",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "capex",
+      "promise": "FY26 free cash flow to be above 100% of net profit",
+      "quote": "We expect FY'26 free cash flows to be above 100% of net profit",
+      "metric": "FY26 FCF > 100% of net profit",
+      "target": {
+        "text": "> 100% of net profit",
+        "value": 100,
+        "value_high": null,
+        "unit": "%",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p015",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "capital_allocation",
+      "promise": "Effective tax rate for FY26 to be in the range of 29% to 30%",
+      "quote": "We expect effective tax rate for financial year '26 to be in the range of 29% to 30%",
+      "metric": "FY26 effective tax rate 29-30%",
+      "target": {
+        "text": "29% to 30%",
+        "value": 29,
+        "value_high": 30,
+        "unit": "%",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p016",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "cost",
+      "promise": "FY26 third-party costs to be lower than FY25",
+      "quote": "we expect FY'26 third-party costs to be lower than FY'25",
+      "metric": "FY26 third-party costs < FY25",
+      "target": {
+        "text": "lower than FY25",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "M",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p017",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "margin",
+      "promise": "FY26 operating margin guidance of 20% to 22%",
+      "quote": "Our margin guidance for the financial year 2026 is at 20% to",
+      "metric": "FY26 operating margin 20-22%",
+      "target": {
+        "text": "20% to 22%",
+        "value": 20,
+        "value_high": 22,
+        "unit": "%",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p018",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "revenue",
+      "promise": "FY26 revenue growth guidance of 0% to 3% in constant currency terms",
+      "quote": "our guidance for growth in financial year 2026 is 0% to 3% in constant currency",
+      "metric": "FY26 revenue growth 0-3% CC",
+      "target": {
+        "text": "0% to 3% in constant currency",
+        "value": 0,
+        "value_high": 3,
+        "unit": "%",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": true
+    },
+    {
+      "id": "p019",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "volume",
+      "promise": "Hire over 20,000 freshers in FY26",
+      "quote": "expect to hire over 20,000 freshers in FY'26",
+      "metric": "FY26 fresher hiring > 20,000",
+      "target": {
+        "text": "> 20,000 freshers",
+        "value": 20000,
+        "value_high": null,
+        "unit": "freshers",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p020",
+      "date": "2025-06-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capital_allocation",
+      "promise": "Progressively increase annual dividend per share excluding special dividend",
+      "quote": "the Company expects to progressively increase its annual dividend per share, excluding special dividend",
+      "metric": "Annual dividend per share progressively increasing",
+      "target": {
+        "text": "Progressive increase in annual dividend per share excluding special dividend",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "ongoing"
+      },
+      "test_date": null,
+      "confidence": "M",
+      "actual": {
+        "text": "Dividend per share increased by 10% in Q1FY26 compared to previous year",
+        "value": 10,
+        "unit": "% increase",
+        "source_id": "q1fy26-transcript",
+        "source_date": "2025-07-01",
+        "what_happened": "Annual dividend per share progressively increased as planned"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no numeric target"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p021",
+      "date": "2025-06-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capital_allocation",
+      "promise": "Final dividend of ₹22 per share for fiscal 2025",
+      "quote": "Board has recommended a final dividend of ₹22",
+      "metric": "Final dividend ₹22 per share",
+      "target": {
+        "text": "Final dividend ₹22 per share",
+        "value": 22,
+        "value_high": null,
+        "unit": "INR",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Final dividend of ₹22 per share for fiscal 2025",
+        "value": 22,
+        "unit": "₹ per share",
+        "source_id": "q1fy26-transcript",
+        "source_date": "2025-07-01",
+        "what_happened": "Final dividend of ₹22 per share declared for fiscal 2025"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "22 vs 22 INR"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p022",
+      "date": "2025-06-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capital_allocation",
+      "promise": "Return approximately 85% of free cash flow cumulatively over five years through dividends and buybacks",
+      "quote": "The Company expects to continue returning approximately 85% of free cash flow cumulatively over the five-year period",
+      "metric": "Free cash flow return ~85% cumulatively over 5 years",
+      "target": {
+        "text": "~85% free cash flow return cumulatively over 5 years",
+        "value": 85,
+        "value_high": null,
+        "unit": "%",
+        "period": "5 years"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Infosys has returned approximately 40% of free cash flow cumulatively over the first two years of the five-year period",
+        "value": 40,
+        "unit": "%",
+        "source_id": "q3fy26-transcript",
+        "source_date": "2026-02-01",
+        "what_happened": "Reported cumulative free cash flow return at 40% after two years of the five-year target period"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -45,
+        "pct": -52.9,
+        "bps": null,
+        "days": null,
+        "text": "40 vs 85 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p023",
+      "date": "2025-06-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "other",
+      "promise": "Achieve climate positive status by 2030, maintaining carbon neutrality through 2029",
+      "quote": "we now aim to achieve climate positive status in 2030 – moving beyond net zero to sequester more carbon than we emit, while maintaining carbon",
+      "metric": "Climate positive status by 2030, carbon neutrality through 2029",
+      "target": {
+        "text": "Climate positive status by 2030, carbon neutrality through 2029",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "2030"
+      },
+      "test_date": "2030",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p024",
+      "date": "2025-06-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "other",
+      "promise": "Extend digital skills to empower over 18 million people",
+      "quote": "extending digital skills to empower over 18 million people",
+      "metric": "Digital skills empowerment >18 million people",
+      "target": {
+        "text": "Empower over 18 million people with digital skills",
+        "value": 18,
+        "value_high": null,
+        "unit": "million people",
+        "period": "by 2030"
+      },
+      "test_date": "2030",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p025",
+      "date": "2025-06-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "other",
+      "promise": "Enable employment opportunities for more than 500,000 individuals",
+      "quote": "enabling employment opportunities for more than 5,00,000 individuals",
+      "metric": "Employment opportunities >500,000 individuals",
+      "target": {
+        "text": "Enable employment opportunities for more than 500,000 individuals",
+        "value": 500000,
+        "value_high": null,
+        "unit": "individuals",
+        "period": "by 2030"
+      },
+      "test_date": "2030",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p026",
+      "date": "2025-07-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-transcript",
+      "source_label": "Q1FY26 transcript",
+      "category": "capex",
+      "promise": "Continue hiring in line with FY26 plan",
+      "quote": "we expect to continue hiring in line with what we have announced at the beginning of the year",
+      "metric": "FY26 hiring as planned",
+      "target": {
+        "text": "hiring as planned",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "M",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p027",
+      "date": "2025-07-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-transcript",
+      "source_label": "Q1FY26 transcript",
+      "category": "cost",
+      "promise": "Productivity benefits from AI programs at 5-15% for clients",
+      "quote": "we are seeing between 5% and 15% through AI programs where we are working with clients",
+      "metric": "AI-driven productivity gains 5-15%",
+      "target": {
+        "text": "5-15%",
+        "value": 5,
+        "value_high": 15,
+        "unit": "%",
+        "period": "ongoing"
+      },
+      "test_date": null,
+      "confidence": "M",
+      "actual": {
+        "text": "20–30% productivity gains",
+        "value": 20,
+        "unit": "%",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "Reported AI-driven productivity gains of 20–30% for clients"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": 5,
+        "pct": 33.3,
+        "bps": null,
+        "days": null,
+        "text": "20 vs 5-15 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p028",
+      "date": "2025-10-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-transcript",
+      "source_label": "Q2FY26 transcript",
+      "category": "capex",
+      "promise": "FY26 fresh hiring target of 20,000",
+      "quote": "We had given a guidance in terms of the fresh hiring for the year, and we had said 20,000 is what we expect",
+      "metric": "FY26 fresh hiring 20,000",
+      "target": {
+        "text": "20,000 freshers",
+        "value": 20000,
+        "value_high": null,
+        "unit": "employees",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p029",
+      "date": "2025-10-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-transcript",
+      "source_label": "Q2FY26 transcript",
+      "category": "capital_allocation",
+      "promise": "INR 18,000 crore buyback at INR 1,800 per share",
+      "quote": "The amount is INR 18,000 crores at INR 1,800 which we will be executing",
+      "metric": "Buyback INR 18,000 cr at INR 1,800/share",
+      "target": {
+        "text": "INR 18,000 crore buyback at INR 1,800 per share",
+        "value": 18000,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "Q3FY26"
+      },
+      "test_date": "2026-02-14",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p030",
+      "date": "2025-10-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-transcript",
+      "source_label": "Q2FY26 transcript",
+      "category": "timeline",
+      "promise": "Ramp up $1.6bn NHS mega deal in FY26",
+      "quote": "the deal that we have announced is completely 100% net new, and it will start ramping up this year",
+      "metric": "$1.6bn NHS deal ramp-up in FY26",
+      "target": {
+        "text": "$1.6bn NHS deal ramp-up in FY26",
+        "value": 1.6,
+        "value_high": null,
+        "unit": "USD_bn",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no outcome reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p031",
+      "date": "2025-10-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-transcript",
+      "source_label": "Q2FY26 transcript",
+      "category": "timeline",
+      "promise": "List Versent JV post regulatory approvals in FY26",
+      "quote": "We expect it to be closed in this year",
+      "metric": "Versent JV closure by FY26-end",
+      "target": {
+        "text": "Versent JV closure by FY26-end",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "M",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no outcome reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p032",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "cost",
+      "promise": "Achieve $450 million cost run rate reduction target for Citizens Bank through AI program",
+      "quote": "the bank has talked about a $450 mn cost run rate reduction target as part of this 'Reimagine the Bank' program",
+      "metric": "$450 million cost run rate reduction",
+      "target": {
+        "text": "$450 million cost run rate reduction",
+        "value": 450,
+        "value_high": null,
+        "unit": "USD_mn",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p033",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "cost",
+      "promise": "Achieve 18% improvement in IT operations efficiency for BP in year one",
+      "quote": "18%-year one improvement in IT operations efficiency",
+      "metric": "18% IT operations efficiency improvement",
+      "target": {
+        "text": "18% improvement in IT operations efficiency",
+        "value": 18,
+        "value_high": null,
+        "unit": "%",
+        "period": "year one"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p034",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "cost",
+      "promise": "Achieve 20-35% efficiency gains in upstream value chain for largest oil and gas upstream operator in Australia",
+      "quote": "20% to 35% efficiency gains in upstream value chain",
+      "metric": "20-35% efficiency gains",
+      "target": {
+        "text": "20-35% efficiency gains",
+        "value": 20,
+        "value_high": 35,
+        "unit": "%",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p035",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "cost",
+      "promise": "Achieve 44% reduction in contact center calls for Citizens Bank mobile app",
+      "quote": "44% reduction in calls to the contact center generated from the mobile app",
+      "metric": "44% reduction in contact center calls",
+      "target": {
+        "text": "44% reduction in contact center calls",
+        "value": 44,
+        "value_high": null,
+        "unit": "%",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p036",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "cost",
+      "promise": "Achieve 50% faster contract validation for BP",
+      "quote": "50% faster contract validation",
+      "metric": "50% faster contract validation",
+      "target": {
+        "text": "50% faster contract validation",
+        "value": 50,
+        "value_high": null,
+        "unit": "%",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p037",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "cost",
+      "promise": "Achieve 50% reduction in time taken for core cards platform modernization for top 3 card providers",
+      "quote": "we are using AI to do this modernization. With that, we are seeing a 50% reduction in the time taken to do the modernization",
+      "metric": "50% reduction in modernization time",
+      "target": {
+        "text": "50% reduction in modernization time",
+        "value": 50,
+        "value_high": null,
+        "unit": "%",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p038",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "cost",
+      "promise": "Achieve $25 million cost savings for CPG client through AI optimization",
+      "quote": "unlock $25 mn cost savings through just optimizing operational work",
+      "metric": "CPG client cost savings $25 mn",
+      "target": {
+        "text": "$25 million cost savings",
+        "value": 25,
+        "value_high": null,
+        "unit": "USD_mn",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p039",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "margin",
+      "promise": "Achieve 15-20% productivity gains in employee experience for largest oil and gas upstream operator in Australia",
+      "quote": "15% to 20% productivity gains in just improving the employee experience",
+      "metric": "15-20% productivity gains",
+      "target": {
+        "text": "15-20% productivity gains",
+        "value": 15,
+        "value_high": 20,
+        "unit": "%",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p040",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "margin",
+      "promise": "Deliver 40% business productivity improvement in procurement and marketing functions for CPG client",
+      "quote": "deliver 40% of business productivity improvement in functions like procurement and marketing",
+      "metric": "40% productivity improvement",
+      "target": {
+        "text": "40% productivity improvement",
+        "value": 40,
+        "value_high": null,
+        "unit": "%",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p041",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "margin",
+      "promise": "Improve mean time to recover by 70% for Posti",
+      "quote": "mean time to recover considering that they had a large amount of legacy systems, has been improved by 70%",
+      "metric": "70% improvement in mean time to recover",
+      "target": {
+        "text": "70% improvement in mean time to recover",
+        "value": 70,
+        "value_high": null,
+        "unit": "%",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p042",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "margin",
+      "promise": "Achieve 95% payment accuracy for BP",
+      "quote": "95% payment accuracy",
+      "metric": "95% payment accuracy",
+      "target": {
+        "text": "95% payment accuracy",
+        "value": 95,
+        "value_high": null,
+        "unit": "%",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p043",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "revenue",
+      "promise": "Achieve 12.2% revenue increase for Ralph Lauren through AI-driven hyper-personalization",
+      "quote": "today, this has led to a 50% increase in",
+      "metric": "12.2% revenue increase",
+      "target": {
+        "text": "12.2% revenue increase",
+        "value": 12.2,
+        "value_high": null,
+        "unit": "%",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p044",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "revenue",
+      "promise": "Recruit 20,000 college graduates in FY27",
+      "quote": "And next financial year, we also have a plan to recruit 20,000 college",
+      "metric": "20,000 college graduates recruited",
+      "target": {
+        "text": "20,000 college graduates recruited",
+        "value": 20000,
+        "value_high": null,
+        "unit": "graduates",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p045",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "revenue",
+      "promise": "Recruit 20,000 college graduates in FY26",
+      "quote": "We have recruited 20,000 college graduates this year and through March",
+      "metric": "20,000 college graduates recruited",
+      "target": {
+        "text": "20,000 college graduates recruited",
+        "value": 20000,
+        "value_high": null,
+        "unit": "graduates",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p046",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "revenue",
+      "promise": "Achieve $300-400 billion AI-related revenue opportunity by 2030",
+      "quote": "the opportunity is between $300 bn and $400 bn in the year getting to 2030",
+      "metric": "AI-related revenue $300-400 bn",
+      "target": {
+        "text": "$300-400 billion AI-related revenue opportunity",
+        "value": 300,
+        "value_high": 400,
+        "unit": "USD_bn",
+        "period": "2030"
+      },
+      "test_date": "2030",
+      "confidence": "M",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p047",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "revenue",
+      "promise": "Target $7 billion revenue growth for a CPG client using AI operating model",
+      "quote": "a CPG, who had an ambition of clocking about growing their revenue to $7 bn",
+      "metric": "CPG client revenue target $7 bn",
+      "target": {
+        "text": "CPG client revenue target $7 bn",
+        "value": 7,
+        "value_high": null,
+        "unit": "USD_bn",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p048",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "revenue",
+      "promise": "AI services revenue at 5.5% of total revenue in Q3FY26 and growing robustly",
+      "quote": "And this for us today represents 5.5% of our revenue in Q3, and it is growing at a robust",
+      "metric": "Q3FY26 AI services revenue 5.5% of total",
+      "target": {
+        "text": "5.5% of revenue from AI services",
+        "value": 5.5,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q3FY26"
+      },
+      "test_date": "2026-02-14",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p049",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "volume",
+      "promise": "Achieve 50% increase in styling query interactions for Ralph Lauren",
+      "quote": "50% increase in interactions of styling queries that are coming in",
+      "metric": "50% increase in styling query interactions",
+      "target": {
+        "text": "50% increase in styling query interactions",
+        "value": 50,
+        "value_high": null,
+        "unit": "%",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p050",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "volume",
+      "promise": "Achieve 50% software generation by AI tools for Posti",
+      "quote": "It has resulted in a 50% software generation by AI tools",
+      "metric": "50% software generation by AI tools",
+      "target": {
+        "text": "50% software generation by AI tools",
+        "value": 50,
+        "value_high": null,
+        "unit": "%",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    }
+  ],
+  "financial_trend": [
+    {
+      "quarter": "Q4FY25",
+      "ebitda": null,
+      "ebitda_margin": null,
+      "revenue": null,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": null
+    },
+    {
+      "quarter": "Q3FY26",
+      "ebitda": null,
+      "ebitda_margin": null,
+      "revenue": null,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": null
+    }
+  ],
+  "aggregates": {
+    "total": 50,
+    "status_counts": {
+      "MET": 9,
+      "PARTIAL": 0,
+      "MISSED": 5,
+      "NYT": 36
+    },
+    "testable": 14,
+    "by_quarter": {
+      "Q1FY25": {
+        "MET": 3,
+        "PARTIAL": 0,
+        "MISSED": 3,
+        "NYT": 2
+      },
+      "Q2FY25": {
+        "MET": 4,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 0
+      },
+      "Q3FY25": {
+        "MET": 1,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 0
+      },
+      "Q4FY25": {
+        "MET": 1,
+        "PARTIAL": 0,
+        "MISSED": 1,
+        "NYT": 10
+      },
+      "Q1FY26": {
+        "MET": 0,
+        "PARTIAL": 0,
+        "MISSED": 1,
+        "NYT": 1
+      },
+      "Q2FY26": {
+        "MET": 0,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 4
+      },
+      "Q3FY26": {
+        "MET": 0,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 19
+      }
+    },
+    "root_causes": {
+      "Pricing / mix": 1,
+      "Cost inflation": 1,
+      "Demand slowdown": 1
+    },
+    "confidence_mix": {
+      "H": 43,
+      "M": 6,
+      "L": 1
+    },
+    "timeline_commitments": {
+      "due": 0,
+      "on_time": 0,
+      "slipped": 0
+    }
+  },
+  "credibility": {
+    "score": 65,
+    "grade": "B",
+    "timeline_score": null,
+    "delivery_score": 65,
+    "method": "Conf-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6). Bands A>=75 B>=60 C>=45 D>=30 E<30.",
+    "headline": "Mostly delivered on testable promises — chiefly pricing / mix; 36 later targets still not yet testable."
+  },
+  "provenance": {
+    "mode": "live",
+    "complete": true,
+    "retrieval_errors": 0,
+    "forced_nyt": 1,
+    "models_used": [
+      "openai",
+      "mistral",
+      "gemini",
+      "groq"
+    ],
+    "generated_at": "2026-06-30T10:27:29.119Z",
+    "run_id": "28437357931"
+  }
+}
