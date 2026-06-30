@@ -346,6 +346,11 @@ free tiers.
 
 Company-agnostic: never hardcode a metric set — models return whatever measurable
 guidance the company gives (bank→NIM/GNPA, IT→margin/TCV, metals→cost/capacity).
+**Precision rule (rubric):** the prompt forbids turning a project/capacity inventory
+into a row-per-line list — it extracts only MATERIAL, explicitly-guided forward
+commitments (a capacity/plant + a committed date), skipping the standing asset
+inventory, per-plant breakdowns of an aggregate, and "on track / ramping up" status —
+so a capacity-heavy deck no longer inflates the ledger with hundreds of line items.
 Per doc the engine builds **management-only** text (prepared remarks in full +
 the *guidance-bearing* management Q&A answers — operational Q&A chatter is
 pre-filtered out via `QA_FILTER`, ~half the Q&A turns — with the preceding analyst
