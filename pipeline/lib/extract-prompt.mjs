@@ -5,7 +5,7 @@
  *
  * Bump PROMPT_VERSION whenever the prompt or schema changes (invalidates caches).
  */
-export const PROMPT_VERSION = "p4-2026-06c";
+export const PROMPT_VERSION = "p4-2026-06d";
 
 // Mirrors the company schema's promise.category enum.
 export const CATEGORIES = [
@@ -59,7 +59,9 @@ A promise is FORWARD-LOOKING — a target/guidance for a future period ("we expe
 
 REJECT vague or non-measurable statements with NO number/date — e.g. "we are confident", "we will grow strongly", "focused on execution", "well positioned". If it has no checkable forward number or date, it is NOT a promise: return nothing for it.
 
-Extract each distinct commitment ONCE, at the most consolidated level stated (prefer the company/guidance figure over restating it per sub-business). Do NOT split one piece of guidance into several near-duplicate rows, and do NOT pad the list — a typical call yields a handful to ~15 real commitments, not dozens. Quality over quantity.
+Extract each distinct commitment ONCE, at the most consolidated level stated (prefer the company/guidance figure over restating it per sub-business). Do NOT split one piece of guidance into several near-duplicate rows, and do NOT pad the list — a typical call yields a handful to ~15 real commitments, not dozens. Quality over quantity. This cap applies to presentations too: an investor deck is not a licence to extract more.
+
+PROJECT / CAPACITY INVENTORIES (important): presentations and prepared remarks routinely enumerate many plants, smelters, lines, mines or sub-projects with their capacities or build status. Do NOT emit a promise for each row. Extract ONLY the MATERIAL capacity/commissioning commitments management explicitly guides as a forward target — a specific capacity to be REACHED, or a specific plant to be COMMISSIONED, BY a specific future date. SKIP: the standing asset inventory and existing/current capacities; per-line / per-plant breakdowns of an already-stated aggregate; and "progress / under construction / ramping up / on track" status updates that carry no clear committed target+date. Prefer one consolidated business-level capacity target over its component plants. The same discipline applies to every category — never turn a table into a row-per-line list.
 
 EDGE CASES:
 - Range ("12 to 14%", "$1.7-1.9bn") → value = low end, value_high = high end.
@@ -70,7 +72,7 @@ EDGE CASES:
 
 For each promise:
 - quarter_context: the fiscal quarter the statement was made (given to you; default to it).
-- category: one of the enum values.
+- category: EXACTLY one of the listed enum values — if none fits, use "other"; never invent or pluralise a category name.
 - promise: a short paraphrase of the commitment.
 - quote: a VERBATIM quote (copy the exact words, <=25 words) that states the measurable target. Do NOT paraphrase or invent the quote — it must appear verbatim in the document text. If you cannot find a verbatim quote, do not emit the promise.
 - metric: the metric and its target value, e.g. "FY26 EBITDA > $6.0 bn", "Aluminium CoP $1,700-1,750/t", "Net debt/EBITDA < 1x".
@@ -141,6 +143,30 @@ const FEW_SHOTS = [
           quote: "we continue to guide FY26 capex of $1.7 to $1.9 billion",
           metric: "FY26 capex $1.7-1.9 bn",
           target: { text: "FY26 capex $1.7-1.9 bn", value: 1.7, value_high: 1.9, unit: "USD_bn", period: "FY26" },
+          confidence: "H",
+        },
+      ],
+    }),
+  },
+  {
+    role: "user",
+    content:
+      "Quarter: Q2FY26. Text:\n" +
+      "Arun Misra: Our aluminium smelters currently run at 2.4 million tonnes. BALCO line 3 is under construction, the Lanjigarh refinery is ramping up, and our FACOR plant operates at 150,000 tonnes. We remain on track across all projects. We are targeting total aluminium capacity of 3.1 million tonnes per annum by FY27.",
+  },
+  {
+    role: "assistant",
+    content: JSON.stringify({
+      // The current 2.4 Mtpa, the per-plant inventory (BALCO line 3 / Lanjigarh / FACOR) and
+      // the "on track" status are NOT promises — extract only the explicit forward target.
+      promises: [
+        {
+          quarter_context: "Q2FY26",
+          category: "capacity",
+          promise: "Aluminium capacity to 3.1 Mtpa by FY27",
+          quote: "targeting total aluminium capacity of 3.1 million tonnes per annum by FY27",
+          metric: "Aluminium capacity 3.1 Mtpa by FY27",
+          target: { text: "3.1 Mtpa by FY27", value: 3.1, value_high: null, unit: "Mtpa", period: "FY27" },
           confidence: "H",
         },
       ],
