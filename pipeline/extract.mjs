@@ -403,7 +403,11 @@ async function main() {
   const extractOne = MOCK
     ? async (_cfg, doc) => mockExtract(doc)
     : async (cfg, doc) => {
-    const hash = docHash(doc.text, cfg.provider);
+    // Key the hash on the RESOLVED model (cfg.model), not just the provider name: a <PROVIDER>_MODEL
+    // override or a preset model change must invalidate the cache, else (now that the cache persists
+    // across CI runs) a stored entry would serve promises from the OLD model for unchanged filings.
+    // The cache FILE stays per-provider; the model lives in the hash that guards a hit.
+    const hash = docHash(doc.text, `${cfg.provider}:${cfg.model}`);
     const cp = cachePath(doc.id, cfg.provider);
     if (existsSync(cp)) {
       try {

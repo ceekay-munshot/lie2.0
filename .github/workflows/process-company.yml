@@ -88,6 +88,11 @@ jobs:
             pipeline-cache-${{ steps.t.outputs.lc }}-
 
       - name: Run the pipeline (acquire → … → build-report → guarded commit)
+        # Step timeout BELOW the 90-min job timeout: if the pipeline overruns, the STEP fails but the
+        # JOB is not cancelled, so the cache-save step below still runs (if:always()) and the retrievals
+        # made so far survive to resume the next run. A job-level timeout would cancel the job and skip
+        # even always() steps, losing the partial cache — the exact case this PR exists to handle.
+        timeout-minutes: 80
         run: node pipeline/run-pipeline.mjs
 
       - name: Persist the LLM retrieval cache (a partial run's successes survive to the next)

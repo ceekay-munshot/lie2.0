@@ -51,7 +51,10 @@ export async function financialTrend({ corpus, mock = false, providers = null, c
     const base = { quarter: q.quarter, ebitda: null, ebitda_margin: null, revenue: null, pat: null, net_debt_ebitda: null, roce: null, unit: null };
     if (mock || chain.length === 0) { trend.push(base); continue; }
     const text = q.slides.join("\n").slice(0, 4000);
-    const key = createHash("sha256").update(`${FIN_TREND_VERSION}|${q.doc_id}|${text.length}`).digest("hex");
+    // Hash the actual snapshot TEXT, not just its length: a re-acquired filing or a parser change
+    // can yield different financials at the same doc_id and identical length, and (with the cache now
+    // persisted across CI runs) a length-only key would serve those stale quarterly figures.
+    const key = createHash("sha256").update(`${FIN_TREND_VERSION}|${q.doc_id}|${text}`).digest("hex");
     const cp = cacheDir ? join(cacheDir, `fin-${q.quarter}.json`) : null;
     if (cp && existsSync(cp)) {
       try { const c = JSON.parse(readFileSync(cp, "utf8")); if (c.key === key) { stats.cache_hits += 1; trend.push({ ...base, ...c.value }); continue; } } catch { /* re-fetch */ }

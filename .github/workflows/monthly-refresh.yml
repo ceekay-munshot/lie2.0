@@ -65,6 +65,10 @@ jobs:
             pipeline-cache-universe-
 
       - name: Walk the universe sequentially (guarded commit per company)
+        # Step timeout BELOW the 330-min job timeout so the cache-save step below still runs if the walk
+        # overruns: a step timeout fails the step but does NOT cancel the job, whereas a job timeout would
+        # skip even always() steps and lose every retrieval this run made.
+        timeout-minutes: 315
         shell: bash
         run: |
           set -u
