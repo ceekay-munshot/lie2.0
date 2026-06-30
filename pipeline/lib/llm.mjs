@@ -217,12 +217,17 @@ async function callChat(cfg, messages, opts = {}) {
   if (!cfg.apiKey) throw new LLMError(`No API key for provider "${cfg.provider}"`, { provider: cfg.provider });
 
   const url = joinURL(cfg.baseURL, "chat/completions");
-  const body = {
-    model: opts.model || cfg.model,
-    messages,
-    temperature: opts.temperature ?? 0.2,
-  };
-  if (opts.maxTokens != null) body.max_tokens = opts.maxTokens;
+  const model = opts.model || cfg.model;
+  // OpenAI param quirks: its API takes `max_completion_tokens` (the GPT-5 / o-series
+  // reasoning models REJECT the deprecated `max_tokens` with a 400), and those reasoning
+  // models only accept the default temperature (a non-default value is a 400). Other
+  // OpenAI-compatible providers (Groq / Mistral / Gemini-compat) still expect `max_tokens`
+  // and an explicit temperature, so the quirk is scoped to the real OpenAI endpoint.
+  const isOpenAI = cfg.provider === "openai" || /(^|\.)api\.openai\.com/i.test(cfg.baseURL || "");
+  const reasoningModel = isOpenAI && /^(o\d|gpt-5)/i.test(String(model));
+  const body = { model, messages };
+  if (!reasoningModel) body.temperature = opts.temperature ?? 0.2;
+  if (opts.maxTokens != null) body[isOpenAI ? "max_completion_tokens" : "max_tokens"] = opts.maxTokens;
   if (opts.response_format) body.response_format = opts.response_format;
   if (opts.extraBody) Object.assign(body, opts.extraBody);
 
