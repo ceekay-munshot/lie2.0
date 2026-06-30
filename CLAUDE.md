@@ -348,16 +348,23 @@ metric-subject`, so the downstream verifier can group restatements), and a lenie
 dropped). `eval-extraction.mjs` scores recall vs the fixture. **No verification/
 status/variance here — that's Prompt 5.**
 
+**Provider order:** the default `EXTRACTION_ORDER` is **`openai,mistral,gemini,groq`**.
+A provider whose KEY is unset is filtered out downstream (`extract.mjs` / `find-actual.mjs`),
+so the lead is chosen by which keys are present: **with `OPENAI_API_KEY` set, OpenAI leads**
+(paid, no free-tier daily cap → a live run completes in **one pass**); **without it, the free
+pool leads** (Mistral first — Gemini's free key is quota-exhausted). This same chain drives
+both extraction and the verify-step retrieval. The OpenAI model is `gpt-4o-mini` by default
+(override via `OPENAI_MODEL` — e.g. `gpt-5-mini`/`gpt-4.1-mini`); a mini-class model suffices
+because the verdict is decided by deterministic rules, not the model.
+
 Strategies (`LLM_STRATEGY`):
-- **`failover` (default)** — treat the three free tiers as ONE combined quota pool,
-  used in priority order (set by `EXTRACTION_ORDER`; **default Mistral → Gemini →
-  Groq** while Gemini's free-tier key is quota-exhausted — flip back to
-  `gemini,groq,mistral` once it's healthy). Each doc is extracted **once**, by the
-  first provider with budget; a provider that hits its per-day quota is dropped for
-  the remaining docs. A 6-doc corpus = ~6 calls, all on the lead provider (the rest
-  held in reserve) — no redundant work, no 3× quota burn.
-- `ensemble` — every doc × all 3 (≈ docs×3 calls) for max recall + cross-model
-  agreement. Use only when you have quota to spare.
+- **`failover` (default)** — treat the provider chain as ONE combined quota pool, used in
+  priority order (`EXTRACTION_ORDER`). Each doc is extracted **once**, by the first provider
+  with budget; a provider that hits its per-day quota is dropped for the remaining docs. A
+  6-doc corpus = ~6 calls, all on the lead provider (the rest held in reserve) — no redundant
+  work, no 3× quota burn.
+- `ensemble` — every doc × all available providers (≈ docs×N calls) for max recall +
+  cross-model agreement. Use only when you have quota to spare.
 - `partition` — round-robin docs across providers (~1/3 each). `single` — one (debug).
 
 Per (doc×model) caching makes re-runs ~free. **Accuracy is NOT pursued via
@@ -369,7 +376,15 @@ cheaply.
 (`.github/workflows/test-extract.yml`, `workflow_dispatch`). In-session: build +
 `DRY_RUN=1` (estimates calls/tokens) + mock-LLM unit tests.
 
-### Confirmed free-tier models (June 2026)
+### Models
+
+**Paid lead (recommended for live runs):**
+
+| Provider | Default model (env override) | Notes |
+| --- | --- | --- |
+| OpenAI | `gpt-4o-mini` (`OPENAI_MODEL`) | No free-tier daily cap → a live company completes in one pass. Set `OPENAI_API_KEY` as a GitHub Secret to make it the lead. ~$0.10–0.50/company on mini-class models; bump `OPENAI_MODEL` to `gpt-5-mini`/`gpt-4.1-mini` for stronger extraction recall. |
+
+**Free fallback pool (used when no `OPENAI_API_KEY` is set):**
 
 | Provider | Default model (env override) | Free-tier limits |
 | --- | --- | --- |

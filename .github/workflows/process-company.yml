@@ -9,7 +9,10 @@
 #     Worker's /api/request/:ticker fires this when a visitor requests an uncovered company.
 #   - workflow_dispatch (manual) — ticker + optional source.
 #
-# Secrets: SCREENER_EMAIL/PASSWORD (acquire) · GEMINI/GROQ/MISTRAL_API_KEY (extract+verify pool).
+# Secrets: SCREENER_EMAIL/PASSWORD (acquire) · OPENAI_API_KEY (paid lead, optional) ·
+#          GEMINI/GROQ/MISTRAL_API_KEY (free fallback pool). With OPENAI_API_KEY set the
+#          run leads with it (no daily cap → completes in one pass); without it, the free
+#          pool is used (mistral leads). Optional OPENAI_MODEL overrides gpt-4o-mini.
 
 name: Process company
 
@@ -49,6 +52,8 @@ jobs:
       FORCE: ${{ (github.event.inputs.force == 'true' || github.event.client_payload.force) && '1' || '' }}
       SCREENER_EMAIL: ${{ secrets.SCREENER_EMAIL }}
       SCREENER_PASSWORD: ${{ secrets.SCREENER_PASSWORD }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}

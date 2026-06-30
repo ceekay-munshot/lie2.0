@@ -5,7 +5,8 @@
 # guard as process-company.yml, so a quota-truncated run keeps the prior good ledger on main
 # (never a downgrade). A monthly commit also keeps the repository active.
 #
-# Secrets: SCREENER_EMAIL/PASSWORD · GEMINI/GROQ/MISTRAL_API_KEY.
+# Secrets: SCREENER_EMAIL/PASSWORD · OPENAI_API_KEY (paid lead, optional) ·
+#          GEMINI/GROQ/MISTRAL_API_KEY (free fallback pool).
 
 name: Monthly refresh
 
@@ -35,6 +36,8 @@ jobs:
       REFRESH: "1"            # re-acquire so new quarters are picked up
       SCREENER_EMAIL: ${{ secrets.SCREENER_EMAIL }}
       SCREENER_PASSWORD: ${{ secrets.SCREENER_PASSWORD }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
