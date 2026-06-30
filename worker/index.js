@@ -37,17 +37,42 @@ function rateLimited(ip, now) {
   return hits.length > RATE_MAX;
 }
 
-/** Is this ticker already covered? (read the committed index via the ASSETS binding). */
-async function isCovered(env, url, ticker) {
+/**
+ * Read a value from the optional LEDGERS KV namespace. KV holds freshly-scored ledgers +
+ * the index the moment a pipeline run finishes — BEFORE the slow git-commit→redeploy lands —
+ * so a requested company goes live immediately. Returns null when KV isn't bound (no KV →
+ * the Worker just serves the committed JSON via ASSETS, unchanged).
+ */
+async function kvGet(env, key) {
+  if (!env || !env.LEDGERS) return null;
+  try {
+    return await env.LEDGERS.get(key);
+  } catch {
+    return null;
+  }
+}
+
+/** The covered-company index, KV-first (fresh) then the committed ASSETS copy. Returns an array. */
+async function readIndexArray(env, url) {
+  const fromKv = await kvGet(env, "index");
+  if (fromKv) {
+    try {
+      const arr = JSON.parse(fromKv);
+      if (Array.isArray(arr)) return arr;
+    } catch { /* fall through to ASSETS */ }
+  }
   try {
     const res = await env.ASSETS.fetch(new Request(new URL("/data/companies/index.json", url)));
-    if (!res.ok) return false;
-    const index = await res.json();
-    const t = ticker.toUpperCase();
-    return Array.isArray(index) && index.some((c) => String(c.ticker).toUpperCase() === t);
-  } catch {
-    return false;
-  }
+    if (res.ok) return await res.json();
+  } catch { /* ignore */ }
+  return [];
+}
+
+/** Is this ticker already covered? (KV-first index, then the committed copy). */
+async function isCovered(env, url, ticker) {
+  const index = await readIndexArray(env, url);
+  const t = ticker.toUpperCase();
+  return Array.isArray(index) && index.some((c) => String(c.ticker).toUpperCase() === t);
 }
 
 /** Fire a GitHub repository_dispatch to run process-company.yml for this ticker. */
@@ -122,10 +147,31 @@ async function handleApi(request, env, url) {
   return json({ ok: false, error: "not_found", path: pathname }, 404);
 }
 
+/**
+ * Serve a company ledger / the index from KV when present (a just-scored company is live
+ * before the redeploy), else fall through to the committed ASSETS copy. Only GETs, only the
+ * data JSON paths, and only when KV is bound — everything else is untouched.
+ */
+async function serveDataFile(request, env, url) {
+  if (!env.LEDGERS || (request.method !== "GET" && request.method !== "HEAD")) return null;
+  const m = url.pathname.match(/^\/data\/companies\/(index|[A-Za-z0-9.&_-]{1,24})\.json$/);
+  if (!m) return null;
+  const key = m[1] === "index" ? "index" : `ledger:${m[1].toUpperCase()}`;
+  const val = await kvGet(env, key);
+  if (val == null) return null; // not in KV → let ASSETS serve the committed copy
+  // index changes whenever a company lands → don't edge-cache it; ledgers are immutable per run.
+  const cache = m[1] === "index" ? "no-store" : "public, max-age=60";
+  return new Response(request.method === "HEAD" ? null : val, {
+    headers: { "content-type": "application/json; charset=utf-8", "cache-control": cache },
+  });
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     if (url.pathname === "/api" || url.pathname.startsWith("/api/")) return handleApi(request, env, url);
+    const fresh = await serveDataFile(request, env, url);
+    if (fresh) return fresh;
     return env.ASSETS.fetch(request);
   },
 };
