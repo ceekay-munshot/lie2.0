@@ -172,14 +172,19 @@ export function mountSearch(host, { compact = false, autofocus = false, onReques
       if (!r.ok) { setReqState(li, "Couldn’t queue that company", "Please try again later."); return; }
     } catch { setReqState(li, "Network error", "Couldn’t reach the request service."); return; }
     if (data.status === "ready") { choose(ticker); return; } // already covered → just open it
-    setReqState(li, `Processing “${ticker}” — pulling filings & scoring`, "This takes a few minutes; we’ll open it automatically when it’s ready.");
+    setReqState(li, `Processing “${ticker}” — pulling filings & scoring`, "This usually takes 10–15 minutes (real filings, then verification). You can keep browsing — we’ll open it automatically the moment it’s ready.");
     pollUntilReady(ticker, li);
   }
 
-  // Poll the committed index (the ground truth) until the requested ledger appears, then route.
+  // Poll the index (the ground truth) until the requested ledger appears, then route. The
+  // pipeline runs ~10–15 min, so poll patiently and show elapsed time rather than implying
+  // a quick spinner. The index is served KV-first by the Worker, so a freshly-scored company
+  // appears as soon as the run finishes — no redeploy wait.
   function pollUntilReady(ticker, li) {
     const T = ticker.toUpperCase();
-    const deadline = Date.now() + 6 * 60 * 1000;
+    const startedAt = Date.now();
+    const DEADLINE_MS = 20 * 60 * 1000; // a cold company can take a while; don't give up early
+    const INTERVAL_MS = 12000;
     const tick = async () => {
       try {
         const res = await fetch(`/data/companies/index.json?t=${Date.now()}`, { cache: "no-store" });
@@ -188,10 +193,15 @@ export function mountSearch(host, { compact = false, autofocus = false, onReques
           if (Array.isArray(idx) && idx.some((c) => String(c.ticker).toUpperCase() === T)) { choose(ticker); return; }
         }
       } catch { /* transient — keep polling */ }
-      if (Date.now() < deadline) setTimeout(tick, 8000);
-      else setReqState(li, `Still processing “${ticker}”`, "Check back shortly — it’ll appear in search once scored.");
+      const mins = Math.max(1, Math.round((Date.now() - startedAt) / 60000));
+      if (Date.now() - startedAt < DEADLINE_MS) {
+        setReqState(li, `Processing “${ticker}” — pulling filings & scoring`, `Still working (~${mins} min in). We’ll open it automatically when it’s ready.`);
+        setTimeout(tick, INTERVAL_MS);
+      } else {
+        setReqState(li, `“${ticker}” is taking longer than usual`, "It’s still being scored — check back in a few minutes and search again; it’ll open once ready.");
+      }
     };
-    setTimeout(tick, 8000);
+    setTimeout(tick, INTERVAL_MS);
   }
 
   input.addEventListener("focus", update);
