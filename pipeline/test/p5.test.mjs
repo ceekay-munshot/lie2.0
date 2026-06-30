@@ -11,6 +11,7 @@ import { directionFor, numericDirection, parseTarget, actualNumber } from "../li
 import { periodIndex, maxPeriodIndex } from "../lib/fiscal.mjs";
 import { verificationWindow, isNotYetTestable } from "../lib/verification-window.mjs";
 import { aggregate, credibility, gradeFromScore } from "../lib/aggregate.mjs";
+import { runCompleteness } from "../verify.mjs";
 
 let fails = 0;
 const ok = (cond, label) => { if (!cond) fails++; console.log(`  ${cond ? "✓" : "✗"} ${label}`); };
@@ -110,6 +111,18 @@ ok(tl("X by Q2FY26", "commissioned in Q2FY26").status === "MET", "positive miles
 const CTXP = { ...CTX, latestReportedPeriod: "Q4FY26" };
 ok(sv({ category: "ebitda", target: { value: 6 }, test_date: "2030", confidence: "H", revisions: [] }, { value: 4 }, CTXP).status === "NYT", "non-ISO 2030 target + interim actual → NYT (not scored in 2026)");
 ok(sv({ category: "capacity", target: { value: 20, unit: "GW" }, test_date: "FY30", confidence: "H", revisions: [] }, { value: 5 }, CTXP).status === "NYT", "FY30 capacity target stays NYT vs Q4FY26 window");
+
+// ---- 11) run completeness (Option B honesty rule) --------------------------
+// "complete" gates on retrieval doing its job, NOT on every due promise being resolved.
+console.log("\nrun completeness (provenance.complete):");
+const rc = (o) => runCompleteness(o).complete;
+ok(rc({ retrievalErrors: 0, forcedNyt: 0, testable: 90 }) === true, "0 errors, 0 forced → complete");
+ok(rc({ retrievalErrors: 0, forcedNyt: 15, testable: 173 }) === true, "0 errors, a few due unconfirmed (8%) → complete (the VEDL case)");
+ok(rc({ retrievalErrors: 5, forcedNyt: 0, testable: 90 }) === false, "any retrieval error → INCOMPLETE (hard gate)");
+ok(rc({ retrievalErrors: 0, forcedNyt: 80, testable: 20 }) === false, "most due promises unresolved (80%) → INCOMPLETE (retrieval pathology)");
+ok(rc({ retrievalErrors: 0, forcedNyt: 1, testable: 1 }) === true, "exactly at the 50% cap → still complete (boundary)");
+ok(rc({ retrievalErrors: 0, forcedNyt: 0, testable: 0 }) === true, "no due promises at all → complete (no division by zero)");
+ok(runCompleteness({ retrievalErrors: 0, forcedNyt: 15, testable: 173 }).ratio < 0.1, "ratio reported (15/188 ≈ 8%)");
 
 console.log(fails === 0 ? "\nALL P5 UNIT TESTS PASSED" : `\n${fails} TEST(S) FAILED`);
 process.exit(fails ? 1 : 0);

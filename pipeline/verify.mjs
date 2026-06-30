@@ -29,6 +29,26 @@ const TICKER = (process.env.TICKER || process.argv.slice(2).find((a) => !a.start
 const MOCK = process.env.PROVIDER === "mock" || (!!process.env.MOCK && process.env.MOCK !== "0");
 const PARTIAL_TOL = Number(process.env.PARTIAL_TOL || 0.05);
 const TIMELINE_GRACE_QTRS = Number(process.env.TIMELINE_GRACE_QTRS || 1);
+// A due promise the company never re-reported is a legitimate NYT, not a pipeline failure,
+// so forced_nyt alone must not mark a run "provisional". But if MOST due promises go
+// unresolved that's a retrieval pathology (not just sparse disclosure) → still incomplete.
+// This caps the share of due promises that may be unresolved before a clean run is flagged.
+const FORCED_NYT_MAX_RATIO = Number(process.env.FORCED_NYT_MAX_RATIO ?? 0.5);
+
+/**
+ * Decide whether a LIVE run counts as "complete" (a real, shippable verdict).
+ * Pure + exported for unit testing. A run is complete when retrieval did its job:
+ *   - retrievalErrors === 0   (a quota/network failure means the run is truly truncated), AND
+ *   - the share of DUE promises left unresolved (forcedNyt / (testable + forcedNyt)) is within
+ *     `maxRatio` — a few due promises the company never re-reported are legitimate NYTs, but if
+ *     MOST went unresolved that's a retrieval pathology, not sparse disclosure.
+ * @returns {{complete: boolean, ratio: number, due: number}}
+ */
+export function runCompleteness({ retrievalErrors, forcedNyt, testable, maxRatio = 0.5 }) {
+  const due = (Number(testable) || 0) + (Number(forcedNyt) || 0);
+  const ratio = due > 0 ? forcedNyt / due : 0;
+  return { complete: (Number(retrievalErrors) || 0) === 0 && ratio <= maxRatio, ratio, due };
+}
 const LIMIT = Number(process.env.LIMIT || Infinity);
 const DEBUG = !!process.env.DEBUG && process.env.DEBUG !== "0";
 const EVAL = process.env.EVAL ? process.env.EVAL !== "0" : true;
@@ -152,22 +172,32 @@ async function main() {
   const aggregates = aggregate(verified);
   const cred = credibility(verified, aggregates);
 
-  // 6. provenance — the honesty stamp the UI badges. forced_nyt = promises whose deadline
-  // is within the window yet were left NYT for want of a retrieved actual (a truncation
-  // signal, e.g. a provider's daily quota cut retrieval short). The UI disclaims/warns when
-  // the run isn't a complete live one. (Refuse-to-commit lands in P10; here we only stamp.)
-  // A promise left NYT whose deadline is provably WITHIN the window (parseable + not future, by the
-  // same date/period logic the verdict uses) is "forced": due, but no actual was retrieved. An
-  // unparseable long-dated horizon ("medium term", null) is NOT due, so it never flips complete→false.
+  // 6. provenance — the honesty stamp the UI badges and the commit guard enforce.
+  //   retrieval_errors = retrieval calls that FAILED (provider quota/network) — the pipeline
+  //     didn't do its job, so the run is genuinely truncated. This is the HARD gate.
+  //   forced_nyt = due promises (deadline provably WITHIN the window — parseable + not future)
+  //     left NYT for want of a retrieved actual. Most of these are legitimate: the company
+  //     simply never re-reported that metric, which is NOT a pipeline failure and must not, by
+  //     itself, mark the verdict provisional (real filings never re-report everything). An
+  //     unparseable long-dated horizon ("medium term", null) is not due, so it's never forced.
+  // "complete" therefore gates on retrieval_errors === 0, plus a sanity cap on the forced_nyt
+  // RATIO: if more than FORCED_NYT_MAX_RATIO of due promises went unresolved, that looks like a
+  // retrieval pathology rather than sparse disclosure, so the run is still flagged incomplete.
   const forced_nyt = verified.filter((p) => p.status === "NYT" && isWithinWindow(p.test_date, vw.latest_reported_date, vw.latest_reported)).length;
   const retrieval_errors = (faStats.errors?.length || 0) + (ftStats.errors?.length || 0);
+  const { complete, ratio: forced_nyt_ratio } = runCompleteness({
+    retrievalErrors: retrieval_errors,
+    forcedNyt: forced_nyt,
+    testable: aggregates.testable,
+    maxRatio: FORCED_NYT_MAX_RATIO,
+  });
   const models_used = MOCK
     ? ["mock"]
     : EXTRACTION_PROVIDERS.filter((pr) => providerConfig(pr, process.env).apiKey);
   const generatedAt = new Date().toISOString();
   const provenance = {
     mode: MOCK ? "mock" : "live",
-    complete: retrieval_errors === 0 && forced_nyt === 0,
+    complete,
     retrieval_errors,
     forced_nyt,
     models_used,
@@ -199,7 +229,10 @@ async function main() {
   console.log(`  promises   : ${verified.length}  (MET ${sc.MET} / PARTIAL ${sc.PARTIAL} / MISSED ${sc.MISSED} / NYT ${sc.NYT})`);
   console.log(`  testable   : ${aggregates.testable}  · credibility ${cred.score} (${cred.grade})  [timeline ${cred.timeline_score} · delivery ${cred.delivery_score}]`);
   console.log(`  actuals    : llm_calls ${faStats.calls} · cache ${faStats.cache_hits} · no_evidence ${faStats.no_evidence} · errors ${faStats.errors.length}  | fin_trend calls ${ftStats.calls}`);
-  console.log(`  provenance : ${provenance.mode}${provenance.complete ? " · complete" : ` · INCOMPLETE (retrieval_errors ${retrieval_errors}, forced_nyt ${forced_nyt})`}  [${provenance.mode === "live" ? "honesty: " + (provenance.complete ? "green/Live" : "amber/Provisional") : provenance.mode === "mock" ? "red/Mock — not a real verdict" : "grey/Curated"}]`);
+  const completeNote = provenance.complete
+    ? ` · complete${forced_nyt ? ` (${forced_nyt} due awaiting confirmation)` : ""}`
+    : ` · INCOMPLETE (retrieval_errors ${retrieval_errors}, forced_nyt ${forced_nyt}, ratio ${(forced_nyt_ratio * 100).toFixed(0)}%/${(FORCED_NYT_MAX_RATIO * 100).toFixed(0)}%)`;
+  console.log(`  provenance : ${provenance.mode}${completeNote}  [${provenance.mode === "live" ? "honesty: " + (provenance.complete ? "green/Live" : "amber/Provisional") : provenance.mode === "mock" ? "red/Mock — not a real verdict" : "grey/Curated"}]`);
   console.log(`  headline   : ${cred.headline}`);
   console.log(`  ledger     : ${outPath}`);
 
