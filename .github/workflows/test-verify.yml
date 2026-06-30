@@ -8,8 +8,8 @@
 # tests. Validates the engine's ledger against the schema and evaluates it against
 # the golden fixture. Nothing is committed.
 #
-# Required repo secrets: GEMINI_API_KEY, GROQ_API_KEY, MISTRAL_API_KEY
-# Egress: generativelanguage.googleapis.com · api.groq.com · api.mistral.ai
+# Repo secrets: OPENAI_API_KEY (paid lead, optional) · GEMINI_API_KEY, GROQ_API_KEY, MISTRAL_API_KEY (free pool)
+# Egress: api.openai.com · generativelanguage.googleapis.com · api.groq.com · api.mistral.ai
 #
 # Needs (committed): pipeline/fixtures/<ticker>.corpus.json  (extract/verify input)
 #                    pipeline/fixtures/<ticker>.golden.json  (eval target)
@@ -50,6 +50,8 @@ jobs:
       CORPUS: pipeline/fixtures/${{ inputs.ticker }}.corpus.json
       PARTIAL_TOL: ${{ inputs.partial_tol }}
       TIMELINE_GRACE_QTRS: ${{ inputs.timeline_grace_qtrs }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}

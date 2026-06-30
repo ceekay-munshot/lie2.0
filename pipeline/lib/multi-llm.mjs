@@ -13,11 +13,12 @@
  * actual model call is injected as `extractOne` so this module is pure and
  * unit-testable with a mock.
  */
-// Failover priority. Mistral-first by default: Gemini's free-tier key is currently
-// quota-exhausted, so leading with the live provider avoids burning a fail-fast probe
-// on it each run. Override with EXTRACTION_ORDER (e.g. "gemini,groq,mistral") once
-// Gemini quota is healthy again.
-export const EXTRACTION_PROVIDERS = (process.env.EXTRACTION_ORDER || "mistral,gemini,groq")
+// Failover priority. OpenAI-first by default: it's the paid, reliable provider with no
+// free-tier daily cap, so a live run completes in one pass. Providers whose KEY is unset
+// are filtered out downstream (extract.mjs / find-actual.mjs), so with no OPENAI_API_KEY
+// this transparently falls back to the free pool (mistral leads — Gemini's free key is
+// quota-exhausted). Override with EXTRACTION_ORDER (e.g. "mistral,gemini,groq").
+export const EXTRACTION_PROVIDERS = (process.env.EXTRACTION_ORDER || "openai,mistral,gemini,groq")
   .split(",")
   .map((s) => s.trim().toLowerCase())
   .filter(Boolean);

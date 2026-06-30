@@ -6,8 +6,8 @@
 # recall against the golden fixture, and uploads promises.json as an artifact.
 # Nothing is committed.
 #
-# Required repo secrets: GEMINI_API_KEY, GROQ_API_KEY, MISTRAL_API_KEY
-# Egress: generativelanguage.googleapis.com · api.groq.com · api.mistral.ai
+# Repo secrets: OPENAI_API_KEY (paid lead, optional) · GEMINI_API_KEY, GROQ_API_KEY, MISTRAL_API_KEY (free pool)
+# Egress: api.openai.com · generativelanguage.googleapis.com · api.groq.com · api.mistral.ai
 
 name: Test extraction (ensemble)
 
@@ -41,6 +41,8 @@ jobs:
       LLM_STRATEGY: ${{ inputs.strategy }}
       CORPUS: pipeline/fixtures/${{ inputs.ticker }}.corpus.json
       GEMINI_MODEL: ${{ inputs.gemini_model }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}

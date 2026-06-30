@@ -43,6 +43,17 @@ import { pathToFileURL } from "node:url";
  * in Prompt 4; completeJSON() degrades gracefully regardless.
  * ------------------------------------------------------------------------- */
 export const PROVIDER_PRESETS = {
+  // Paid, reliable lead (no free-tier daily cap). OpenAI's API is the reference
+  // OpenAI-compatible shape and supports json_schema structured outputs natively.
+  // Override the model with OPENAI_MODEL (e.g. gpt-5-mini, gpt-4.1-mini) — gpt-4o-mini
+  // is the cost-effective default for this extract/retrieve task (the verdict is
+  // decided by deterministic rules, not the model, so a mini-class model suffices).
+  openai: {
+    baseURL: "https://api.openai.com/v1",
+    model: "gpt-4o-mini",
+    structured: "json_schema",
+    keyEnv: "OPENAI_API_KEY",
+  },
   gemini: {
     baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
     model: "gemini-2.5-flash",

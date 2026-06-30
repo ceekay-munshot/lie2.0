@@ -541,9 +541,9 @@ async function main() {
   // a 0 means a degraded run. In failover/single, untouched providers are normal
   // (the work was done by an earlier provider with budget).
   if (STRATEGY === "ensemble" || STRATEGY === "partition") {
-    const dead = ["gemini", "groq", "mistral"].filter(
-      (m) => available.some((c) => c.provider === m) && (out.stats.by_model[m] || 0) === 0,
-    );
+    const dead = available
+      .map((c) => c.provider)
+      .filter((m) => (out.stats.by_model[m] || 0) === 0);
     if (dead.length) console.log(`  ⚠ contributed 0 promises: ${dead.join(", ")} (ensemble degraded)`);
   } else {
     const used = Object.entries(out.stats.by_model).filter(([, n]) => n > 0).map(([m]) => m);
