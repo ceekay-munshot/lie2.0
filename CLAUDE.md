@@ -258,8 +258,15 @@ Framework-free (vanilla ES modules + the P1 design system), zero build step.
 **The provenance guard (this prompt's safety goal): never present a mock or
 quota-truncated ledger as a real verdict.** `verify.mjs` stamps `provenance`
 (`mode` live/mock/manual · `complete` · `retrieval_errors` · `forced_nyt` =
-due-but-unverified promises · `models_used` · `run_id`); `ui.js#provenanceBadge`
-(pure, unit-tested) maps it to a badge + a `disclaim` flag the hero honours:
+due-but-unverified promises · `models_used` · `run_id`). **`complete` gates on
+retrieval doing its job, not on every due promise being resolved**
+(`runCompleteness`, pure + unit-tested): `complete = retrieval_errors === 0` AND the
+share of due promises left unresolved (`forced_nyt / (testable + forced_nyt)`) is
+within `FORCED_NYT_MAX_RATIO` (0.5). A few due promises the company simply never
+re-reported are legitimate NYTs — not a pipeline failure — so they don't, by
+themselves, mark a clean run provisional; but a retrieval error (quota/network) or a
+majority of due promises going unresolved (a retrieval pathology) does. `ui.js#provenanceBadge`
+(pure, unit-tested) maps the stamp to a badge + a `disclaim` flag the hero honours:
 **complete live → green "Live · complete"; `mode:mock` → red "Mock data — not a
 real verdict" (ring dimmed + disclaimer); `!complete` → amber "Provisional —
 incomplete retrieval"; manual → grey "Curated".** The committed `vedl.json` is the
@@ -321,9 +328,10 @@ schema-valid ledger; `npm run validate` passes). **Keys live only in GitHub
 Secrets** → the live retrieval is CI-only (`test-verify.yml`, `workflow_dispatch`).
 
 **Env knobs:** `TICKER` · `CORPUS=<path>` · `PROMISES=<path>` (else extract is run
-first) · `PARTIAL_TOL` (0.05) · `TIMELINE_GRACE_QTRS` (1) · `PROVIDER=mock`/`MOCK=1`
-· `EXTRACTION_ORDER` (retrieval provider priority) · `LLM_CONCURRENCY` (2) · `EVAL`
-(1) · `LIMIT` · `DEBUG`.
+first) · `PARTIAL_TOL` (0.05) · `TIMELINE_GRACE_QTRS` (1) · `FORCED_NYT_MAX_RATIO`
+(0.5 — max share of due promises that may be unresolved before a clean run is flagged
+incomplete) · `PROVIDER=mock`/`MOCK=1` · `EXTRACTION_ORDER` (retrieval provider
+priority) · `LLM_CONCURRENCY` (2) · `EVAL` (1) · `LIMIT` · `DEBUG`.
 
 ## Extraction engine (Prompt 4)
 

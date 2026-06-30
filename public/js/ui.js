@@ -115,7 +115,12 @@ export function provenanceBadge(provenance) {
   // live
   if (p.complete) {
     const models = (Array.isArray(p.models_used) ? p.models_used : []).filter((m) => m && m !== "mock");
-    return { tone: "live", label: "Live · complete", detail: models.length ? `Full retrieval · ${models.join(", ")}.` : "Full live retrieval.", disclaim: false };
+    const forced = Number(p.forced_nyt || 0);
+    // A complete run can still have a few due promises the company never re-reported — they
+    // stay NYT (excluded from the score). Surface that honestly rather than implying 100%.
+    const base = models.length ? `Retrieval complete · ${models.join(", ")}.` : "Live retrieval complete.";
+    const detail = forced ? `${base} ${forced} due promise${forced === 1 ? "" : "s"} not yet re-reported (shown as NYT).` : base;
+    return { tone: "live", label: "Live · complete", detail, disclaim: false };
   }
   const forced = Number(p.forced_nyt || 0);
   const errs = Number(p.retrieval_errors || 0);
