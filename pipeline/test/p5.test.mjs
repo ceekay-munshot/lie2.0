@@ -120,8 +120,11 @@ ok(rc({ retrievalErrors: 0, forcedNyt: 0, testable: 90 }) === true, "0 errors, 0
 ok(rc({ retrievalErrors: 0, forcedNyt: 15, testable: 173 }) === true, "0 errors, a few due unconfirmed (8%) → complete (the VEDL case)");
 ok(rc({ retrievalErrors: 5, forcedNyt: 0, testable: 90 }) === false, "any retrieval error → INCOMPLETE (hard gate)");
 ok(rc({ retrievalErrors: 0, forcedNyt: 80, testable: 20 }) === false, "most due promises unresolved (80%) → INCOMPLETE (retrieval pathology)");
-ok(rc({ retrievalErrors: 0, forcedNyt: 1, testable: 1 }) === true, "exactly at the 50% cap → still complete (boundary)");
-ok(rc({ retrievalErrors: 0, forcedNyt: 0, testable: 0 }) === true, "no due promises at all → complete (no division by zero)");
+ok(rc({ retrievalErrors: 0, forcedNyt: 5, testable: 5 }) === true, "exactly at the 50% cap (5/10) → still complete (boundary)");
+ok(rc({ retrievalErrors: 0, forcedNyt: 0, testable: 0 }) === false, "0 testable promises → INCOMPLETE (thin, nothing to score)");
+ok(rc({ retrievalErrors: 0, forcedNyt: 0, testable: 1 }) === false, "1 testable promise → INCOMPLETE (thin — the INFY parse-failure case)");
+ok(rc({ retrievalErrors: 0, forcedNyt: 0, testable: 3 }) === true, "3 testable → complete (at the MIN_TESTABLE floor)");
+ok(runCompleteness({ retrievalErrors: 0, forcedNyt: 0, testable: 1 }).thin === true, "thin flag set when testable < minTestable");
 ok(runCompleteness({ retrievalErrors: 0, forcedNyt: 15, testable: 173 }).ratio < 0.1, "ratio reported (15/188 ≈ 8%)");
 
 console.log(fails === 0 ? "\nALL P5 UNIT TESTS PASSED" : `\n${fails} TEST(S) FAILED`);

@@ -45,6 +45,24 @@ ok(roleOf("Jane Roe") === "management", "Jane Roe → management (roster)");
 ok(roleOf("Amit Kumar") === "analyst", "Amit Kumar → analyst (not on roster)");
 ok(tn.sections.some((s) => s.role === "moderator"), "Moderator → moderator");
 
+/* ---- 3b) Transcript with name-on-own-line + no MANAGEMENT block (e.g. Infosys) -- */
+console.log("normalizer — transcript (name-on-own-line / no roster block):");
+const iPages = [
+  '"Infosys Q3 FY26 Earnings Conference Call"\nJanuary 15, 2026\n' +
+    'Salil Parekh:\nThank you. Revenue grew in constant currency and we expect margins to expand.\n' +
+    'Jayesh Sanghrajka:\nWe now guide full-year revenue growth of 3% to 4%.',
+  'Moderator:\nWe will now begin the question-and-answer session.\n' +
+    'Sandip Agarwal:\nThanks for taking my question.\n' +
+    'Salil Parekh:\nWe target operating margin of 21% to 23%.',
+];
+const itn = normalizeTranscript(iPages);
+const iRole = (name) => (itn.sections.find((s) => s.speaker === name) || {}).role;
+ok(iRole("Salil Parekh") === "management", "prepared-remarks speaker → management (derived-roster fallback)");
+ok(iRole("Jayesh Sanghrajka") === "management", "second prepared-remarks speaker → management");
+ok(iRole("Sandip Agarwal") === "analyst", "Q&A-only speaker → analyst (not in prepared remarks)");
+ok(itn.sections.filter((s) => s.role === "management" || s.role === "analyst").length >= 3, "fallback recovered ≥3 real turns (primary parser found 0)");
+ok(/guide full-year revenue growth/i.test(itn.sections.map((s) => s.text).join(" ")), "speech captured, not dropped into front matter");
+
 /* ---- 3) Normalizer: presentation fixture ------------------------------- */
 console.log("normalizer — presentation:");
 const pPages = [

@@ -119,7 +119,80 @@ export function classifyRole(name, roster) {
 }
 
 const TURN_RE = /^([A-Z][A-Za-z.'’\-]+(?:\s+[A-Z][A-Za-z.'’\-]+){0,3})\s*:\s+(.+)$/;
+// Some vendors put the speaker NAME on its own line (colon-terminated), with the
+// utterance on the following lines — e.g. "Salil Parekh:\n<speech>". Require ≥2
+// capitalised tokens so it reads as a person, not a heading like "Outlook:".
+const SPEAKER_EOL_RE = /^([A-Z][A-Za-z.'’\-]+(?:\s+[A-Z][A-Za-z.'’\-]+){1,3})\s*:\s*$/;
+const MOD_EOL_RE = /^(Moderator|Operator)\s*:\s*$/i;
+const MIN_REAL_TURNS = 3; // below this the primary parse is presumed to have missed the format
 const QA_START_RE = /(?:we will now begin the question|first question (?:is|comes|will be) from|question[-\s]and[-\s]answer session|begin the q\s*&\s*a)/i;
+
+/** A speaker-header line → {speaker, rest}. `eol` also accepts a name-only colon line. */
+function speakerHeader(l, eol) {
+  const mi = l.match(TURN_RE);
+  if (mi) return { speaker: mi[1].trim(), rest: mi[2] };
+  if (eol) {
+    const me = l.match(SPEAKER_EOL_RE) || l.match(MOD_EOL_RE);
+    if (me) return { speaker: me[1].trim(), rest: "" };
+  }
+  return null;
+}
+
+/**
+ * Derive a management roster when the document has no parseable MANAGEMENT block:
+ * speakers in the PREPARED-REMARKS section (before the Q&A announcement) are management
+ * — analysts only speak during Q&A. Falls back to all non-moderator speakers.
+ */
+function deriveRoster(lines) {
+  let qaAt = lines.findIndex(({ l }) => QA_START_RE.test(l));
+  if (qaAt < 0) qaAt = lines.length;
+  const before = new Set();
+  const all = new Set();
+  lines.forEach(({ l }, i) => {
+    const h = speakerHeader(l, true);
+    if (!h || /^(moderator|operator)$/i.test(h.speaker)) return;
+    for (const k of [h.speaker.toLowerCase(), lastName(h.speaker)]) {
+      all.add(k);
+      if (i < qaAt) before.add(k);
+    }
+  });
+  return before.size ? before : all;
+}
+
+/** Core turn assembler. `roleOf` resolves a speaker's role; `eol`/`requireRole` tune detection. */
+function assembleTurns(lines, roleOf, { eol, requireRole }) {
+  const turns = [];
+  let front = null;
+  let cur = null;
+  for (const { l, page } of lines) {
+    const h = speakerHeader(l, eol);
+    const role = h ? roleOf(h.speaker) : null;
+    if (h && (!requireRole || role)) {
+      if (cur) turns.push(cur);
+      cur = { kind: "prepared_remarks", speaker: h.speaker, role, page, _lines: h.rest ? [h.rest] : [] };
+    } else if (cur) {
+      cur._lines.push(l);
+    } else {
+      (front ||= { kind: "front_matter", speaker: null, role: null, page, _lines: [] })._lines.push(l);
+    }
+  }
+  if (cur) turns.push(cur);
+
+  const finalize = (t) => ({
+    kind: t.kind, speaker: t.speaker, role: t.role, page: t.page,
+    text: dehyphenate(t._lines.join("\n")).replace(/\s+/g, " ").trim(),
+  });
+
+  let inQA = false;
+  const out = [];
+  if (front && front._lines.length) out.push(finalize(front));
+  for (const t of turns) {
+    if (!inQA && t.role === "moderator" && QA_START_RE.test(t._lines.join(" "))) inQA = true;
+    t.kind = inQA ? "qa" : "prepared_remarks";
+    out.push(finalize(t));
+  }
+  return out;
+}
 
 /**
  * Split cleaned transcript pages into speaker turns, tagging roles and segmenting
@@ -136,43 +209,24 @@ export function splitTurns(cleanedPages, roster) {
     }
   });
 
-  const turns = [];
-  let front = null; // pre-first-turn matter (title, roster)
-  let cur = null;
-  for (const { l, page } of lines) {
-    const m = l.match(TURN_RE);
-    const speaker = m ? m[1].trim() : null;
-    const role = speaker ? classifyRole(speaker, roster) : null;
-    if (m && role) {
-      if (cur) turns.push(cur);
-      cur = { kind: "prepared_remarks", speaker, role, page, _lines: [m[2]] };
-    } else if (cur) {
-      cur._lines.push(l);
-    } else {
-      (front ||= { kind: "front_matter", speaker: null, role: null, page, _lines: [] })._lines.push(l);
-    }
-  }
-  if (cur) turns.push(cur);
+  // Primary: roster-driven, inline "Name: text" only (unchanged for transcripts that fit).
+  const primary = assembleTurns(lines, (sp) => classifyRole(sp, roster), { eol: false, requireRole: true });
+  const realTurns = primary.filter((s) => s.role === "management" || s.role === "analyst").length;
+  if (realTurns >= MIN_REAL_TURNS) return primary;
 
-  // Finalize text + de-hyphenate per turn.
-  const finalize = (t) => ({
-    kind: t.kind,
-    speaker: t.speaker,
-    role: t.role,
-    page: t.page,
-    text: dehyphenate(t._lines.join("\n")).replace(/\s+/g, " ").trim(),
-  });
-
-  // Segment Q&A: from the first moderator turn that announces it, mark qa.
-  let inQA = false;
-  const out = [];
-  if (front && front._lines.length) out.push(finalize(front));
-  for (const t of turns) {
-    if (!inQA && t.role === "moderator" && QA_START_RE.test(t._lines.join(" "))) inQA = true;
-    t.kind = inQA ? "qa" : "prepared_remarks";
-    out.push(finalize(t));
-  }
-  return out;
+  // Fallback: the transcript uses a layout the primary missed (speaker name on its own
+  // line, and/or no MANAGEMENT roster block — e.g. Infosys). Derive the roster from the
+  // prepared-remarks speakers and accept name-only colon lines as turns.
+  const derived = deriveRoster(lines);
+  const roleOf = (sp) => {
+    if (/^(moderator|operator)$/i.test(sp)) return "moderator";
+    if (classifyRole(sp, roster) === "management") return "management";
+    if (derived.has(sp.toLowerCase()) || derived.has(lastName(sp))) return "management";
+    return "analyst";
+  };
+  const fallback = assembleTurns(lines, roleOf, { eol: true, requireRole: false });
+  const fbReal = fallback.filter((s) => s.role === "management" || s.role === "analyst").length;
+  return fbReal > realTurns ? fallback : primary;
 }
 
 /** Normalize a transcript document → sections. */

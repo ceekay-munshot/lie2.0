@@ -262,10 +262,12 @@ due-but-unverified promises · `models_used` · `run_id`). **`complete` gates on
 retrieval doing its job, not on every due promise being resolved**
 (`runCompleteness`, pure + unit-tested): `complete = retrieval_errors === 0` AND the
 share of due promises left unresolved (`forced_nyt / (testable + forced_nyt)`) is
-within `FORCED_NYT_MAX_RATIO` (0.5). A few due promises the company simply never
-re-reported are legitimate NYTs — not a pipeline failure — so they don't, by
-themselves, mark a clean run provisional; but a retrieval error (quota/network) or a
-majority of due promises going unresolved (a retrieval pathology) does. `ui.js#provenanceBadge`
+within `FORCED_NYT_MAX_RATIO` (0.5) AND `testable >= MIN_TESTABLE` (3). A few due
+promises the company simply never re-reported are legitimate NYTs — not a pipeline
+failure — so they don't, by themselves, mark a clean run provisional; but a retrieval
+error (quota/network), a majority of due promises going unresolved (a retrieval
+pathology), or a ledger too **thin** to be a real verdict (≤2 testable — usually a failed
+extraction, e.g. a transcript whose format the parser missed) all do. `ui.js#provenanceBadge`
 (pure, unit-tested) maps the stamp to a badge + a `disclaim` flag the hero honours:
 **complete live → green "Live · complete"; `mode:mock` → red "Mock data — not a
 real verdict" (ring dimmed + disclaimer); `!complete` → amber "Provisional —
@@ -330,7 +332,8 @@ Secrets** → the live retrieval is CI-only (`test-verify.yml`, `workflow_dispat
 **Env knobs:** `TICKER` · `CORPUS=<path>` · `PROMISES=<path>` (else extract is run
 first) · `PARTIAL_TOL` (0.05) · `TIMELINE_GRACE_QTRS` (1) · `FORCED_NYT_MAX_RATIO`
 (0.5 — max share of due promises that may be unresolved before a clean run is flagged
-incomplete) · `PROVIDER=mock`/`MOCK=1` · `EXTRACTION_ORDER` (retrieval provider
+incomplete) · `MIN_TESTABLE` (3 — fewer testable promises ⇒ thin/not a real verdict) ·
+`PROVIDER=mock`/`MOCK=1` · `EXTRACTION_ORDER` (retrieval provider
 priority) · `LLM_CONCURRENCY` (2) · `EVAL` (1) · `LIMIT` · `DEBUG`.
 
 ## Extraction engine (Prompt 4)
@@ -428,6 +431,13 @@ providers are normal (reported as "held in reserve").
 with roster-based roles + prepared_remarks/qa; presentation slides with titles +
 `is_guidance`) → `chunk` emits ≤`CHUNK_TOKENS` (1500) overlapping chunks that
 never split mid-turn. No-text PDFs → `needs_ocr:true` (flagged, run continues).
+**Transcript-format robustness:** the primary turn parser expects inline
+`Name: utterance` lines + a `MANAGEMENT:` roster block; when that yields too few
+turns (a vendor that puts the speaker NAME on its own line and/or omits the roster
+block — e.g. Infosys), `splitTurns` falls back to a permissive pass that accepts
+name-only colon lines and **derives the management roster from the prepared-remarks
+speakers** (analysts only speak in Q&A). So extraction isn't silently starved of the
+transcripts for a company whose format differs from the golden's.
 
 The **upload backend is filename-agnostic** (P3 upgrade): real downloads have
 arbitrary names, so `ingest-upload.mjs` reads page-1 text and detects
