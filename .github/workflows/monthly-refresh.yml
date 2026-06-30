@@ -52,6 +52,18 @@ jobs:
           npm i -D ajv ajv-formats unpdf playwright --no-save --no-audit --no-fund
           npx playwright install --with-deps chromium
 
+      - name: Restore the LLM retrieval cache (whole universe — resume + cut the monthly quota burn)
+        # Cache only the per-ticker content-addressed LLM caches (cache/{extract,verify}), never
+        # corpus/manifest/raw — so REFRESH=1 still re-acquires each month and picks up new quarters,
+        # while unchanged promises reuse last month's retrievals (a changed corpus self-invalidates the
+        # keys). One entry covers every ticker the walk touches; a truncated company resumes next month.
+        uses: actions/cache/restore@v4
+        with:
+          path: pipeline/output/*/cache
+          key: pipeline-cache-universe-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            pipeline-cache-universe-
+
       - name: Walk the universe sequentially (guarded commit per company)
         shell: bash
         run: |
@@ -65,6 +77,15 @@ jobs:
             echo "::endgroup::"
             sleep 30   # polite backoff between companies (free-tier discipline)
           done
+
+      - name: Persist the LLM retrieval cache (whole universe)
+        # Saved even if the walk timed out partway, so the companies already retrieved this run resume
+        # next month. Unique key per run+attempt; restore-keys above picks up the newest entry.
+        if: ${{ always() }}
+        uses: actions/cache/save@v4
+        with:
+          path: pipeline/output/*/cache
+          key: pipeline-cache-universe-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Validate every committed ledger against the schema
         if: ${{ always() }}

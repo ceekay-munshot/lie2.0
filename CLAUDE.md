@@ -118,9 +118,18 @@ coverage. Everything is keyed on `TICKER` — **no company is hardcoded** (the o
 - **`.github/workflows/process-company.yml`** — `repository_dispatch` (type `process-company`,
   payload `{ticker}`) **and** `workflow_dispatch` (ticker + source). Runs the pipeline with the
   Screener + LLM-pool secrets and commits via the guard. **Concurrency-group per ticker.**
+  **Persists the LLM retrieval cache across runs** (`actions/cache`, key
+  `pipeline-cache-<ticker>-…`, path `pipeline/output/<ticker>/cache` only — never corpus/manifest/
+  raw): a verify truncated by the free-tier daily quota writes one cache file per *successful*
+  retrieval, so a re-run **resumes** — reuses those and retries only what failed, completing within
+  a fraction of a day's quota. The keys are content-addressed (evidence signature), so a changed
+  corpus self-invalidates and fresh-filing pickup / `REFRESH` are unaffected.
 - **`.github/workflows/monthly-refresh.yml`** — `cron` (monthly) + manual. Walks `universe.json`
   **sequentially** (shared free-tier pool · cache · backoff), pipeline + guard per company; a
-  truncated company keeps its prior ledger. The monthly commit keeps the repo active.
+  truncated company keeps its prior ledger. The monthly commit keeps the repo active. The same
+  retrieval cache is persisted universe-wide (`pipeline-cache-universe-…`, every ticker's
+  `cache/`), so each month unchanged promises reuse last month's retrievals and only new quarters
+  burn quota — a company truncated mid-walk resumes next month.
 - **Worker `/api/request/:ticker`** (`worker/index.js`) — POST validates the ticker, rate-limits
   per IP, is idempotent (covered/queued), and fires the `repository_dispatch` with the
   `GH_DISPATCH_TOKEN` Worker secret (wired at deploy P11; until then it safely mock-queues so the
