@@ -104,15 +104,40 @@ function bindGridNavigation(app) {
   app.addEventListener("keydown", go);
 }
 
+const HOME_TITLE = "Lie Detector — do management teams keep their promises?";
+
+/** Announce the new view to screen readers (SPA nav has no page reload to do it). */
+function announceRoute(label) {
+  const r = document.getElementById("route-status");
+  if (r) r.textContent = label;
+}
+
+let _firstRoute = true;
+
 /** Render the route; returns the (async) render promise so boot can await it. */
 function route(ticker) {
   const app = $app();
+  // Set a sensible title immediately; the company view refines it with the real
+  // company name once its ledger loads (shareable ?c= URLs get a meaningful title).
+  document.title = ticker ? `${ticker.toUpperCase()} · Lie Detector` : HOME_TITLE;
+
+  let done;
   if (ticker) {
     document.body.classList.remove("view-home");
     document.body.classList.add("view-company");
-    return renderCompany(app, ticker, { headerHost: $headerTools() });
+    done = renderCompany(app, ticker, { headerHost: $headerTools() });
+  } else {
+    done = renderHome(app);
   }
-  return renderHome(app);
+
+  return Promise.resolve(done).then(() => {
+    announceRoute(ticker ? `${ticker.toUpperCase()} dashboard loaded` : "Home — all companies");
+    // On a user navigation (not the initial boot render) move keyboard/SR focus to the
+    // top of the freshly-rendered main region. The home view auto-focuses its search, so
+    // only steal focus for the company/error views.
+    if (!_firstRoute && ticker && app) app.focus({ preventScroll: true });
+    _firstRoute = false;
+  });
 }
 
 async function boot() {

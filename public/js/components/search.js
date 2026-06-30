@@ -18,6 +18,7 @@ function setReqState(li, title, meta) {
   li.innerHTML = `<span class="ld-result-id"><span class="ld-result-name">${escapeHTML(title)}</span>${meta ? `<span class="ld-result-meta">${escapeHTML(meta)}</span>` : ""}</span>`;
 }
 
+let mountSeq = 0; // unique listbox id per mounted search (header + error view can coexist)
 let _indexPromise = null;
 /** Module-cached index load (shared across every mounted search). */
 function getIndex() {
@@ -46,12 +47,12 @@ function filterCompanies(list, q) {
   return scored.slice(0, 8).map((x) => x.c);
 }
 
-function resultRowHTML(c, i, activeIdx) {
+function resultRowHTML(c, i, activeIdx, listId) {
   const grade = c.grade || gradeFromScore(c.credibility_score) || "—";
   const color = gradeColor(grade);
   const meta = [c.sector, c.coverage].filter(Boolean).map(escapeHTML).join(" · ");
   return `
-    <li class="ld-result${i === activeIdx ? " is-active" : ""}" role="option" id="ld-opt-${i}"
+    <li class="ld-result${i === activeIdx ? " is-active" : ""}" role="option" id="${listId}-opt-${i}"
         aria-selected="${i === activeIdx}" data-ticker="${escapeHTML(c.ticker)}">
       <span class="ld-result-id">
         <span class="ld-result-ticker">${escapeHTML(c.ticker)}</span>
@@ -69,19 +70,24 @@ function resultRowHTML(c, i, activeIdx) {
 export function mountSearch(host, { compact = false, autofocus = false, onRequest = null } = {}) {
   const root = document.createElement("div");
   root.className = `ld-search${compact ? " is-compact" : ""}`;
+  // ARIA 1.2 combobox pattern: the role + state live on the INPUT itself (the older
+  // shape — role=combobox on a wrapper around a separate input — is broken in modern
+  // screen readers). `aria-activedescendant` follows the highlighted option so arrow-key
+  // nav is announced. Each mounted search gets a unique listbox id (multiple coexist).
+  const listId = `ld-listbox-${++mountSeq}`;
   root.innerHTML = `
-    <div class="ld-search-box" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-owns="ld-listbox">
+    <div class="ld-search-box">
       <i data-lucide="search" aria-hidden="true"></i>
       <input class="ld-search-input" type="search" autocomplete="off" spellcheck="false"
-             role="searchbox" aria-controls="ld-listbox" aria-autocomplete="list"
+             role="combobox" aria-expanded="false" aria-controls="${listId}" aria-autocomplete="list"
+             aria-activedescendant=""
              placeholder="${compact ? "Search…" : "Search a company (e.g. Vedanta, VEDL)…"}"
              aria-label="Search companies" />
     </div>
-    <ul class="ld-search-panel" id="ld-listbox" role="listbox" hidden></ul>`;
+    <ul class="ld-search-panel" id="${listId}" role="listbox" aria-label="Company results" hidden></ul>`;
   host.appendChild(root);
   if (window.lucide?.createIcons) window.lucide.createIcons();
 
-  const box = root.querySelector(".ld-search-box");
   const input = root.querySelector(".ld-search-input");
   const panel = root.querySelector(".ld-search-panel");
 
@@ -92,19 +98,26 @@ export function mountSearch(host, { compact = false, autofocus = false, onReques
 
   getIndex().then((list) => { companies = list; }).catch((err) => console.error("search index:", err));
 
+  const syncActive = () => {
+    input.setAttribute("aria-activedescendant", activeIdx >= 0 && results.length ? `${listId}-opt-${activeIdx}` : "");
+  };
+
   const setOpen = (v) => {
     open = v;
     panel.hidden = !v;
-    box.setAttribute("aria-expanded", String(v));
+    input.setAttribute("aria-expanded", String(v));
+    if (!v) input.setAttribute("aria-activedescendant", "");
   };
 
   function render() {
     const q = input.value;
     if (results.length) {
-      panel.innerHTML = results.map((c, i) => resultRowHTML(c, i, activeIdx)).join("");
+      panel.innerHTML = results.map((c, i) => resultRowHTML(c, i, activeIdx, listId)).join("");
     } else if (norm(q)) {
+      // Not a selectable option (it holds a button) — keep it out of the listbox's
+      // option set so it never becomes the active descendant.
       panel.innerHTML = `
-        <li class="ld-result is-empty" role="option" aria-selected="false">
+        <li class="ld-result is-empty">
           <span class="ld-result-id">
             <span class="ld-result-name">No company matches “${escapeHTML(q.trim())}”.</span>
             <span class="ld-result-meta">It may not be covered yet.</span>
@@ -114,6 +127,7 @@ export function mountSearch(host, { compact = false, autofocus = false, onReques
     } else {
       panel.innerHTML = "";
     }
+    syncActive();
     if (window.lucide?.createIcons) window.lucide.createIcons();
   }
 
