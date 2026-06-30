@@ -331,8 +331,8 @@ function loadFixture() {
 function cachePath(docId, model) {
   return join(outputDir(TICKER), "cache", "extract", `${docId}.${model}.json`);
 }
-function docHash(text, model) {
-  return createHash("sha256").update(`${PROMPT_VERSION} ${model} ${text}`).digest("hex");
+function docHash(text, sig) {
+  return createHash("sha256").update(`${PROMPT_VERSION} ${sig} ${text}`).digest("hex");
 }
 
 async function main() {
@@ -403,7 +403,22 @@ async function main() {
   const extractOne = MOCK
     ? async (_cfg, doc) => mockExtract(doc)
     : async (cfg, doc) => {
-    const hash = docHash(doc.text, cfg.provider);
+    // Resolve the effective REQUEST SHAPE first so it can guard the cache key — both inputs below change
+    // what the model is actually asked, so a persisted entry must not survive a change to either:
+    //   maxTokens — the output budget. Generous default so a long doc's JSON isn't truncated (Gemini
+    //     2.5-flash supports far more); Groq's preset caps it low to fit its TPM/TPD budget.
+    //   segChars — the per-request INPUT budget that drives segmentText(): reserve the prompt overhead +
+    //     output budget from the provider's maxInputTokens (env-overridable via <PROVIDER>_MAX_INPUT_TOKENS),
+    //     then segment to what's left. Large-context providers (no cap) send the doc in one call.
+    const maxTokens = cfg.maxOutputTokens || 16000;
+    const segChars = cfg.maxInputTokens
+      ? Math.max(4000, cfg.maxInputTokens * 4 - PROMPT_OVERHEAD_CHARS)
+      : Infinity;
+    // Key the hash on the RESOLVED model (not just the provider name) AND the request shape
+    // (in:segChars / out:maxTokens): a <PROVIDER>_MODEL / preset / <PROVIDER>_MAX_INPUT_TOKENS change must
+    // invalidate the now-persisted cache, else a stored entry would serve promises from the OLD model or
+    // the OLD chunking for unchanged filings. The cache FILE stays per-provider.
+    const hash = docHash(doc.text, `${cfg.provider}:${cfg.model}|in:${segChars}|out:${maxTokens}`);
     const cp = cachePath(doc.id, cfg.provider);
     if (existsSync(cp)) {
       try {
@@ -414,17 +429,6 @@ async function main() {
       }
     }
 
-    // Keep each request within the provider's budget (e.g. Groq's 12K TPM, which
-    // counts input+output): reserve the prompt overhead + the output budget, then
-    // segment the document text to what's left. Large-context providers (no cap)
-    // send it in one call.
-    // Generous output cap so a long doc's JSON isn't truncated (Gemini 2.5-flash
-    // supports far more; the rubric keeps outputs modest). Groq overrides this
-    // low via its preset to fit the TPM/TPD budget.
-    const maxTokens = cfg.maxOutputTokens || 16000;
-    const segChars = cfg.maxInputTokens
-      ? Math.max(4000, cfg.maxInputTokens * 4 - PROMPT_OVERHEAD_CHARS)
-      : Infinity;
     const segments = segmentText(doc.text, segChars);
 
     const promises = [];

@@ -64,13 +64,47 @@ jobs:
       - name: Guard — a ticker is required
         run: '[ -n "$TICKER" ] || { echo "::error::no ticker supplied (workflow input or dispatch payload)"; exit 1; }'
 
+      - name: Normalize the ticker (lowercase slug — matches pipeline/output/<ticker>/)
+        id: t
+        run: echo "lc=$(node -e 'process.stdout.write(String(process.env.TICKER||"").trim().toLowerCase())')" >> "$GITHUB_OUTPUT"
+
       - name: Install pipeline deps (--no-save) + Chromium
         run: |
           npm i -D ajv ajv-formats unpdf playwright --no-save --no-audit --no-fund
           npx playwright install --with-deps chromium
 
+      - name: Restore the LLM retrieval cache (resume a quota-truncated run)
+        # find-actual.mjs writes one cache file per SUCCESSFUL retrieval (a failure writes nothing),
+        # keyed by a content signature, so restoring this lets a re-run reuse the prior successes and
+        # retry only what failed — a verify truncated by the free-tier daily quota RESUMES instead of
+        # repeating every call. We cache ONLY pipeline/output/<ticker>/cache (the content-addressed
+        # extract+verify caches), never corpus/manifest/raw: a changed corpus self-invalidates the keys,
+        # and acquire/ingest still re-run, so fresh-filing pickup and REFRESH are unaffected.
+        uses: actions/cache/restore@v4
+        with:
+          path: pipeline/output/${{ steps.t.outputs.lc }}/cache
+          key: pipeline-cache-${{ steps.t.outputs.lc }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            pipeline-cache-${{ steps.t.outputs.lc }}-
+
       - name: Run the pipeline (acquire → … → build-report → guarded commit)
+        # Step timeout BELOW the 90-min job timeout: if the pipeline overruns, the STEP fails but the
+        # JOB is not cancelled, so the cache-save step below still runs (if:always()) and the retrievals
+        # made so far survive to resume the next run. A job-level timeout would cancel the job and skip
+        # even always() steps, losing the partial cache — the exact case this PR exists to handle.
+        timeout-minutes: 80
         run: node pipeline/run-pipeline.mjs
+
+      - name: Persist the LLM retrieval cache (a partial run's successes survive to the next)
+        # A guard-refused incomplete run still exits 0, so the new successful retrievals it made are
+        # saved on the normal path; `always()` additionally covers an earlier stage aborting (e.g. the
+        # pool runs dry mid-verify). The key is unique per run+attempt, so each run writes a fresh entry
+        # and the restore step above picks up the newest.
+        if: ${{ always() }}
+        uses: actions/cache/save@v4
+        with:
+          path: pipeline/output/${{ steps.t.outputs.lc }}/cache
+          key: pipeline-cache-${{ steps.t.outputs.lc }}-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Validate every committed ledger against the schema
         if: ${{ always() }}

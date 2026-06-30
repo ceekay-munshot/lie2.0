@@ -116,6 +116,11 @@ function mockResult(promise, evidence) {
  */
 export async function findActuals({ promises, corpus, mock = false, providers = null, concurrency = 2, cacheDir = null, debug = false }) {
   const chain = providers || EXTRACTION_PROVIDERS.map((p) => providerConfig(p, process.env)).filter((c) => c.apiKey);
+  // Fold the resolved model chain into every cache key so a <PROVIDER>_MODEL / preset / EXTRACTION_ORDER
+  // change invalidates persisted actuals instead of reusing old-model retrievals across runs. Derived
+  // from `chain` (providers whose KEY is set), which is stable across a quota-truncation→resume cycle —
+  // an exhausted quota is a runtime 429, not a missing key, so it doesn't change chain membership.
+  const modelSig = chain.map((c) => `${c.provider}:${c.model}`).join(",");
   const stats = { calls: 0, cache_hits: 0, no_evidence: 0, errors: [] };
   const results = new Array(promises.length).fill(null);
 
@@ -129,7 +134,7 @@ export async function findActuals({ promises, corpus, mock = false, providers = 
     // include each evidence doc's DATE and TEXT (not just id/overlap) so a re-ingested or
     // corrected corpus with the same doc ids busts stale cached actuals instead of reusing them.
     const evSig = evidence.map((e) => `${e.doc_id}:${e.date}:${e.text}`).join("");
-    const key = createHash("sha256").update(`${FIND_ACTUAL_VERSION}|${promise.promise_key || promise.id}|${evSig}`).digest("hex");
+    const key = createHash("sha256").update(`${FIND_ACTUAL_VERSION}|${modelSig}|${promise.promise_key || promise.id}|${evSig}`).digest("hex");
     const cp = cacheDir ? join(cacheDir, `${String(promise.id || promise.promise_key || "p").replace(/[^\w-]/g, "_")}.json`) : null;
     if (cp && existsSync(cp)) {
       try { const c = JSON.parse(readFileSync(cp, "utf8")); if (c.key === key) { stats.cache_hits += 1; return c.value; } } catch { /* re-fetch */ }
