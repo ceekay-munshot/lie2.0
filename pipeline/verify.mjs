@@ -34,20 +34,29 @@ const TIMELINE_GRACE_QTRS = Number(process.env.TIMELINE_GRACE_QTRS || 1);
 // unresolved that's a retrieval pathology (not just sparse disclosure) → still incomplete.
 // This caps the share of due promises that may be unresolved before a clean run is flagged.
 const FORCED_NYT_MAX_RATIO = Number(process.env.FORCED_NYT_MAX_RATIO ?? 0.5);
+// A credibility grade computed from one or two promises isn't a meaningful verdict — it's
+// usually a sign extraction barely mined the docs (e.g. a transcript whose format the
+// parser missed). Below this many TESTABLE promises a live run is not shippable.
+const MIN_TESTABLE = Number(process.env.MIN_TESTABLE ?? 3);
 
 /**
  * Decide whether a LIVE run counts as "complete" (a real, shippable verdict).
- * Pure + exported for unit testing. A run is complete when retrieval did its job:
+ * Pure + exported for unit testing. A run is complete when retrieval did its job AND the
+ * ledger is substantive:
  *   - retrievalErrors === 0   (a quota/network failure means the run is truly truncated), AND
  *   - the share of DUE promises left unresolved (forcedNyt / (testable + forcedNyt)) is within
  *     `maxRatio` — a few due promises the company never re-reported are legitimate NYTs, but if
- *     MOST went unresolved that's a retrieval pathology, not sparse disclosure.
- * @returns {{complete: boolean, ratio: number, due: number}}
+ *     MOST went unresolved that's a retrieval pathology, not sparse disclosure; AND
+ *   - testable >= `minTestable` — a score off 1–2 promises (a thin/failed extraction, e.g. a
+ *     transcript format the parser missed) must not ship as a confident grade.
+ * @returns {{complete: boolean, ratio: number, due: number, thin: boolean}}
  */
-export function runCompleteness({ retrievalErrors, forcedNyt, testable, maxRatio = 0.5 }) {
-  const due = (Number(testable) || 0) + (Number(forcedNyt) || 0);
+export function runCompleteness({ retrievalErrors, forcedNyt, testable, maxRatio = 0.5, minTestable = 3 }) {
+  const t = Number(testable) || 0;
+  const due = t + (Number(forcedNyt) || 0);
   const ratio = due > 0 ? forcedNyt / due : 0;
-  return { complete: (Number(retrievalErrors) || 0) === 0 && ratio <= maxRatio, ratio, due };
+  const thin = t < minTestable;
+  return { complete: (Number(retrievalErrors) || 0) === 0 && ratio <= maxRatio && !thin, ratio, due, thin };
 }
 const LIMIT = Number(process.env.LIMIT || Infinity);
 const DEBUG = !!process.env.DEBUG && process.env.DEBUG !== "0";
@@ -185,11 +194,12 @@ async function main() {
   // retrieval pathology rather than sparse disclosure, so the run is still flagged incomplete.
   const forced_nyt = verified.filter((p) => p.status === "NYT" && isWithinWindow(p.test_date, vw.latest_reported_date, vw.latest_reported)).length;
   const retrieval_errors = (faStats.errors?.length || 0) + (ftStats.errors?.length || 0);
-  const { complete, ratio: forced_nyt_ratio } = runCompleteness({
+  const { complete, ratio: forced_nyt_ratio, thin } = runCompleteness({
     retrievalErrors: retrieval_errors,
     forcedNyt: forced_nyt,
     testable: aggregates.testable,
     maxRatio: FORCED_NYT_MAX_RATIO,
+    minTestable: MIN_TESTABLE,
   });
   const models_used = MOCK
     ? ["mock"]
@@ -231,7 +241,7 @@ async function main() {
   console.log(`  actuals    : llm_calls ${faStats.calls} · cache ${faStats.cache_hits} · no_evidence ${faStats.no_evidence} · errors ${faStats.errors.length}  | fin_trend calls ${ftStats.calls}`);
   const completeNote = provenance.complete
     ? ` · complete${forced_nyt ? ` (${forced_nyt} due awaiting confirmation)` : ""}`
-    : ` · INCOMPLETE (retrieval_errors ${retrieval_errors}, forced_nyt ${forced_nyt}, ratio ${(forced_nyt_ratio * 100).toFixed(0)}%/${(FORCED_NYT_MAX_RATIO * 100).toFixed(0)}%)`;
+    : ` · INCOMPLETE (retrieval_errors ${retrieval_errors}, forced_nyt ${forced_nyt}, ratio ${(forced_nyt_ratio * 100).toFixed(0)}%/${(FORCED_NYT_MAX_RATIO * 100).toFixed(0)}%${thin ? `, thin: ${aggregates.testable} testable < ${MIN_TESTABLE}` : ""})`;
   console.log(`  provenance : ${provenance.mode}${completeNote}  [${provenance.mode === "live" ? "honesty: " + (provenance.complete ? "green/Live" : "amber/Provisional") : provenance.mode === "mock" ? "red/Mock — not a real verdict" : "grey/Curated"}]`);
   console.log(`  headline   : ${cred.headline}`);
   console.log(`  ledger     : ${outPath}`);
