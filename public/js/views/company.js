@@ -189,6 +189,12 @@ export async function renderCompany(app, ticker, { headerHost } = {}) {
       ${placeholdersHTML()}
     </div>`;
   drawIcons();
+  // Refine the document title with the real company name (the router set a ticker-only
+  // placeholder before the ledger loaded) — shareable ?c= URLs get a meaningful title.
+  const co = ledger.company || {};
+  if (co.name || co.ticker) {
+    document.title = `${co.name || String(ticker).toUpperCase()} (${String(co.ticker || ticker).toUpperCase()}) · Lie Detector`;
+  }
   mountCharts(ledger);              // async; each panel renders into its canvas
   mountLedgerDetail(ledger);        // filter bar + cards + table (shared store) + drill
   mountExport(ledger);              // async; wires the Export PDF download (#export)
