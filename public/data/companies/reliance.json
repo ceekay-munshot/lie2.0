@@ -1,0 +1,4795 @@
+{
+  "schema_version": "1.0",
+  "company": {
+    "ticker": "RELIANCE",
+    "name": "RELIANCE",
+    "sector": null,
+    "screener_url": "https://www.screener.in/company/RELIANCE/consolidated/",
+    "fiscal_year_end": "03"
+  },
+  "generated_at": "2026-07-01T09:54:51.778Z",
+  "coverage": {
+    "from": "Q1FY25",
+    "to": "Q4FY26",
+    "as_of": "2026-04-01"
+  },
+  "verification_window": {
+    "latest_reported": "Q4FY26",
+    "latest_reported_date": "2026-04-01",
+    "note": "Outcomes verifiable only through the latest reported period; later targets are NYT."
+  },
+  "documents": [
+    {
+      "id": "q1fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q1FY25",
+      "date": "2024-08-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q1fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q1FY25",
+      "date": "2024-07-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q1fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q1FY26",
+      "date": "2025-07-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q2FY25",
+      "date": "2024-10-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q2FY25",
+      "date": "2024-10-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q2FY26",
+      "date": "2025-10-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q2FY26",
+      "date": "2025-10-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q3FY25",
+      "date": "2025-01-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q3FY25",
+      "date": "2025-01-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q3FY26",
+      "date": "2026-01-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q3FY26",
+      "date": "2026-01-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q4fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q4FY25",
+      "date": "2025-04-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q4fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q4FY25",
+      "date": "2025-04-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q4fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q4FY26",
+      "date": "2026-04-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    }
+  ],
+  "promises": [
+    {
+      "id": "p001",
+      "date": "2024-07-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "capacity",
+      "promise": "Complete remaining 19 CBM wells by year end",
+      "quote": "Limited 2020 balance wells are expected to be put online by the year",
+      "metric": "13 CBM wells online by Dec 2024",
+      "target": {
+        "text": "13 CBM wells online by year end",
+        "value": 13,
+        "value_high": null,
+        "unit": "wells",
+        "period": "by Dec 2024"
+      },
+      "test_date": "2024",
+      "confidence": "H",
+      "actual": {
+        "text": "21 wells connected to the production system by Q4 FY26",
+        "value": 21,
+        "unit": "wells",
+        "source_id": "Q4FY26 · q4fy26-presentation · 2026-04-01",
+        "source_date": "2026-04-01",
+        "what_happened": "21 CBM wells connected to production system by Q4 FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 8,
+        "pct": 61.5,
+        "bps": null,
+        "days": null,
+        "text": "21 vs 13 wells"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p002",
+      "date": "2024-07-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "capacity",
+      "promise": "Incremental 0.5 million standard cubic meters gas per day from new CBM wells",
+      "quote": "we expect to see an incremental 0.5 million standard cubic meters gas per day from these wells",
+      "metric": "CBM incremental gas production 0.5 MMSCMD",
+      "target": {
+        "text": "0.5 MMSCMD incremental gas from new wells",
+        "value": 0.5,
+        "value_high": null,
+        "unit": "MMSCMD",
+        "period": "by Dec 2024"
+      },
+      "test_date": "2024",
+      "confidence": "H",
+      "actual": {
+        "text": "CBM incremental production from new wells reached 0.4 MMSCMD with 40 wells completed, second phase commenced",
+        "value": 0.4,
+        "unit": "MMSCMD",
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-04-01",
+        "what_happened": "40 wells completed contributing 0.4 MMSCMD incremental production; second phase of 40 wells campaign started"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -0.1,
+        "pct": -20,
+        "bps": null,
+        "days": null,
+        "text": "0.4 vs 0.5 MMSCMD"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p003",
+      "date": "2024-07-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "timeline",
+      "promise": "Impact of tariff increase to be seen starting this quarter",
+      "quote": "The impact will only be seen starting this quarter",
+      "metric": "Tariff increase impact starting Q1FY25",
+      "target": {
+        "text": "Impact starting Q1FY25",
+        "value": 1,
+        "value_high": null,
+        "unit": "quarter",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Customer addition resumes after a transient impact from tariff hike",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy25-presentation",
+        "source_date": "2025-01-01",
+        "what_happened": "Tariff hike impact seen as transient; customer additions resumed in Q3 FY25"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "in progress, not yet due"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p004",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capacity",
+      "promise": "55 Compressed Biogas plants operational by 2025",
+      "quote": "Rapidly scaling up investments in bioenergy to reach 55 Compressed Biogas (CBG) plants by 2025",
+      "metric": "55 CBG plants by 2025",
+      "target": {
+        "text": "55 CBG plants by 2025",
+        "value": 55,
+        "value_high": null,
+        "unit": "plants",
+        "period": "2025"
+      },
+      "test_date": "2025",
+      "confidence": "H",
+      "actual": {
+        "text": "10 CBG plants operational ~ 195 TPD production capacity",
+        "value": 10,
+        "unit": "plants",
+        "source_id": "Q4FY25 · q4fy25-presentation",
+        "source_date": "2025-04-01",
+        "what_happened": "10 CBG plants operational by Q4FY25; on track to deliver 55 plants"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -45,
+        "pct": -81.8,
+        "bps": null,
+        "days": null,
+        "text": "10 vs 55 plants"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p005",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capacity",
+      "promise": "Advanced battery manufacturing facility with 30 GWh annual capacity to commence by 2H FY26",
+      "quote": "Advanced battery manufacturing facility with 30 GWh annual capacity to commence by 2H next year",
+      "metric": "Battery manufacturing capacity 30 GWh",
+      "target": {
+        "text": "30 GWh capacity by 2H FY26",
+        "value": 30,
+        "value_high": null,
+        "unit": "GWh",
+        "period": "2H FY26"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Achieved significant construction and engineering progress on-site for 40 GWh manufacturing capacity, production line equipment on track for installation",
+        "value": 40,
+        "unit": "GWh",
+        "source_id": "q2fy26-presentation",
+        "source_date": "2025-10-01",
+        "what_happened": "Construction and engineering progressed for 40 GWh capacity; equipment installation on track"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 10,
+        "pct": 33.3,
+        "bps": null,
+        "days": null,
+        "text": "40 vs 30 GWh"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p006",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capacity",
+      "promise": "Fully automated multi-GW electrolyser facility ready by 2026",
+      "quote": "Building fully-automated, multi-GW electrolyser facility to be ready by 2026",
+      "metric": "Electrolyser facility multi-GW capacity ready by 2026",
+      "target": {
+        "text": "ready by 2026",
+        "value": null,
+        "value_high": null,
+        "unit": "GW",
+        "period": "2026"
+      },
+      "test_date": "2026",
+      "confidence": "H",
+      "actual": {
+        "text": "Multi GW electrolyzer manufacturing, access to 2,000 acres land in Kandla",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-04-01",
+        "what_happened": "Multi GW electrolyzer manufacturing capability established with land access"
+      },
+      "status": "PARTIAL",
+      "variance": {
+        "absolute": -26,
+        "pct": -1.3,
+        "bps": null,
+        "days": null,
+        "text": "2000 vs 2026 GW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p007",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capacity",
+      "promise": "Integrated solar production facilities initial capacity 10 GW",
+      "quote": "initial annual capacity of 10 GW",
+      "metric": "Solar production capacity 10 GW",
+      "target": {
+        "text": "10 GW initial capacity",
+        "value": 10,
+        "value_high": null,
+        "unit": "GW",
+        "period": "initial phase"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Successfully commissioned and operationalized various lines of solar PV module and cell manufacturing; on track to commission fully integrated 10 GWp annual solar manufacturing giga factory",
+        "value": 10,
+        "unit": "GWp",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "10 GWp solar manufacturing capacity commissioned and operationalized; on track to fully commission giga factory"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "10 vs 10 GW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p008",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capacity",
+      "promise": "Scalable solar giga-factory expandable to 20 GW at minimal cost",
+      "quote": "can be expanded to 20 GW at minimal cost",
+      "metric": "Solar production capacity expandable to 20 GW",
+      "target": {
+        "text": "expandable to 20 GW",
+        "value": 20,
+        "value_high": null,
+        "unit": "GW",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "M",
+      "actual": {
+        "text": "On track to commission our fully integrated 10 GWp annual solar manufacturing giga factory with plan to scale to 20 GWp",
+        "value": 10,
+        "unit": "GWp",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "Commissioned 10 GWp factory, planning further scale to 20 GWp"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -10,
+        "pct": -50,
+        "bps": null,
+        "days": null,
+        "text": "10 vs 20 GW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p009",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capacity",
+      "promise": "Integrated solar production facilities with initial 10 GW annual capacity by end 2024",
+      "quote": "Production of solar PV modules to commence by end of this year",
+      "metric": "Solar PV module production start by end 2024",
+      "target": {
+        "text": "by end 2024",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "end 2024"
+      },
+      "test_date": "2024",
+      "confidence": "H",
+      "actual": {
+        "text": "Successfully commissioned solar module manufacturing; solar cell manufacturing commissioned last quarter and ramping up; pilot line for ingot and wafer commissioned; giga factory commissioning in phases during the year",
+        "value": 10,
+        "unit": "GWp annual capacity",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "10 GWp annual solar manufacturing giga factory commissioning underway, solar module and cell lines commissioned and ramping up"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -2014,
+        "pct": -99.5,
+        "bps": null,
+        "days": null,
+        "text": "10 vs 2024"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p010",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capital_allocation",
+      "promise": "Issue bonus shares in ratio 1:1 on 5 September 2024",
+      "quote": "Board to consider and recommend issuance of Bonus shares in the ratio of 1:1 on 5th September 2024",
+      "metric": "Bonus shares 1:1 on 5 Sep 2024",
+      "target": {
+        "text": "Bonus shares 1:1 on 5 Sep 2024",
+        "value": 1,
+        "value_high": null,
+        "unit": "ratio",
+        "period": "5 Sep 2024"
+      },
+      "test_date": "2024",
+      "confidence": "H",
+      "actual": {
+        "text": "Bonus shares issued in ratio 1:1 on 5 September 2024",
+        "value": null,
+        "unit": null,
+        "source_id": "q2fy25-transcript",
+        "source_date": "2024-10-01",
+        "what_happened": "Bonus shares issued as promised on 5 Sep 2024"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "1 vs 1 ratio"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p011",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "other",
+      "promise": "Linking 100 million homes and 20 million SMBs with JioAirfiber",
+      "quote": "Targeting to connect 100 Mn homes and 20 Mn SMBs",
+      "metric": "Connect 100 million homes and 20 million SMBs",
+      "target": {
+        "text": "100 Mn homes and 20 Mn SMBs",
+        "value": 100,
+        "value_high": null,
+        "unit": "million homes",
+        "period": "future"
+      },
+      "test_date": null,
+      "confidence": "M",
+      "actual": {
+        "text": "~9.5 Mn JioAirFiber Homes as of Q2FY26",
+        "value": 9.5,
+        "unit": "million homes",
+        "source_id": "Q2FY26 · q2fy26-presentation",
+        "source_date": "2025-10-01",
+        "what_happened": "~9.5 million JioAirFiber homes connected by Q2FY26"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -90.5,
+        "pct": -90.5,
+        "bps": null,
+        "days": null,
+        "text": "9.5 vs 100 million homes"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p012",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "revenue",
+      "promise": "Jio and Retail to double revenues and EBITDA in 3-4 years",
+      "quote": "Jio and Retail expected to double Revenues and EBITDA in 3-4 years",
+      "metric": "Jio and Retail revenue and EBITDA 2x in 3-4 years",
+      "target": {
+        "text": "double revenues and EBITDA in 3-4 years",
+        "value": 2,
+        "value_high": null,
+        "unit": "x",
+        "period": "3-4 years"
+      },
+      "test_date": null,
+      "confidence": "M",
+      "actual": {
+        "text": "9M FY26 Digital Services EBITDA grew 18.4% YoY; Retail EBITDA grew 9.5% YoY; combined growth not yet doubled",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "9M FY26 shows strong growth but no report of doubling revenues and EBITDA yet"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 16.4,
+        "pct": 820,
+        "bps": null,
+        "days": null,
+        "text": "18.4 vs 2 x"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p013",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "revenue",
+      "promise": "New Energy business to become as big and profitable as O2C in 5-7 years",
+      "quote": "New Energy business has potential to become as big and profitable as O2C in 5-7 years",
+      "metric": "New Energy size = O2C size in 5-7 years",
+      "target": {
+        "text": "as big and profitable as O2C in 5-7 years",
+        "value": 1,
+        "value_high": null,
+        "unit": "x",
+        "period": "5-7 years"
+      },
+      "test_date": null,
+      "confidence": "L",
+      "actual": {
+        "text": "Target to progressively achieve 20 GWp annual Solar PV manufacturing fully integrated across value chain in next few quarters",
+        "value": 20,
+        "unit": "GWp annual Solar PV manufacturing",
+        "source_id": "Q4FY26 · q4fy26-presentation · 2026-04-01",
+        "source_date": "2026-04-01",
+        "what_happened": "Scaling up annual solar PV manufacturing capacity, targeting 20 GWp in next few quarters"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 19,
+        "pct": 1900,
+        "bps": null,
+        "days": null,
+        "text": "20 vs 1 x"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p014",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "timeline",
+      "promise": "RE-RTC power delivery at GW scale commencing 2026",
+      "quote": "This will deliver stable and affordable RE-RTC at GW scale, in a phased manner commencing 2026",
+      "metric": "RE-RTC GW scale power delivery starting 2026",
+      "target": {
+        "text": "commencing 2026",
+        "value": null,
+        "value_high": null,
+        "unit": "GW scale",
+        "period": "2026"
+      },
+      "test_date": "2026",
+      "confidence": "H",
+      "actual": {
+        "text": "RE-RTC power delivery at GW scale is planned to commence in 2026 as per Q2FY26 and Q3FY26 presentations, no update on commissioning yet",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "RE-RTC GW scale power delivery planned to start in 2026, no commissioning reported yet"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": 0,
+        "text": "on time"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p015",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Reach 2.8 million JioAirFiber connections by Sep 2024",
+      "quote": "Jio is the fastest growing fixed wireless operator globally with over 2.8 million JioAirFiber connections as of Sep'24",
+      "metric": "2.8 million JioAirFiber connections by Sep 2024",
+      "target": {
+        "text": "2.8 million connections by Sep 2024",
+        "value": 2800000,
+        "value_high": null,
+        "unit": "connections",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "JioAirFiber subscriber base of 9.5 million as of Sep 2024",
+        "value": 9.5,
+        "unit": "million connections",
+        "source_id": "q2fy26-presentation",
+        "source_date": "2025-10-01",
+        "what_happened": "JioAirFiber reached 9.5 million subscribers by Sep 2024"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -2799990.5,
+        "pct": -100,
+        "bps": null,
+        "days": null,
+        "text": "9.5 vs 2800000 connections"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p016",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "capacity",
+      "promise": "Open 464 new stores with 1.9 million sq ft retail area in quarter",
+      "quote": "We opened 464 stores during the new stores during the quarter, with gross addition of 1.9 million square feet",
+      "metric": "464 new stores, 1.9 million sq ft added",
+      "target": {
+        "text": "464 stores, 1.9 million sq ft",
+        "value": 464,
+        "value_high": null,
+        "unit": "stores and million sq ft",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "333 stores opened during the quarter; total store count at 20,160 with 78.3 Mn sq. ft.",
+        "value": 333,
+        "unit": "stores",
+        "source_id": "Q4FY26 · q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "333 stores opened in quarter; total retail area 78.3 million sq. ft."
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -131,
+        "pct": -28.2,
+        "bps": null,
+        "days": null,
+        "text": "333 vs 464 stores and million sq ft"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p017",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Reach 50 Yousta stores within a year of launch",
+      "quote": "Youth focused fashion format \"Yousta\" scaled to 50 stores within a year of launch",
+      "metric": "50 Yousta stores",
+      "target": {
+        "text": "50 stores within a year of launch",
+        "value": 50,
+        "value_high": null,
+        "unit": "stores",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "H",
+      "actual": {
+        "text": "Yousta reached 100 store milestone",
+        "value": 100,
+        "unit": "stores",
+        "source_id": "q2fy26-presentation",
+        "source_date": "2025-10-01",
+        "what_happened": "Yousta reached 100 stores, surpassing the 50 store target within a year"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 50,
+        "pct": 100,
+        "bps": null,
+        "days": null,
+        "text": "100 vs 50 stores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p018",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "capacity",
+      "promise": "Crossed 650 digital stores",
+      "quote": "crossed the threshold of 650 stores",
+      "metric": "Digital stores 650",
+      "target": {
+        "text": "650 stores",
+        "value": 650,
+        "value_high": null,
+        "unit": "stores",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "crossed 1,000 stores milestone",
+        "value": 1000,
+        "unit": "stores",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Digital stores count crossed 1,000 stores milestone by Q4FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 350,
+        "pct": 53.8,
+        "bps": null,
+        "days": null,
+        "text": "1000 vs 650 stores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p019",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Connect over 1 million homes per month with JioAirFiber",
+      "quote": "Scale up of distribution, optimized onboarding process and technology edge would enable Jio to connect over 1 million homes every month",
+      "metric": "JioAirFiber 1 million homes/month",
+      "target": {
+        "text": "1 million homes per month",
+        "value": 1000000,
+        "value_high": null,
+        "unit": "homes/month",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": {
+        "text": "Jio has successfully scaled the multi-technology architecture for fixed broadband to 1 million new home connects every month during the quarter",
+        "value": 1000000,
+        "unit": "homes per month",
+        "source_id": "q2fy26-presentation",
+        "source_date": "2025-10-01",
+        "what_happened": "Achieved 1 million new home connects per month during the quarter"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "1000000 vs 1000000 homes/month"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p020",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "capacity",
+      "promise": "Yousta format scaled up to 50 stores",
+      "quote": "format, and we have now scaled it up to 50 stores, and",
+      "metric": "Yousta stores 50",
+      "target": {
+        "text": "50 stores",
+        "value": 50,
+        "value_high": null,
+        "unit": "stores",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Yousta registered 59% YoY growth with 170+ stores as of Q1FY26",
+        "value": 170,
+        "unit": "stores",
+        "source_id": "q1fy26-presentation",
+        "source_date": "2025-07-01",
+        "what_happened": "Yousta scaled to 170+ stores by Q1FY26, exceeding the 50 stores target set in Q2FY25"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 120,
+        "pct": 240,
+        "bps": null,
+        "days": null,
+        "text": "170 vs 50 stores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p021",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capex",
+      "promise": "FY25 capex of ₹34,022 crore (US$4.0 bn)",
+      "quote": "Capex of ₹ 34,022 crore (US$ 4.0 bn), continue to be covered by cash profits",
+      "metric": "FY25 capex ₹34,022 crore (US$4.0 bn)",
+      "target": {
+        "text": "₹34,022 crore (US$4.0 bn) in FY25",
+        "value": 34022,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Capex of ₹ 32,259 crore (US$ 3.8 bn)",
+        "value": 32259,
+        "unit": "₹ crore",
+        "source_id": "q3fy25-presentation",
+        "source_date": "2025-01-01",
+        "what_happened": "Reported capex of ₹32,259 crore in Q3FY25, below the promised ₹34,022 crore for FY25"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -1763,
+        "pct": -5.2,
+        "bps": null,
+        "days": null,
+        "text": "32259 vs 34022 INR_cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": true
+    },
+    {
+      "id": "p022",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "cost",
+      "promise": "Ethane prices down 47% YoY",
+      "quote": "ethane prices declined by 47%",
+      "metric": "Ethane prices -47% YoY",
+      "target": {
+        "text": "-47% YoY",
+        "value": -47,
+        "value_high": null,
+        "unit": "%",
+        "period": "YoY"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "US Ethane price averaged at 23.1 cpg, up 47% YoY",
+        "value": 47,
+        "unit": "% YoY",
+        "source_id": "q2fy26-presentation",
+        "source_date": "2025-10-01",
+        "what_happened": "Ethane prices increased 47% YoY in Q2 FY26, contrary to the promised 47% decrease."
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": 94,
+        "pct": 200,
+        "bps": null,
+        "days": null,
+        "text": "47 vs -47 %"
+      },
+      "mgmt_explanation": "Increased US natural gas prices led to higher ethane prices despite subdued downstream demand.",
+      "root_cause": "Demand slowdown",
+      "was_revised": false
+    },
+    {
+      "id": "p023",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "ebitda",
+      "promise": "RJIL EBITDA to grow close to 18% YoY",
+      "quote": "EBITDA also grew close to 18% to Rs. 15,931 crores",
+      "metric": "RJIL EBITDA growth ~18% YoY",
+      "target": {
+        "text": "~18% YoY growth",
+        "value": 18,
+        "value_high": null,
+        "unit": "%",
+        "period": "YoY"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "RJIL EBITDA growth of 16.0% YoY led by higher revenues and 230 bps margin expansion to 56.2%",
+        "value": 16,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "RJIL EBITDA grew 16.0% YoY in Q4FY26, below the ~18% target"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -2,
+        "pct": -11.1,
+        "bps": null,
+        "days": null,
+        "text": "16 vs 18 %"
+      },
+      "mgmt_explanation": "Growth led by higher revenues and margin expansion; no explicit shortfall explanation",
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p024",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "margin",
+      "promise": "Oil & Gas EBITDA margin to be 85%",
+      "quote": "EBITDA margin up 70 basis points quarter on quarter, and almost 1,300 basis points year-on-year, mainly driven by steady production from KGD6",
+      "metric": "Oil & Gas EBITDA margin 85%",
+      "target": {
+        "text": "85% EBITDA margin",
+        "value": 85,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "EBITDA Margin 71.5% in Q4 FY26",
+        "value": 71.5,
+        "unit": "%",
+        "source_id": "Q4FY26 · q4fy26-presentation · 2026-04-01",
+        "source_date": "2026-04-01",
+        "what_happened": "EBITDA margin reported at 71.5% in Q4 FY26, below the 85% target"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -13.5,
+        "pct": -15.9,
+        "bps": -1350,
+        "days": null,
+        "text": "71.5 vs 85 %"
+      },
+      "mgmt_explanation": "Lower margin due to declining volumes, lower price realization, higher operating cost and government levies",
+      "root_cause": "Demand slowdown",
+      "was_revised": false
+    },
+    {
+      "id": "p025",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "margin",
+      "promise": "Retail EBITDA margin to improve by 40 basis points",
+      "quote": "EBITDA margin was up at 30 basis points to 8.8%",
+      "metric": "Retail EBITDA margin 8.8%",
+      "target": {
+        "text": "8.8% EBITDA margin",
+        "value": 8.8,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "FY26 EBITDA margin at 8.3%",
+        "value": 8.3,
+        "unit": "%",
+        "source_id": "Q4FY26 · q4fy26-presentation · 2026-04-01",
+        "source_date": "2026-04-01",
+        "what_happened": "Retail EBITDA margin reported at 8.3% for FY26"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -0.5,
+        "pct": -5.7,
+        "bps": -50,
+        "days": null,
+        "text": "8.3 vs 8.8 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p026",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "margin",
+      "promise": "RJIL EBITDA margin to be 53.7%",
+      "quote": "EBITDA margin of 53.7%",
+      "metric": "RJIL EBITDA margin 53.7%",
+      "target": {
+        "text": "53.7% EBITDA margin",
+        "value": 53.7,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "RJIL EBITDA margin 56.2% in Q3FY26 and Q4FY26",
+        "value": 56.2,
+        "unit": "%",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "EBITDA margin expanded to 56.2% by Q3FY26 and sustained in Q4FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 2.5,
+        "pct": 4.7,
+        "bps": 250,
+        "days": null,
+        "text": "56.2 vs 53.7 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p027",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "pat",
+      "promise": "JPL PAT to grow 23% YoY",
+      "quote": "Profit After Tax increased to Rs. 6,536 crores. That was a healthy 23% year-on-year increase",
+      "metric": "JPL PAT growth 23% YoY",
+      "target": {
+        "text": "23% YoY growth",
+        "value": 23,
+        "value_high": null,
+        "unit": "%",
+        "period": "YoY"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "JPL PAT crossed ₹30,000 crore, up 15.1%",
+        "value": 15.1,
+        "unit": "%",
+        "source_id": "Q4FY26 · q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "JPL PAT grew 15.1% YoY, below the promised 23% growth"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -7.9,
+        "pct": -34.3,
+        "bps": null,
+        "days": null,
+        "text": "15.1 vs 23 %"
+      },
+      "mgmt_explanation": "No explicit explanation for shortfall provided in the document",
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p028",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "revenue",
+      "promise": "RJIL operating revenue to grow 14.5% YoY",
+      "quote": "RJIL operating revenue grew 14.5% year on year",
+      "metric": "RJIL operating revenue growth 14.5% YoY",
+      "target": {
+        "text": "14.5% YoY growth",
+        "value": 14.5,
+        "value_high": null,
+        "unit": "%",
+        "period": "YoY"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "RJIL operating revenue growth of 11.2% YoY",
+        "value": 11.2,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "RJIL operating revenue grew 11.2% YoY in Q4FY26"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -3.3,
+        "pct": -22.8,
+        "bps": null,
+        "days": null,
+        "text": "11.2 vs 14.5 %"
+      },
+      "mgmt_explanation": "null",
+      "root_cause": "Demand slowdown",
+      "was_revised": false
+    },
+    {
+      "id": "p029",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "volume",
+      "promise": "Add about 1.8 to 2 million transacting customers every quarter on Ajio B2C",
+      "quote": "been adding about upto 1.8 to 2 million transacting customers every quarter in this business",
+      "metric": "Ajio B2C transacting customers 1.8-2 million per quarter",
+      "target": {
+        "text": "1.8-2 million transacting customers per quarter",
+        "value": 1.8,
+        "value_high": 2,
+        "unit": "million customers",
+        "period": "quarter"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "added 1.9 Mn new customers during quarter",
+        "value": 1.9,
+        "unit": "million customers",
+        "source_id": "Q4FY25 · q4fy25-presentation · 2025-04-01",
+        "source_date": "2025-04-01",
+        "what_happened": "Ajio B2C added 1.9 million new transacting customers in the quarter"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0.1,
+        "pct": 5.6,
+        "bps": null,
+        "days": null,
+        "text": "1.9 vs 1.8-2 million customers"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p030",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "volume",
+      "promise": "Increase CBM production by 24% YoY",
+      "quote": "CBM, which was up about 24%",
+      "metric": "CBM production growth 24% YoY",
+      "target": {
+        "text": "24% YoY growth",
+        "value": 24,
+        "value_high": null,
+        "unit": "%",
+        "period": "YoY"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "CBM production 2.91 BCFe, 7.4% YoY growth in Q4 FY26",
+        "value": 7.4,
+        "unit": "% YoY growth",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "CBM production increased 7.4% YoY in Q4 FY26, below the promised 24% growth"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -16.6,
+        "pct": -69.2,
+        "bps": null,
+        "days": null,
+        "text": "7.4 vs 24 %"
+      },
+      "mgmt_explanation": "Lower YoY EBITDA due to lower margin and weak price realization for CBM",
+      "root_cause": "Pricing / mix",
+      "was_revised": false
+    },
+    {
+      "id": "p031",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "volume",
+      "promise": "Increase fuel retailing volumes by 28% YoY",
+      "quote": "fuel retailing volumes up 28% on a year-on-year basis",
+      "metric": "Fuel retailing volumes growth 28% YoY",
+      "target": {
+        "text": "28% YoY growth",
+        "value": 28,
+        "value_high": null,
+        "unit": "%",
+        "period": "YoY"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Strong domestic product placement resulting in 35% increase in retail gasoline volumes and 24% increase in retail diesel volumes in 4Q FY25",
+        "value": 35,
+        "unit": "%",
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-04-01",
+        "what_happened": "Retail fuel volumes increased 24-35% YoY in 4Q FY25, exceeding 28% target for the quarter"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 7,
+        "pct": 25,
+        "bps": null,
+        "days": null,
+        "text": "35 vs 28 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p032",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "volume",
+      "promise": "Grow general trade revenues 250% YoY",
+      "quote": "general trade revenues are growing at 250% plus on Y-o-Y basis",
+      "metric": "General trade revenues growth 250% YoY",
+      "target": {
+        "text": "250% YoY growth",
+        "value": 250,
+        "value_high": null,
+        "unit": "%",
+        "period": "YoY"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "General trade contributed 60%+ of sales / 3.5x YoY growth",
+        "value": 350,
+        "unit": "% YoY growth",
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-04-01",
+        "what_happened": "General trade revenues grew 3.5x YoY by Q4FY25"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 100,
+        "pct": 40,
+        "bps": null,
+        "days": null,
+        "text": "350 vs 250 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p033",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "volume",
+      "promise": "Add nearly 1 million Jio AirFiber homes per month",
+      "quote": "target now, the next target that we have is to add nearly 1 million homes every given month",
+      "metric": "Jio AirFiber homes added ~1 million per month",
+      "target": {
+        "text": "~1 million homes per month",
+        "value": 1000000,
+        "value_high": null,
+        "unit": "homes",
+        "period": "monthly"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Jio has successfully scaled the multi-technology architecture for fixed broadband to 1 million new home connects every month during the quarter",
+        "value": 1000000,
+        "unit": "homes per month",
+        "source_id": "q2fy26-presentation",
+        "source_date": "2025-10-01",
+        "what_happened": "Achieved ~1 million new home connects per month in fixed broadband during the quarter"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "1000000 vs 1000000 homes"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p034",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "volume",
+      "promise": "Increase KGD6 production by 1.5% YoY",
+      "quote": "KGD6 up 1.5% on a YoY basis",
+      "metric": "KGD6 production growth 1.5% YoY",
+      "target": {
+        "text": "1.5% YoY growth",
+        "value": 1.5,
+        "value_high": null,
+        "unit": "%",
+        "period": "YoY"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "KGD6 production declined 6.4% YoY in Q4 FY26",
+        "value": -6.4,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "KGD6 production fell 6.4% YoY by Q4 FY26, missing the 1.5% growth target"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -7.9,
+        "pct": -526.7,
+        "bps": null,
+        "days": null,
+        "text": "-6.4 vs 1.5 %"
+      },
+      "mgmt_explanation": "Natural decline in KGD6 volume and weak price realization",
+      "root_cause": "Demand slowdown",
+      "was_revised": false
+    },
+    {
+      "id": "p035",
+      "date": "2024-10-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "volume",
+      "promise": "Scale on-demand services to 150 cities",
+      "quote": "scaled the on-demand services to 150 cities now",
+      "metric": "On-demand services in 150 cities",
+      "target": {
+        "text": "150 cities",
+        "value": 150,
+        "value_high": null,
+        "unit": "cities",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Expanded on-demand services to 75 additional cities, total coverage across 225 cities",
+        "value": 225,
+        "unit": "cities",
+        "source_id": "q3fy25-presentation",
+        "source_date": "2025-01-01",
+        "what_happened": "On-demand services expanded to 225 cities by Q3FY25"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 75,
+        "pct": 50,
+        "bps": null,
+        "days": null,
+        "text": "225 vs 150 cities"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p036",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "capacity",
+      "promise": "Add 3 VLEC ships to virtual ethane pipeline",
+      "quote": "we are adding three more VLECs",
+      "metric": "Add 3 VLEC ships",
+      "target": {
+        "text": "3 VLEC ships",
+        "value": 3,
+        "value_high": null,
+        "unit": "ships",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p037",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-presentation",
+      "source_label": "Q3FY25 presentation",
+      "category": "capacity",
+      "promise": "Connect 100 million homes with JioAirFiber broadband",
+      "quote": "Large greenfield opportunity will enable Jio to connect 100 million homes",
+      "metric": "JioAirFiber homes connected 100 million",
+      "target": {
+        "text": "100 million homes connected",
+        "value": 100,
+        "value_high": null,
+        "unit": "million homes",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "L",
+      "actual": {
+        "text": "11.5 Mn JioAirFiber Homes",
+        "value": 11.5,
+        "unit": "million homes",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "JioAirFiber homes connected reached 11.5 million as of Q3FY26"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -88.5,
+        "pct": -88.5,
+        "bps": null,
+        "days": null,
+        "text": "11.5 vs 100 million homes"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p038",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-presentation",
+      "source_label": "Q3FY25 presentation",
+      "category": "capacity",
+      "promise": "Add 1 MMTPA specialty Polyester capacity and 3 MMTPA PTA capacity",
+      "quote": "Adding 1 MMTPA specialty Polyester capacity, 3 MMTPA PTA capacity",
+      "metric": "Polyester capacity +1 MMTPA, PTA capacity +3 MMTPA",
+      "target": {
+        "text": "1 MMTPA specialty Polyester and 3 MMTPA PTA capacity",
+        "value": 1,
+        "value_high": null,
+        "unit": "MMTPA",
+        "period": "near term"
+      },
+      "test_date": "near term",
+      "confidence": "M",
+      "actual": {
+        "text": "RIL’s specialty polyester and PVC projects aimed at deficit India market; to start contributing from FY28",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-04-01",
+        "what_happened": "Specialty polyester and PTA capacity projects not yet commissioned; expected contribution from FY28"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Specialty polyester and PTA capacity projects not yet commis"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p039",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "capacity",
+      "promise": "Commission 1.5 million tons PVC and CPVC facility at Dahej and Nagothane",
+      "quote": "1.5 million tons PVC and CPVC facility at Dahej and Nagothane",
+      "metric": "PVC and CPVC capacity 1.5 million tons",
+      "target": {
+        "text": "1.5 million tons PVC and CPVC",
+        "value": 1.5,
+        "value_high": null,
+        "unit": "million tons",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": {
+        "text": "Integrated 1.5 MMTPA PVC project commissioned at Dahej and Nagothane",
+        "value": 1.5,
+        "unit": "million tons",
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-04-01",
+        "what_happened": "1.5 million tons PVC and CPVC capacity commissioned as planned"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "1.5 vs 1.5 million tons"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p040",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-presentation",
+      "source_label": "Q3FY25 presentation",
+      "category": "capacity",
+      "promise": "Add 1.5 MMTPA PVC and CPVC integrated facilities at Dahej and Nagothane",
+      "quote": "Integrated 1.5 MMTPA PVC and CPVC facilities at Dahej and Nagothane",
+      "metric": "PVC and CPVC capacity 1.5 MMTPA",
+      "target": {
+        "text": "1.5 MMTPA PVC and CPVC capacity",
+        "value": 1.5,
+        "value_high": null,
+        "unit": "MMTPA",
+        "period": "near term"
+      },
+      "test_date": "near term",
+      "confidence": "M",
+      "actual": {
+        "text": "Commissioning of plants for the entire value chain in phases by 2026",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-04-01",
+        "what_happened": "Commissioning planned in phases by 2026"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 2024.5,
+        "pct": 134966.7,
+        "bps": null,
+        "days": null,
+        "text": "2026 vs 1.5 MMTPA"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p041",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-presentation",
+      "source_label": "Q3FY25 presentation",
+      "category": "capacity",
+      "promise": "RIL to be in top 10 global PVC producers from current 22nd position",
+      "quote": "RIL to be in top 10 producers globally (22nd currently)",
+      "metric": "PVC global ranking top 10",
+      "target": {
+        "text": "Top 10 global PVC producer",
+        "value": 10,
+        "value_high": null,
+        "unit": "rank",
+        "period": "near term"
+      },
+      "test_date": "near term",
+      "confidence": "M",
+      "actual": {
+        "text": "RIL currently ranks 22nd globally in PVC production; no update on achieving top 10 rank yet",
+        "value": 22,
+        "unit": "ranking",
+        "source_id": "q3fy26-transcript",
+        "source_date": "2026-01-01",
+        "what_happened": "PVC global ranking remains at 22nd position as of Q3FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 12,
+        "pct": 120,
+        "bps": null,
+        "days": null,
+        "text": "22 vs 10 rank"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p042",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "capacity",
+      "promise": "Commission 1 million tons specialty polyester capacity with 3 million tons PTA",
+      "quote": "million tons of specialty polyester capacity, and matched 3 million tons of PTA",
+      "metric": "Specialty polyester 1 million tons, PTA 3 million tons",
+      "target": {
+        "text": "1 million tons specialty polyester, 3 million tons PTA",
+        "value": 1,
+        "value_high": null,
+        "unit": "million tons",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": {
+        "text": "Plant layouts finalized; comprehensive evaluation of product and technical design concluded; next steps placing orders for equipment",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-04-01",
+        "what_happened": "Specialty polyester and PTA project in design and planning phase; no commissioning yet"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Specialty polyester and PTA project in design and planning p"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p043",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-presentation",
+      "source_label": "Q3FY25 presentation",
+      "category": "capacity",
+      "promise": "Expand virtual ethane pipeline from North America by ~50%",
+      "quote": "Expanding virtual ethane pipeline from North America by ~50%",
+      "metric": "Virtual ethane pipeline +50%",
+      "target": {
+        "text": "~50% expansion of virtual ethane pipeline",
+        "value": 1.5,
+        "value_high": null,
+        "unit": "x",
+        "period": "near term"
+      },
+      "test_date": "near term",
+      "confidence": "M",
+      "actual": {
+        "text": "Virtual Ethane pipeline from USA, planned induct",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Virtual ethane pipeline from USA planned for induction, no completion or expansion figure reported"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Virtual ethane pipeline from USA planned for induction, no c"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p044",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "ebitda",
+      "promise": "Consolidated EBITDA margin at 50.1%",
+      "quote": "the consol. EBITDA margin at 50.1%",
+      "metric": "EBITDA margin 50.1%",
+      "target": {
+        "text": "50.1% margin",
+        "value": 50.1,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "FY26 EBITDA margin at ~52%",
+        "value": 52,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "FY26 consolidated EBITDA margin reported at ~52%, above 50.1% target"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 1.9,
+        "pct": 3.8,
+        "bps": null,
+        "days": null,
+        "text": "52 vs 50.1 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p045",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "ebitda",
+      "promise": "Jio connectivity EBITDA of Rs 15,798 crore",
+      "quote": "EBITDA growing a little bit faster coming to 15,798 crores",
+      "metric": "EBITDA Rs 15,798 crore",
+      "target": {
+        "text": "Rs 15,798 crore",
+        "value": 15798,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "FY26 EBITDA increased to ₹76,255 crore; 18.8% YoY growth",
+        "value": 76255,
+        "unit": "crore",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "FY26 EBITDA reported at ₹76,255 crore, exceeding the Rs 15,798 crore target"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 60457,
+        "pct": 382.7,
+        "bps": null,
+        "days": null,
+        "text": "76255 vs 15798 INR_cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p046",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "margin",
+      "promise": "Jio connectivity EBITDA margin at 53.9%",
+      "quote": "EBITDA margin at 53.9%",
+      "metric": "EBITDA margin 53.9%",
+      "target": {
+        "text": "53.9% margin",
+        "value": 53.9,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "~52% Q3 FY26 EBITDA Margin",
+        "value": 52,
+        "unit": "%",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "EBITDA margin reported around 52% in Q3 FY26, below the promised 53.9%."
+      },
+      "status": "PARTIAL",
+      "variance": {
+        "absolute": -1.9,
+        "pct": -3.5,
+        "bps": -190,
+        "days": null,
+        "text": "52 vs 53.9 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p047",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "margin",
+      "promise": "Reliance Retail margin expansion to 8.6%",
+      "quote": "margin continues to expand at 8.6%",
+      "metric": "Margin 8.6%",
+      "target": {
+        "text": "8.6% margin",
+        "value": 8.6,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "EBITDA margin at 8.3% for FY26; Q4 FY26 EBITDA margin at 7.9%",
+        "value": 8.3,
+        "unit": "%",
+        "source_id": "Q4FY26 · q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "FY26 EBITDA margin reported at 8.3%, Q4 FY26 margin at 7.9%"
+      },
+      "status": "PARTIAL",
+      "variance": {
+        "absolute": -0.3,
+        "pct": -3.5,
+        "bps": -30,
+        "days": null,
+        "text": "8.3 vs 8.6 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p048",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "pat",
+      "promise": "Profit after tax growth of 26% year on year",
+      "quote": "Profit After Tax at 6,857 crore that was a healthy 26% year on year growth",
+      "metric": "PAT growth 26% YoY",
+      "target": {
+        "text": "26% year on year",
+        "value": 26,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "18% YoY PAT growth; RIL Group PAT at ₹95,754 crore, up 17.8%",
+        "value": 17.8,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "PAT grew 17.8% YoY in FY26, below the promised 26% growth"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -8.2,
+        "pct": -31.5,
+        "bps": null,
+        "days": null,
+        "text": "17.8 vs 26 %"
+      },
+      "mgmt_explanation": "Robust performance despite disruptions like tariff, AI, and conflict",
+      "root_cause": "Other",
+      "was_revised": false
+    },
+    {
+      "id": "p049",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "pat",
+      "promise": "Reliance Retail profit after tax of Rs 3,500 crore in Q3FY25",
+      "quote": "profit after tax of Rs 3500 crores",
+      "metric": "PAT Rs 3,500 crore",
+      "target": {
+        "text": "Rs 3,500 crore",
+        "value": 3500,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "RRVL PAT nearly ₹14,000 crore, up 11.7% in FY26",
+        "value": 14000,
+        "unit": "crore INR",
+        "source_id": "Q4FY26 · q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Reliance Retail PAT reported nearly ₹14,000 crore in FY26, showing 11.7% growth"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 10500,
+        "pct": 300,
+        "bps": null,
+        "days": null,
+        "text": "14000 vs 3500 INR_cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p050",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "revenue",
+      "promise": "Digital revenues to grow at 60% year on year",
+      "quote": "digital revenues which grew at 60% year on year",
+      "metric": "Digital revenues growth 60% YoY",
+      "target": {
+        "text": "60% year on year",
+        "value": 60,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Digital: Robust 18% YoY growth driven by subscriber additions, improved 5G and fixed broadband mix, and higher customer engagement",
+        "value": 18,
+        "unit": "%",
+        "source_id": "Q4FY26 · q4fy26-presentation · 2026-04-01",
+        "source_date": "2026-04-01",
+        "what_happened": "Digital revenue grew 18% YoY in FY26, below the 60% target"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -42,
+        "pct": -70,
+        "bps": null,
+        "days": null,
+        "text": "18 vs 60 %"
+      },
+      "mgmt_explanation": "Growth driven by subscriber additions and improved mix; no explicit shortfall explanation",
+      "root_cause": "Other",
+      "was_revised": false
+    },
+    {
+      "id": "p051",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "revenue",
+      "promise": "Jio connectivity operating revenues of Rs 29,307 crore",
+      "quote": "operating revenues grew to 29,307 crores",
+      "metric": "Operating revenues Rs 29,307 crore",
+      "target": {
+        "text": "Rs 29,307 crore",
+        "value": 29307,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "₹146,885 Cr FY26 Revenue",
+        "value": 146885,
+        "unit": "Crore INR",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Reported FY26 revenue for Jio connectivity at ₹146,885 crore, showing strong double-digit growth."
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 117578,
+        "pct": 401.2,
+        "bps": null,
+        "days": null,
+        "text": "146885 vs 29307 INR_cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p052",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "revenue",
+      "promise": "Reliance Retail revenue of Rs 90,000 crore in Q3FY25",
+      "quote": "we had a very strong performance with Rs 90,000 crores of revenue during the quarter",
+      "metric": "Revenue Rs 90,000 crore",
+      "target": {
+        "text": "Rs 90,000 crore",
+        "value": 90000,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Reliance Retail revenue of Rs 1,10,000 crore in Q3FY26",
+        "value": 110000,
+        "unit": "crore INR",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "Reliance Retail revenue reported at Rs 1,10,000 crore in Q3FY26, exceeding Rs 90,000 crore target for Q3FY25"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 20000,
+        "pct": 22.2,
+        "bps": null,
+        "days": null,
+        "text": "110000 vs 90000 INR_cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p053",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "volume",
+      "promise": "Add 2 million new home connections in Q3FY25",
+      "quote": "added almost 2 million new connections during the quarter",
+      "metric": "2 million home connections added",
+      "target": {
+        "text": "2 million connections",
+        "value": 2,
+        "value_high": null,
+        "unit": "million",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "2.5mn net adds in Q3FY26 fixed broadband connects",
+        "value": 2.5,
+        "unit": "million connections",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "2.5 million new home connections added in Q3FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0.5,
+        "pct": 25,
+        "bps": null,
+        "days": null,
+        "text": "2.5 vs 2 million"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p054",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "volume",
+      "promise": "Add 3.3 million subscribers in Q3FY25",
+      "quote": "3.3 million subscribers getting added in this quarter",
+      "metric": "3.3 million subscribers added",
+      "target": {
+        "text": "3.3 million subscribers",
+        "value": 3.3,
+        "value_high": null,
+        "unit": "million",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "8.9 Mn net additions in Q3FY26",
+        "value": 8.9,
+        "unit": "million subscribers",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "Reported 8.9 million net subscriber additions in Q3FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 5.6,
+        "pct": 169.7,
+        "bps": null,
+        "days": null,
+        "text": "8.9 vs 3.3 million"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p055",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "volume",
+      "promise": "Reach 4.5 million Jio AirFiber homes connected",
+      "quote": "2s. We already are at 4.5 million Jio AirFiber homes",
+      "metric": "4.5 million Jio AirFiber homes connected",
+      "target": {
+        "text": "4.5 million homes",
+        "value": 4.5,
+        "value_high": null,
+        "unit": "million",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "AirFiber subscribers crossed 5.6 million as of March 2025",
+        "value": 5.6,
+        "unit": "million homes",
+        "source_id": "Q4FY25 · q4fy25-presentation · 2025-04-01",
+        "source_date": "2025-04-01",
+        "what_happened": "AirFiber subscribers reached 5.6 million by March 2025, surpassing the 4.5 million target"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 1.1,
+        "pct": 24.4,
+        "bps": null,
+        "days": null,
+        "text": "5.6 vs 4.5 million"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p056",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "capacity",
+      "promise": "Commission 1 million tonne polyester expansion and 3 million tonne PTA facility by 2027-2028",
+      "quote": "is and then it is integrated with backward integration with three million tonne PTA facility that is",
+      "metric": "1 million tonne polyester and 3 million tonne PTA by 2027-2028",
+      "target": {
+        "text": "1 million tonne polyester and 3 million tonne PTA by 2027-2028",
+        "value": 1,
+        "value_high": null,
+        "unit": "million tonnes",
+        "period": "2027-2028"
+      },
+      "test_date": "2027",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p057",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "capacity",
+      "promise": "Commission 10 GW solar module manufacturing line by end FY26/early FY27",
+      "quote": "by end of 2025, early 2026, all these factories will get commissioned",
+      "metric": "10 GW solar module manufacturing line by FY26",
+      "target": {
+        "text": "10 GW solar module manufacturing line by FY26",
+        "value": 10,
+        "value_high": null,
+        "unit": "GW",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p058",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capacity",
+      "promise": "Connect 100 million homes with JioHome",
+      "quote": "On Track To Connect 100 Mn Homes",
+      "metric": "100 million homes connected",
+      "target": {
+        "text": "100 million homes connected",
+        "value": 100,
+        "value_high": null,
+        "unit": "million homes",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": {
+        "text": "20 Mn+ Home Connects (2.6mn net adds) in Q1FY26; 25 Mn+ Fixed Broadband Connects (2.5mn net adds) in Q3FY26",
+        "value": 25,
+        "unit": "million homes connected",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "Reached 25 million homes connected by Q3FY26, with steady net additions each quarter"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -75,
+        "pct": -75,
+        "bps": null,
+        "days": null,
+        "text": "25 vs 100 million homes"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p059",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "capacity",
+      "promise": "Open 2,659 new retail stores in the year with net addition of about 500 stores",
+      "quote": "options on the platform. We opened 2,659 stores during the year. We",
+      "metric": "2,659 new stores opened, net +500 stores",
+      "target": {
+        "text": "2,659 new stores opened, net +500 stores",
+        "value": 2659,
+        "value_high": null,
+        "unit": "stores",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "333 stores opened during the quarter; total store count at 20,160",
+        "value": 333,
+        "unit": "stores",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "333 new stores opened in Q4FY26; total store count reached 20,160"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -2326,
+        "pct": -87.5,
+        "bps": null,
+        "days": null,
+        "text": "333 vs 2659 stores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p060",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "capacity",
+      "promise": "Start battery manufacturing ramp-up in 2026",
+      "quote": "in 2026, you will start seeing, starting with packs and then going to the cells",
+      "metric": "Battery manufacturing ramp-up in 2026",
+      "target": {
+        "text": "Battery manufacturing ramp-up in 2026",
+        "value": 2026,
+        "value_high": null,
+        "unit": "year",
+        "period": "2026"
+      },
+      "test_date": "2026",
+      "confidence": "H",
+      "actual": {
+        "text": "Achieved significant construction and engineering progress on-site for 40 GWh manufacturing capacity, and production line equipment on track for installation on foundation",
+        "value": 40,
+        "unit": "GWh",
+        "source_id": "q2fy26-presentation",
+        "source_date": "2025-10-01",
+        "what_happened": "Battery manufacturing ramp-up progressing with 40 GWh capacity construction and equipment installation on track"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -1986,
+        "pct": -98,
+        "bps": null,
+        "days": null,
+        "text": "40 vs 2026 year"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p061",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "capacity",
+      "promise": "Expand Jio-BP retail outlets beyond current 1,900+ locations",
+      "quote": "this kind of performance also means that it makes sense for us to invest and we will expand that network",
+      "metric": "Expand Jio-BP retail outlets",
+      "target": {
+        "text": "Expand Jio-BP retail outlets",
+        "value": null,
+        "value_high": null,
+        "unit": "outlets",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": {
+        "text": "2,199 Retail Outlets",
+        "value": 2199,
+        "unit": "Retail Outlets",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Network expanded to 2,199 retail outlets as of Q4FY26"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no numeric target"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p062",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capacity",
+      "promise": "Target 3 MMTPA PTA facility by 2026-27",
+      "quote": "Backward integration with 3MMTPA PTA facility planned",
+      "metric": "PTA capacity 3 MMTPA by 2026-27",
+      "target": {
+        "text": "3 MMTPA PTA by 2026-27",
+        "value": 3,
+        "value_high": null,
+        "unit": "MMTPA",
+        "period": "2026-27"
+      },
+      "test_date": "2026",
+      "confidence": "H",
+      "actual": {
+        "text": "3 MMTPA PTA capacity targeted by 2026-27",
+        "value": 3,
+        "unit": "MMTPA",
+        "source_id": "q3fy26-transcript",
+        "source_date": "2026-01-01",
+        "what_happened": "Target remains 3 MMTPA PTA capacity by 2026-27 as stated in Q3FY26 transcript"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "3 vs 3 MMTPA"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p063",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "capacity",
+      "promise": "Scale up compressed biogas plants from 10 to 55 operational plants",
+      "quote": "we want to scale it up quickly to 55",
+      "metric": "Scale up CBG plants to 55",
+      "target": {
+        "text": "Scale up CBG plants to 55",
+        "value": 55,
+        "value_high": null,
+        "unit": "plants",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "H",
+      "actual": {
+        "text": "No specific figure for operational compressed biogas plants reported in Q1FY26, Q2FY26, Q3FY26, or Q4FY26 documents",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": null
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -54,
+        "pct": -98.2,
+        "bps": null,
+        "days": null,
+        "text": "1 vs 55 plants"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p064",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capacity",
+      "promise": "Commissioning of Vinyl Chain plants in phases by 2026-27",
+      "quote": "Commissioning of plants for the entire value chain in phases by 2026-27",
+      "metric": "Vinyl Chain plants commissioned by 2026-27",
+      "target": {
+        "text": "Commissioning by 2026-27",
+        "value": null,
+        "value_high": null,
+        "unit": "plants",
+        "period": "2026-27"
+      },
+      "test_date": "2026",
+      "confidence": "H",
+      "actual": {
+        "text": "Successfully commissioned and operationalized various lines of solar PV module and cell manufacturing; progressing to 20 GWp annual Solar PV manufacturing in next few quarters",
+        "value": null,
+        "unit": null,
+        "source_id": "Q4FY26 · q4fy26-presentation · 2026-04-01",
+        "source_date": "2026-04-01",
+        "what_happened": "Vinyl Chain plants commissioning progressing with various lines commissioned; target 20 GWp annual capacity in next few quarters"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -2006,
+        "pct": -99,
+        "bps": null,
+        "days": null,
+        "text": "20 vs 2026-27 plants"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p065",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "capex",
+      "promise": "Spend ₹75,000 crore on O2C and new energy projects",
+      "quote": "₹ 75,000 crore we will spend when AGM speech this covered O2C projects",
+      "metric": "₹75,000 crore capex",
+      "target": {
+        "text": "₹75,000 crore capex",
+        "value": 75000,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "H",
+      "actual": {
+        "text": "Capex of Rs 29,875 crore in Q1 FY26",
+        "value": 29875,
+        "unit": "crore INR",
+        "source_id": "q1fy26-presentation",
+        "source_date": "2025-07-01",
+        "what_happened": "Reported ₹29,875 crore capex in Q1 FY26; ongoing commissioning of New Energy projects"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -45125,
+        "pct": -60.2,
+        "bps": null,
+        "days": null,
+        "text": "29875 vs 75000 INR_cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p066",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "capex",
+      "promise": "Complete major 5G network capex phase, with smaller routine and infill capex going forward",
+      "quote": "the bulk of the capex is",
+      "metric": "Capex phase mostly complete",
+      "target": {
+        "text": "Capex phase mostly complete",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": {
+        "text": "Capex phase mostly complete as of Q4FY26",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Capex phase mostly complete as reported in Q4FY26 presentation"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no numeric target"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p067",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capex",
+      "promise": "Capex of Rs 1,31,107 crore ($15.3 bn) in FY25",
+      "quote": "Capex of Rs 1,31,107 crore ($ 15.3 bn)",
+      "metric": "FY25 capex Rs 1,31,107 crore",
+      "target": {
+        "text": "Rs 1,31,107 crore ($15.3 bn) in FY25",
+        "value": 131107,
+        "value_high": null,
+        "unit": "Rs crore",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Capex of Rs 1,31,107 crore in FY25",
+        "value": 131107,
+        "unit": "Rs crore",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Capex of Rs 1,31,107 crore achieved in FY25 as reported in Q4FY26 presentation"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "131107 vs 131107 Rs crore"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p068",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "ebitda",
+      "promise": "Reliance Retail FY25 EBITDA growth 9% YoY with 8.3% margin",
+      "quote": "FY25 EBITDA at Rs 25,053 crore, +9% YoY; EBITDA margin from operations at 8.3% for FY25, +20 bps YoY",
+      "metric": "FY25 EBITDA growth 9% YoY, margin 8.3%",
+      "target": {
+        "text": "9% YoY EBITDA growth with 8.3% margin in FY25",
+        "value": 9,
+        "value_high": null,
+        "unit": "%",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "FY26 EBITDA at ₹27,033 crore, up 8% YoY; EBITDA margin at 8.3%",
+        "value": 8,
+        "unit": "% YoY growth",
+        "source_id": "Q4FY26 · q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "FY26 EBITDA growth was 8% YoY with 8.3% margin"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -1,
+        "pct": -11.1,
+        "bps": null,
+        "days": null,
+        "text": "8 vs 9 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p069",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "ebitda",
+      "promise": "Grow Jio Infocomm quarterly EBITDA to about ₹17,000 crore",
+      "quote": "EBITDA at ₹ 17,000 crore",
+      "metric": "Quarterly EBITDA ~₹17,000 crore",
+      "target": {
+        "text": "Quarterly EBITDA ~₹17,000 crore",
+        "value": 17000,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Q4 FY26 Jio Platforms EBITDA ₹20,060 crore",
+        "value": 20060,
+        "unit": "₹ crore",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Jio Infocomm quarterly EBITDA reached ₹20,060 crore in Q4 FY26, exceeding the ₹17,000 crore target."
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 3060,
+        "pct": 18,
+        "bps": null,
+        "days": null,
+        "text": "20060 vs 17000 INR_cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p070",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "ebitda",
+      "promise": "Grow Reliance Retail quarterly EBITDA by 14-15% YoY",
+      "quote": "EBITDA from operations was up 15%, total EBITDA was up 14%",
+      "metric": "Quarterly EBITDA growth 14-15% YoY",
+      "target": {
+        "text": "Quarterly EBITDA growth 14-15% YoY",
+        "value": 14,
+        "value_high": 15,
+        "unit": "%",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Retail EBITDA grew 1.1% YoY in Q3FY26 and 3.0% YoY in Q4FY26",
+        "value": 1.1,
+        "unit": "%",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "Retail EBITDA growth was 1.1% YoY in Q3FY26 and 3.0% YoY in Q4FY26, below 14-15% target"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -12.9,
+        "pct": -92.1,
+        "bps": null,
+        "days": null,
+        "text": "1.1 vs 14-15 %"
+      },
+      "mgmt_explanation": "Soft food & lifestyle demand and scale-up of hyperlocal commerce impacted growth",
+      "root_cause": "Demand slowdown",
+      "was_revised": false
+    },
+    {
+      "id": "p071",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "margin",
+      "promise": "Expand Reliance Retail EBITDA margin by 20 basis points YoY",
+      "quote": "EBITDA margin from operations continues to expand; it was up 20 basis points on Y-o-Y basis",
+      "metric": "EBITDA margin +20 bps YoY",
+      "target": {
+        "text": "EBITDA margin +20 bps YoY",
+        "value": 0.2,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Reliance Retail EBITDA margin expanded by ~190 basis points YoY in FY26",
+        "value": 190,
+        "unit": "basis points",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "EBITDA margin expanded by ~190 bps YoY in FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 189.8,
+        "pct": 94900,
+        "bps": 18980,
+        "days": null,
+        "text": "190 vs 0.2 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p072",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "margin",
+      "promise": "Maintain Jio Platforms EBITDA margin at 50%",
+      "quote": "we are maintaining our EBITDA margin at 50%",
+      "metric": "EBITDA margin 50%",
+      "target": {
+        "text": "EBITDA margin 50%",
+        "value": 50,
+        "value_high": null,
+        "unit": "%",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "H",
+      "actual": {
+        "text": "FY26 EBITDA Margin 51.9%",
+        "value": 51.9,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "EBITDA margin maintained above 50%, reported at 51.9% for FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 1.9,
+        "pct": 3.8,
+        "bps": 190,
+        "days": null,
+        "text": "51.9 vs 50 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p073",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "margin",
+      "promise": "Expand Reliance Retail own brands contribution by 900 basis points YoY",
+      "quote": "The contribution was up 900 basis points on a Y-o-Y basis",
+      "metric": "Own brands contribution +900 bps YoY",
+      "target": {
+        "text": "Own brands contribution +900 bps YoY",
+        "value": 9,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Own brands continues to gain traction; Buda Jeans, Nyrika & Indie Picks outperformed",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Own brands gained traction with key brands outperforming, no specific bps figure reported"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Own brands gained traction with key brands outperforming, no"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p074",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "pat",
+      "promise": "Reliance Retail FY25 PAT growth 12% YoY",
+      "quote": "Profit After Tax 11,101 12,392 12%",
+      "metric": "FY25 PAT growth 12% YoY",
+      "target": {
+        "text": "12% YoY PAT growth in FY25",
+        "value": 12,
+        "value_high": null,
+        "unit": "%",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "RRVL PAT nearly ₹14,000 crore, up 11.7%",
+        "value": 11.7,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Reliance Retail PAT grew 11.7% YoY in FY25-26"
+      },
+      "status": "PARTIAL",
+      "variance": {
+        "absolute": -0.3,
+        "pct": -2.5,
+        "bps": null,
+        "days": null,
+        "text": "11.7 vs 12 %"
+      },
+      "mgmt_explanation": "No explicit explanation for shortfall provided",
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p075",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "pat",
+      "promise": "Grow Jio Infocomm quarterly PAT to about ₹7,000 crore",
+      "quote": "profit after tax growth of 26% to ₹ 7,023 crore",
+      "metric": "Quarterly PAT ~₹7,000 crore",
+      "target": {
+        "text": "Quarterly PAT ~₹7,000 crore",
+        "value": 7023,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "JPL PAT crossed ₹30,000 crore, up 15.1%",
+        "value": 30000,
+        "unit": "₹ crore",
+        "source_id": "Q4FY26 · q4fy26-presentation · 2026-04-01",
+        "source_date": "2026-04-01",
+        "what_happened": "Jio Platforms PAT crossed ₹30,000 crore in FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 22977,
+        "pct": 327.2,
+        "bps": null,
+        "days": null,
+        "text": "30000 vs 7023 INR_cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p076",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "pat",
+      "promise": "Grow Reliance Retail quarterly PAT by 30% YoY",
+      "quote": "profit after tax was up 30%",
+      "metric": "Quarterly PAT growth 30% YoY",
+      "target": {
+        "text": "Quarterly PAT growth 30% YoY",
+        "value": 30,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "RRVL PAT nearly ₹14,000 crore, up 11.7% YoY in FY26",
+        "value": 14000,
+        "unit": "₹ crore",
+        "source_id": "Q4FY26 · q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Reliance Retail PAT grew 11.7% YoY in FY26, short of 30% target"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 13970,
+        "pct": 46566.7,
+        "bps": null,
+        "days": null,
+        "text": "14000 vs 30 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p077",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "revenue",
+      "promise": "Add 1.9 million new Ajio customers in the quarter",
+      "quote": "added 1.9 million new customers during the quarter",
+      "metric": "1.9 million new Ajio customers",
+      "target": {
+        "text": "1.9 million new Ajio customers",
+        "value": 1.9,
+        "value_high": null,
+        "unit": "million",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Acquired 5.9 Mn new customers in Q3",
+        "value": 5.9,
+        "unit": "million customers",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "Ajio added 5.9 million new customers in Q3FY26, exceeding the 1.9 million target for a quarter."
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 4,
+        "pct": 210.5,
+        "bps": null,
+        "days": null,
+        "text": "5.9 vs 1.9 million"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p078",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "revenue",
+      "promise": "Add 600,000 new customers during Ajio All-Star Sale campaign",
+      "quote": "added 6 lakh plus new customers during this campaign",
+      "metric": "600,000 new customers added",
+      "target": {
+        "text": "600,000 new customers added",
+        "value": 600000,
+        "value_high": null,
+        "unit": "customers",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "600,000 new customers added during Ajio All-Star Sale campaign",
+        "value": null,
+        "unit": null,
+        "source_id": "q2fy26-presentation",
+        "source_date": "2025-10-01",
+        "what_happened": "Not explicitly reported; Ajio All-Star Sale campaign mentioned with strong growth but no specific new customer count"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "600000 vs 600000 customers"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p079",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "revenue",
+      "promise": "Grow Ajio Luxe brand count 19% YoY",
+      "quote": "The option was up 19% on a Y-o-Y basis. On",
+      "metric": "Ajio Luxe brand count growth 19% YoY",
+      "target": {
+        "text": "Ajio Luxe brand count growth 19% YoY",
+        "value": 19,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Ajio Luxe brand portfolio grew 24% YoY",
+        "value": 24,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Ajio Luxe brand portfolio grew 24% YoY as reported in Q4FY26 presentation"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 5,
+        "pct": 26.3,
+        "bps": null,
+        "days": null,
+        "text": "24 vs 19 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p080",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "revenue",
+      "promise": "Achieve ₹11,450 crore sales in consumer brands business in second year",
+      "quote": "We have achieved almost ₹ 11,450 crore of sales in the second year of operations",
+      "metric": "Consumer brands sales ₹11,450 crore",
+      "target": {
+        "text": "₹11,450 crore sales in second year",
+        "value": 11450,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "second year"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Consumer brands business achieved ₹22,000 crore gross revenue in FY26",
+        "value": 22000,
+        "unit": "crore",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Consumer brands sales reached ₹22,000 crore in FY26, exceeding the ₹11,450 crore target for second year"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 10550,
+        "pct": 92.1,
+        "bps": null,
+        "days": null,
+        "text": "22000 vs 11450 INR_cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p081",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "revenue",
+      "promise": "Grow consumer electronics business mid-single-digit YoY",
+      "quote": "consumer electronics business, we had pretty healthy mid-single-digit growth",
+      "metric": "Consumer electronics growth mid-single-digit",
+      "target": {
+        "text": "Consumer electronics growth mid-single-digit",
+        "value": 5,
+        "value_high": 9,
+        "unit": "%",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Consumer Electronics delivered 18% YoY growth aided by GST rate reduction and new launches",
+        "value": 18,
+        "unit": "% YoY growth",
+        "source_id": "Q2FY26 · q2fy26-presentation",
+        "source_date": "2025-10-01",
+        "what_happened": "Consumer Electronics grew 18% YoY in Q2FY26, driven by GST rate reduction and new launches"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 13,
+        "pct": 260,
+        "bps": null,
+        "days": null,
+        "text": "18 vs 5-9 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p082",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "revenue",
+      "promise": "Grow Jio Platforms Limited non-connectivity digital services revenue faster than connectivity business",
+      "quote": "growth momentum obviously is like two times of your connectivity business here",
+      "metric": "Digital services revenue growth > connectivity growth",
+      "target": {
+        "text": "Digital services revenue growth > connectivity growth",
+        "value": 2,
+        "value_high": null,
+        "unit": "x",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": {
+        "text": "FY26 Revenue from operations at ₹146,885 crore, 14.6% YoY growth",
+        "value": 14.6,
+        "unit": "% YoY growth",
+        "source_id": "Q4FY26 · q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Reported 14.6% YoY revenue growth for FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 12.6,
+        "pct": 630,
+        "bps": null,
+        "days": null,
+        "text": "14.6 vs 2 x"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p083",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "revenue",
+      "promise": "Reliance Retail FY25 gross revenue growth 8% YoY",
+      "quote": "FY25 Gross revenue of Rs. 3,30,870 crore, +8% YoY",
+      "metric": "FY25 gross revenue growth 8% YoY",
+      "target": {
+        "text": "8% YoY gross revenue growth in FY25",
+        "value": 8,
+        "value_high": null,
+        "unit": "%",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "FY26 gross revenue at ₹3,70,026 crore, up 12% YoY",
+        "value": 12,
+        "unit": "% YoY growth",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "FY26 gross revenue growth reported at 12% YoY, exceeding 8% target"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 4,
+        "pct": 50,
+        "bps": null,
+        "days": null,
+        "text": "12 vs 8 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p084",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "revenue",
+      "promise": "Jio Platforms FY25 revenue growth ~17% YoY",
+      "quote": "FY25 Revenue and EBITDA growth of ~17% YoY",
+      "metric": "FY25 revenue growth ~17% YoY",
+      "target": {
+        "text": "~17% YoY revenue growth in FY25",
+        "value": 17,
+        "value_high": null,
+        "unit": "%",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "FY26 Revenue from operations at ₹146,885 crore, 14.6% YoY growth",
+        "value": 14.6,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "FY26 revenue growth reported at 14.6% YoY, below the ~17% target"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -2.4,
+        "pct": -14.1,
+        "bps": null,
+        "days": null,
+        "text": "14.6 vs 17 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p085",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "revenue",
+      "promise": "Grow gold jewellery average bill values 20% YoY",
+      "quote": "which has had an impact on the average bill values, which are up almost 20% on",
+      "metric": "Gold jewellery average bill values +20% YoY",
+      "target": {
+        "text": "Gold jewellery average bill values +20% YoY",
+        "value": 20,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Gold jewellery average bill value up 73% YoY driven by rising gold price; best ever",
+        "value": 73,
+        "unit": "% YoY",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "Average bill value increased 73% YoY, best ever, driven by rising gold price"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 53,
+        "pct": 265,
+        "bps": null,
+        "days": null,
+        "text": "73 vs 20 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p086",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "revenue",
+      "promise": "Grow Jio Infocomm quarterly revenue to about ₹34,000 crore",
+      "quote": "consolidated revenue was very close to ₹ 34,000 crore",
+      "metric": "Quarterly revenue ~₹34,000 crore",
+      "target": {
+        "text": "Quarterly revenue ~₹34,000 crore",
+        "value": 34000,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Q4 FY26 Operating Revenue 38,259 crore",
+        "value": 38259,
+        "unit": "crore",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Jio Infocomm quarterly operating revenue reached ₹38,259 crore in Q4 FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 4259,
+        "pct": 12.5,
+        "bps": null,
+        "days": null,
+        "text": "38259 vs 34000 INR_cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p087",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "revenue",
+      "promise": "Grow Reliance Retail quarterly revenue by 16% YoY",
+      "quote": "revenue was up 16% for the quarter on a Y-o-Y basis",
+      "metric": "Quarterly revenue growth 16% YoY",
+      "target": {
+        "text": "Quarterly revenue growth 16% YoY",
+        "value": 16,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Reliance Retail revenue grew 9.5% YoY in 9M FY26",
+        "value": 9.5,
+        "unit": "%",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "Reliance Retail quarterly revenue grew 9.5% YoY in 9M FY26, below 16% target"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -6.5,
+        "pct": -40.6,
+        "bps": null,
+        "days": null,
+        "text": "9.5 vs 16 %"
+      },
+      "mgmt_explanation": "No explicit explanation given for shortfall in transcript",
+      "root_cause": "Demand slowdown",
+      "was_revised": false
+    },
+    {
+      "id": "p088",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "revenue",
+      "promise": "Grow Jio Platforms Limited consolidated revenue and EBITDA by 14-18% annually",
+      "quote": "Industries Limited 2020 EBITDA growth of 17%, consistent EBITDA margins of 50% and",
+      "metric": "Revenue and EBITDA growth ~17%",
+      "target": {
+        "text": "Revenue and EBITDA growth ~17%",
+        "value": 17,
+        "value_high": null,
+        "unit": "%",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "FY26 Revenue from operations at ₹146,885 crore, 14.6% YoY growth; FY26 EBITDA increased to ₹76,255 crore; 18.8% YoY growth",
+        "value": 14.6,
+        "unit": "% YoY growth in revenue",
+        "source_id": "Q4FY26 · q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Revenue grew 14.6% YoY; EBITDA grew 18.8% YoY in FY26"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -2.4,
+        "pct": -14.1,
+        "bps": null,
+        "days": null,
+        "text": "14.6 vs 17 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p089",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "volume",
+      "promise": "Add 6.1 million Jio subscribers in the quarter",
+      "quote": "subscriber base at 488.2 million, so that is a net addition of 6.1 million for the quarter",
+      "metric": "6.1 million net subscriber additions",
+      "target": {
+        "text": "6.1 million net subscriber additions",
+        "value": 6.1,
+        "value_high": null,
+        "unit": "million",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "8.3mn net additions in Q2FY26",
+        "value": 8.3,
+        "unit": "million subscribers",
+        "source_id": "q2fy26-presentation",
+        "source_date": "2025-10-01",
+        "what_happened": "8.3 million net subscriber additions reported in Q2FY26, exceeding the 6.1 million target"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 2.2,
+        "pct": 36.1,
+        "bps": null,
+        "days": null,
+        "text": "8.3 vs 6.1 million"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p090",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "volume",
+      "promise": "Grow GMD business 76% YoY",
+      "quote": "GMD, which is our B2B and B2C business in electronics, it had a very healthy growth of 76% on a Y-o-Y basis",
+      "metric": "GMD business growth 76% YoY",
+      "target": {
+        "text": "GMD business growth 76% YoY",
+        "value": 76,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "GMD business growth 18.8% YoY EBITDA Growth",
+        "value": 18.8,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "GMD business grew 18.8% YoY in EBITDA for FY26, reported in Q4FY26 presentation."
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -57.2,
+        "pct": -75.3,
+        "bps": null,
+        "days": null,
+        "text": "18.8 vs 76 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p091",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "volume",
+      "promise": "Grow HoReCa segment 37% YoY",
+      "quote": "that segment had a 37% growth on a Y-o-Y",
+      "metric": "HoReCa segment growth 37% YoY",
+      "target": {
+        "text": "HoReCa segment growth 37% YoY",
+        "value": 37,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p092",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "volume",
+      "promise": "Increase JioMart app and web visits 37% YoY",
+      "quote": "37% growth in apps and web visits",
+      "metric": "JioMart app and web visits +37% YoY",
+      "target": {
+        "text": "JioMart app and web visits +37% YoY",
+        "value": 37,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "JioMart hyper-local commerce Q4 average daily orders up 300%+ YoY",
+        "value": 300,
+        "unit": "% YoY",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "JioMart daily orders increased over 300% YoY in Q4, indicating strong growth in visits and engagement"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 263,
+        "pct": 710.8,
+        "bps": null,
+        "days": null,
+        "text": "300 vs 37 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p093",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "volume",
+      "promise": "Increase JioMart average daily orders 62% YoY",
+      "quote": "average daily orders were up 62% on a Y-o-Y basis",
+      "metric": "JioMart average daily orders +62% YoY",
+      "target": {
+        "text": "JioMart average daily orders +62% YoY",
+        "value": 62,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Hyper-local commerce Q4 average daily orders up 300%+ YoY and 29% QoQ",
+        "value": 300,
+        "unit": "% YoY",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "JioMart average daily orders increased over 300% YoY in Q4FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 238,
+        "pct": 383.9,
+        "bps": null,
+        "days": null,
+        "text": "300 vs 62 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p094",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "volume",
+      "promise": "Increase JioMart subscription daily orders 27% YoY",
+      "quote": "on a Y-o-Y basis. Similarly, our subscription service continues to see",
+      "metric": "JioMart subscription daily orders +27% YoY",
+      "target": {
+        "text": "JioMart subscription daily orders +27% YoY",
+        "value": 27,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Hyper-local commerce Q4 average daily orders up 300%+ YoY",
+        "value": 300,
+        "unit": "% YoY",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "JioMart daily orders grew over 300% YoY in Q4FY26, exceeding the 27% YoY target"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 273,
+        "pct": 1011.1,
+        "bps": null,
+        "days": null,
+        "text": "300 vs 27 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p095",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "volume",
+      "promise": "Grow own brands merchant base 60% YoY",
+      "quote": "The merchant base was up 60% on a Y-o-Y basis",
+      "metric": "Own brands merchant base growth 60% YoY",
+      "target": {
+        "text": "Own brands merchant base growth 60% YoY",
+        "value": 60,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Own brands merchant partner base expanded, but no specific 60% YoY growth figure reported",
+        "value": null,
+        "unit": null,
+        "source_id": "q1fy26-presentation",
+        "source_date": "2025-07-01",
+        "what_happened": "Own brands merchant partner base grew, but exact 60% YoY growth not disclosed"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "60 vs 60 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p096",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "volume",
+      "promise": "Increase quick commerce orders 2.4x quarter-on-quarter",
+      "quote": "number of orders were up quarter-on-quarter 2.4 times",
+      "metric": "Quick commerce orders 2.4x QoQ",
+      "target": {
+        "text": "Quick commerce orders 2.4x QoQ",
+        "value": 2.4,
+        "value_high": null,
+        "unit": "x",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Hyper-local commerce Q4 average daily orders up 29% QoQ",
+        "value": 29,
+        "unit": "% QoQ",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Quick commerce orders increased 29% quarter-on-quarter in Q4 FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 26.6,
+        "pct": 1108.3,
+        "bps": null,
+        "days": null,
+        "text": "29 vs 2.4 x"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p097",
+      "date": "2025-07-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "capacity",
+      "promise": "Achieve 55 CBG plants capacity by end of FY26",
+      "quote": "We are on track to achieve our targeted capacity of 55 CBG plants by end of this year",
+      "metric": "55 CBG plants by FY26-end",
+      "target": {
+        "text": "55 CBG plants by FY26-end",
+        "value": 55,
+        "value_high": null,
+        "unit": "plants",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p098",
+      "date": "2025-07-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission giga-factories progressively over next 4-6 quarters",
+      "quote": "On-track to commission giga-factories progressively over next 4-6 quarters",
+      "metric": "Commission giga-factories in 4-6 quarters",
+      "target": {
+        "text": "Commission giga-factories in 4-6 quarters",
+        "value": 4,
+        "value_high": 6,
+        "unit": "quarters",
+        "period": "by Q3FY27"
+      },
+      "test_date": "2027-02-14",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p099",
+      "date": "2025-07-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "capex",
+      "promise": "Capex of Rs 29,875 crore ($3.5 bn) in FY26",
+      "quote": "Robust cash flows support growth initiatives – Capex of Rs 29,875 crore ($3.5 bn)",
+      "metric": "FY26 capex Rs 29,875 crore ($3.5 bn)",
+      "target": {
+        "text": "Rs 29,875 crore ($3.5 bn) in FY26",
+        "value": 29875,
+        "value_high": null,
+        "unit": "Rs crore",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": true
+    },
+    {
+      "id": "p100",
+      "date": "2025-07-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "ebitda",
+      "promise": "Double EBITDA across RIL group by end of golden decade",
+      "quote": "We are confident of doubling EBITDA across RIL group by end of golden decade",
+      "metric": "EBITDA 2x by end of golden decade",
+      "target": {
+        "text": "Double EBITDA by end of golden decade",
+        "value": 2,
+        "value_high": null,
+        "unit": "x",
+        "period": "by 2030"
+      },
+      "test_date": "2030",
+      "confidence": "L",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p101",
+      "date": "2025-07-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "leverage",
+      "promise": "Maintain Net Debt to LTM EBITDA below 1.0x",
+      "quote": "Disciplined capital allocation framework; Net Debt to LTM EBITDA of < 1.0x",
+      "metric": "Net Debt to LTM EBITDA < 1.0x",
+      "target": {
+        "text": "Net Debt to LTM EBITDA < 1.0x",
+        "value": 1,
+        "value_high": null,
+        "unit": "x",
+        "period": "Q1FY26"
+      },
+      "test_date": "2025-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Net Debt to LTM EBITDA (x) 0.56",
+        "value": 0.56,
+        "unit": "x",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "Net Debt to LTM EBITDA was 0.56x in Dec-25, below 1.0x target"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": -0.44,
+        "pct": -44,
+        "bps": null,
+        "days": null,
+        "text": "0.56 vs 1 x"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p102",
+      "date": "2025-10-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-presentation",
+      "source_label": "Q2FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission 40 GWh battery energy storage gigafactory",
+      "quote": "On track to commission 40 GWh Battery Energy Storage giga factory",
+      "metric": "Battery Energy Storage gigafactory 40 GWh capacity",
+      "target": {
+        "text": "40 GWh battery gigafactory commissioned",
+        "value": 40,
+        "value_high": null,
+        "unit": "GWh",
+        "period": "by Q4FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "M",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p103",
+      "date": "2025-10-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-presentation",
+      "source_label": "Q2FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission 1st solar PV cell line by Oct 2025",
+      "quote": "1st cell line to be commissioned in Oct'25",
+      "metric": "Solar PV cell line commissioned by Oct 2025",
+      "target": {
+        "text": "1st solar PV cell line commissioned by Oct 2025",
+        "value": 1,
+        "value_high": null,
+        "unit": "line",
+        "period": "Oct 2025"
+      },
+      "test_date": "2025",
+      "confidence": "H",
+      "actual": {
+        "text": "Last quarter we have commissioned our solar cell manufacturing and are ramping up to full capacity",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-01-01",
+        "what_happened": "Solar cell manufacturing commissioned last quarter and ramping up to full capacity"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Solar cell manufacturing commissioned last quarter and rampi"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p104",
+      "date": "2025-10-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-presentation",
+      "source_label": "Q2FY26 presentation",
+      "category": "capacity",
+      "promise": "Achieve 20 GWp solar PV manufacturing capacity by FY27",
+      "quote": "On-track to setup 20 GWp of solar PV manufacturing capacity",
+      "metric": "Solar PV manufacturing capacity 20 GWp",
+      "target": {
+        "text": "20 GWp solar PV capacity by FY27",
+        "value": 20,
+        "value_high": null,
+        "unit": "GWp",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p105",
+      "date": "2025-10-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-presentation",
+      "source_label": "Q2FY26 presentation",
+      "category": "ebitda",
+      "promise": "Jio Platforms to deliver 2x EBITDA growth between FY24 and FY28",
+      "quote": "On-track to deliver 2x EBITDA between FY2024-28",
+      "metric": "EBITDA 2x growth FY24-FY28",
+      "target": {
+        "text": "2x EBITDA growth between FY24 and FY28",
+        "value": 2,
+        "value_high": null,
+        "unit": "x",
+        "period": "FY24-FY28"
+      },
+      "test_date": null,
+      "confidence": "M",
+      "actual": {
+        "text": "FY26 EBITDA increased to ₹76,255 crore; 18.8% YoY growth",
+        "value": 76255,
+        "unit": "₹ crore",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "FY26 EBITDA reported at ₹76,255 crore, showing 18.8% YoY growth"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 76253,
+        "pct": 3812650,
+        "bps": null,
+        "days": null,
+        "text": "76255 vs 2 x"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p106",
+      "date": "2026-01-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission fully integrated 10 GWp annual solar manufacturing gigafactory and scale to 20 GWp annual capacity",
+      "quote": "on track to commission our fully integrated 10 GWp annual solar manufacturing giga factory and with a plan to further scale up to 20 GWp",
+      "metric": "Solar manufacturing capacity 10 GWp commission, scale to 20 GWp",
+      "target": {
+        "text": "commission 10 GWp and scale to 20 GWp annual capacity",
+        "value": 10,
+        "value_high": 20,
+        "unit": "GWp",
+        "period": "by FY27"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Successfully commissioned and operationalized various lines of solar PV module and cell manufacturing; targeting 20 GWp annual capacity in next few quarters",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "10 GWp commissioned; scaling to 20 GWp annual capacity targeted in next few quarters"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 10,
+        "pct": 100,
+        "bps": null,
+        "days": null,
+        "text": "20 vs 10-20 GWp"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p107",
+      "date": "2026-01-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "ebitda",
+      "promise": "Jio Platforms EBITDA margin expansion to 51.8% in Q3 FY26",
+      "quote": "EBITDA increased to Rs 19,303 Crore; 16.4% YoY growth with margin expansion of 170bps",
+      "metric": "Q3 FY26 EBITDA margin 51.8%",
+      "target": {
+        "text": "Q3 FY26 EBITDA margin 51.8%",
+        "value": 51.8,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q3FY26"
+      },
+      "test_date": "2026-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Q3 FY26 EBITDA margin 52.4%",
+        "value": 52.4,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Jio Platforms reported Q3 FY26 EBITDA margin of 52.4%, exceeding the 51.8% target."
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0.6,
+        "pct": 1.2,
+        "bps": null,
+        "days": null,
+        "text": "52.4 vs 51.8 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p108",
+      "date": "2026-01-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "ebitda",
+      "promise": "Retail EBITDA margin at 8.0% in Q3 FY26",
+      "quote": "EBITDA margin at 8.0%",
+      "metric": "Q3 FY26 Retail EBITDA margin 8.0%",
+      "target": {
+        "text": "Q3 FY26 Retail EBITDA margin 8.0%",
+        "value": 8,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q3FY26"
+      },
+      "test_date": "2026-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Q4 FY26 Retail EBITDA margin at 7.9%",
+        "value": 7.9,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Retail EBITDA margin reported at 7.9% in Q4 FY26, close to but below 8.0% target for Q3 FY26"
+      },
+      "status": "PARTIAL",
+      "variance": {
+        "absolute": -0.1,
+        "pct": -1.2,
+        "bps": null,
+        "days": null,
+        "text": "7.9 vs 8 %"
+      },
+      "mgmt_explanation": "No explicit explanation for margin shortfall provided in the document",
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p109",
+      "date": "2026-01-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "revenue",
+      "promise": "Retail gross revenue Rs 97,605 crore in Q3 FY26",
+      "quote": "highest ever gross revenue at Rs 97,605 crore, up 8.1% YoY",
+      "metric": "Q3 FY26 Retail gross revenue Rs 97,605 crore",
+      "target": {
+        "text": "Q3 FY26 Retail gross revenue Rs 97,605 crore",
+        "value": 97605,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "Q3FY26"
+      },
+      "test_date": "2026-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Q4 FY26 gross revenue at ₹98,232 crore",
+        "value": 98232,
+        "unit": "crore INR",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Q3 FY26 retail gross revenue not explicitly reported; Q4 FY26 retail gross revenue was ₹98,232 crore"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 627,
+        "pct": 0.6,
+        "bps": null,
+        "days": null,
+        "text": "98232 vs 97605 INR_cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p110",
+      "date": "2026-01-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "revenue",
+      "promise": "Jio Platforms revenue from operations Rs 37,262 crore in Q3 FY26",
+      "quote": "Q3 FY26 Revenue from operations at Rs 37,262 Crore, 12.7% YoY growth",
+      "metric": "Q3 FY26 revenue Rs 37,262 crore",
+      "target": {
+        "text": "Q3 FY26 revenue Rs 37,262 crore",
+        "value": 37262,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "Q3FY26"
+      },
+      "test_date": "2026-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Operating Revenue 38,259 crore in Q4 FY26",
+        "value": 38259,
+        "unit": "crore",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Jio Platforms reported Q4 FY26 operating revenue of ₹38,259 crore, exceeding the Q3 FY26 target of ₹37,262 crore."
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 997,
+        "pct": 2.7,
+        "bps": null,
+        "days": null,
+        "text": "38259 vs 37262 INR_cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p111",
+      "date": "2026-01-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "timeline",
+      "promise": "Commission first Food Park plant in March FY26",
+      "quote": "first plant becoming operational in March",
+      "metric": "First Food Park plant operational by March FY26",
+      "target": {
+        "text": "First Food Park plant operational by March FY26",
+        "value": 3,
+        "value_high": null,
+        "unit": "month",
+        "period": "Mar FY26"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Strategically developing Food Parks at key locations with highspeed, multi-category production lines",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-04-01",
+        "what_happened": "Food Parks development ongoing; no explicit commissioning or operationalization by March FY26 reported"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": 0,
+        "text": "on time"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p112",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-presentation",
+      "source_label": "Q4FY26 presentation",
+      "category": "capacity",
+      "promise": "Scale up annual battery manufacturing capacity to 100 GWh, first phase of 40 GWh manufacturing to be commissioned this year",
+      "quote": "We are scaling up our annual battery manufacturing capacity to 100 GWh – on track to commission our first phase of 40 GWh manufacturing this",
+      "metric": "Battery manufacturing capacity 100 GWh, first phase 40 GWh",
+      "target": {
+        "text": "100 GWh battery capacity, 40 GWh first phase",
+        "value": 100,
+        "value_high": null,
+        "unit": "GWh",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p113",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-presentation",
+      "source_label": "Q4FY26 presentation",
+      "category": "capacity",
+      "promise": "Target to progressively achieve 20 GWp annual Solar PV manufacturing fully integrated across value chain in next few quarters",
+      "quote": "Target to progressively achieve 20 GWp annual Solar PV manufacturing fully integrated across value chain in next few quarters",
+      "metric": "Solar PV manufacturing capacity 20 GWp",
+      "target": {
+        "text": "20 GWp solar PV manufacturing capacity",
+        "value": 20,
+        "value_high": null,
+        "unit": "GWp",
+        "period": "next few quarters"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p114",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-presentation",
+      "source_label": "Q4FY26 presentation",
+      "category": "ebitda",
+      "promise": "FY26 EBITDA of Jio Platforms at ₹76,255 crore with 18.8% YoY growth",
+      "quote": "FY26 EBITDA increased to ₹76,255 crore; 18.8% YoY growth",
+      "metric": "FY26 EBITDA ₹76,255 crore",
+      "target": {
+        "text": "FY26 EBITDA ₹76,255 crore",
+        "value": 76255,
+        "value_high": null,
+        "unit": "₹ crore",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p115",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-presentation",
+      "source_label": "Q4FY26 presentation",
+      "category": "revenue",
+      "promise": "FY26 revenue from operations of Jio Platforms at ₹146,885 crore with 14.6% YoY growth",
+      "quote": "FY26 Revenue from operations at ₹146,885 crore, 14.6% YoY growth",
+      "metric": "FY26 Revenue ₹146,885 crore",
+      "target": {
+        "text": "FY26 Revenue ₹146,885 crore",
+        "value": 146885,
+        "value_high": null,
+        "unit": "₹ crore",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p116",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-presentation",
+      "source_label": "Q4FY26 presentation",
+      "category": "timeline",
+      "promise": "Start installations of 150 GWp+ renewable energy generation project at Kutch in next few quarters",
+      "quote": "we will start installations in next few quarters as we also ramp up our evacuation capacity to",
+      "metric": "150 GWp+ renewable energy project installations start",
+      "target": {
+        "text": "Start installations of 150 GWp+ renewable energy project",
+        "value": 150,
+        "value_high": null,
+        "unit": "GWp",
+        "period": "next few quarters"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no outcome reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p117",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-presentation",
+      "source_label": "Q4FY26 presentation",
+      "category": "timeline",
+      "promise": "Start green ammonia supply under $3 billion long term agreement with Samsung C&T starting in 2029 for 15 years",
+      "quote": "$ 3 Bn long term supply agreement for green ammonia with Samsung C&T – starting in 2029 for a period of 15 years",
+      "metric": "Green ammonia supply start 2029, $3bn agreement, 15 years",
+      "target": {
+        "text": "Start green ammonia supply in 2029 for 15 years",
+        "value": 2029,
+        "value_high": null,
+        "unit": "year",
+        "period": "2029"
+      },
+      "test_date": "2029",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no outcome reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    }
+  ],
+  "financial_trend": [
+    {
+      "quarter": "Q1FY25",
+      "revenue": null,
+      "ebitda": null,
+      "ebitda_margin": null,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": null
+    },
+    {
+      "quarter": "Q2FY25",
+      "revenue": 258027,
+      "ebitda": 43934,
+      "pat": 19323,
+      "ebitda_margin": null,
+      "roce": null,
+      "net_debt_ebitda": null,
+      "unit": "₹ crore"
+    },
+    {
+      "quarter": "Q3FY25",
+      "revenue": 267186,
+      "ebitda": 48003,
+      "pat": 21930,
+      "ebitda_margin": null,
+      "roce": null,
+      "net_debt_ebitda": null,
+      "unit": "₹ crore"
+    },
+    {
+      "quarter": "Q4FY25",
+      "revenue": 288138,
+      "ebitda": 48737,
+      "pat": 22611,
+      "ebitda_margin": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "Rs crore"
+    },
+    {
+      "quarter": "Q1FY26",
+      "revenue": 273252,
+      "ebitda": 58024,
+      "ebitda_margin": 21.22,
+      "pat": 30783,
+      "net_debt_ebitda": 0.59,
+      "roce": null,
+      "unit": "Rs crore"
+    },
+    {
+      "quarter": "Q2FY26",
+      "revenue": 283548,
+      "ebitda": 50367,
+      "pat": 22092,
+      "ebitda_margin": 18,
+      "net_debt_ebitda": 0.58,
+      "roce": null,
+      "unit": "Rs crore"
+    },
+    {
+      "quarter": "Q3FY26",
+      "revenue": 293829,
+      "ebitda": 50932,
+      "pat": 22290,
+      "ebitda_margin": 16.4,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "Rs crore"
+    },
+    {
+      "quarter": "Q4FY26",
+      "revenue": 325290,
+      "ebitda": 48588,
+      "pat": 20589,
+      "ebitda_margin": null,
+      "roce": null,
+      "net_debt_ebitda": null,
+      "unit": "₹ crore"
+    }
+  ],
+  "aggregates": {
+    "total": 117,
+    "status_counts": {
+      "MET": 57,
+      "PARTIAL": 5,
+      "MISSED": 31,
+      "NYT": 24
+    },
+    "testable": 93,
+    "by_quarter": {
+      "Q1FY25": {
+        "MET": 7,
+        "PARTIAL": 1,
+        "MISSED": 5,
+        "NYT": 1
+      },
+      "Q2FY25": {
+        "MET": 10,
+        "PARTIAL": 0,
+        "MISSED": 11,
+        "NYT": 0
+      },
+      "Q3FY25": {
+        "MET": 11,
+        "PARTIAL": 2,
+        "MISSED": 3,
+        "NYT": 4
+      },
+      "Q4FY25": {
+        "MET": 22,
+        "PARTIAL": 1,
+        "MISSED": 12,
+        "NYT": 6
+      },
+      "Q1FY26": {
+        "MET": 1,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 4
+      },
+      "Q2FY26": {
+        "MET": 1,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 3
+      },
+      "Q3FY26": {
+        "MET": 5,
+        "PARTIAL": 1,
+        "MISSED": 0,
+        "NYT": 0
+      },
+      "Q4FY26": {
+        "MET": 0,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 6
+      }
+    },
+    "root_causes": {
+      "Demand slowdown": 6,
+      "Pricing / mix": 1,
+      "Other": 2
+    },
+    "confidence_mix": {
+      "H": 97,
+      "M": 17,
+      "L": 3
+    },
+    "timeline_commitments": {
+      "due": 2,
+      "on_time": 2,
+      "slipped": 0
+    }
+  },
+  "credibility": {
+    "score": 64,
+    "grade": "B",
+    "timeline_score": 100,
+    "delivery_score": 63,
+    "method": "Conf-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6). Bands A>=75 B>=60 C>=45 D>=30 E<30.",
+    "headline": "Mostly delivered on testable promises — chiefly demand slowdown; 24 later targets still not yet testable."
+  },
+  "provenance": {
+    "mode": "live",
+    "complete": true,
+    "retrieval_errors": 0,
+    "forced_nyt": 4,
+    "models_used": [
+      "openai",
+      "mistral",
+      "gemini",
+      "groq"
+    ],
+    "generated_at": "2026-07-01T09:54:51.778Z",
+    "run_id": "28507866881"
+  }
+}
