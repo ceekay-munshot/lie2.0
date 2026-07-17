@@ -263,9 +263,9 @@
 
     /* ---- Company grid -------------------------------------------------- */
     .grid {
-      margin: 26px 0 10px;
-      display: grid; gap: 18px;
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr));
+      margin: 20px 0 10px;
+      display: grid; gap: 12px;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 208px), 1fr));
     }
     .empty {
       grid-column: 1 / -1; color: var(--muted);
@@ -282,8 +282,8 @@
 
     .company-card {
       position: relative; overflow: hidden;
-      padding: 18px 18px 16px; cursor: pointer;
-      display: grid; gap: 14px;
+      padding: 13px 14px 12px; cursor: pointer;
+      display: grid; gap: 9px;
       transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
       outline: none;
     }
@@ -302,34 +302,34 @@
     }
     .cc-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
     .cc-id { display: grid; gap: 3px; min-width: 0; }
-    .cc-ticker { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; color: var(--accent-cyan); }
-    .cc-name { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+    .cc-ticker { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.08em; color: var(--accent-cyan); }
+    .cc-name { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
     .cc-grade {
-      flex: none; width: 42px; height: 42px; border-radius: 12px;
+      flex: none; width: 34px; height: 34px; border-radius: 9px;
       display: grid; place-items: center;
-      font-weight: 800; font-size: 19px; color: var(--grade-color, var(--muted));
+      font-weight: 800; font-size: 16px; color: var(--grade-color, var(--muted));
       background: color-mix(in srgb, var(--grade-color, var(--muted)) 14%, var(--card));
       border: 1px solid color-mix(in srgb, var(--grade-color, var(--muted)) 42%, transparent);
     }
     .cc-meta { display: flex; flex-wrap: wrap; gap: 8px; }
     .chip {
-      font-size: 12px; padding: 4px 10px; border-radius: 999px;
+      font-size: 11px; padding: 3px 9px; border-radius: 999px;
       color: var(--text); background: var(--ink2);
       border: 1px solid var(--line);
     }
     .chip-quiet { color: var(--muted); }
-    .cc-score { display: grid; gap: 8px; }
+    .cc-score { display: grid; gap: 6px; }
     .cc-score-line { display: flex; align-items: baseline; gap: 6px; }
-    .cc-score-num { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
-    .cc-score-den { color: var(--muted); font-size: 13px; }
-    .cc-score-label { margin-left: auto; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
-    .cc-bar { height: 7px; border-radius: 999px; background: var(--ink2); overflow: hidden; }
+    .cc-score-num { font-size: 21px; font-weight: 800; letter-spacing: -0.02em; }
+    .cc-score-den { color: var(--muted); font-size: 12px; }
+    .cc-score-label { margin-left: auto; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.07em; }
+    .cc-bar { height: 6px; border-radius: 999px; background: var(--ink2); overflow: hidden; }
     .cc-bar > span { display: block; height: 100%; border-radius: 999px; transition: width 0.5s ease; }
     .cc-cta {
-      display: inline-flex; align-items: center; gap: 7px;
-      color: var(--muted); font-size: 13px; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--muted); font-size: 12px; font-weight: 600;
     }
-    .cc-cta i { width: 16px; height: 16px; transition: transform 0.16s ease; }
+    .cc-cta i { width: 14px; height: 14px; transition: transform 0.16s ease; }
     .company-card:hover .cc-cta { color: var(--accent-violet); }
     .company-card:hover .cc-cta i { transform: translateX(3px); }
 
