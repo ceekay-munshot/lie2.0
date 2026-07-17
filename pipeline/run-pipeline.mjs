@@ -100,4 +100,11 @@ console.log(`  elapsed    : ${elapsed}s`);
 if (SKIP_COMMIT) { console.log("\ncommit: skipped (SKIP_COMMIT=1)."); process.exit(0); }
 console.log("");
 const c = spawnSync("node", [P("lib/commit.mjs")], { cwd: REPO, env: { ...process.env, TICKER }, stdio: "inherit" });
+
+// ---- publish to KV (instant-live) — non-fatal, no-op unless CF_* are set ----
+// Mirrors the commit guard (publishes only a real verdict). A KV hiccup never fails the run —
+// the committed JSON still ships on the next redeploy.
+console.log("");
+spawnSync("node", [P("publish-kv.mjs")], { cwd: REPO, env: { ...process.env, TICKER }, stdio: "inherit" });
+
 process.exit(c.status || 0);

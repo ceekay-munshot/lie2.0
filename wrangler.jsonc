@@ -17,4 +17,18 @@
   "observability": {
     "enabled": true
   }
+
+  // --- Optional: instant-live coverage (KV) ----------------------------------
+  // A requested company is written to KV by the pipeline the moment it's scored, and the
+  // Worker serves /data/companies/{index,<ticker>}.json from KV first — so it goes live
+  // WITHOUT waiting for the git-commit → redeploy. The Worker degrades gracefully when this
+  // binding is absent (it serves the committed JSON), so it's safe to enable later.
+  // To turn on:
+  //   1) npx wrangler kv namespace create LEDGERS      # copy the printed id
+  //   2) uncomment the block below and paste the id
+  //   3) add CF_ACCOUNT_ID + CF_KV_NAMESPACE_ID and a CF_API_TOKEN secret ("Workers KV
+  //      Storage: Edit") to the GitHub repo so the pipeline's publish step can write to KV
+  // "kv_namespaces": [
+  //   { "binding": "LEDGERS", "id": "PASTE_KV_NAMESPACE_ID_HERE" }
+  // ]
 }

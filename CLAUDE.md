@@ -135,8 +135,20 @@ coverage. Everything is keyed on `TICKER` — **no company is hardcoded** (the o
   `GH_DISPATCH_TOKEN` Worker secret (wired at deploy P11; until then it safely mock-queues so the
   flow still works). `GET /api/status/:ticker` reports ready/processing/unknown.
 - **Dashboard "Request this company"** (`components/search.js`) — a no-match query → POST
-  `/api/request/:ticker` → a "Processing — pulling filings & scoring" state → polls `index.json`
-  (the ground truth) until the ledger appears, then routes; an already-covered ticker just opens.
+  `/api/request/:ticker` → a "Processing — pulling filings & scoring (~10–15 min)" state that
+  shows elapsed time → polls `index.json` (the ground truth, **served KV-first**) until the
+  ledger appears, then routes; an already-covered ticker just opens. Patient 20-min poll
+  window (the pipeline genuinely takes ~10–15 min).
+- **Instant-live coverage (optional KV)** — the pipeline runs in CI, but the live site serves
+  the *committed* `public/data/` (a git-commit → Cloudflare redeploy lag of minutes). To make a
+  requested company go live the moment it's scored, the pipeline's **`publish-kv.mjs`** step
+  writes the ledger + index to a Cloudflare **KV** namespace (`LEDGERS`) after the guarded
+  commit, and the Worker serves `/data/companies/{index,<ticker>}.json` **KV-first**, falling
+  back to the committed ASSETS copy. **Honest by construction:** `publish-kv` mirrors the commit
+  guard (publishes only a real verdict) and is a **no-op until `CF_ACCOUNT_ID` + `CF_KV_NAMESPACE_ID`
+  + `CF_API_TOKEN` are set** and the `LEDGERS` binding is enabled in `wrangler.jsonc` — so the
+  Worker degrades to serving committed JSON when KV is off. Offline `npm run test:worker` covers
+  KV-first serving + graceful fallback.
 
 **The provenance commit guard is the load-bearing safety property: shipped data
 (`public/data/`) can only ever be a real, complete verdict — a mock/incomplete/stale run never
