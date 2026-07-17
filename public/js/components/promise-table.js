@@ -61,63 +61,85 @@ function cell(col, p) {
   return `<td class="${col.cls || ""}"${v ? "" : ""}>${escapeHTML(v)}</td>`;
 }
 
+const rowHTML = (p) => `<tr data-id="${escapeHTML(p.id)}" tabindex="0">${COLS.map((c) => cell(c, p)).join("")}</tr>`;
+
+const pagerHTML = (page, pages, scope) => (pages > 1 ? `
+  <div class="tbl-pager">
+    <button type="button" class="btn-ghost sm" data-pg="prev" data-scope="${scope}" ${page === 1 ? "disabled" : ""}>Prev</button>
+    <span>Page ${page} of ${pages}</span>
+    <button type="button" class="btn-ghost sm" data-pg="next" data-scope="${scope}" ${page === pages ? "disabled" : ""}>Next</button>
+  </div>` : "");
+
+/**
+ * The master table leads with the TESTABLE verdicts (status ≠ NYT); the not-yet-due
+ * promises — legitimately awaiting their test date and excluded from the score — are
+ * folded into a labelled, collapsible block so a wide ledger (e.g. VEDL's 158 NYT)
+ * doesn't bury the 149 rows that actually carry a verdict. NYT stay one click away.
+ */
 export function mountTable(host, store, { onDrill }) {
   const sort = { key: "status", dir: -1 }; // default worst-first
-  let page = 1;
+  let pageT = 1, pageN = 1, nytOpen = false;
 
-  function rows() {
-    const list = store.filtered().slice();
+  const sortList = (list) => {
+    const out = list.slice();
     const cmp = COMPARE[sort.key];
-    if (cmp) list.sort((a, b) => cmp(a, b) * sort.dir);
-    return list;
-  }
+    if (cmp) out.sort((a, b) => cmp(a, b) * sort.dir);
+    return out;
+  };
+
+  const theadHTML = () => COLS.map((c) => {
+    const sortable = !!c.sort;
+    const active = sortable && sort.key === c.sort;
+    const arrow = active ? (sort.dir === 1 ? " ▲" : " ▼") : "";
+    return `<th class="${c.cls || ""}${sortable ? " sortable" : ""}${active ? " is-sorted" : ""}"${sortable ? ` data-sort="${c.sort}" role="button" tabindex="0" aria-sort="${active ? (sort.dir === 1 ? "ascending" : "descending") : "none"}"` : ""}>${escapeHTML(c.label)}${arrow}</th>`;
+  }).join("");
+
+  const tableHTML = (list, page, scope) => {
+    const pages = Math.max(1, Math.ceil(list.length / PAGE));
+    const p = Math.min(page, pages);
+    if (scope === "t") pageT = p; else pageN = p;
+    const slice = list.slice((p - 1) * PAGE, p * PAGE);
+    return `<div class="table-wrap"><table class="promise-table"><thead><tr>${theadHTML()}</tr></thead><tbody>${slice.map(rowHTML).join("")}</tbody></table></div>${pagerHTML(p, pages, scope)}`;
+  };
 
   function render() {
-    const all = rows();
-    const pages = Math.max(1, Math.ceil(all.length / PAGE));
-    if (page > pages) page = pages;
-    const slice = all.slice((page - 1) * PAGE, page * PAGE);
+    const filtered = store.filtered();
+    const testable = sortList(filtered.filter((x) => x.status !== "NYT"));
+    const nyt = sortList(filtered.filter((x) => x.status === "NYT"));
+    // if a filter leaves nothing testable, auto-open NYT so the view isn't empty
+    const nytExpanded = nyt.length > 0 && (nytOpen || testable.length === 0);
 
     const head = `
       <div class="section-head">
         <div class="section-title"><i data-lucide="table" aria-hidden="true"></i><h2>Master promise table</h2></div>
-        <span class="section-count">${all.length} promise${all.length === 1 ? "" : "s"}${store.active() ? " · filtered" : ""}</span>
+        <span class="section-count">${testable.length} testable${store.active() ? " · filtered" : ""}${nyt.length ? ` · ${nyt.length} not yet due` : ""}</span>
       </div>`;
 
-    if (!all.length) {
-      host.innerHTML = `${head}<div class="tr-empty card">No promises match the current filter.</div>`;
-      if (window.lucide?.createIcons) window.lucide.createIcons();
-      return;
-    }
+    const main = testable.length
+      ? tableHTML(testable, pageT, "t")
+      : `<div class="tr-empty card">No testable promises match the current filter.</div>`;
 
-    const ths = COLS.map((c) => {
-      const sortable = !!c.sort;
-      const active = sortable && sort.key === c.sort;
-      const arrow = active ? (sort.dir === 1 ? " ▲" : " ▼") : "";
-      return `<th class="${c.cls || ""}${sortable ? " sortable" : ""}${active ? " is-sorted" : ""}"${sortable ? ` data-sort="${c.sort}" role="button" tabindex="0" aria-sort="${active ? (sort.dir === 1 ? "ascending" : "descending") : "none"}"` : ""}>${escapeHTML(c.label)}${arrow}</th>`;
-    }).join("");
-
-    const body = slice.map((p) => `<tr data-id="${escapeHTML(p.id)}" tabindex="0">${COLS.map((c) => cell(c, p)).join("")}</tr>`).join("");
-
-    const pager = pages > 1 ? `
-      <div class="tbl-pager">
-        <button type="button" class="btn-ghost sm" data-pg="prev" ${page === 1 ? "disabled" : ""}>Prev</button>
-        <span>Page ${page} of ${pages}</span>
-        <button type="button" class="btn-ghost sm" data-pg="next" ${page === pages ? "disabled" : ""}>Next</button>
+    const nytBlock = nyt.length ? `
+      <div class="nyt-section">
+        <button type="button" class="nyt-toggle" data-nyt-toggle aria-expanded="${nytExpanded}">
+          <i data-lucide="${nytExpanded ? "chevron-down" : "chevron-right"}" aria-hidden="true"></i>
+          <span>Not yet due <b>${nyt.length}</b></span>
+          <span class="nyt-note">awaiting their test date · excluded from the score</span>
+        </button>
+        ${nytExpanded ? tableHTML(nyt, pageN, "n") : ""}
       </div>` : "";
 
-    host.innerHTML = `${head}
-      <div class="table-wrap"><table class="promise-table"><thead><tr>${ths}</tr></thead><tbody>${body}</tbody></table></div>
-      ${pager}`;
+    host.innerHTML = `${head}${main}${nytBlock}`;
     if (window.lucide?.createIcons) window.lucide.createIcons();
   }
 
-  // sort
   host.addEventListener("click", (e) => {
     const th = e.target.closest("th.sortable");
-    if (th) { const k = th.dataset.sort; if (sort.key === k) sort.dir *= -1; else { sort.key = k; sort.dir = (k === "status" || k === "variance") ? -1 : 1; } page = 1; render(); return; }
+    if (th) { const k = th.dataset.sort; if (sort.key === k) sort.dir *= -1; else { sort.key = k; sort.dir = (k === "status" || k === "variance") ? -1 : 1; } pageT = 1; pageN = 1; render(); return; }
+    const tog = e.target.closest("[data-nyt-toggle]");
+    if (tog) { nytOpen = !nytOpen; render(); return; }
     const pg = e.target.closest("[data-pg]");
-    if (pg) { page += pg.dataset.pg === "next" ? 1 : -1; render(); return; }
+    if (pg) { const d = pg.dataset.pg === "next" ? 1 : -1; if (pg.dataset.scope === "n") pageN += d; else pageT += d; render(); return; }
     const tr = e.target.closest("tr[data-id]");
     if (tr) { const p = store.all.find((x) => String(x.id) === tr.dataset.id); if (p) onDrill(p, tr); }
   });
@@ -125,10 +147,12 @@ export function mountTable(host, store, { onDrill }) {
     if (e.key !== "Enter" && e.key !== " ") return;
     const th = e.target.closest("th.sortable");
     if (th) { e.preventDefault(); th.click(); return; }
+    const tog = e.target.closest("[data-nyt-toggle]");
+    if (tog) { e.preventDefault(); tog.click(); return; }
     const tr = e.target.closest("tr[data-id]");
     if (tr) { e.preventDefault(); const p = store.all.find((x) => String(x.id) === tr.dataset.id); if (p) onDrill(p, tr); }
   });
 
-  store.subscribe(() => { page = 1; render(); });
+  store.subscribe(() => { pageT = 1; pageN = 1; render(); });
   render();
 }
