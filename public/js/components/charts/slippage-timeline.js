@@ -47,16 +47,16 @@ export function slippageTimeline(el, ledger) {
           return `<b>${r.label}</b><br/>Promised: ${quarterLabel(r.promised)}<br/>${when}<br/>Status: ${r.status}`;
         },
       },
-      legend: { top: 0, right: 0, data: ["Promised", "Re-set / actual"], icon: "circle", itemWidth: 9, itemHeight: 9, textStyle: { color: tokens.dark.muted } },
+      legend: { top: 0, right: 0, data: ["Promised", "Re-set / actual"], icon: "circle", itemWidth: 9, itemHeight: 9, textStyle: { color: tokens.ui.muted } },
       grid: { left: 10, right: 18, top: 32, bottom: 22, containLabel: true },
       xAxis: { type: "value", min: min - 0.6, max: max + 0.6, interval: 1, axisLabel: { formatter: (v) => quarterLabel(v) } },
-      yAxis: { type: "category", data: cats, axisLabel: { width: 160, overflow: "truncate", color: tokens.dark.muted } },
+      yAxis: { type: "category", data: cats, axisLabel: { width: 160, overflow: "truncate", color: tokens.ui.muted } },
       series: [
         // transparent offset places the coloured span between promised and revised
         { name: "_offset", type: "bar", stack: "slip", silent: true, tooltip: { show: false }, itemStyle: { color: "transparent" }, barWidth: "46%", data: rows.map((r) => Math.min(r.promised, r.revised)) },
         { name: "_span", type: "bar", stack: "slip", barWidth: "46%", data: rows.map((r) => ({ value: Math.abs(r.revised - r.promised), itemStyle: { color: statusColor(r.status), borderRadius: 5 } })) },
-        { name: "Promised", type: "scatter", symbol: "circle", symbolSize: 12, z: 6, itemStyle: { color: AMBER, borderColor: tokens.dark.card, borderWidth: 1.5 }, data: rows.map((r, i) => [r.promised, i]) },
-        { name: "Re-set / actual", type: "scatter", symbol: "circle", symbolSize: 12, z: 7, itemStyle: { color: RED, borderColor: tokens.dark.card, borderWidth: 1.5 }, data: rows.map((r, i) => [r.revised, i]) },
+        { name: "Promised", type: "scatter", symbol: "circle", symbolSize: 12, z: 6, itemStyle: { color: AMBER, borderColor: tokens.ui.card, borderWidth: 1.5 }, data: rows.map((r, i) => [r.promised, i]) },
+        { name: "Re-set / actual", type: "scatter", symbol: "circle", symbolSize: 12, z: 7, itemStyle: { color: RED, borderColor: tokens.ui.card, borderWidth: 1.5 }, data: rows.map((r, i) => [r.revised, i]) },
       ],
     };
   }, { empty: "No slipped timelines — deadlines held", height: "340px", ariaLabel: "Slippage timeline: promised vs re-set" });

@@ -18,15 +18,15 @@ export function statusDonut(el, ledger) {
     }));
     return {
       tooltip: { trigger: "item", formatter: "{b}<br/><b>{c}</b> ({d}%)" },
-      legend: { bottom: 0, icon: "circle", itemWidth: 9, itemHeight: 9, textStyle: { color: tokens.dark.muted } },
+      legend: { bottom: 0, icon: "circle", itemWidth: 9, itemHeight: 9, textStyle: { color: tokens.ui.muted } },
       title: {
         text: String(total), subtext: "promises", left: "50%", top: "40%", textAlign: "center",
-        textStyle: { fontSize: 30, fontWeight: 800, color: tokens.dark.text },
-        subtextStyle: { fontSize: 12, color: tokens.dark.muted },
+        textStyle: { fontSize: 30, fontWeight: 800, color: tokens.ui.text },
+        subtextStyle: { fontSize: 12, color: tokens.ui.muted },
       },
       series: [{
         type: "pie", radius: ["56%", "80%"], center: ["50%", "47%"], avoidLabelOverlap: true,
-        itemStyle: { borderColor: tokens.dark.card, borderWidth: 2 },
+        itemStyle: { borderColor: tokens.ui.card, borderWidth: 2 },
         label: { show: false }, labelLine: { show: false }, data,
       }],
     };

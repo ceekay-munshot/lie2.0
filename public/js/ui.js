@@ -26,15 +26,15 @@ export const tokens = {
     M: "#FFB020",
     L: "#7C8BB0",
   },
-  // Accent ramp (charts, highlights)
+  // Accent ramp (charts, highlights) — vibrant, tuned for a light background
   accent: {
-    red: "#FF4D5E",
-    gold: "#FFB020",
-    violet: "#8B7BFF",
-    teal: "#2DD4BF",
-    cyan: "#38BDF8",
+    red: "#F43F5E",    // rose
+    gold: "#F59E0B",   // amber
+    violet: "#6366F1", // indigo — the primary interactive accent
+    teal: "#10B981",   // emerald
+    cyan: "#06B6D4",   // cyan
   },
-  // Dark theme surfaces
+  // Dark theme surfaces (kept for reference / an optional dark mode)
   dark: {
     ink: "#0A0E1A",
     ink2: "#0F1626",
@@ -50,6 +50,17 @@ export const tokens = {
     card: "#FFFFFF",
     line: "#E4E8F2",
   },
+  // Active surfaces the charts + ECharts theme read from (light & vibrant).
+  // Keep in lock-step with the :root CSS variables in index.html.
+  ui: {
+    bg: "#F6F8FC",
+    card: "#FFFFFF",
+    line: "#E4E9F2",
+    muted: "#5B6B85",
+    text: "#0F1B34",
+  },
+  // A rich, well-graded categorical ramp for charts on a light canvas.
+  chart: ["#6366F1", "#06B6D4", "#10B981", "#F59E0B", "#F43F5E", "#8B5CF6", "#14B8A6", "#EC4899"],
   // Credibility grade ramp (A best → E worst)
   grade: {
     A: "#22C55E",
@@ -66,17 +77,17 @@ export const tokens = {
 
 /** Colour for a promise status (MET | PARTIAL | MISSED | NYT). */
 export function statusColor(status) {
-  return tokens.status[status] || tokens.dark.muted;
+  return tokens.status[status] || tokens.ui.muted;
 }
 
 /** Colour for an extraction confidence (H | M | L). */
 export function confColor(conf) {
-  return tokens.confidence[conf] || tokens.dark.muted;
+  return tokens.confidence[conf] || tokens.ui.muted;
 }
 
 /** Colour for a credibility grade (A–E, case-insensitive). */
 export function gradeColor(grade) {
-  return tokens.grade[String(grade || "").toUpperCase()] || tokens.dark.muted;
+  return tokens.grade[String(grade || "").toUpperCase()] || tokens.ui.muted;
 }
 
 /**
@@ -183,38 +194,33 @@ const FONT_STACK =
   "Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif";
 
 export const echartsTheme = {
-  color: [
-    tokens.accent.cyan,
-    tokens.accent.violet,
-    tokens.accent.teal,
-    tokens.accent.gold,
-    tokens.accent.red,
-  ],
+  color: tokens.chart,
   backgroundColor: "transparent",
-  textStyle: { color: tokens.dark.text, fontFamily: FONT_STACK },
+  textStyle: { color: tokens.ui.text, fontFamily: FONT_STACK },
   title: {
-    textStyle: { color: tokens.dark.text, fontFamily: FONT_STACK, fontWeight: 600 },
-    subtextStyle: { color: tokens.dark.muted },
+    textStyle: { color: tokens.ui.text, fontFamily: FONT_STACK, fontWeight: 700 },
+    subtextStyle: { color: tokens.ui.muted },
   },
-  legend: { textStyle: { color: tokens.dark.muted } },
+  legend: { textStyle: { color: tokens.ui.muted } },
   tooltip: {
-    backgroundColor: tokens.dark.card,
-    borderColor: tokens.dark.line,
+    backgroundColor: tokens.ui.card,
+    borderColor: tokens.ui.line,
     borderWidth: 1,
-    textStyle: { color: tokens.dark.text },
+    textStyle: { color: tokens.ui.text },
+    extraCssText: "box-shadow: 0 12px 30px -10px rgba(16,24,40,0.22); border-radius: 10px; padding: 8px 11px;",
   },
-  grid: { borderColor: tokens.dark.line, containLabel: true },
+  grid: { borderColor: tokens.ui.line, containLabel: true },
   categoryAxis: {
-    axisLine: { lineStyle: { color: tokens.dark.line } },
-    axisTick: { lineStyle: { color: tokens.dark.line } },
-    axisLabel: { color: tokens.dark.muted },
-    splitLine: { show: false, lineStyle: { color: tokens.dark.line } },
+    axisLine: { lineStyle: { color: tokens.ui.line } },
+    axisTick: { lineStyle: { color: tokens.ui.line } },
+    axisLabel: { color: tokens.ui.muted },
+    splitLine: { show: false, lineStyle: { color: tokens.ui.line } },
   },
   valueAxis: {
-    axisLine: { show: false, lineStyle: { color: tokens.dark.line } },
-    axisTick: { lineStyle: { color: tokens.dark.line } },
-    axisLabel: { color: tokens.dark.muted },
-    splitLine: { lineStyle: { color: tokens.dark.line, type: "dashed" } },
+    axisLine: { show: false, lineStyle: { color: tokens.ui.line } },
+    axisTick: { lineStyle: { color: tokens.ui.line } },
+    axisLabel: { color: tokens.ui.muted },
+    splitLine: { lineStyle: { color: tokens.ui.line, type: "dashed" } },
   },
 };
 

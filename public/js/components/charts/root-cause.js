@@ -15,11 +15,11 @@ export function rootCause(el, ledger) {
       tooltip: { trigger: "item", formatter: "{b}: <b>{c}</b>" },
       grid: { left: 8, right: 28, top: 8, bottom: 8, containLabel: true },
       xAxis: { type: "value", minInterval: 1 },
-      yAxis: { type: "category", data: entries.map((e) => e[0]), axisLabel: { color: tokens.dark.muted } },
+      yAxis: { type: "category", data: entries.map((e) => e[0]), axisLabel: { color: tokens.ui.muted } },
       series: [{
         type: "bar", barWidth: "58%",
         itemStyle: { color: tokens.accent.red, borderRadius: [0, 4, 4, 0] },
-        label: { show: true, position: "right", color: tokens.dark.muted },
+        label: { show: true, position: "right", color: tokens.ui.muted },
         data: entries.map((e) => e[1]),
       }],
     };

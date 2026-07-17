@@ -20,7 +20,7 @@ export function byQuarter(el, ledger) {
     }));
     return {
       tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
-      legend: { bottom: 0, icon: "roundRect", itemWidth: 10, itemHeight: 10, textStyle: { color: tokens.dark.muted } },
+      legend: { bottom: 0, icon: "roundRect", itemWidth: 10, itemHeight: 10, textStyle: { color: tokens.ui.muted } },
       grid: { left: 8, right: 12, top: 14, bottom: 38, containLabel: true },
       xAxis: { type: "category", data: quarters },
       yAxis: { type: "value", minInterval: 1 },

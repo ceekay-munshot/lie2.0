@@ -55,7 +55,7 @@ export function momentum(el, ledger) {
           return [head, ...lines].join("<br/>");
         },
       },
-      legend: { bottom: 0, icon: "roundRect", itemWidth: 10, itemHeight: 10, textStyle: { color: tokens.dark.muted } },
+      legend: { bottom: 0, icon: "roundRect", itemWidth: 10, itemHeight: 10, textStyle: { color: tokens.ui.muted } },
       grid: { left: 8, right: 8, top: 16, bottom: 38, containLabel: true },
       xAxis: { type: "category", data: quarters },
       yAxis: [
