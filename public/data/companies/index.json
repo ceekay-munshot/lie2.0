@@ -3,31 +3,31 @@
     "ticker": "VEDL",
     "name": "VEDL",
     "sector": null,
-    "credibility_score": 59,
+    "credibility_score": 58,
     "coverage": "Q1 FY25–Q4 FY26",
     "updated_at": "2026-07-01T09:44:33.975Z"
-  },
-  {
-    "ticker": "RELIANCE",
-    "name": "RELIANCE",
-    "sector": null,
-    "credibility_score": 64,
-    "coverage": "Q1 FY25–Q4 FY26",
-    "updated_at": "2026-07-01T09:54:51.778Z"
   },
   {
     "ticker": "HDFCBANK",
     "name": "HDFCBANK",
     "sector": null,
-    "credibility_score": 76,
+    "credibility_score": 63,
     "coverage": "Q3 FY25–Q4 FY26",
     "updated_at": "2026-07-01T10:09:15.435Z"
+  },
+  {
+    "ticker": "RELIANCE",
+    "name": "RELIANCE",
+    "sector": null,
+    "credibility_score": 63,
+    "coverage": "Q1 FY25–Q4 FY26",
+    "updated_at": "2026-07-01T09:54:51.778Z"
   },
   {
     "ticker": "INFY",
     "name": "INFY",
     "sector": null,
-    "credibility_score": 100,
+    "credibility_score": 80,
     "coverage": "Q1 FY25–Q3 FY26",
     "updated_at": "2026-07-01T09:48:20.390Z"
   }

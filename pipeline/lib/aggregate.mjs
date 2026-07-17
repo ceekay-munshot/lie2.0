@@ -10,6 +10,13 @@ import { directionFor } from "./metric-direction.mjs";
 
 const CONF_W = { H: 1.0, M: 0.8, L: 0.6 };
 const OUTCOME_W = { MET: 1, PARTIAL: 0.5, MISSED: 0 };
+// Coverage-aware shrinkage — a thin testable base must not earn a confident extreme
+// score (INFY was 15/15 MET → a bogus 100). Blend the observed confidence-weighted rate
+// with a neutral PRIOR, weighted by K pseudo-observations: a large sample barely moves,
+// a thin one pulls toward the prior and firms up as more promises come due. Env-tunable.
+const _num = (v, d) => { const n = Number(v); return Number.isFinite(n) ? n : d; };
+const PRIOR_RATE = Math.min(1, Math.max(0, _num(process.env.CRED_PRIOR_RATE, 0.5)));
+const PRIOR_K = Math.max(0, _num(process.env.CRED_PRIOR_K, 10));
 const BANDS = [[75, "A"], [60, "B"], [45, "C"], [30, "D"], [0, "E"]];
 export const gradeFromScore = (s) => (s == null ? null : (BANDS.find(([t]) => s >= t) || [, "E"])[1]);
 
@@ -47,7 +54,13 @@ export function aggregate(promises = []) {
   };
 }
 
-/** Confidence-weighted delivery rate over a subset; rounded 0-100 or null if empty. */
+/**
+ * Confidence-weighted delivery rate over a subset, shrunk toward the neutral prior;
+ * rounded 0-100, or null if the subset is empty (nothing testable → score pending).
+ * Shrinkage: score = 100 × (Σ(conf×outcome) + K·prior) / (Σconf + K). At Σconf ≫ K the
+ * observed rate dominates; at a thin Σconf it pulls toward the prior — so neither a
+ * perfect nor a rock-bottom score is handed out on a handful of promises.
+ */
 function weightedScore(subset) {
   let num = 0, den = 0;
   for (const p of subset) {
@@ -55,7 +68,8 @@ function weightedScore(subset) {
     num += w * (OUTCOME_W[p.status] ?? 0);
     den += w;
   }
-  return den ? Math.round((100 * num) / den) : null;
+  if (!den) return null;
+  return Math.round((100 * (num + PRIOR_K * PRIOR_RATE)) / (den + PRIOR_K));
 }
 
 /** Deterministic headline from the numbers — never invents figures. */
@@ -82,7 +96,7 @@ export function credibility(promises = [], aggregates = null) {
     grade: gradeFromScore(score),
     timeline_score,
     delivery_score,
-    method: "Conf-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6). Bands A>=75 B>=60 C>=45 D>=30 E<30.",
+    method: `Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), shrunk toward a neutral ${Math.round(PRIOR_RATE * 100)} prior by ${PRIOR_K} pseudo-observations so a thin testable base can't earn a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.`,
     headline: buildHeadline(agg),
   };
 }

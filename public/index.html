@@ -675,6 +675,17 @@
     .tr-card-rows dd { margin: 0; font-size: 13px; }
     .tr-card-rows .tr-var { font-weight: 600; }
     .tr-why { margin: 0; font-size: 12.5px; color: var(--muted); font-style: italic; line-height: 1.45; }
+    .tr-more {
+      display: flex; align-items: center; gap: 7px; width: fit-content; margin: 10px auto 0;
+      font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer;
+      color: var(--accent-violet); background: var(--card);
+      border: 1px solid color-mix(in srgb, var(--accent-violet) 35%, var(--line));
+      border-radius: 999px; padding: 9px 18px; box-shadow: var(--shadow-sm);
+      transition: background .12s ease, border-color .12s ease;
+    }
+    .tr-more:hover { background: color-mix(in srgb, var(--accent-violet) 8%, var(--card)); border-color: color-mix(in srgb, var(--accent-violet) 55%, var(--line)); }
+    .tr-more:focus-visible { outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-violet) 30%, transparent); }
+    .tr-more i { width: 15px; height: 15px; }
 
     /* master table */
     .table-wrap { overflow-x: auto; max-width: 100%; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--card); box-shadow: var(--shadow-sm); }

@@ -28,7 +28,10 @@ const CHART_PANELS = [
   { id: "chart-slippage", title: "Slippage timeline", sub: "Promised → re-set", icon: "calendar-clock", wide: true, mount: slippageTimeline, show: (l) => (l.promises || []).some((p) => p.category === "timeline") },
   { id: "chart-donut", title: "Promise status mix", icon: "chart-pie", mount: statusDonut, show: (l) => !!l.aggregates?.status_counts },
   { id: "chart-quarter", title: "By quarter", icon: "chart-column-big", mount: byQuarter, show: (l) => Object.keys(l.aggregates?.by_quarter || {}).length > 0 },
-  { id: "chart-momentum", title: "Financial momentum", sub: "EBITDA · margin · leverage · ROCE", icon: "trending-up", wide: true, mount: momentum, show: (l) => (l.financial_trend || []).length > 0 },
+  // only show momentum when at least one quarter carries a real financial figure —
+  // some ledgers (e.g. INFY) have financial_trend rows with every metric null, which
+  // would otherwise render an empty "No EBITDA / margin reported" box.
+  { id: "chart-momentum", title: "Financial momentum", sub: "EBITDA · margin · leverage · ROCE", icon: "trending-up", wide: true, mount: momentum, show: (l) => (l.financial_trend || []).some((q) => q && ["revenue", "ebitda", "ebitda_margin", "pat", "net_debt_ebitda", "roce"].some((k) => q[k] != null && q[k] !== "")) },
   { id: "chart-root", title: "Why promises slipped", icon: "list-tree", wide: true, mount: rootCause, show: (l) => Object.keys(l.aggregates?.root_causes || {}).length > 0 },
 ];
 

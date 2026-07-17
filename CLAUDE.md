@@ -316,8 +316,11 @@ Pipeline (all but step 2 is deterministic):
    presentation pulls reported headline financials → `financial_trend[]`.
 5. **aggregates + credibility** (`aggregate.mjs`) — confidence-weighted delivery
    over **testable** promises: `MET=1/PARTIAL=0.5/MISSED=0`, `H=1.0/M=0.8/L=0.6`;
-   `score = 100 × Σ(conf×outcome)/Σ(conf)`; bands A≥75 B≥60 C≥45 D≥30 E<30. The
-   headline is a deterministic template — it never invents a figure.
+   `score = 100 × (Σ(conf×outcome) + K·p₀)/(Σconf + K)` — the raw rate **shrunk toward a
+   neutral prior** (`p₀=0.5`, `K=10`) so a thin testable base can't earn a confident
+   extreme score (a 15/15-MET company reads ~80, not a bogus 100; the shrink fades as the
+   sample grows); bands A≥75 B≥60 C≥45 D≥30 E<30. The headline is a deterministic
+   template — it never invents a figure.
 
 `eval-verification.mjs` is the **data-verifier**: it aligns the engine ledger to
 the golden fixture (lexical fuzzy match, then an LLM that judges *matching* only —
@@ -531,7 +534,13 @@ Confidence-weighted delivery rate over **testable** (non-NYT) promises:
 
 - Outcome weights: `MET = 1`, `PARTIAL = 0.5`, `MISSED = 0`.
 - Confidence weights: `H = 1.0`, `M = 0.8`, `L = 0.6`.
-- `score = 100 × Σ(conf_weight × outcome) / Σ(conf_weight)` over testable promises.
+- Raw rate `= Σ(conf_weight × outcome) / Σ(conf_weight)` over testable promises, then
+  **shrunk toward a neutral prior** (coverage-aware):
+  `score = 100 × (Σ(conf×outcome) + K·p₀) / (Σconf + K)`, `p₀ = 0.5`, `K = 10`
+  (env `CRED_PRIOR_RATE` / `CRED_PRIOR_K`). A large testable base tracks the raw rate;
+  a thin one (e.g. 15/15 MET) can't earn a confident extreme score — it pulls toward the
+  prior and firms up as more promises come due. Same shrinkage on `timeline_score` /
+  `delivery_score`.
 - Grade bands: **A ≥ 75 · B ≥ 60 · C ≥ 45 · D ≥ 30 · E < 30**.
 
 `aggregate.mjs#credibility` computes it; `public/js/ui.js#gradeFromScore` encodes

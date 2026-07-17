@@ -32,8 +32,11 @@ function cardHTML(p) {
     </article>`;
 }
 
+const CAP = 6; // cards shown before the "+N more" toggle
+
 export function mountTrackRecord(host, store, { onDrill }) {
   const totalTestable = store.all.filter((p) => p.status && p.status !== "NYT").length;
+  let expanded = false;
 
   function render(filtered) {
     const testable = filtered.filter((p) => p.status && p.status !== "NYT");
@@ -50,18 +53,31 @@ export function mountTrackRecord(host, store, { onDrill }) {
         : `No testable promises yet — ${nyt} awaiting their test date.`;
       host.innerHTML = `${head}<div class="tr-empty card">${escapeHTML(msg)}</div>`;
     } else {
-      host.innerHTML = `${head}<div class="tr-grid">${testable.map(cardHTML).join("")}</div>`;
+      const shown = expanded ? testable : testable.slice(0, CAP);
+      const rest = testable.length - shown.length;
+      const more = testable.length > CAP
+        ? `<button type="button" class="tr-more" data-tr-more aria-expanded="${expanded}">${expanded ? "Show fewer" : `Show ${rest} more`}<i data-lucide="${expanded ? "chevron-up" : "chevron-down"}" aria-hidden="true"></i></button>`
+        : "";
+      host.innerHTML = `${head}<div class="tr-grid">${shown.map(cardHTML).join("")}</div>${more}`;
     }
     if (window.lucide?.createIcons) window.lucide.createIcons();
   }
 
   const fire = (el) => { const p = store.all.find((x) => String(x.id) === el.dataset.id); if (p) onDrill(p, el); };
-  host.addEventListener("click", (e) => { const c = e.target.closest(".tr-card[data-id]"); if (c) fire(c); });
+  host.addEventListener("click", (e) => {
+    const more = e.target.closest("[data-tr-more]");
+    if (more) { expanded = !expanded; render(store.filtered()); return; }
+    const c = e.target.closest(".tr-card[data-id]"); if (c) fire(c);
+  });
   host.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const more = e.target.closest("[data-tr-more]");
+    if (more) { e.preventDefault(); expanded = !expanded; render(store.filtered()); return; }
     const c = e.target.closest(".tr-card[data-id]");
-    if (c && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); fire(c); }
+    if (c) { e.preventDefault(); fire(c); }
   });
 
-  store.subscribe(render);
+  // a filter change resets to the collapsed view (fresh, short list)
+  store.subscribe((f) => { expanded = false; render(f); });
   render(store.filtered());
 }

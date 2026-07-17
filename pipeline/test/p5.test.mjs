@@ -85,12 +85,16 @@ const P = (status, confidence, category = "ebitda") => ({ status, confidence, ca
 const set = [P("MET", "H"), P("MISSED", "H"), P("NYT", "M")];
 const agg = aggregate(set);
 ok(agg.total === 3 && agg.testable === 2 && agg.status_counts.NYT === 1, "aggregate counts + testable excludes NYT");
-// hand-fed credibility: testable = 1×MET(H,w1) + 1×MISSED(H,w1) → 100×(1×1+1×0)/(1+1)=50 → C
-ok(credibility(set).score === 50 && credibility(set).grade === "C", "credibility = conf-weighted delivery (1 MET + 1 MISSED, both H → 50 / C)");
-// all-MISSED testable → 0 / E ; banding reproduced
-ok(credibility([P("MISSED", "H"), P("MISSED", "M")]).score === 0 && credibility([P("MISSED", "H")]).grade === "E", "all-missed → 0 / grade E");
-// PARTIAL counts as 0.5
-ok(credibility([P("PARTIAL", "H")]).score === 50, "a lone PARTIAL (H) → 50");
+// testable = 1 MET(H) + 1 MISSED(H): the raw rate 0.5 equals the neutral prior, so
+// shrinkage leaves it exactly at 50 → C.
+ok(credibility(set).score === 50 && credibility(set).grade === "C", "1 MET + 1 MISSED (both H) → 50 / C (rate == prior, unmoved by shrinkage)");
+// PARTIAL counts as 0.5 — a lone PARTIAL(H) also sits at the prior → 50
+ok(credibility([P("PARTIAL", "H")]).score === 50, "a lone PARTIAL (H) → 50 (rate == prior)");
+// coverage-aware shrinkage — the fix for the INFY "15/15 MET → 100" bogus score:
+ok(credibility([P("MET", "H")]).score < 90, "a thin all-MET base no longer earns a perfect 100 (shrunk below 90)");
+ok(credibility(Array.from({ length: 50 }, () => P("MET", "H"))).score >= 90, "a large all-MET base still reads high (~100) — shrinkage fades with evidence");
+ok(credibility([P("MISSED", "H")]).score > 30 && credibility([P("MISSED", "H")]).score < 50, "a lone MISSED is pulled UP off rock-bottom 0 toward the prior");
+ok(credibility(Array.from({ length: 40 }, () => P("MISSED", "H"))).grade === "E", "40 misses → grade E (thin-sample shrinkage negligible at scale)");
 
 // ---- 10) Codex review regressions (hardening generic parsing/verdicts) ------
 console.log("\nCodex-review regressions:");
