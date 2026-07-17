@@ -14,6 +14,7 @@ import { deriveTestDate } from "../lib/test-date.mjs";
 import { SYSTEM_PROMPT } from "../lib/extract-prompt.mjs";
 import { evalExtraction } from "../eval-extraction.mjs";
 import { isDailyLimit } from "../lib/llm.mjs";
+import { normPeriod, dedup } from "../lib/dedup.mjs";
 
 let fails = 0;
 const ok = (cond, label) => {
@@ -269,6 +270,27 @@ const relFig = assemblePromises(
   { docTextById: new Map([["y", "we will double our aluminium capacity going forward"]]) },
 );
 ok(relFig.promises[0].figure_in_quote === true, "relative target ('double') counts as figure-in-quote via a quantity word");
+
+// ---- 2d) fiscal-period canonicalisation (near-dup merge) -------------------
+console.log("\nperiod canonicalisation:");
+ok(normPeriod("FY25") === normPeriod("by end of FY25") && normPeriod("FY25") === normPeriod("FY'25"), "FY25 / 'by end of FY25' / FY'25 canonicalise to one period");
+ok(normPeriod("Q3FY25") === normPeriod("Q3 FY'25") && normPeriod("Q3FY25") === normPeriod("3QFY25"), "Q3FY25 / Q3 FY'25 / 3QFY25 canonicalise together");
+ok(normPeriod("1HFY27") === normPeriod("H1 FY27"), "half-year 1HFY27 / H1 FY27 canonicalise together");
+ok(normPeriod("FY25") !== normPeriod("FY26"), "different fiscal years stay distinct (no over-merge)");
+ok(normPeriod("Q3FY25") !== normPeriod("Q2FY25"), "different quarters of the same FY stay distinct");
+ok(normPeriod("medium term") === "mediumterm" && normPeriod("near term") === "nearterm", "vague horizons unchanged (fall back to the cleaned string)");
+// end-to-end: two same-quarter rows for one commitment, periods phrased differently, now merge
+const nearDup = dedup([
+  { model: "m", source_id: "a", date: "2025-08-01", quarter_context: "Q1FY25", category: "capacity", promise: "Complete ESL steel expansion to 3.5 Mtpa", quote: "q1", metric: "ESL steel capacity 3.5 Mtpa", target: { text: "3.5 Mtpa by FY25", value: 3.5, unit: "Mtpa", period: "FY25" }, confidence: "H" },
+  { model: "m", source_id: "a", date: "2025-08-01", quarter_context: "Q1FY25", category: "capacity", promise: "ESL steel ramp-up to 3.5 Mtpa by end FY25", quote: "q2", metric: "ESL steel capacity 3.5 Mtpa", target: { text: "3.5 Mtpa by FY25-end", value: 3.5, unit: "Mtpa", period: "by end of FY25" }, confidence: "H" },
+]);
+ok(nearDup.length === 1, "same-quarter near-dup (period 'FY25' vs 'by end of FY25', same subject+target) merges to one row");
+// but a genuinely different period must NOT merge
+const twoPeriods = dedup([
+  { model: "m", source_id: "a", date: "2025-08-01", quarter_context: "Q1FY25", category: "capacity", promise: "3.5 Mtpa by FY25", quote: "q1", metric: "ESL steel capacity", target: { text: "3.5 Mtpa by FY25", value: 3.5, unit: "Mtpa", period: "FY25" }, confidence: "H" },
+  { model: "m", source_id: "a", date: "2025-08-01", quarter_context: "Q1FY25", category: "capacity", promise: "5 Mtpa by FY27", quote: "q2", metric: "ESL steel capacity", target: { text: "5 Mtpa by FY27", value: 5, unit: "Mtpa", period: "FY27" }, confidence: "H" },
+]);
+ok(twoPeriods.length === 2, "distinct fiscal periods (FY25 vs FY27) stay as two rows");
 
 // ---- 2c) offline mock extractor (PROVIDER=mock, $0) ------------------------
 console.log("\nmock extractor (offline, no API):");

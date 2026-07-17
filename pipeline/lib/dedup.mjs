@@ -30,7 +30,29 @@ const FILLER = new Set(
 const normUnit = (s) =>
   String(s || "").toLowerCase().replace(/\bbillion\b/g, "bn").replace(/\bmillion\b/g, "mn").replace(/[^a-z0-9%]/g, "");
 
-const normPeriod = (s) => String(s || "").toLowerCase().replace(/['’\s]/g, "");
+/**
+ * Canonicalise a target period so the SAME fiscal period phrased differently
+ * ("FY25", "by end of FY25", "FY'25", "end-FY25", "Q3 FY'25" vs "3QFY25") maps to
+ * ONE key — otherwise two rows for the same commitment fail to merge and inflate
+ * the ledger. Non-fiscal horizons ("medium term", "2030") fall back to the cleaned
+ * string, so behaviour there is unchanged. Distinct fiscal periods stay distinct
+ * (FY25 ≠ FY26) — this only collapses phrasing, never merges different periods.
+ */
+function normPeriod(s) {
+  const raw = String(s || "").toLowerCase();
+  let m;
+  if ((m = raw.match(/q\s*([1-4])\s*['’]?\s*fy\s*['’]?\s*(\d{2,4})/)) ||
+      (m = raw.match(/([1-4])\s*q\s*['’]?\s*fy\s*['’]?\s*(\d{2,4})/)))
+    return `q${m[1]}fy${m[2].slice(-2)}`;
+  if ((m = raw.match(/([12])\s*h\s*['’]?\s*fy\s*['’]?\s*(\d{2,4})/)) ||
+      (m = raw.match(/h\s*([12])\s*['’]?\s*fy\s*['’]?\s*(\d{2,4})/)))
+    return `${m[1]}hfy${m[2].slice(-2)}`;
+  if ((m = raw.match(/\bfy\s*['’]?\s*(\d{2,4})/)))
+    return `fy${m[1].slice(-2)}`;
+  if ((m = raw.match(/\b(20\d{2})\b/)))
+    return m[1];
+  return raw.replace(/['’\s]/g, "");
+}
 
 /**
  * The commitment's SUBJECT: category + period + topic words (numbers, currency,
