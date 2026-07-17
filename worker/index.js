@@ -37,6 +37,51 @@ function rateLimited(ip, now) {
   return hits.length > RATE_MAX;
 }
 
+/** A looser per-IP limiter for /api/search (typed-ahead, debounced client-side). */
+const SEARCH_LOG = new Map(); // ip -> number[]
+const SEARCH_MAX = 40;
+const SEARCH_WINDOW_MS = 60 * 1000;
+function searchRateLimited(ip, now) {
+  const hits = (SEARCH_LOG.get(ip) || []).filter((t) => now - t < SEARCH_WINDOW_MS);
+  hits.push(now);
+  SEARCH_LOG.set(ip, hits);
+  return hits.length > SEARCH_MAX;
+}
+
+/**
+ * Proxy the muns stock-search API. Keeps the bearer token server-side and normalises the
+ * response to `[{ticker,name,sector,country}]`. Every failure path returns 200 with an
+ * empty list so the dashboard degrades to its local index instead of erroring.
+ */
+async function stockSearch(env, query) {
+  const token = env.MUNS_TOKEN;
+  if (!token) return { ok: false, error: "search_unconfigured", results: [] };
+  let res;
+  try {
+    res = await fetch("https://birdnest.muns.io/stock/search", {
+      method: "POST",
+      headers: { accept: "*/*", authorization: `Bearer ${token}`, "content-type": "application/json" },
+      body: JSON.stringify({ query, user_index: 124 }),
+    });
+  } catch {
+    return { ok: false, error: "search_failed", results: [] };
+  }
+  if (!res.ok) return { ok: false, error: "search_upstream", status: res.status, results: [] };
+  const data = await res.json().catch(() => ({}));
+  const raw = (data && data.data && data.data.results) || {};
+  const results = Object.entries(raw)
+    .map(([ticker, arr]) => ({
+      ticker: String(ticker),
+      country: Array.isArray(arr) ? arr[0] : null,
+      name: (Array.isArray(arr) ? arr[1] : null) || String(ticker),
+      sector: Array.isArray(arr) ? arr[2] : null,
+    }))
+    // Screener (the acquisition backend) is India-only, so a foreign listing can't be
+    // requested — surface only Indian rows whose ticker is a clean, requestable symbol.
+    .filter((x) => x.country === "India" && TICKER_RE.test(x.ticker));
+  return { ok: true, results };
+}
+
 /** Is this ticker already covered? (read the committed index via the ASSETS binding). */
 async function isCovered(env, url, ticker) {
   try {
@@ -72,6 +117,18 @@ async function handleApi(request, env, url) {
   const { pathname } = url;
 
   if (pathname === "/api/health") return json({ ok: true });
+
+  // POST /api/search { query } — typed-ahead company search (proxies the muns API).
+  if (pathname === "/api/search") {
+    if (request.method !== "POST") return json({ ok: false, error: "method_not_allowed", results: [] }, 405);
+    let body = {};
+    try { body = await request.json(); } catch { /* empty body */ }
+    const query = String((body && body.query) || "").trim();
+    if (query.length < 2) return json({ ok: true, results: [] });
+    const ip = request.headers.get("cf-connecting-ip") || request.headers.get("x-forwarded-for") || "unknown";
+    if (searchRateLimited(ip, Date.now())) return json({ ok: false, error: "rate_limited", results: [] });
+    return json(await stockSearch(env, query));
+  }
 
   const company = pathname.match(/^\/api\/company\/([A-Za-z0-9._-]+)\/?$/);
   if (company) {
