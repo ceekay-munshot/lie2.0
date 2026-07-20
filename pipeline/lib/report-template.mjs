@@ -89,20 +89,25 @@ function hbars(items, w = 300, rh = 30) {
   return s.join("");
 }
 
-function gantt(rows, qs, w = 580, rh = 34) {
-  const lw = 188, right = 14, plot = w - lw - right, n = qs.length || 1, cw = plot / n;
-  const h = rh * rows.length + 42;
+function gantt(rows, qs, w = 1040, rh = 34) {
+  // Full-width viewBox (the panel now spans the whole page) so the quarter columns are wide —
+  // with lw/right fixed, a larger total makes each column a bigger share, so labels stop colliding.
+  const lw = 210, right = 120, plot = w - lw - right, n = qs.length || 1, cw = plot / n;
+  const h = rh * rows.length + 46;
   // truncate names to what the label gutter actually fits (≈6.4px/char at 11px semibold,
   // leaving a 12px gap before the first quarter line) so a long name never bleeds into the plot.
-  const maxChars = Math.max(8, Math.floor((lw - 12) / 6.4));
+  const maxChars = Math.max(10, Math.floor((lw - 12) / 6.4));
+  // thin the quarter-axis labels so they never overlap: a "QnFYnn" label is ~40 units wide,
+  // so only draw every k-th where k keeps ≥48 units between shown labels (dense ranges).
+  const qstep = Math.max(1, Math.ceil(48 / cw));
   const s = [`<svg viewBox="0 0 ${w} ${h}" class="gt">`];
   qs.forEach((q, j) => {
     const x = lw + cw * j;
-    s.push(`<line x1="${x}" y1="22" x2="${x}" y2="${h - 12}" stroke="${T.LINE}" stroke-width="1"/>`);
-    s.push(`<text x="${x + cw / 2}" y="14" class="gt-q">${esc(q)}</text>`);
+    s.push(`<line x1="${x}" y1="24" x2="${x}" y2="${h - 14}" stroke="${T.LINE}" stroke-width="1"/>`);
+    if (j % qstep === 0) s.push(`<text x="${x + cw / 2}" y="15" class="gt-q">${esc(q)}</text>`);
   });
   rows.forEach((r, i) => {
-    const y = 30 + i * rh;
+    const y = 32 + i * rh;
     const nm = r.name.length > maxChars ? `${r.name.slice(0, maxChars - 1)}…` : r.name;
     s.push(`<text x="0" y="${y + rh * 0.5}" class="gt-name">${esc(nm)}</text>`);
     const px = lw + cw * r.prom + cw / 2, rx = lw + cw * r.rev + cw / 2, cy = y + rh * 0.45;
@@ -120,40 +125,48 @@ function gantt(rows, qs, w = 580, rh = 34) {
   return s.join("");
 }
 
-function momentumChart(ft, w = 360, h = 170) {
+function momentumChart(ft, w = 980, h = 132) {
+  // A WIDE, flat viewBox: this panel now spans the full page, so a near-square viewBox would
+  // scale up to a ~470px-tall chart (overflowing the slide) with giant labels. w:h ≈ 5.6:1
+  // renders ~180px tall at full width, with normal-sized labels.
   // keep any quarter that reports EITHER absolute EBITDA or a margin (the schema allows
   // ebitda:null) — a margin-only ledger still renders its line series instead of an empty page.
   const vals = ft.map((q) => [q.quarter, num(q.ebitda), num(q.ebitda_margin)]).filter((x) => x[1] != null || x[2] != null);
   if (!vals.length) return "";
   // guard against all-zero (NaN) and loss-making/negative EBITDA (negative bar heights):
   // scale off the largest non-negative value (floored to 1) and clamp every bar at ≥0.
-  const maxv = Math.max(1, ...vals.map((x) => Math.max(0, x[1] ?? 0))) * 1.12;
-  const pad = 30, gw = (w - pad - 12) / vals.length, bw = gw * 0.46, base = h - 24, top = 14;
+  const maxv = Math.max(1, ...vals.map((x) => Math.max(0, x[1] ?? 0))) * 1.14;
+  const pad = 34, gw = (w - pad - 16) / vals.length, bw = Math.min(72, gw * 0.5), base = h - 26, top = 18;
   // margin line: scale from the data (a fixed 0–50% scale clips high-margin or loss-making
   // ledgers off the chart) but anchored to 0 so a small fluctuation isn't visually exaggerated;
   // padded so points never sit on the very edge.
   const ms = vals.map((x) => x[2]).filter((v) => v != null);
   let mLo = Math.min(0, ...(ms.length ? ms : [0])), mHi = Math.max(0, ...(ms.length ? ms : [1]));
   if (mHi - mLo < 1e-9) mHi = mLo + 1;
-  const mpad = (mHi - mLo) * 0.12; mLo -= mpad; mHi += mpad;
+  const mpad = (mHi - mLo) * 0.14; mLo -= mpad; mHi += mpad;
   const mY = (m) => base - ((m - mLo) / (mHi - mLo)) * (base - top);
   const s = [`<svg viewBox="0 0 ${w} ${h}" class="eb">`];
   const pts = [];
   vals.forEach(([lab, v, m], i) => {
-    const x = pad + gw * i + (gw - bw) / 2;
+    const x = pad + gw * i + (gw - bw) / 2, cx = x + bw / 2;
     if (v != null) { // a bar only when this quarter reports an absolute EBITDA
       const bh = Math.max(0, (v / maxv) * (base - top)), y = base - bh;
       s.push(`<defs><linearGradient id="g${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.GOLD}"/><stop offset="1" stop-color="${T.RED}"/></linearGradient></defs>`);
       s.push(`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="4" fill="url(#g${i})"/>`);
-      s.push(`<text x="${x + bw / 2}" y="${y - 6}" class="eb-v">${v.toLocaleString("en-IN")}</text>`);
+      // EBITDA value INSIDE the bar top (white) when the bar is tall enough, else just above —
+      // keeps it clear of the margin-line % labels, which live above the bars.
+      if (bh > 30) s.push(`<text x="${cx}" y="${y + 15}" class="eb-v in">${v.toLocaleString("en-IN")}</text>`);
+      else s.push(`<text x="${cx}" y="${y - 6}" class="eb-v">${v.toLocaleString("en-IN")}</text>`);
     }
-    s.push(`<text x="${x + bw / 2}" y="${base + 16}" class="eb-x">${esc(shortQ(lab))}</text>`);
-    if (m != null) pts.push([x + bw / 2, mY(m), m]);
+    // full quarter label (e.g. Q1FY25) — the wide viewBox has room, and shortQ's bare "Q1/Q2"
+    // repeats across fiscal years, which reads ambiguously on a multi-year trend.
+    s.push(`<text x="${cx}" y="${base + 17}" class="eb-x">${esc(lab)}</text>`);
+    if (m != null) pts.push([cx, mY(m), m]);
   });
   if (pts.length > 1) s.push(`<polyline points="${pts.map((p) => `${p[0]},${p[1]}`).join(" ")}" fill="none" stroke="${T.TEAL}" stroke-width="2.5"/>`);
   for (const [x, y, m] of pts) {
-    s.push(`<circle cx="${x}" cy="${y}" r="3.5" fill="${T.TEAL}"/>`);
-    s.push(`<text x="${x}" y="${y - 8}" class="eb-m">${m}%</text>`);
+    s.push(`<circle cx="${x}" cy="${y}" r="4" fill="${T.TEAL}" stroke="#fff" stroke-width="1.5"/>`);
+    s.push(`<text x="${x}" y="${y - 9}" class="eb-m">${m}%</text>`);
   }
   s.push("</svg>");
   return s.join("");
@@ -230,14 +243,22 @@ export function reportHTML(ledger) {
     tlRaw.push({ name: p.promise || p.metric || p.id, prom, rev, status: p.status || "NYT" });
   }
   const slipped = tlRaw.filter((r) => r.rev > r.prom);
-  let ganttSVG = "", ganttQs = [];
+  let ganttSVG = "", ganttQs = [], ganttMore = 0, ganttShown = 0;
   if (slipped.length) {
-    tlRaw.sort((a, b) => (a.rev - a.prom) - (b.rev - b.prom) || a.prom - b.prom);
-    const idxs = tlRaw.flatMap((r) => [r.prom, r.rev]);
+    // Cap the gantt to the biggest slips so it fits ABOVE the momentum chart on one page (a
+    // company with a dozen timelines would otherwise overflow the slide). Rank by slip magnitude
+    // desc, keep the top MAXG; the full timeline list is always in the master table.
+    const MAXG = 5;
+    const bySlip = tlRaw.slice().sort((a, b) => (b.rev - b.prom) - (a.rev - a.prom) || a.prom - b.prom);
+    const shown = bySlip.slice(0, MAXG);
+    ganttShown = shown.length;
+    ganttMore = Math.max(0, tlRaw.length - shown.length);
+    shown.sort((a, b) => (a.rev - a.prom) - (b.rev - b.prom) || a.prom - b.prom); // biggest slip at top
+    const idxs = shown.flatMap((r) => [r.prom, r.rev]);
     const minI = Math.min(...idxs), maxI = Math.max(...idxs);
     ganttQs = []; for (let i = minI; i <= maxI; i++) ganttQs.push(quarterLabel(i));
-    const rows = tlRaw.map((r) => ({ name: r.name, status: r.status, prom: r.prom - minI, rev: r.rev - minI, note: r.rev > r.prom ? `${quarterLabel(r.prom)} → ${quarterLabel(r.rev)}` : "on time" }));
-    ganttSVG = gantt(rows, ganttQs);
+    const rows = shown.map((r) => ({ name: r.name, status: r.status, prom: r.prom - minI, rev: r.rev - minI, note: r.rev > r.prom ? `${quarterLabel(r.prom)} → ${quarterLabel(r.rev)}` : "on time" }));
+    ganttSVG = gantt(rows, ganttQs, 1040, 30);
   }
 
   /* track-record cards: testable, worst-first, paginated 6/page (no clipping) */
@@ -292,7 +313,7 @@ export function reportHTML(ledger) {
     <div class="row2">
       <div class="panel" style="width:300px"><h3>Status of all ${total} commitments</h3><div style="display:flex;align-items:center;gap:14px">${donut(donutSegs)}<div class="legend" style="flex:1">${leg}</div></div></div>
       ${byQuarter.length ? `<div class="panel" style="flex:1"><h3>Commitments by reporting quarter</h3>${vbars(byQuarter)}</div>` : ""}
-      ${rootItems.length ? `<div class="panel" style="width:300px"><h3>Root cause of misses &amp; shortfalls</h3>${hbars(rootItems)}</div>` : ""}
+      ${rootItems.length > 1 ? `<div class="panel" style="width:300px"><h3>Root cause of misses &amp; shortfalls</h3>${hbars(rootItems)}</div>` : ""}
     </div>
     <div class="row2" style="margin-top:16px">
       <div class="callout" style="flex:1.2"><div class="big">${esc(cred.headline || `${testableN} of ${total} promises are testable so far.`)}</div>
@@ -308,14 +329,20 @@ export function reportHTML(ledger) {
     const lev = latest("net_debt_ebitda"), roce = latest("roce"), rev = latest("revenue");
     const unitLabel = trendUnitLabel(ft);
     const stat = (val, lab, color) => (val == null ? "" : `<div class="kpi" style="flex:1;padding:11px 13px"><div class="kpi-n" style="font-size:24px;color:${color}">${val}</div><div class="kpi-l">${lab}</div></div>`);
+    // Stack the two charts vertically (each spans the full page) — side-by-side crammed the gantt
+    // and cluttered the page; full width lets the timeline breathe and the quarter axis fit.
+    const ganttPanel = ganttSVG ? `<div class="panel"><h3>Timeline commitments — promised → where it actually landed</h3>
+      <div class="gt-legend">
+        <span class="gk"><i class="dot" style="background:${T.GOLD}"></i> Promised date</span>
+        <span class="gk"><i class="dot" style="background:${T.MISSED}"></i> Where it landed <span class="gk-sub">— dot colour is the verdict (green met · amber partial · red missed)</span></span>
+        <span class="gk"><i class="dash"></i> the slip</span>
+      </div>${ganttSVG}${ganttMore ? `<div class="gt-more">Showing the ${ganttShown} largest slips · +${ganttMore} more timeline commitment${ganttMore === 1 ? "" : "s"} in the master table</div>` : ""}</div>` : "";
+    const momoPanel = momoSVG ? `<div class="panel"><h3>Execution momentum — EBITDA (${esc(unitLabel)}) &amp; margin</h3>${momoSVG}
+      <div style="display:flex;gap:10px;margin-top:10px">${stat(lev ? `${lev.v.toFixed(2)}×` : null, `Net debt / EBITDA${lev ? ` · ${shortQ(lev.q)}` : ""}`, "#2563eb")}${stat(roce ? `${roce.v}%` : null, `ROCE${roce ? ` · ${shortQ(roce.q)}` : ""}`, "#7c3aed")}${stat(rev ? fmtTrendVal(rev.v, unitLabel) : null, `Revenue${rev ? ` · ${shortQ(rev.q)}` : ""}`, "#16a34a")}</div></div>` : "";
     H.push(`<div class="slide light">${watermarkHTML(info)}<div class="pad">
       <div class="sec-h"><span class="ix">02</span><h2>Deadline Slippage &amp; Execution Momentum</h2><span class="tl"></span></div>
-      <div class="lead">Left: where each promised date <b>started</b> (amber) versus where management <b>re-set it</b> (red). Right: the reported financials.</div>
-      <div class="row2">
-        <div class="panel" style="flex:1.55"><h3>Timeline commitments — promised → revised</h3>${ganttSVG || `<div class="empty-pan">No slipped timelines — deadlines held.</div>`}
-          <div style="display:flex;gap:18px;margin-top:6px;font-size:11px;color:#5b677f"><span><span class="legdot" style="background:${T.GOLD}"></span> Promised window</span><span><span class="legdot" style="background:${T.MISSED}"></span> Re-set / actual window</span></div></div>
-        ${momoSVG ? `<div class="panel" style="flex:1"><h3>EBITDA (${esc(unitLabel)}) &amp; margin</h3>${momoSVG}<div style="display:flex;gap:10px;margin-top:10px">${stat(lev ? `${lev.v.toFixed(2)}×` : null, `Net debt / EBITDA${lev ? ` · ${shortQ(lev.q)}` : ""}`, "#2563eb")}${stat(roce ? `${roce.v}%` : null, `ROCE${roce ? ` · ${shortQ(roce.q)}` : ""}`, "#7c3aed")}${stat(rev ? fmtTrendVal(rev.v, unitLabel) : null, `Revenue${rev ? ` · ${shortQ(rev.q)}` : ""}`, "#16a34a")}</div></div>` : ""}
-      </div>
+      <div class="lead">${ganttSVG ? "Each row is one dated commitment: the amber dot is where it was <b>promised</b>, the second dot is where it <b>actually landed</b> (its colour is the verdict). " : ""}${momoSVG ? "Below, the reported EBITDA and margin trend." : ""}</div>
+      <div class="vstack">${ganttPanel}${momoPanel}</div>
       ${foot()}</div></div>`);
   }
 
@@ -361,32 +388,43 @@ function card(p) {
     ${(why || tag) ? `<div class="trc-why">${why}${tag}</div>` : ""}</div>`;
 }
 
-const TBL_COLS = ["Date", "Qtr/FY", "Source", "Promise", "Exact Quote", "Metric + Target", "Test Date", "Conf.", "What Happened", "Status", "Variance", "Mgmt Explanation", "Root-Cause"];
 function masterTable(promises, total, info) {
   const rows = promises.slice().sort((a, b) => (periodIndex(a.quarter_context) ?? 0) - (periodIndex(b.quarter_context) ?? 0) || String(a.date).localeCompare(String(b.date)) || String(a.id).localeCompare(String(b.id)));
   const confBadge = (c) => (c ? `<span class="cf" style="background:${{ H: T.RED, M: T.GOLD, L: T.NYT }[c] || T.NYT}">${esc(c)}</span>` : "");
   const metricTarget = (p) => [p.metric, p.target?.text].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(" · ");
+  // Column descriptors: `text(p)` is the raw cell value (drives BOTH the empty-column check and
+  // the default rendering); `html(p)` overrides rendering for badges/pills. `always` never drops.
+  const COLS = [
+    { header: "Date", w: 5.0, text: (p) => p.date },
+    { header: "Qtr/FY", w: 4.2, text: (p) => p.quarter_context },
+    { header: "Source", w: 6.5, text: (p) => p.source_label || p.source_id || "" },
+    { header: "Promise", w: 10.5, cls: "strong", always: true, text: (p) => p.promise },
+    { header: "Exact Quote", w: 16.5, cls: "q", text: (p) => p.quote },
+    { header: "Metric + Target", w: 10.5, text: metricTarget },
+    { header: "Test Date", w: 6.5, text: (p) => p.test_date },
+    { header: "Conf.", w: 3.2, align: "center", text: (p) => p.confidence, html: (p) => confBadge(p.confidence) },
+    { header: "What Happened", w: 12.5, text: (p) => p.actual?.what_happened || p.actual?.text || "" },
+    { header: "Status", w: 5.2, always: true, text: (p) => p.status, html: (p) => `<span class="pill" style="background:${STC[p.status] || T.NYT}">${esc(p.status)}</span>` },
+    { header: "Variance", w: 7.0, text: (p) => p.variance?.text || "" },
+    { header: "Mgmt Explanation", w: 9.5, text: (p) => p.mgmt_explanation || "" },
+    { header: "Root-Cause", w: 6.0, text: (p) => p.root_cause || "" },
+  ];
+  // Drop any column empty for EVERY promise (e.g. Mgmt Explanation / Root-Cause on a ledger where
+  // the model recorded neither) — a column of blanks is pure noise. `always` columns stay regardless.
+  const kept = COLS.filter((col) => col.always || rows.some((p) => String(col.text(p) ?? "").trim() !== ""));
+  // Re-normalise the surviving widths back to 100% so the table always fills the page width.
+  const wsum = kept.reduce((s, col) => s + col.w, 0) || 1;
+  const colgroup = `<colgroup>${kept.map((col) => `<col style="width:${((col.w / wsum) * 100).toFixed(2)}%">`).join("")}</colgroup>`;
+  const thead = `<thead><tr>${kept.map((col) => `<th>${esc(col.header)}</th>`).join("")}</tr></thead>`;
   const tr = rows.map((p, i) => {
-    const c = STC[p.status] || T.NYT;
-    const cells = [
-      `<td>${esc(p.date)}</td>`,
-      `<td>${esc(p.quarter_context)}</td>`,
-      `<td>${esc(p.source_label || p.source_id || "")}</td>`,
-      `<td class="strong">${esc(p.promise)}</td>`,
-      `<td class="q">${esc(p.quote)}</td>`,
-      `<td>${esc(metricTarget(p))}</td>`,
-      `<td>${esc(p.test_date)}</td>`,
-      `<td style="text-align:center">${confBadge(p.confidence)}</td>`,
-      `<td>${esc(p.actual?.what_happened || p.actual?.text || "")}</td>`,
-      `<td><span class="pill" style="background:${c}">${esc(p.status)}</span></td>`,
-      `<td>${esc(p.variance?.text || "")}</td>`,
-      `<td>${esc(p.mgmt_explanation || "")}</td>`,
-      `<td>${esc(p.root_cause || "")}</td>`,
-    ].join("");
+    const cells = kept.map((col) => {
+      const inner = col.html ? col.html(p) : esc(col.text(p) ?? "");
+      const cls = col.cls ? ` class="${col.cls}"` : "";
+      const style = col.align ? ` style="text-align:${col.align}"` : "";
+      return `<td${cls}${style}>${inner}</td>`;
+    }).join("");
     return `<tr class="${i % 2 ? "zz" : ""}">${cells}</tr>`;
   }).join("");
-  const colgroup = `<colgroup><col class="c-date"><col class="c-qtr"><col class="c-src"><col class="c-prom"><col class="c-quote"><col class="c-metric"><col class="c-test"><col class="c-conf"><col class="c-act"><col class="c-stat"><col class="c-var"><col class="c-mgmt"><col class="c-tag"></colgroup>`;
-  const thead = `<thead><tr>${TBL_COLS.map((c) => `<th>${esc(c)}</th>`).join("")}</tr></thead>`;
   return `<div class="table-wrap" style="${tableWatermark(info)}"><div class="tbl-head"><h2>Master Table — all ${total} measurable commitments</h2><span>Chronological · oldest first · colour = delivery status</span></div><table>${colgroup}${thead}<tbody>${tr}</tbody></table></div>`;
 }
 
@@ -490,7 +528,7 @@ h1 .grad{background:linear-gradient(90deg,#FFE7A6,#FFC2CE 55%,#C7ECFF);-webkit-b
 .hb{width:100%;height:auto}.hb-lab{fill:__TXT__;font-size:12px;dominant-baseline:middle}.hb-val{fill:__MUT__;font-size:11px;font-weight:700;dominant-baseline:middle;font-family:'DejaVu Sans Mono'}
 .gt{width:100%;height:auto}.gt-q{fill:__MUT__;font-size:10px;text-anchor:middle;letter-spacing:.3px}.gt-name{fill:__TXT__;font-size:11px;dominant-baseline:middle;font-weight:600}
 .gt-note{fill:__MISSED__;font-size:10px;dominant-baseline:middle;font-weight:700}
-.eb{width:100%;height:auto}.eb-v{fill:__TXT__;font-size:11px;text-anchor:middle;font-weight:700;font-family:'DejaVu Sans Mono'}.eb-x{fill:__MUT__;font-size:11px;text-anchor:middle;font-weight:700}.eb-m{fill:__TEAL__;font-size:10px;text-anchor:middle;font-weight:700;font-family:'DejaVu Sans Mono'}
+.eb{width:100%;height:auto}.eb-v{fill:__TXT__;font-size:11px;text-anchor:middle;font-weight:700;font-family:'DejaVu Sans Mono'}.eb-v.in{fill:#fff}.eb-x{fill:__MUT__;font-size:11px;text-anchor:middle;font-weight:700}.eb-m{fill:__TEAL__;font-size:11px;text-anchor:middle;font-weight:700;font-family:'DejaVu Sans Mono'}
 .trgrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:6px}
 .trc{background:#fff;border:1px solid __LINE__;border-radius:15px;padding:16px 18px;box-shadow:0 6px 16px rgba(16,24,40,.06)}
 .trc-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
@@ -535,6 +573,15 @@ const EXTRA_CSS = `
 .table-wrap .pill{white-space:nowrap;font-size:8px;padding:2px 6px;letter-spacing:0}
 .legdot{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:middle}
 .empty-pan{padding:40px;text-align:center;color:${T.MUT2};font-size:13px}
+/* page 3: stacked full-width charts + a plain-English gantt legend */
+.vstack{display:flex;flex-direction:column;gap:14px}
+.vstack .panel{padding:14px 18px 12px}
+.gt-legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;margin-bottom:10px;padding:9px 13px;background:${T.CARD2};border:1px solid ${T.LINE};border-radius:11px}
+.gk{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;color:${T.TXT}}
+.gk .dot{width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px ${T.LINE}}
+.gk .dash{width:22px;height:0;border-top:3px dashed #C6CFDE}
+.gk-sub{color:${T.MUT};font-weight:500}
+.gt-more{margin-top:8px;font-size:10.5px;color:${T.MUT};font-weight:600}
 /* cover credibility ring + split (on the vibrant gradient) */
 .cover-cred{display:flex;align-items:center;gap:22px;margin-top:24px}
 .cc-ring{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle at center, rgba(255,255,255,.16) 55%, transparent 56%), conic-gradient(var(--gc) calc(1%*var(--p,0)), rgba(255,255,255,.30) 0)}

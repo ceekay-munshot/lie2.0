@@ -33,18 +33,21 @@ export function momentum(el, ledger) {
   const chartEl = el.querySelector(".mom-chart");
 
   return mountChart(chartEl, () => {
-    const quarters = sorted.map((q) => q.quarter);
-    const hasEbitda = sorted.some((q) => num(q.ebitda) != null);
-    const hasMargin = sorted.some((q) => num(q.ebitda_margin) != null);
+    // only plot quarters that actually report a figure — a null quarter would leave a
+    // confusing blank gap in the middle of the chart.
+    const plot = sorted.filter((q) => num(q.ebitda) != null || num(q.ebitda_margin) != null);
+    const quarters = plot.map((q) => q.quarter);
+    const hasEbitda = plot.some((q) => num(q.ebitda) != null);
+    const hasMargin = plot.some((q) => num(q.ebitda_margin) != null);
     if (!hasEbitda && !hasMargin) return null;
     const series = [];
     if (hasEbitda) series.push({
       name: "EBITDA", type: "bar", yAxisIndex: 0, barWidth: "42%",
-      itemStyle: { color: tokens.accent.cyan, borderRadius: [4, 4, 0, 0] }, data: sorted.map((q) => num(q.ebitda)),
+      itemStyle: { color: tokens.accent.cyan, borderRadius: [4, 4, 0, 0] }, data: plot.map((q) => num(q.ebitda)),
     });
     if (hasMargin) series.push({
       name: "EBITDA margin", type: "line", yAxisIndex: 1, smooth: true, symbol: "circle", symbolSize: 7,
-      lineStyle: { width: 3 }, itemStyle: { color: tokens.accent.gold }, data: sorted.map((q) => num(q.ebitda_margin)),
+      lineStyle: { width: 3 }, itemStyle: { color: tokens.accent.gold }, connectNulls: true, data: plot.map((q) => num(q.ebitda_margin)),
     });
     return {
       tooltip: {

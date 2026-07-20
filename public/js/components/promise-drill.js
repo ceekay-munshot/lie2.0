@@ -56,8 +56,13 @@ export function openDrill(p, trigger) {
   closeDrill();
   const color = statusColor(p.status);
   const quote = p.quote || "";
+  const hasActual = !!(p.actual?.what_happened || p.actual?.text);
+  const actualSrc = [p.actual?.source_id, p.actual?.source_date].filter(Boolean).join(" · ");
   const overlay = document.createElement("div");
   overlay.className = "drill-overlay";
+  // Two source-backed sections make the audit trail explicit: (1) WHERE the promise was made —
+  // the verbatim quote + the document/date it was said in; (2) HOW it was verified — the reported
+  // actual + the later document/date it was reported in. Every claim points at a checkable source.
   overlay.innerHTML = `
     <div class="drill card" role="dialog" aria-modal="true" aria-labelledby="drill-title">
       <button type="button" class="drill-close" aria-label="Close">&times;</button>
@@ -66,23 +71,34 @@ export function openDrill(p, trigger) {
         <span class="drill-cat">${escapeHTML(p.category || "")}${p.quarter_context ? ` · ${escapeHTML(p.quarter_context)}` : ""}</span>
       </div>
       <h3 id="drill-title" class="drill-title">${escapeHTML(p.promise || p.metric || p.id)}</h3>
-      ${quote ? `
-        <figure class="drill-quote">
-          <i data-lucide="quote" aria-hidden="true"></i>
-          <blockquote>${escapeHTML(quote)}</blockquote>
-          <figcaption>${escapeHTML(p.source_label || p.source_id || "source")}${p.date ? ` · ${escapeHTML(p.date)}` : ""}
-            <button type="button" class="drill-copy" aria-label="Copy quote">Copy</button>
-          </figcaption>
-        </figure>` : ""}
-      <dl class="drill-rows">
-        ${row("Metric + target", [p.metric, p.target?.text].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(" · "), "wide")}
-        ${row("Test date", p.test_date)}
-        ${row("What happened", p.actual?.what_happened || p.actual?.text, "wide")}
-        ${row("Actual source", [p.actual?.source_id, p.actual?.source_date].filter(Boolean).join(" · "))}
-        ${row("Variance", varianceText(p.variance), "wide")}
-        ${p.mgmt_explanation ? row("Mgmt explanation", `“${p.mgmt_explanation}”`, "wide") : ""}
-        ${p.root_cause ? `<div class="drill-row"><dt>Root cause</dt><dd><span class="tag-chip">${escapeHTML(p.root_cause)}</span></dd></div>` : ""}
-      </dl>
+
+      <section class="drill-section">
+        <div class="drill-sec-h"><i data-lucide="megaphone" aria-hidden="true"></i> Where the promise was made</div>
+        ${quote ? `
+          <figure class="drill-quote">
+            <i data-lucide="quote" aria-hidden="true"></i>
+            <blockquote>${escapeHTML(quote)}</blockquote>
+            <figcaption><span class="drill-src-doc"><i data-lucide="file-text" aria-hidden="true"></i> ${escapeHTML(p.source_label || p.source_id || "source")}</span>${p.date ? ` · ${escapeHTML(p.date)}` : ""}
+              <button type="button" class="drill-copy" aria-label="Copy quote">Copy</button>
+            </figcaption>
+          </figure>` : `<p class="drill-note">No verbatim quote was captured for this commitment.</p>`}
+        <dl class="drill-rows">
+          ${row("Metric + target", [p.metric, p.target?.text].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(" · "), "wide")}
+          ${row("Test date", p.test_date)}
+        </dl>
+      </section>
+
+      <section class="drill-section">
+        <div class="drill-sec-h"><i data-lucide="badge-check" aria-hidden="true"></i> How it was verified</div>
+        ${hasActual ? `<dl class="drill-rows">
+          ${row("What happened", p.actual?.what_happened || p.actual?.text, "wide")}
+          ${actualSrc ? `<div class="drill-row"><dt>Reported in</dt><dd><span class="drill-src-doc"><i data-lucide="file-check" aria-hidden="true"></i> ${escapeHTML(actualSrc)}</span></dd></div>` : ""}
+          ${row("Variance", varianceText(p.variance), "wide")}
+          ${p.mgmt_explanation ? row("Mgmt explanation", `“${p.mgmt_explanation}”`, "wide") : ""}
+          ${p.root_cause ? `<div class="drill-row"><dt>Root cause</dt><dd><span class="tag-chip">${escapeHTML(p.root_cause)}</span></dd></div>` : ""}
+        </dl>` : `<p class="drill-note">Not yet testable — no actual has been reported within the verification window${p.test_date ? ` (test date ${escapeHTML(p.test_date)})` : ""}.</p>`}
+      </section>
+
       ${historyHTML(p)}
       ${provChips(p) ? `<div class="drill-prov">${provChips(p)}</div>` : ""}
     </div>`;

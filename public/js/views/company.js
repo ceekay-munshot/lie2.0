@@ -32,7 +32,9 @@ const CHART_PANELS = [
   // some ledgers (e.g. INFY) have financial_trend rows with every metric null, which
   // would otherwise render an empty "No EBITDA / margin reported" box.
   { id: "chart-momentum", title: "Financial momentum", sub: "EBITDA · margin · leverage · ROCE", icon: "trending-up", wide: true, mount: momentum, show: (l) => (l.financial_trend || []).some((q) => q && ["revenue", "ebitda", "ebitda_margin", "pat", "net_debt_ebitda", "roce"].some((k) => q[k] != null && q[k] !== "")) },
-  { id: "chart-root", title: "Why promises slipped", icon: "list-tree", wide: true, mount: rootCause, show: (l) => Object.keys(l.aggregates?.root_causes || {}).length > 0 },
+  // needs ≥2 distinct causes to be worth a chart — a lone "Execution: 2" bar is just noise
+  // (the cause still shows per-row in the master table + drill).
+  { id: "chart-root", title: "Why promises slipped", icon: "list-tree", wide: true, mount: rootCause, show: (l) => Object.values(l.aggregates?.root_causes || {}).filter((v) => Number(v) > 0).length > 1 },
 ];
 
 function chartsHTML(ledger) {

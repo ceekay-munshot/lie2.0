@@ -28,7 +28,10 @@ function cardHTML(p) {
         <div><dt>Variance</dt><dd class="tr-var">${escapeHTML(variance)}</dd></div>
       </dl>
       ${p.mgmt_explanation ? `<p class="tr-why">“${escapeHTML(p.mgmt_explanation)}”</p>` : ""}
-      ${p.root_cause ? `<span class="tag-chip">${escapeHTML(p.root_cause)}</span>` : ""}
+      <div class="tr-card-foot">
+        ${p.root_cause ? `<span class="tag-chip">${escapeHTML(p.root_cause)}</span>` : "<span></span>"}
+        <span class="tr-evidence"><i data-lucide="receipt-text" aria-hidden="true"></i> View source &amp; proof</span>
+      </div>
     </article>`;
 }
 

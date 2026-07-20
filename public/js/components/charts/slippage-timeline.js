@@ -26,15 +26,27 @@ function rowsFrom(ledger) {
   return out;
 }
 
+const LEGKEY = (label, color, dot) => `<span class="slip-key"><i class="${dot ? "dot" : ""}" style="background:${color}"></i>${label}</span>`;
+
 export function slippageTimeline(el, ledger) {
-  return mountChart(el, () => {
-    const rows = rowsFrom(ledger);
-    if (!rows.some((r) => r.slip > 0)) return null; // → "no slipped timelines" empty state
-    rows.sort((a, b) => a.slip - b.slip || a.promised - b.promised); // biggest slip last → top of the y-axis
+  const rows = rowsFrom(ledger);
+  if (!rows.some((r) => r.slip > 0)) { el.innerHTML = `<div class="chart-empty">No slipped timelines — deadlines held</div>`; return Promise.resolve(null); }
+  rows.sort((a, b) => a.slip - b.slip || a.promised - b.promised); // biggest slip last → top of the y-axis
+  // A plain-English key ABOVE the chart — the bar colour is the final verdict, and the two
+  // dots are the promised date and where it actually landed (users found the raw colours cryptic).
+  el.innerHTML = `
+    <div class="slip-legend">
+      <span class="slip-lead">Bar = verdict</span>
+      ${LEGKEY("Missed", statusColor("MISSED"))}${LEGKEY("Partial", statusColor("PARTIAL"))}${LEGKEY("Met", statusColor("MET"))}${LEGKEY("Not yet tested", statusColor("NYT"))}
+      <span class="slip-lead">Dots</span>
+      ${LEGKEY("Promised", AMBER, true)}${LEGKEY("Re-set / actual", RED, true)}
+    </div>
+    <div class="slip-chart"></div>`;
+  const chartEl = el.querySelector(".slip-chart");
+  return mountChart(chartEl, () => {
     const cats = rows.map((r) => r.label);
     const all = rows.flatMap((r) => [r.promised, r.revised]);
     const min = Math.min(...all), max = Math.max(...all);
-
     return {
       tooltip: {
         trigger: "item",
@@ -47,10 +59,10 @@ export function slippageTimeline(el, ledger) {
           return `<b>${r.label}</b><br/>Promised: ${quarterLabel(r.promised)}<br/>${when}<br/>Status: ${r.status}`;
         },
       },
-      legend: { top: 0, right: 0, data: ["Promised", "Re-set / actual"], icon: "circle", itemWidth: 9, itemHeight: 9, textStyle: { color: tokens.ui.muted } },
-      grid: { left: 10, right: 28, top: 36, bottom: 28, containLabel: true },
+      grid: { left: 10, right: 26, top: 12, bottom: 26, containLabel: true },
       xAxis: { type: "value", min: min - 0.6, max: max + 0.6, interval: 1, axisLabel: { formatter: (v) => quarterLabel(v), fontSize: 10.5, hideOverlap: true } },
-      yAxis: { type: "category", data: cats, axisLabel: { width: 200, overflow: "truncate", color: tokens.ui.muted, fontSize: 11 } },
+      // wrap (don't truncate) the promise names so nothing is cut off
+      yAxis: { type: "category", data: cats, axisLabel: { width: 220, overflow: "break", color: tokens.ui.muted, fontSize: 11, lineHeight: 13 } },
       series: [
         // transparent offset places the coloured span between promised and revised
         { name: "_offset", type: "bar", stack: "slip", silent: true, tooltip: { show: false }, itemStyle: { color: "transparent" }, barWidth: "46%", data: rows.map((r) => Math.min(r.promised, r.revised)) },
@@ -59,5 +71,5 @@ export function slippageTimeline(el, ledger) {
         { name: "Re-set / actual", type: "scatter", symbol: "circle", symbolSize: 12, z: 7, itemStyle: { color: RED, borderColor: tokens.ui.card, borderWidth: 1.5 }, data: rows.map((r, i) => [r.revised, i]) },
       ],
     };
-  }, { empty: "No slipped timelines — deadlines held", height: "340px", ariaLabel: "Slippage timeline: promised vs re-set" });
+  }, { empty: "No slipped timelines — deadlines held", height: "320px", ariaLabel: "Slippage timeline: promised vs re-set" });
 }

@@ -54,6 +54,9 @@ const COMPARE = {
   variance: (a, b) => varMag(a) - varMag(b),
 };
 
+// raw cell value (drives the empty-column check); badge columns have no `get`.
+const rawOf = (col, p) => (col.badge === "status" ? p.status : col.badge === "conf" ? p.confidence : col.get ? col.get(p) : "");
+
 function cell(col, p) {
   if (col.badge === "status") return `<td class="ctr"><span class="status-pill sm" style="--c:${statusColor(p.status)}">${LABEL[p.status] || escapeHTML(p.status || "")}</span></td>`;
   if (col.badge === "conf") return p.confidence ? `<td class="ctr"><span class="conf-badge" style="--c:${confColor(p.confidence)}" title="${p.confidence} confidence">${p.confidence}</span></td>` : `<td class="ctr"></td>`;
@@ -61,7 +64,7 @@ function cell(col, p) {
   return `<td class="${col.cls || ""}"${v ? "" : ""}>${escapeHTML(v)}</td>`;
 }
 
-const rowHTML = (p) => `<tr data-id="${escapeHTML(p.id)}" tabindex="0">${COLS.map((c) => cell(c, p)).join("")}</tr>`;
+const rowHTML = (p, cols) => `<tr data-id="${escapeHTML(p.id)}" tabindex="0">${cols.map((c) => cell(c, p)).join("")}</tr>`;
 
 const pagerHTML = (page, pages, scope) => (pages > 1 ? `
   <div class="tbl-pager">
@@ -80,6 +83,12 @@ export function mountTable(host, store, { onDrill }) {
   const sort = { key: "status", dir: -1 }; // default worst-first
   let pageT = 1, pageN = 1, nytOpen = false;
 
+  // Hide any column that is empty for EVERY promise in this ledger (e.g. Mgmt Explanation /
+  // Root-Cause when the model recorded neither) — a column of blanks is pure noise. Promise +
+  // Status always stay. Computed once from the whole ledger so columns don't flicker on filter.
+  const ALWAYS = new Set(["promise", "status"]);
+  const cols = COLS.filter((c) => ALWAYS.has(c.key) || store.all.some((p) => String(rawOf(c, p) ?? "").trim() !== ""));
+
   const sortList = (list) => {
     const out = list.slice();
     const cmp = COMPARE[sort.key];
@@ -87,7 +96,7 @@ export function mountTable(host, store, { onDrill }) {
     return out;
   };
 
-  const theadHTML = () => COLS.map((c) => {
+  const theadHTML = () => cols.map((c) => {
     const sortable = !!c.sort;
     const active = sortable && sort.key === c.sort;
     const arrow = active ? (sort.dir === 1 ? " ▲" : " ▼") : "";
@@ -99,7 +108,7 @@ export function mountTable(host, store, { onDrill }) {
     const p = Math.min(page, pages);
     if (scope === "t") pageT = p; else pageN = p;
     const slice = list.slice((p - 1) * PAGE, p * PAGE);
-    return `<div class="table-wrap"><table class="promise-table"><thead><tr>${theadHTML()}</tr></thead><tbody>${slice.map(rowHTML).join("")}</tbody></table></div>${pagerHTML(p, pages, scope)}`;
+    return `<div class="table-wrap"><table class="promise-table"><thead><tr>${theadHTML()}</tr></thead><tbody>${slice.map((row) => rowHTML(row, cols)).join("")}</tbody></table></div>${pagerHTML(p, pages, scope)}`;
   };
 
   function render() {
@@ -113,7 +122,8 @@ export function mountTable(host, store, { onDrill }) {
       <div class="section-head">
         <div class="section-title"><i data-lucide="table" aria-hidden="true"></i><h2>Master promise table</h2></div>
         <span class="section-count">${testable.length} testable${store.active() ? " · filtered" : ""}${nyt.length ? ` · ${nyt.length} not yet due` : ""}</span>
-      </div>`;
+      </div>
+      <p class="tbl-hint"><i data-lucide="hand-pointer" aria-hidden="true"></i> Tap any row for the evidence receipt — the verbatim quote, its source document, and how the actual was verified.</p>`;
 
     const main = testable.length
       ? tableHTML(testable, pageT, "t")

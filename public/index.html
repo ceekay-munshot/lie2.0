@@ -628,6 +628,20 @@
     .mom-chart { width: 100%; min-height: 230px; }
     @media (max-width: 520px) { .mom-stats { grid-template-columns: 1fr; } }
 
+    /* slippage timeline: a plain-English legend above the chart (colours were cryptic) */
+    .slip-legend {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 7px 12px;
+      padding: 9px 11px; margin-bottom: 8px; border-radius: var(--radius-sm);
+      background: var(--card2); border: 1px solid var(--line);
+    }
+    .slip-lead { font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+    .slip-lead:not(:first-child) { margin-left: 6px; padding-left: 12px; border-left: 1px solid var(--line); }
+    .slip-key { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--text); }
+    .slip-key i { width: 13px; height: 13px; border-radius: 3px; flex: none; }
+    .slip-key i.dot { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid var(--card); box-shadow: 0 0 0 1px var(--line); }
+    .slip-chart { width: 100%; min-height: 260px; }
+    @media (max-width: 520px) { .slip-lead:not(:first-child) { margin-left: 0; padding-left: 0; border-left: none; } }
+
     @media (max-width: 720px) {
       .charts-grid { grid-template-columns: 1fr; }
       .chart-panel.wide { grid-column: auto; }
@@ -652,17 +666,25 @@
     .tr-empty { padding: 28px; text-align: center; color: var(--muted); border-style: dashed; }
 
     /* filter bar */
-    .fb { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px; border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
-    .fb-search { position: relative; flex: 1 1 240px; min-width: 180px; }
-    .fb-search i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--muted); }
-    .fb-q { width: 100%; height: 38px; padding: 0 12px 0 34px; border-radius: 999px; border: 1px solid var(--line); background: var(--ink2); color: var(--text); font: inherit; font-size: 14px; outline: none; }
-    .fb-q:focus { border-color: color-mix(in srgb, var(--accent-violet) 52%, var(--line)); background: var(--card); }
+    .fb { display: flex; flex-direction: column; gap: 10px; padding: 13px 14px; border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow-sm); }
+    .fb-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .fb-row-primary { gap: 12px; }
+    /* the promise search is the headline control on the report page — big, pill, own row */
+    .fb-search { position: relative; flex: 1 1 340px; min-width: 200px; }
+    .fb-search i { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--accent-violet); }
+    .fb-q { width: 100%; height: 44px; padding: 0 14px 0 40px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--ink2); color: var(--text); font: inherit; font-size: 14.5px; outline: none; transition: border-color .12s, background .12s; }
+    .fb-q:focus { border-color: color-mix(in srgb, var(--accent-violet) 58%, var(--line)); background: var(--card); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-violet) 14%, transparent); }
+    .fb-field { display: inline-flex; align-items: center; gap: 8px; flex: none; }
+    .fb-field-l { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+    .fb-field-l i { width: 14px; height: 14px; }
+    .fb-field .fb-select { height: 42px; }
     .fb-statuses { display: inline-flex; gap: 6px; }
     .fb-chip { font: inherit; font-size: 12.5px; font-weight: 700; cursor: pointer; padding: 6px 11px; border-radius: 999px; color: var(--muted); background: var(--card); border: 1px solid var(--line); transition: color .12s, border-color .12s, background .12s; }
     .fb-chip:hover { border-color: var(--line2); }
     .fb-chip.is-active { color: color-mix(in srgb, var(--c) 80%, var(--text)); background: color-mix(in srgb, var(--c) 15%, var(--card)); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
     .fb-select { height: 38px; padding: 0 10px; border-radius: 9px; border: 1px solid var(--line); background: var(--ink2); color: var(--text); font: inherit; font-size: 13px; outline: none; cursor: pointer; }
     .fb-clear { display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--accent-red); background: var(--card); border: 1px solid color-mix(in srgb, var(--accent-red) 35%, var(--line)); border-radius: 999px; padding: 6px 12px; }
+    .fb-clear[hidden] { display: none; }  /* class display: would otherwise override the [hidden] UA rule */
     .fb-clear i { width: 14px; height: 14px; }
     .fb-active { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 6px; }
     .fb-active:empty { display: none; }
@@ -684,6 +706,10 @@
     .tr-card-rows dd { margin: 0; font-size: 13px; }
     .tr-card-rows .tr-var { font-weight: 600; }
     .tr-why { margin: 0; font-size: 12.5px; color: var(--muted); font-style: italic; line-height: 1.45; }
+    .tr-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 1px; }
+    .tr-evidence { display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; font-weight: 700; color: var(--accent-violet); white-space: nowrap; opacity: 0.85; transition: opacity .12s; }
+    .tr-evidence i { width: 13px; height: 13px; }
+    .tr-card:hover .tr-evidence, .tr-card:focus-visible .tr-evidence { opacity: 1; }
     .tr-more {
       display: flex; align-items: center; gap: 7px; width: fit-content; margin: 10px auto 0;
       font: inherit; font-size: 13.5px; font-weight: 700; cursor: pointer;
@@ -697,6 +723,8 @@
     .tr-more i { width: 15px; height: 15px; }
 
     /* master table */
+    .tbl-hint { display: flex; align-items: center; gap: 7px; margin: -4px 0 0; font-size: 12.5px; color: var(--muted); }
+    .tbl-hint i { width: 14px; height: 14px; color: var(--accent-violet); flex: none; }
     .table-wrap { overflow-x: auto; max-width: 100%; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--card); box-shadow: var(--shadow-sm); }
     .promise-table { border-collapse: separate; border-spacing: 0; width: max-content; min-width: 100%; font-size: 12.5px; }
     .promise-table th, .promise-table td { padding: 9px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
@@ -743,6 +771,13 @@
     .drill-head { display: flex; align-items: center; gap: 10px; }
     .drill-cat { font-size: 12px; font-family: var(--font-mono); color: var(--muted); text-transform: capitalize; }
     .drill-title { margin: 0; font-size: 19px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; padding-right: 36px; }
+    /* the two source-backed sections: "where promised" / "how verified" */
+    .drill-section { display: grid; gap: 11px; padding: 14px; border-radius: var(--radius-sm); background: var(--card2); border: 1px solid var(--line); }
+    .drill-sec-h { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent-violet); }
+    .drill-sec-h i { width: 16px; height: 16px; }
+    .drill-note { margin: 0; font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .drill-src-doc { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--text); }
+    .drill-src-doc i { width: 14px; height: 14px; color: var(--accent-cyan); flex: none; }
     .drill-quote { margin: 0; position: relative; padding: 14px 16px 14px 44px; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--accent-gold) 8%, var(--card2)); border: 1px solid color-mix(in srgb, var(--accent-gold) 30%, var(--line)); }
     .drill-quote > i { position: absolute; left: 14px; top: 14px; width: 20px; height: 20px; color: var(--accent-gold); opacity: 0.85; }
     .drill-quote blockquote { margin: 0; font-size: 15px; line-height: 1.5; font-weight: 600; }

@@ -61,26 +61,33 @@ export function mountFilterBar(host, store) {
 
   host.innerHTML = `
     <div class="fb">
-      <div class="fb-search">
-        <i data-lucide="search" aria-hidden="true"></i>
-        <input type="search" class="fb-q" autocomplete="off" spellcheck="false" placeholder="Search promise, metric or quote…" aria-label="Search promises" />
+      <div class="fb-row fb-row-primary">
+        <div class="fb-search">
+          <i data-lucide="search" aria-hidden="true"></i>
+          <input type="search" class="fb-q" autocomplete="off" spellcheck="false" placeholder="Search these promises — keyword, metric or quote…" aria-label="Search this company's promises" />
+        </div>
+        <label class="fb-field">
+          <span class="fb-field-l"><i data-lucide="calendar-range" aria-hidden="true"></i> Quarter</span>
+          <select class="fb-select fb-qtr" aria-label="Filter by quarter">
+            <option value="">All quarters</option>
+            ${quarters.map((q) => `<option value="${escapeHTML(q)}">${escapeHTML(q)}</option>`).join("")}
+          </select>
+        </label>
       </div>
-      <div class="fb-statuses" role="group" aria-label="Filter by status">
-        ${STATUS.map((s) => `<button type="button" class="fb-chip" data-status="${s}" style="--c:${statusColor(s)}" aria-pressed="false">${STATUS_LABEL[s]}</button>`).join("")}
+      <div class="fb-row fb-row-controls">
+        <div class="fb-statuses" role="group" aria-label="Filter by status">
+          ${STATUS.map((s) => `<button type="button" class="fb-chip" data-status="${s}" style="--c:${statusColor(s)}" aria-pressed="false">${STATUS_LABEL[s]}</button>`).join("")}
+        </div>
+        <select class="fb-select fb-cat" aria-label="Filter by category">
+          <option value="">All categories</option>
+          ${cats.map((c) => `<option value="${escapeHTML(c)}">${escapeHTML(titleCase(c))}</option>`).join("")}
+        </select>
+        <select class="fb-select fb-conf" aria-label="Filter by confidence">
+          <option value="">Any confidence</option>
+          ${confs.map((c) => `<option value="${c}">${CONF_LABEL[c]}</option>`).join("")}
+        </select>
+        <button type="button" class="fb-clear" hidden><i data-lucide="x" aria-hidden="true"></i> Clear all</button>
       </div>
-      <select class="fb-select fb-cat" aria-label="Filter by category">
-        <option value="">All categories</option>
-        ${cats.map((c) => `<option value="${escapeHTML(c)}">${escapeHTML(titleCase(c))}</option>`).join("")}
-      </select>
-      <select class="fb-select fb-qtr" aria-label="Filter by quarter">
-        <option value="">All quarters</option>
-        ${quarters.map((q) => `<option value="${escapeHTML(q)}">${escapeHTML(q)}</option>`).join("")}
-      </select>
-      <select class="fb-select fb-conf" aria-label="Filter by confidence">
-        <option value="">Any confidence</option>
-        ${confs.map((c) => `<option value="${c}">${CONF_LABEL[c]}</option>`).join("")}
-      </select>
-      <button type="button" class="fb-clear" hidden><i data-lucide="x" aria-hidden="true"></i> Clear all</button>
       <div class="fb-active" aria-live="polite"></div>
     </div>`;
   if (window.lucide?.createIcons) window.lucide.createIcons();
