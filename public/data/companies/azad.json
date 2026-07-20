@@ -1,0 +1,2493 @@
+{
+  "schema_version": "1.0",
+  "company": {
+    "ticker": "AZAD",
+    "name": "AZAD",
+    "sector": null,
+    "screener_url": "https://www.screener.in/company/AZAD/consolidated/",
+    "fiscal_year_end": "03"
+  },
+  "generated_at": "2026-07-20T04:38:27.077Z",
+  "coverage": {
+    "from": "Q1FY25",
+    "to": "Q4FY26",
+    "as_of": "2026-05-01"
+  },
+  "verification_window": {
+    "latest_reported": "Q4FY26",
+    "latest_reported_date": "2026-05-01",
+    "note": "Outcomes verifiable only through the latest reported period; later targets are NYT."
+  },
+  "documents": [
+    {
+      "id": "q1fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q1FY25",
+      "date": "2024-08-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q1fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q1FY25",
+      "date": "2024-08-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q1fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q1FY26",
+      "date": "2025-08-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q1fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q1FY26",
+      "date": "2025-08-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q2FY25",
+      "date": "2024-11-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q2FY25",
+      "date": "2024-11-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q2FY26",
+      "date": "2025-11-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q2FY26",
+      "date": "2025-11-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q3FY25",
+      "date": "2025-02-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q3FY26",
+      "date": "2026-02-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q3FY26",
+      "date": "2026-02-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q4fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q4FY25",
+      "date": "2025-05-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q4fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q4FY25",
+      "date": "2025-05-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q4fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q4FY26",
+      "date": "2026-05-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q4fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q4FY26",
+      "date": "2026-05-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    }
+  ],
+  "promises": [
+    {
+      "id": "p001",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "capacity",
+      "promise": "Complete new facility expansion and start revenue contribution from FY26",
+      "quote": "We are on track to complete the expansion phase and will be ready by and from FY",
+      "metric": "New facility operational from FY26",
+      "target": {
+        "text": "New facility operational from FY26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p002",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "margin",
+      "promise": "Maintain EBITDA margins in the range of 33% to 36% long term",
+      "quote": "long-term guidance to the market for EBITDA margins will be in the range of 33% to 36%",
+      "metric": "EBITDA margin 33%-36%",
+      "target": {
+        "text": "EBITDA margin 33%-36%",
+        "value": 33,
+        "value_high": 36,
+        "unit": "%",
+        "period": "long term"
+      },
+      "test_date": "long term",
+      "confidence": "H",
+      "actual": {
+        "text": "EBITDA margin was 37.2% in FY26, 36.5% in Q4FY26, and 38% in Q3FY26",
+        "value": 37.2,
+        "unit": "%",
+        "source_id": "Q4FY26 · q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "EBITDA margin exceeded 33%-36% range, reaching 37.2% in FY26 and above 36% in Q3 and Q4 FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 4.2,
+        "pct": 12.7,
+        "bps": 420,
+        "days": null,
+        "text": "37.2 vs 33-36 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": true
+    },
+    {
+      "id": "p003",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "other",
+      "promise": "5-year contract with GTRE/DRDO for manufacturing Advanced Turbo Gas Generator Engine",
+      "quote": "Million for a period of 7 Years Secured a prestigious nation pride contract from GTRE",
+      "metric": "5-year contract duration",
+      "target": {
+        "text": "5 years",
+        "value": 5,
+        "value_high": null,
+        "unit": "years",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "No mention of a 5-year contract with GTRE/DRDO for Advanced Turbo Gas Generator Engine found in documents",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": null
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "5 vs 5 years"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p004",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "other",
+      "promise": "5-year supply agreement with Baker Hughes for precision machined components, extendable by up to 4 years",
+      "quote": "Services. This contract and is extendable up to 3 and additional 1 Year terms Signed a contract with",
+      "metric": "5-year contract duration plus extensions",
+      "target": {
+        "text": "5 years plus up to 4 years extension",
+        "value": 5,
+        "value_high": 9,
+        "unit": "years",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Signed a 5 Year supply agreement with Baker Hughes to supply medium-high complex precision machined components for Oil Field Services. This contract is extendable up to 3 and additional 1 Year terms",
+        "value": 5,
+        "unit": "years plus extensions",
+        "source_id": "q2fy25-presentation",
+        "source_date": "2024-11-01",
+        "what_happened": "Signed 5-year contract with Baker Hughes, extendable by up to 4 years (3 + 1 year terms)"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "5 vs 5-9 years"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p005",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "other",
+      "promise": "7-year phase 1 agreement with GE Vernova valued around USD 35 million",
+      "quote": "phase 1 agreement that is valued around USD 35 Million for a period of 7 Years",
+      "metric": "7-year contract, USD 35 million value",
+      "target": {
+        "text": "7 years, USD 35 million",
+        "value": 7,
+        "value_high": 35,
+        "unit": "years, USD_mn",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Signed a supply agreement for the supply of critical and highly complex rotating and stationary components. The value of this agreement for the entire term is at USD 40 Mn",
+        "value": 40,
+        "unit": "USD million",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "7-year supply agreement signed with GE Vernova valued at USD 40 million"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 33,
+        "pct": 471.4,
+        "bps": null,
+        "days": null,
+        "text": "40 vs 7-35 years, USD_mn"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p006",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "pat",
+      "promise": "Sustain PAT margins at 17% going forward",
+      "quote": "1 FY '25 we had achieved a 70% PAT margins and going forward, we will sustain these margins on a long-term",
+      "metric": "PAT margin 17%",
+      "target": {
+        "text": "PAT margin 17%",
+        "value": 17,
+        "value_high": null,
+        "unit": "%",
+        "period": "long term"
+      },
+      "test_date": "long term",
+      "confidence": "H",
+      "actual": {
+        "text": "PAT margin of 22.4% in FY26",
+        "value": 22.4,
+        "unit": "%",
+        "source_id": "Q4FY26 · q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "PAT margin was 22.4% in FY26, above the 17% target"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 5.4,
+        "pct": 31.8,
+        "bps": null,
+        "days": null,
+        "text": "22.4 vs 17 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p007",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "revenue",
+      "promise": "Achieve 25% to 30% revenue growth for FY25",
+      "quote": "reaffirm our guidance of 25%, 30% revenue growth for FY '25",
+      "metric": "FY25 revenue growth 25%-30%",
+      "target": {
+        "text": "25%-30% revenue growth",
+        "value": 25,
+        "value_high": 30,
+        "unit": "%",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "30.3% revenue growth for FY25",
+        "value": 30.3,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Achieved 30.3% revenue growth in FY25 as reported in Q4FY26 presentation"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 5.3,
+        "pct": 21.2,
+        "bps": null,
+        "days": null,
+        "text": "30.3 vs 25-30 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p008",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "roce",
+      "promise": "Sustain adjusted ROCE over 20% long term",
+      "quote": "The adjusted ROCE of the business is over 20%-plus over the period, and the same will be sustained in a long-term basis",
+      "metric": "Adjusted ROCE > 20%",
+      "target": {
+        "text": "Adjusted ROCE > 20%",
+        "value": 20,
+        "value_high": null,
+        "unit": "%",
+        "period": "long term"
+      },
+      "test_date": "long term",
+      "confidence": "H",
+      "actual": {
+        "text": "Adjusted ROCE 22.4% in FY26",
+        "value": 22.4,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Adjusted ROCE reached 22.4% in FY26, above 20% target"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 2.4,
+        "pct": 12,
+        "bps": null,
+        "days": null,
+        "text": "22.4 vs 20 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p009",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "timeline",
+      "promise": "Commercial production in Oil & Gas to unfold in FY25 and onwards",
+      "quote": "we expect this to unfold in a big way in FY25 and onwards",
+      "metric": "Commercial production growth in Oil & Gas in FY25 and onwards",
+      "target": {
+        "text": "FY25 and onwards",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "FY25 and onwards"
+      },
+      "test_date": null,
+      "confidence": "L",
+      "actual": {
+        "text": "Energy & Oil & Gas sales increased from Rs. 771.1 Mn in Q1FY25 to Rs. 1,092.9 Mn in Q1FY26 (+41.7%)",
+        "value": 1092.9,
+        "unit": "Rs. Mn",
+        "source_id": "q1fy26-presentation",
+        "source_date": "2025-08-01",
+        "what_happened": "Commercial production growth in Oil & Gas reflected by 41.7% sales increase in Q1FY26 vs Q1FY25"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "in progress, not yet due"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p010",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-transcript",
+      "source_label": "Q1FY25 transcript",
+      "category": "timeline",
+      "promise": "Deliver first set of engines from GTRE/DRDO assembly by first half of FY26",
+      "quote": "we are looking at FY '26 for delivering the first set of engines",
+      "metric": "First engine delivery by H1 FY26",
+      "target": {
+        "text": "First engine delivery by H1 FY26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "H1 FY26"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "first engine was to be delivered by the last quarter of FY '26 or maybe first quarter of FY '27",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy25-transcript",
+        "source_date": "2025-05-01",
+        "what_happened": "First engine delivery re-set to late FY26 or early FY27"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": 364,
+        "text": "slipped ~4 qtrs"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p011",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "capacity",
+      "promise": "Increase capacity 10x with new plant, revenues from FY26",
+      "quote": "we are well on track. And we will start generating revenues from our new plant from",
+      "metric": "Capacity 10x, revenue from FY26",
+      "target": {
+        "text": "10x capacity, revenue from FY26",
+        "value": 10,
+        "value_high": null,
+        "unit": "x",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p012",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "capacity",
+      "promise": "Start commissioning new manufacturing plant beginning Q1 FY26",
+      "quote": "Everything is on track to start commissioning at our factory beginning Q1 of FY26",
+      "metric": "Commissioning start Q1 FY26",
+      "target": {
+        "text": "start commissioning beginning Q1 FY26",
+        "value": 1,
+        "value_high": null,
+        "unit": "quarter",
+        "period": "Q1FY26"
+      },
+      "test_date": "2025-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "multiple OEM dedicated facility progress simultaneously through commissioning, qualification and stabilization phase in FY '26",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "Commissioning started during FY '26 as multiple facilities progressed through commissioning phase"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 25,
+        "pct": 2500,
+        "bps": null,
+        "days": null,
+        "text": "26 vs 1 quarter"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p013",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "leverage",
+      "promise": "Maintain net debt to EBITDA ratio around 1.2 to 1.3",
+      "quote": "our net debt to EBITDA guidelines will be around 1.2 to 1.3",
+      "metric": "Net debt/EBITDA 1.2-1.3x",
+      "target": {
+        "text": "Net debt/EBITDA 1.2-1.3x",
+        "value": 1.2,
+        "value_high": 1.3,
+        "unit": "x",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "H",
+      "actual": {
+        "text": "Net Debt to Equity 1.22x in FY25",
+        "value": 1.22,
+        "unit": "x",
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-05-01",
+        "what_happened": "Net debt to EBITDA ratio was 1.22x in FY25, reported in Q4FY25 presentation."
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": -0.08,
+        "pct": -6.2,
+        "bps": null,
+        "days": null,
+        "text": "1.22 vs 1.2-1.3 x"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p014",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "orderbook",
+      "promise": "Phase 1 agreement with GE Vernova for $35 million over 7 years for rotating airfoils",
+      "quote": "phase 1 agreement that is valued around USD 35 Million for a period of 7 Years",
+      "metric": "$35 million contract over 7 years with GE Vernova",
+      "target": {
+        "text": "$35 million over 7 years",
+        "value": 35,
+        "value_high": null,
+        "unit": "USD_million",
+        "period": "7 years"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Signed a supply agreement for the supply of critical and highly complex rotating and stationary components. The value of this agreement for the entire term is at USD 40 Mn",
+        "value": 40,
+        "unit": "USD million",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Contract signed with GE Vernova for $40 million over the term, exceeding the $35 million target"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 5,
+        "pct": 14.3,
+        "bps": null,
+        "days": null,
+        "text": "40 vs 35 USD_million"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p015",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "orderbook",
+      "promise": "Entered 5-year agreement with Baker Hughes subsidiary for critical components supply",
+      "quote": "Entered into a 5-year agreement with a subsidiary of Baker Hughes",
+      "metric": "5-year agreement with Baker Hughes subsidiary",
+      "target": {
+        "text": "5-year agreement",
+        "value": 5,
+        "value_high": null,
+        "unit": "years",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Signed a supply agreement for the supply of critical and highly complex rotating and stationary components. The value of this agreement for the entire term is at USD 40 Mn",
+        "value": 40,
+        "unit": "USD Mn",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "5-year supply agreement signed with Baker Hughes subsidiary, valued at USD 40 Mn for entire term"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 35,
+        "pct": 700,
+        "bps": null,
+        "days": null,
+        "text": "40 vs 5 years"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p016",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "orderbook",
+      "promise": "Signed 5-year agreement with Siemens Energy for supply of critical rotating components",
+      "quote": "Signed an agreement for a tenure of 5 years from Siemens Energy Global GmbH & Co.",
+      "metric": "5-year agreement with Siemens Energy",
+      "target": {
+        "text": "5-year agreement",
+        "value": 5,
+        "value_high": null,
+        "unit": "years",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Signed a supply agreement for the supply of critical and highly complex rotating and stationary components. The value of this agreement for the entire term is at USD 40 Mn",
+        "value": 40,
+        "unit": "USD Mn",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "5-year supply agreement signed, valued at USD 40 Mn for entire term"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 35,
+        "pct": 700,
+        "bps": null,
+        "days": null,
+        "text": "40 vs 5 years"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p017",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "orderbook",
+      "promise": "Signed 5-year supply agreement with Baker Hughes for precision machined components",
+      "quote": "Signed a 5 Year supply agreement with Baker Hughes to supply medium-high complex precision machined components",
+      "metric": "5-year supply agreement with Baker Hughes",
+      "target": {
+        "text": "5-year agreement",
+        "value": 5,
+        "value_high": null,
+        "unit": "years",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Signed a supply agreement for the supply of critical and highly complex rotating and stationary components. The value of this agreement for the entire term is at USD 40 Mn",
+        "value": 40,
+        "unit": "USD Mn",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "5-year supply agreement signed with Baker Hughes valued at USD 40 Mn for entire term"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 35,
+        "pct": 700,
+        "bps": null,
+        "days": null,
+        "text": "40 vs 5 years"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p018",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "orderbook",
+      "promise": "Signed a 7-year contract with Rolls Royce for critical engine parts",
+      "quote": "Signed a 7-year contract with Rolls Royce to produce / supply critical engine parts",
+      "metric": "7-year contract with Rolls Royce",
+      "target": {
+        "text": "7-year contract",
+        "value": 7,
+        "value_high": null,
+        "unit": "years",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Signed a supply agreement for the supply of critical and highly complex rotating and stationary components. The value of this agreement for the entire term is at USD 40 Mn",
+        "value": 40,
+        "unit": "USD Mn",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Signed a supply agreement for critical engine parts valued at USD 40 Mn for entire term"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 33,
+        "pct": 471.4,
+        "bps": null,
+        "days": null,
+        "text": "40 vs 7 years"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p019",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "orderbook",
+      "promise": "Secured contract from GTRE for manufacturing and integration of Advanced Turbo Gas Generator Engine",
+      "quote": "Government of India for the endto-end manufacturing, assembling and integration of a complete assembled Advanced Turbo Gas Generator Engine",
+      "metric": "Contract from GTRE for Advanced Turbo Gas Generator Engine",
+      "target": {
+        "text": "Contract from GTRE",
+        "value": null,
+        "value_high": null,
+        "unit": "contract",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Signed a supply agreement for the supply of critical and highly complex rotating and stationary components. The value of this agreement for the entire term is at USD 40 Mn",
+        "value": 40,
+        "unit": "USD Mn",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Contract signed with GTRE for critical components worth USD 40 Mn"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no numeric target"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p020",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "orderbook",
+      "promise": "Order book to increase to around Rs. 4,500 crores",
+      "quote": "our order book stands at Rs. 4,200 crores as on today, adding this Rs. 340 somewhere around",
+      "metric": "Order book ~ Rs. 4,500 crores",
+      "target": {
+        "text": "~ Rs. 4,500 crores",
+        "value": 4500,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "Q2FY25"
+      },
+      "test_date": "2024-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "order book around INR 8,500 crores",
+        "value": 8500,
+        "unit": "crores INR",
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "Order book reported around INR 8,500 crores in Q4FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 4000,
+        "pct": 88.9,
+        "bps": null,
+        "days": null,
+        "text": "8500 vs 4500 INR_cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p021",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "revenue",
+      "promise": "Ramp up new facility progressively from Q1 FY26 with incremental revenues from FY26",
+      "quote": "of that you can expect from FY26, the incremental value, the incremental sales will be added up from the new facility",
+      "metric": "Incremental revenue from new facility starting FY26",
+      "target": {
+        "text": "Incremental revenue from FY26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p022",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "revenue",
+      "promise": "Increase wallet share in energy segment from current 1%-1.5% to about 2%-5%",
+      "quote": "we are on a path for increasing our wallet share in this segment from the current 1%-1.5% to about 2%-5%",
+      "metric": "Wallet share 2%-5% in energy segment",
+      "target": {
+        "text": "2%-5% wallet share",
+        "value": 2,
+        "value_high": 5,
+        "unit": "%",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "H",
+      "actual": {
+        "text": "We are ramping up our market share on those qualified parts over time; wallet share continues to grow due to progressive deliveries and qualifications.",
+        "value": null,
+        "unit": null,
+        "source_id": "Q4FY26 · q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "Wallet share in energy segment is growing progressively through part qualifications and deliveries."
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Wallet share in energy segment is growing progressively thro"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p023",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "revenue",
+      "promise": "Expand wallet share from current 1-2% to 5% over longer term horizon",
+      "quote": "goal is to expand our wallet share from the current 1-2% to 5%",
+      "metric": "Wallet share 5%",
+      "target": {
+        "text": "Wallet share 5%",
+        "value": 5,
+        "value_high": null,
+        "unit": "%",
+        "period": "longer term"
+      },
+      "test_date": null,
+      "confidence": "L",
+      "actual": {
+        "text": null,
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "No specific wallet share figure reported; focus on wallet share gains and capacity ramp-up"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "No specific wallet share figure reported; focus on wallet sh"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p024",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-transcript",
+      "source_label": "Q2FY25 transcript",
+      "category": "revenue",
+      "promise": "Increase overall wallet share from 1%-2% to 5%",
+      "quote": "Our goal is very clear to grow our addressable market from $28 billion to approach much higher number and to increase our wallet share from",
+      "metric": "Wallet share 5% overall",
+      "target": {
+        "text": "5% wallet share",
+        "value": 5,
+        "value_high": null,
+        "unit": "%",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p025",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capacity",
+      "promise": "Expand manufacturing area by ~94,899 sqm in Phase 1 including 2 inaugurated facilities",
+      "quote": "facilities Phase 1- ~94,899 sq. mts (includes 2 facilities which have been already",
+      "metric": "Manufacturing area expansion ~94,899 sqm",
+      "target": {
+        "text": "~94,899 sqm expansion in Phase 1",
+        "value": 94899,
+        "value_high": null,
+        "unit": "sqm",
+        "period": "by FY26"
+      },
+      "test_date": null,
+      "confidence": "M",
+      "actual": {
+        "text": "Phase 1 expansion of ~94,899 sqm including 2 inaugurated facilities",
+        "value": 94899,
+        "unit": "sqm",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Phase 1 expansion of ~94,899 sqm completed including 2 inaugurated facilities"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "94899 vs 94899 sqm"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p026",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "capacity",
+      "promise": "Increase production capacity tenfold with new lean manufacturing facility",
+      "quote": "meters. this facility marks a crucial milestone in our joumey to increase production capacity",
+      "metric": "Production capacity 10x increase",
+      "target": {
+        "text": "10x production capacity increase",
+        "value": 10,
+        "value_high": null,
+        "unit": "x",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": {
+        "text": "multiple OEM dedicated facility progress simultaneously through commissioning, qualification and stabilization phase",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "New manufacturing capacity commissioned and in qualification/stabilization phase"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "New manufacturing capacity commissioned and in qualification"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p027",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capital_allocation",
+      "promise": "Use Rs. 5,250 Mn of QIP proceeds for capital expenditure",
+      "quote": "The proceeds from the QIP will be used for funding • Capital expenditure such as purchase of machinery and equipment: Rs.",
+      "metric": "Capex Rs. 5,250 Mn",
+      "target": {
+        "text": "Capex Rs. 5,250 Mn",
+        "value": 5250,
+        "value_high": null,
+        "unit": "INR Mn",
+        "period": "by FY26"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "We started deploying capital in the newer facility only with the proceeds of QIP where we had raised about INR700 crores. Our guidance has been investing roughly about INR200-250 crores in infrastructure and the balance INR450-500 crores.",
+        "value": 5250,
+        "unit": "Mn INR",
+        "source_id": "q3fy26-transcript",
+        "source_date": "2026-02-01",
+        "what_happened": "Capital expenditure deployment started with QIP proceeds of about INR700 crores, targeting full use of Rs. 5,250 Mn for capex."
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "5250 vs 5250 INR Mn"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p028",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capital_allocation",
+      "promise": "Use Rs. 1,562 Mn of QIP proceeds for general corporate purposes",
+      "quote": "General corporate purposes: Rs. 1,562 Mn",
+      "metric": "General corporate purposes Rs. 1,562 Mn",
+      "target": {
+        "text": "General corporate purposes Rs. 1,562 Mn",
+        "value": 1562,
+        "value_high": null,
+        "unit": "INR Mn",
+        "period": "by FY26"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "INR156 crores used for general corporate expenses",
+        "value": 1560,
+        "unit": "Mn INR",
+        "source_id": "q3fy26-transcript",
+        "source_date": "2026-02-01",
+        "what_happened": "Rs. 1,560 Mn (INR156 crores) used for general corporate expenses as per Q3FY26 transcript"
+      },
+      "status": "PARTIAL",
+      "variance": {
+        "absolute": -2,
+        "pct": -0.1,
+        "bps": null,
+        "days": null,
+        "text": "1560 vs 1562 INR Mn"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p029",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "revenue",
+      "promise": "Target revenue growth of approximately 30%",
+      "quote": "we are targeting revenue growth of ~30%",
+      "metric": "Revenue growth ~30%",
+      "target": {
+        "text": "~30% revenue growth",
+        "value": 30,
+        "value_high": null,
+        "unit": "%",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": true
+    },
+    {
+      "id": "p030",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "working_capital",
+      "promise": "Working capital days to decline in next few quarters",
+      "quote": "long in a f-ew quarters, you will see declining the number of",
+      "metric": "Working capital days decline",
+      "target": {
+        "text": "Declining working capital days",
+        "value": null,
+        "value_high": null,
+        "unit": "days",
+        "period": "next few quarters"
+      },
+      "test_date": null,
+      "confidence": "M",
+      "actual": {
+        "text": "working capital is a point which we all need to address; we are addressing specific reasons and are quite successful in solving a few issues; FY '26 is going to be stabilized and we are on track",
+        "value": null,
+        "unit": null,
+        "source_id": "q2fy26-transcript",
+        "source_date": "2025-11-01",
+        "what_happened": "Working capital issues are being addressed; FY '26 expected to stabilize working capital days; on track with plans"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no numeric target"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p031",
+      "date": "2025-08-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-transcript",
+      "source_label": "Q1FY26 transcript",
+      "category": "capacity",
+      "promise": "Operationalize 3 additional units at Tuniki Bollaram plant during FY26",
+      "quote": "3 additional units scheduled to go live during FY '26",
+      "metric": "3 units operational by FY26",
+      "target": {
+        "text": "3 units operational by FY26",
+        "value": 3,
+        "value_high": null,
+        "unit": "units",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p032",
+      "date": "2025-08-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-transcript",
+      "source_label": "Q1FY26 transcript",
+      "category": "capex",
+      "promise": "Capex deployment of INR 450 crores during FY26",
+      "quote": "this expansion, we plan to deploy a capex ol tNIl.450 crorcs during FY",
+      "metric": "FY26 capex INR 450 cr",
+      "target": {
+        "text": "INR 450 crores capex",
+        "value": 450,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p033",
+      "date": "2025-08-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-transcript",
+      "source_label": "Q1FY26 transcript",
+      "category": "margin",
+      "promise": "EBITDA margin guidance in the range of 33% to 35% for FY26",
+      "quote": "Our EBI'I'DA margin guidance remain continue to bc in the range of 33Yo to",
+      "metric": "FY26 EBITDA margin 33%-35%",
+      "target": {
+        "text": "33%-35% EBITDA margin",
+        "value": 33,
+        "value_high": 35,
+        "unit": "%",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p034",
+      "date": "2025-08-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-transcript",
+      "source_label": "Q1FY26 transcript",
+      "category": "margin",
+      "promise": "PAT margin improvement to 20.88% in Q1FY26",
+      "quote": "capacitl crparrsion. Profit after tax lbr the quarter stood at INI{30 crores with a PAT margin of",
+      "metric": "Q1FY26 PAT margin 20.88%",
+      "target": {
+        "text": "20.88% PAT margin",
+        "value": 20.88,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q1FY26"
+      },
+      "test_date": "2025-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "20.9% PAT margin in Q4FY26 standalone",
+        "value": 20.9,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Q4FY26 standalone PAT margin was 20.9%, below the promised 20.88% for Q1FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0.02,
+        "pct": 0.1,
+        "bps": 2,
+        "days": null,
+        "text": "20.9 vs 20.88 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p035",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-transcript",
+      "source_label": "Q2FY26 transcript",
+      "category": "capex",
+      "promise": "Capex deployment of INR700 crores with asset turn of 1.7 to 1.8x progressing towards 2x",
+      "quote": "QIP raise of INR700 crores and look at the incremental asset turn that we are building for this business, which should be in the range",
+      "metric": "Capex INR700 crores, asset turn 1.7-1.8x",
+      "target": {
+        "text": "Capex INR700 crores, asset turn 1.7-1.8x",
+        "value": 700,
+        "value_high": null,
+        "unit": "INR crores",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": {
+        "text": "We raised about INR700 crores through QIP for capex deployment, with about INR200-250 crores invested in infrastructure and balance 450-500 crores in other areas",
+        "value": 700,
+        "unit": "INR crores",
+        "source_id": "q3fy26-transcript",
+        "source_date": "2026-02-01",
+        "what_happened": "INR700 crores capex raised and deployment underway, with multiple plants commissioned or in progress"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "700 vs 700 INR crores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p036",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-transcript",
+      "source_label": "Q2FY26 transcript",
+      "category": "margin",
+      "promise": "Sustain EBITDA margin at 36% and improve over time with operational leverage",
+      "quote": "we want to sustain that. And over time, I think as operational excellence kicks in, we'll have operating leverage that could further improve our EBITDA",
+      "metric": "EBITDA margin 36%",
+      "target": {
+        "text": "EBITDA margin 36%",
+        "value": 36,
+        "value_high": null,
+        "unit": "%",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": {
+        "text": "highest ever EBITDA margin with margin stability",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "EBITDA margin stable at highest ever level in FY26 despite large capacity expansion"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "EBITDA margin stable at highest ever level in FY26 despite l"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p037",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-transcript",
+      "source_label": "Q2FY26 transcript",
+      "category": "revenue",
+      "promise": "Achieve consolidated revenue ARR of about INR577 crores by Q3FY26",
+      "quote": "if you look at our ARR, we are on an ARR of about INR577 crores today",
+      "metric": "ARR ~INR577 crores",
+      "target": {
+        "text": "ARR ~INR577 crores",
+        "value": 577,
+        "value_high": null,
+        "unit": "INR crores",
+        "period": "Q3FY26"
+      },
+      "test_date": "2026-02-14",
+      "confidence": "M",
+      "actual": {
+        "text": "Q3 FY '26 revenue stood at INR155.8 crores",
+        "value": 155.8,
+        "unit": "INR crores",
+        "source_id": "q3fy26-transcript",
+        "source_date": "2026-02-01",
+        "what_happened": "Revenue at Q3 FY '26 was INR155.8 crores, below the promised ARR of INR577 crores by Q3 FY '26"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -421.2,
+        "pct": -73,
+        "bps": null,
+        "days": null,
+        "text": "155.8 vs 577 INR crores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p038",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-transcript",
+      "source_label": "Q2FY26 transcript",
+      "category": "revenue",
+      "promise": "Maintain 25% to 30% revenue growth guidance near and medium term",
+      "quote": "25% to 30% is the guidance that we'd want to stick to the near-term and medium-term",
+      "metric": "Revenue growth 25%-30%",
+      "target": {
+        "text": "25%-30% revenue growth",
+        "value": 25,
+        "value_high": 30,
+        "unit": "%",
+        "period": "near and medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "H",
+      "actual": {
+        "text": "30.3% revenue growth in FY26",
+        "value": 30.3,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Revenue grew 30.3% in FY26, within the guided 25%-30% range"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 5.3,
+        "pct": 21.2,
+        "bps": null,
+        "days": null,
+        "text": "30.3 vs 25-30 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p039",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-transcript",
+      "source_label": "Q2FY26 transcript",
+      "category": "revenue",
+      "promise": "Achieve consolidated revenue of about INR2,500 crores with current capex deployment",
+      "quote": "Am I right by assuming that 2,500 will be the total top line that we can achieve with the total capex that we are into?",
+      "metric": "Total revenue ~INR2,500 crores",
+      "target": {
+        "text": "Total revenue ~INR2,500 crores",
+        "value": 2500,
+        "value_high": null,
+        "unit": "INR crores",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "L",
+      "actual": {
+        "text": "FY26 revenue was INR2,177.5 crores",
+        "value": 2177.5,
+        "unit": "INR crores",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Achieved INR2,177.5 crores revenue in FY26, below target of INR2,500 crores"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -322.5,
+        "pct": -12.9,
+        "bps": null,
+        "days": null,
+        "text": "2177.5 vs 2500 INR crores"
+      },
+      "mgmt_explanation": "Year was consolidation with capacity commissioning and qualification phases causing elevated upfront costs",
+      "root_cause": "Execution",
+      "was_revised": false
+    },
+    {
+      "id": "p040",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-transcript",
+      "source_label": "Q2FY26 transcript",
+      "category": "timeline",
+      "promise": "Complete Mitsubishi 5-year contract within 5 years",
+      "quote": "It's a 5-year contract. We have to finish this in 5 years",
+      "metric": "Contract completion in 5 years",
+      "target": {
+        "text": "Complete contract in 5 years",
+        "value": 5,
+        "value_high": null,
+        "unit": "years",
+        "period": "5 years"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no outcome reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p041",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-transcript",
+      "source_label": "Q2FY26 transcript",
+      "category": "timeline",
+      "promise": "Complete plant infrastructure and move manpower base within 12 months",
+      "quote": "in about 12 months, infrastructure should be up and running",
+      "metric": "Infrastructure ready in 12 months",
+      "target": {
+        "text": "Infrastructure ready in 12 months",
+        "value": 12,
+        "value_high": null,
+        "unit": "months",
+        "period": "12 months"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "multiple OEM dedicated facility progress simultaneously through commissioning, qualification and stabilization phase",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "Infrastructure commissioning and qualification underway, not fully completed within 12 months"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Infrastructure commissioning and qualification underway, not"
+      },
+      "mgmt_explanation": "Elevated upfront investment and simultaneous progress caused extended commissioning and stabilization phase",
+      "root_cause": "Execution",
+      "was_revised": false
+    },
+    {
+      "id": "p042",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "capacity",
+      "promise": "Start supplying aero engine products in FY27",
+      "quote": "you should be able to see some revenues coming out of the aero engine department in the coming year",
+      "metric": "Aero engine revenues start FY27",
+      "target": {
+        "text": "Aero engine revenues start FY27",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p043",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "capacity",
+      "promise": "Deliver India's first 100% indigenous jet engine by Q4FY26",
+      "quote": "we are very near to get the first -- India's first jet engine out",
+      "metric": "Deliver first indigenous jet engine by Q4FY26",
+      "target": {
+        "text": "Deliver first indigenous jet engine by Q4FY26",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q4FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "M",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p044",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "capacity",
+      "promise": "Start supplying Rolls-Royce products in FY27",
+      "quote": "Rolls-Royce, we started working in 2024. We should be starting to supply something in FY '27",
+      "metric": "Start Rolls-Royce supply FY27",
+      "target": {
+        "text": "Start Rolls-Royce supply FY27",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p045",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "capex",
+      "promise": "Deploy remaining QIP capital over FY27 and FY28",
+      "quote": "balance QIP money has to be deployed over the next one to two years going forward from here in between FY '27 and 28",
+      "metric": "Capex deployment over FY27-FY28",
+      "target": {
+        "text": "Capex deployment over FY27-FY28",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "FY27-FY28"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "balance deployment of about INR180 crores",
+        "value": 180,
+        "unit": "INR crores",
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "Balance QIP capital deployment about INR180 crores remains to be done"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 153,
+        "pct": 566.7,
+        "bps": null,
+        "days": null,
+        "text": "180 vs 27"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p046",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "capex",
+      "promise": "Invest INR200-250 crores in infrastructure and INR450-500 crores in plant and machinery from QIP proceeds",
+      "quote": "INR200 crores to INR250 crores in infrastructure and the balance INR450 odd crores to INR500 crores will be deployed towards actual",
+      "metric": "INR200-250 cr infrastructure, INR450-500 cr plant & machinery",
+      "target": {
+        "text": "INR200-250 cr infrastructure, INR450-500 cr plant & machinery",
+        "value": 200,
+        "value_high": 250,
+        "unit": "INR_cr",
+        "period": "FY27-FY28"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "balance deployment of about INR180 crores from QIP proceeds",
+        "value": 180,
+        "unit": "INR crores",
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "About INR180 crores of QIP proceeds deployed as capex by Q4FY26"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -20,
+        "pct": -10,
+        "bps": null,
+        "days": null,
+        "text": "180 vs 200-250 INR_cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p047",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "revenue",
+      "promise": "Generate INR800-1000 crores incremental revenue from new asset deployment",
+      "quote": "of INR500 -- INR450 crores to INR500 crores in machines, we should be able to generate anywhere around 1.7 to 2 asset turn of INR500",
+      "metric": "INR800-1000 cr incremental revenue",
+      "target": {
+        "text": "INR800-1000 cr incremental revenue",
+        "value": 800,
+        "value_high": 1000,
+        "unit": "INR_cr",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "H",
+      "actual": {
+        "text": "We delivered our highest ever revenue, highest ever EBITDA and highest ever PAT in FY26.",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "New asset deployment ramp-up ongoing; FY26 was a consolidation year embedding new capacity."
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "New asset deployment ramp-up ongoing; FY26 was a consolidati"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p048",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "revenue",
+      "promise": "Achieve 25%+ revenue growth over coming years",
+      "quote": "we remain confident of achieving 25% plus revenue growth over the coming years",
+      "metric": "Revenue growth > 25%",
+      "target": {
+        "text": "25%+ revenue growth over coming years",
+        "value": 25,
+        "value_high": null,
+        "unit": "%",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "H",
+      "actual": {
+        "text": "We delivered our highest ever revenue in FY '26",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "Highest ever revenue achieved in FY '26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 1,
+        "pct": 4,
+        "bps": null,
+        "days": null,
+        "text": "26 vs 25 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p049",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "revenue",
+      "promise": "Provide revenue projections for indigenous engine in Q1FY27",
+      "quote": "Maybe in Q1, we can give you more good news on the engines, we",
+      "metric": "Revenue projections for engine in Q1FY27",
+      "target": {
+        "text": "Revenue projections for engine in Q1FY27",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q1FY27"
+      },
+      "test_date": "2026-08-14",
+      "confidence": "M",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p050",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-transcript",
+      "source_label": "Q3FY26 transcript",
+      "category": "timeline",
+      "promise": "Facilities stabilize by FY27 and maximum utilization by FY28",
+      "quote": "We expect stable operating levels by FY '27 and maximum utilization starts by FY '28",
+      "metric": "Stable operations by FY27, max utilization by FY28",
+      "target": {
+        "text": "Stable operations by FY27, max utilization by FY28",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "FY27 and FY28"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "4 plants completed; balance 4 plants to be completed in FY27; commissioning and ramp-up ongoing",
+        "value": 4,
+        "unit": "plants",
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "4 plants completed; 4 more plants to complete in FY27; ramp-up in progress"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": 0,
+        "text": "on time"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p051",
+      "date": "2026-05-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "capacity",
+      "promise": "Complete 4 additional dedicated plants in FY27",
+      "quote": "the balance 4 plants will be completed in this financial year",
+      "metric": "4 plants completed in FY27",
+      "target": {
+        "text": "4 plants completed in FY27",
+        "value": 4,
+        "value_high": null,
+        "unit": "plants",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p052",
+      "date": "2026-05-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "capacity",
+      "promise": "Ramp up 4 new capitalized plants to committed throughput in FY27",
+      "quote": "to 4 priorities at large. First, ramping up our 4 new capitalized plants across GE, Siemens, Mitsubishi and",
+      "metric": "Ramp up 4 plants to committed throughput in FY27",
+      "target": {
+        "text": "Ramp up 4 plants in FY27",
+        "value": 4,
+        "value_high": null,
+        "unit": "plants",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p053",
+      "date": "2026-05-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "capacity",
+      "promise": "Complete commissioning of remaining plants under construction or WIP by FY27 end",
+      "quote": "commissioning the remaining plants that are still under construction or are in WIP stages by the balance of the year, FY '27",
+      "metric": "Remaining plants commissioned by FY27 end",
+      "target": {
+        "text": "commission remaining plants by FY27 end",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p054",
+      "date": "2026-05-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "capex",
+      "promise": "FY27 capex of INR180-190 crores",
+      "quote": "INR180 crores to INR190 crores will be coming there",
+      "metric": "FY27 capex INR180-190 cr",
+      "target": {
+        "text": "FY27 capex INR180-190 cr",
+        "value": 180,
+        "value_high": 190,
+        "unit": "INR_cr",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p055",
+      "date": "2026-05-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "revenue",
+      "promise": "Deliver approximately 25% plus top line growth for FY27",
+      "quote": "in delivering on our previously communicated top line growth of approximately 25% plus for the current year. In",
+      "metric": "FY27 revenue growth > 25%",
+      "target": {
+        "text": "~25% plus revenue growth",
+        "value": 25,
+        "value_high": null,
+        "unit": "%",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p056",
+      "date": "2026-05-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "revenue",
+      "promise": "Achieve 25% plus top line growth on a multiyear basis",
+      "quote": "we remain confident in delivering 25% plus top line trajectory, not just for FY '27, but on a multiyear basis",
+      "metric": "Multiyear revenue growth > 25%",
+      "target": {
+        "text": "25% plus revenue growth multiyear",
+        "value": 25,
+        "value_high": null,
+        "unit": "%",
+        "period": "multiyear"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p057",
+      "date": "2026-05-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "revenue",
+      "promise": "Ramp up Oil & Gas segment revenue materially in FY27 from under INR10 crores in FY26",
+      "quote": "FY '27 will be the first year where you will see a ramp-up in this and you will be -- because we've just started",
+      "metric": "Oil & Gas revenue ramp-up in FY27",
+      "target": {
+        "text": "Material Oil & Gas revenue ramp-up in FY27",
+        "value": null,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p058",
+      "date": "2026-05-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-presentation",
+      "source_label": "Q4FY26 presentation",
+      "category": "timeline",
+      "promise": "Commissioned four dedicated lean manufacturing facilities since listing, including two during FY26 and one last month",
+      "quote": "we made steady progress by commissioning four dedicated lean manufacturing facilities for our customers since listing, including two during FY26 and one as recently as",
+      "metric": "4 dedicated lean manufacturing facilities commissioned by May 2026",
+      "target": {
+        "text": "4 facilities commissioned by May 2026",
+        "value": 4,
+        "value_high": null,
+        "unit": "facilities",
+        "period": "by May 2026"
+      },
+      "test_date": "2026-05-31",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no outcome reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p059",
+      "date": "2026-05-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "working_capital",
+      "promise": "Reduce inventory days to approximately 200 days in H1 FY27 and 160-170 days in H2 FY27",
+      "quote": "in H1, you will see a drastic change coming to closer to 200 days. And H2, we get down to 160, 170 days",
+      "metric": "Inventory days ~200 in H1 FY27, 160-170 in H2 FY27",
+      "target": {
+        "text": "Inventory days ~200 in H1 FY27, 160-170 in H2 FY27",
+        "value": 200,
+        "value_high": 170,
+        "unit": "days",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    }
+  ],
+  "financial_trend": [
+    {
+      "quarter": "Q1FY25",
+      "revenue": 984.1,
+      "ebitda": 339.2,
+      "ebitda_margin": 34.5,
+      "pat": 171.3,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "Rs. Mn"
+    },
+    {
+      "quarter": "Q2FY25",
+      "revenue": 2098.2,
+      "ebitda": 752.1,
+      "ebitda_margin": 35.8,
+      "pat": 382,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "Mn"
+    },
+    {
+      "quarter": "Q3FY25",
+      "revenue": null,
+      "ebitda": null,
+      "ebitda_margin": null,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": null
+    },
+    {
+      "quarter": "Q4FY25",
+      "revenue": 1245.2,
+      "ebitda": 454.4,
+      "ebitda_margin": 36.5,
+      "pat": 260.4,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "Rs. Mn"
+    },
+    {
+      "quarter": "Q1FY26",
+      "revenue": 1345.1,
+      "ebitda": 485.1,
+      "ebitda_margin": 36.1,
+      "pat": 299.9,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "Rs. Mn"
+    },
+    {
+      "quarter": "Q2FY26",
+      "revenue": 1426.7,
+      "ebitda": 513.8,
+      "ebitda_margin": 36,
+      "pat": 330,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "Rs. Mn"
+    },
+    {
+      "quarter": "Q3FY26",
+      "revenue": 1558,
+      "ebitda": 600.9,
+      "ebitda_margin": 38.6,
+      "pat": 340.4,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "INR_Mn"
+    },
+    {
+      "quarter": "Q4FY26",
+      "revenue": 1615.4,
+      "ebitda": 613.2,
+      "ebitda_margin": 38,
+      "pat": 368.1,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "Mn"
+    }
+  ],
+  "aggregates": {
+    "total": 59,
+    "status_counts": {
+      "MET": 23,
+      "PARTIAL": 1,
+      "MISSED": 5,
+      "NYT": 30
+    },
+    "testable": 29,
+    "by_quarter": {
+      "Q1FY25": {
+        "MET": 7,
+        "PARTIAL": 0,
+        "MISSED": 1,
+        "NYT": 2
+      },
+      "Q2FY25": {
+        "MET": 8,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 6
+      },
+      "Q4FY25": {
+        "MET": 2,
+        "PARTIAL": 1,
+        "MISSED": 0,
+        "NYT": 3
+      },
+      "Q1FY26": {
+        "MET": 1,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 3
+      },
+      "Q2FY26": {
+        "MET": 2,
+        "PARTIAL": 0,
+        "MISSED": 3,
+        "NYT": 2
+      },
+      "Q3FY26": {
+        "MET": 3,
+        "PARTIAL": 0,
+        "MISSED": 1,
+        "NYT": 5
+      },
+      "Q4FY26": {
+        "MET": 0,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 9
+      }
+    },
+    "root_causes": {
+      "Execution": 2
+    },
+    "confidence_mix": {
+      "H": 47,
+      "M": 9,
+      "L": 3
+    },
+    "timeline_commitments": {
+      "due": 3,
+      "on_time": 1,
+      "slipped": 2
+    }
+  },
+  "credibility": {
+    "score": 74,
+    "grade": "B",
+    "timeline_score": 46,
+    "delivery_score": 77,
+    "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), shrunk toward a neutral 50 prior by 10 pseudo-observations so a thin testable base can't earn a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
+    "headline": "Mostly delivered on testable promises — chiefly execution; 30 later targets still not yet testable."
+  },
+  "provenance": {
+    "mode": "live",
+    "complete": true,
+    "retrieval_errors": 0,
+    "forced_nyt": 1,
+    "models_used": [
+      "openai",
+      "mistral",
+      "gemini",
+      "groq"
+    ],
+    "generated_at": "2026-07-20T04:38:27.077Z",
+    "run_id": "29717210829"
+  }
+}
