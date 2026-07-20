@@ -2469,11 +2469,11 @@
     }
   },
   "credibility": {
-    "score": 74,
+    "score": 73,
     "grade": "B",
     "timeline_score": 46,
     "delivery_score": 77,
-    "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), shrunk toward a neutral 50 prior by 10 pseudo-observations so a thin testable base can't earn a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
+    "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
     "headline": "Mostly delivered on testable promises — chiefly execution; 30 later targets still not yet testable."
   },
   "provenance": {

@@ -95,6 +95,17 @@ ok(credibility([P("MET", "H")]).score < 90, "a thin all-MET base no longer earns
 ok(credibility(Array.from({ length: 50 }, () => P("MET", "H"))).score >= 90, "a large all-MET base still reads high (~100) — shrinkage fades with evidence");
 ok(credibility([P("MISSED", "H")]).score > 30 && credibility([P("MISSED", "H")]).score < 50, "a lone MISSED is pulled UP off rock-bottom 0 toward the prior");
 ok(credibility(Array.from({ length: 40 }, () => P("MISSED", "H"))).grade === "E", "40 misses → grade E (thin-sample shrinkage negligible at scale)");
+// forced-NYT shrinkage — unresolved DUE promises (came due, retrieval couldn't confirm an actual)
+// fold in as neutral pseudo-observations, so a thinly-verified one-sided ledger can't read as a
+// confident grade (the INFY grade-A artifact: 15/15 MET but 7 due-yet-unverified).
+const infy15 = Array.from({ length: 15 }, () => P("MET", "H"));
+ok(credibility(infy15).grade === "A", "15/15 MET, nothing unresolved → grade A (deserved)");
+ok(credibility(infy15, null, { forcedNyt: 7 }).grade === "B", "15/15 MET but 7 due-unverified → pulled to grade B (not a confident A)");
+ok(credibility(infy15, null, { forcedNyt: 7 }).score < credibility(infy15).score, "unresolved-due promises lower the score");
+ok(credibility(infy15, null, { forcedNyt: 0 }).score === credibility(infy15).score, "forcedNyt:0 leaves the score unchanged (backward compatible)");
+ok(credibility(infy15, null, { forcedNyt: 20 }).score < credibility(infy15, null, { forcedNyt: 7 }).score, "more unresolved-due promises → lower score (monotonic)");
+const big90 = Array.from({ length: 90 }, () => P("MET", "H"));
+ok(credibility(big90, null, { forcedNyt: 4 }).grade === "A", "a large all-MET base with few unresolved stays A (penalty is coverage-aware, negligible at scale)");
 
 // ---- 10) Codex review regressions (hardening generic parsing/verdicts) ------
 console.log("\nCodex-review regressions:");

@@ -179,7 +179,12 @@ async function main() {
 
   // 5. aggregates + credibility (deterministic)
   const aggregates = aggregate(verified);
-  const cred = credibility(verified, aggregates);
+  // forced_nyt = due promises (deadline provably within the window) left NYT for want of a
+  // retrieved actual. Computed here (not just for provenance) so credibility can fold these
+  // unresolved-due unknowns into its shrinkage — a thinly-verified, one-sided ledger must not
+  // read as a confident grade. (Same value re-used for the provenance stamp below.)
+  const forced_nyt = verified.filter((p) => p.status === "NYT" && isWithinWindow(p.test_date, vw.latest_reported_date, vw.latest_reported)).length;
+  const cred = credibility(verified, aggregates, { forcedNyt: forced_nyt });
 
   // 6. provenance — the honesty stamp the UI badges and the commit guard enforce.
   //   retrieval_errors = retrieval calls that FAILED (provider quota/network) — the pipeline
@@ -192,7 +197,7 @@ async function main() {
   // "complete" therefore gates on retrieval_errors === 0, plus a sanity cap on the forced_nyt
   // RATIO: if more than FORCED_NYT_MAX_RATIO of due promises went unresolved, that looks like a
   // retrieval pathology rather than sparse disclosure, so the run is still flagged incomplete.
-  const forced_nyt = verified.filter((p) => p.status === "NYT" && isWithinWindow(p.test_date, vw.latest_reported_date, vw.latest_reported)).length;
+  // (forced_nyt is computed above, before credibility, so the scorer can use it too.)
   const retrieval_errors = (faStats.errors?.length || 0) + (ftStats.errors?.length || 0);
   const { complete, ratio: forced_nyt_ratio, thin } = runCompleteness({
     retrievalErrors: retrieval_errors,

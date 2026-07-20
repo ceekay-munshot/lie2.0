@@ -60,8 +60,12 @@ export function aggregate(promises = []) {
  * Shrinkage: score = 100 × (Σ(conf×outcome) + K·prior) / (Σconf + K). At Σconf ≫ K the
  * observed rate dominates; at a thin Σconf it pulls toward the prior — so neither a
  * perfect nor a rock-bottom score is handed out on a handful of promises.
+ *
+ * `extraPrior` adds pseudo-observations at the neutral prior on TOP of K — used to fold in
+ * unresolved-due promises (see credibility): each one is a genuine unknown, so it widens the
+ * shrinkage and pulls a thinly-verified, one-sided ledger back toward neutral.
  */
-function weightedScore(subset) {
+function weightedScore(subset, extraPrior = 0) {
   let num = 0, den = 0;
   for (const p of subset) {
     const w = CONF_W[p.confidence] ?? 0.8;
@@ -69,7 +73,8 @@ function weightedScore(subset) {
     den += w;
   }
   if (!den) return null;
-  return Math.round((100 * (num + PRIOR_K * PRIOR_RATE)) / (den + PRIOR_K));
+  const K = PRIOR_K + Math.max(0, Number(extraPrior) || 0);
+  return Math.round((100 * (num + K * PRIOR_RATE)) / (den + K));
 }
 
 /** Deterministic headline from the numbers — never invents figures. */
@@ -85,18 +90,30 @@ function buildHeadline(agg) {
   return `${lead}${cause}${nyt}.`;
 }
 
-export function credibility(promises = [], aggregates = null) {
+export function credibility(promises = [], aggregates = null, opts = {}) {
   const agg = aggregates || aggregate(promises);
   const testable = promises.filter((p) => p.status && p.status !== "NYT");
-  const score = weightedScore(testable);
-  const timeline_score = weightedScore(testable.filter((p) => directionFor(p.category) === "timeline"));
-  const delivery_score = weightedScore(testable.filter((p) => directionFor(p.category) !== "timeline"));
+  // Unresolved-due promises — those that came due WITHIN the verification window but for which
+  // retrieval could not confirm an actual (provenance.forced_nyt) — are genuine unknowns, not
+  // clean passes. Fold each in as ONE neutral pseudo-observation so a thinly-verified, one-sided
+  // ledger (e.g. INFY: 15/15 MET but 7 due-yet-unverified → a spurious grade A that outranks
+  // better-documented companies) is pulled back toward the prior until those promises are actually
+  // verified. This makes the score coverage-aware in the VERIFICATION dimension, complementing the
+  // sample-size shrinkage. The penalty is apportioned to the delivery/timeline sub-scores by their
+  // testable share so the split stays consistent with the headline.
+  const forcedNyt = Math.max(0, Number(opts.forcedNyt) || 0);
+  const tl = testable.filter((p) => directionFor(p.category) === "timeline");
+  const dl = testable.filter((p) => directionFor(p.category) !== "timeline");
+  const tlShare = testable.length ? tl.length / testable.length : 0;
+  const score = weightedScore(testable, forcedNyt);
+  const timeline_score = weightedScore(tl, forcedNyt * tlShare);
+  const delivery_score = weightedScore(dl, forcedNyt * (1 - tlShare));
   return {
     score,
     grade: gradeFromScore(score),
     timeline_score,
     delivery_score,
-    method: `Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), shrunk toward a neutral ${Math.round(PRIOR_RATE * 100)} prior by ${PRIOR_K} pseudo-observations so a thin testable base can't earn a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.`,
+    method: `Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), shrunk toward a neutral ${Math.round(PRIOR_RATE * 100)} prior by ${PRIOR_K} pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.`,
     headline: buildHeadline(agg),
   };
 }
