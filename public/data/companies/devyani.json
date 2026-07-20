@@ -1,0 +1,1479 @@
+{
+  "schema_version": "1.0",
+  "company": {
+    "ticker": "DEVYANI",
+    "name": "DEVYANI",
+    "sector": null,
+    "screener_url": "https://www.screener.in/company/DEVYANI/consolidated/",
+    "fiscal_year_end": "03"
+  },
+  "generated_at": "2026-07-20T19:18:17.838Z",
+  "coverage": {
+    "from": "Q1FY25",
+    "to": "Q4FY26",
+    "as_of": "2026-05-01"
+  },
+  "verification_window": {
+    "latest_reported": "Q4FY26",
+    "latest_reported_date": "2026-05-01",
+    "note": "Outcomes verifiable only through the latest reported period; later targets are NYT."
+  },
+  "documents": [
+    {
+      "id": "q1fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q1FY25",
+      "date": "2024-08-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q1fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q1FY25",
+      "date": "2024-08-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q1fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q1FY26",
+      "date": "2025-08-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q1fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q1FY26",
+      "date": "2025-08-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q2FY25",
+      "date": "2024-11-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q2FY25",
+      "date": "2024-11-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q2FY26",
+      "date": "2025-11-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q2FY26",
+      "date": "2025-11-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q3FY25",
+      "date": "2025-02-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q3FY25",
+      "date": "2025-02-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q3FY26",
+      "date": "2026-02-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q3FY26",
+      "date": "2026-02-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q4fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q4FY25",
+      "date": "2025-05-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q4fy25-transcript",
+      "type": "transcript",
+      "quarter": "Q4FY25",
+      "date": "2025-05-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q4fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q4FY26",
+      "date": "2026-05-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q4fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q4FY26",
+      "date": "2026-05-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    }
+  ],
+  "promises": [
+    {
+      "id": "p001",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capacity",
+      "promise": "Add net new stores in core brands",
+      "quote": "54 NNUs in Q1 FY25",
+      "metric": "54 net new units in Q1FY25",
+      "target": {
+        "text": "54 net new units in Q1FY25",
+        "value": 54,
+        "value_high": null,
+        "unit": "stores",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "54 net new KFC outlets in Q3FY26",
+        "value": 54,
+        "unit": "units",
+        "source_id": "q3fy26-transcript",
+        "source_date": "2026-02-01",
+        "what_happened": "54 net new KFC stores added in Q3FY26, matching the Q1FY25 target for net new units"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "54 vs 54 stores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p002",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capacity",
+      "promise": "Add new stores in under-penetrated markets",
+      "quote": "DIL added 54 new stores during the quarter",
+      "metric": "54 new stores added in Q1FY25",
+      "target": {
+        "text": "54 new stores added in Q1FY25",
+        "value": 54,
+        "value_high": null,
+        "unit": "stores",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "54 net new KFC outlets added in Q3FY26",
+        "value": 54,
+        "unit": "stores",
+        "source_id": "q3fy26-transcript",
+        "source_date": "2026-02-01",
+        "what_happened": "54 net new KFC stores added in Q3FY26, matching the Q1FY25 target for new stores in under-penetrated markets"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "54 vs 54 stores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p003",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capacity",
+      "promise": "Expand store presence beyond 1,836 stores",
+      "quote": "We remain committed to expanding our store presence",
+      "metric": "Store count > 1,836",
+      "target": {
+        "text": "Expand store presence beyond 1,836 stores",
+        "value": 1836,
+        "value_high": null,
+        "unit": "stores",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": {
+        "text": "At the end of Q3’ 2026, the total store count for DIL stood at 2,279 stores.",
+        "value": 2279,
+        "unit": "stores",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "Store count reached 2,279 stores by Q3 FY26."
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 443,
+        "pct": 24.1,
+        "bps": null,
+        "days": null,
+        "text": "2279 vs 1836 stores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p004",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "ebitda",
+      "promise": "Achieve consolidated reported EBITDA of INR 223 Cr in Q1 FY25",
+      "quote": "Consolidated Reported EBITDA ✓ Q1 FY25 INR 223 Cr; grew by 28.5%",
+      "metric": "Q1FY25 EBITDA INR 223 Cr",
+      "target": {
+        "text": "Q1FY25 EBITDA INR 223 Cr",
+        "value": 223,
+        "value_high": null,
+        "unit": "INR Cr",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Q1 FY25 reported EBITDA INR 2,184 Mn",
+        "value": 2184,
+        "unit": "INR Mn",
+        "source_id": "q2fy26-presentation",
+        "source_date": "2025-11-01",
+        "what_happened": "Reported EBITDA for Q1 FY25 was INR 2,184 Mn as per Q2 FY26 presentation."
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 1961,
+        "pct": 879.4,
+        "bps": null,
+        "days": null,
+        "text": "2184 vs 223 INR Cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p005",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "margin",
+      "promise": "Increase brand contribution margin by 1.8% QoQ to 15.3% in Q1 FY25",
+      "quote": "QoQ Brand Contribution ✓ Q1 FY25 at 15.3%;",
+      "metric": "Brand contribution margin 15.3%",
+      "target": {
+        "text": "Brand contribution margin 15.3% in Q1FY25",
+        "value": 15.3,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Brand Contribution Q3 FY25 at 14.3%; +0.7% QoQ",
+        "value": 14.3,
+        "unit": "%",
+        "source_id": "q3fy25-presentation",
+        "source_date": "2025-02-01",
+        "what_happened": "Brand contribution margin was 14.3% in Q3 FY25, up 0.7% QoQ"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -1,
+        "pct": -6.5,
+        "bps": -100,
+        "days": null,
+        "text": "14.3 vs 15.3 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p006",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "margin",
+      "promise": "Achieve EBITDA margin of 18.3% in Q1 FY25",
+      "quote": "Margins at 18.3% vs 16.6% in Q4 FY24",
+      "metric": "EBITDA margin 18.3%",
+      "target": {
+        "text": "EBITDA margin 18.3% in Q1FY25",
+        "value": 18.3,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "EBITDA Margin at 16% in Q4 FY26",
+        "value": 16,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "EBITDA margin was 16% in Q4 FY26, below the promised 18.3% in Q1 FY25"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -2.3,
+        "pct": -12.6,
+        "bps": -230,
+        "days": null,
+        "text": "16 vs 18.3 %"
+      },
+      "mgmt_explanation": "No explicit explanation for shortfall provided in documents",
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p007",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "margin",
+      "promise": "Maintain gross margin at 69.2% in Q1 FY25",
+      "quote": "Gross Margin ✓ Q1 FY25 at 69.2%; flat",
+      "metric": "Gross margin 69.2%",
+      "target": {
+        "text": "Gross margin 69.2% in Q1FY25",
+        "value": 69.2,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Q4 FY25 consolidated gross margin at 68.5%",
+        "value": 68.5,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Gross margin was 68.5% in Q4 FY25, slightly below 69.2% target for Q1 FY25"
+      },
+      "status": "PARTIAL",
+      "variance": {
+        "absolute": -0.7,
+        "pct": -1,
+        "bps": -70,
+        "days": null,
+        "text": "68.5 vs 69.2 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p008",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "pat",
+      "promise": "Achieve profit before tax of INR 31 Cr in Q1 FY25",
+      "quote": "Profit before Tax ✓ Q1 FY25 at INR 31",
+      "metric": "Q1FY25 PBT INR 31 Cr",
+      "target": {
+        "text": "Profit before Tax INR 31 Cr in Q1FY25",
+        "value": 31,
+        "value_high": null,
+        "unit": "INR Cr",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Q1 FY25 PBT INR 31 Cr not explicitly reported; Q1 FY25 EBITDA INR 2,234 Mn (approx INR 223.4 Cr)",
+        "value": null,
+        "unit": null,
+        "source_id": "q1fy26-presentation",
+        "source_date": "2025-08-01",
+        "what_happened": "Q1 FY25 profit before tax figure not explicitly disclosed in documents"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "31 vs 31 INR Cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p009",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "revenue",
+      "promise": "Grow revenue in Q1 FY25",
+      "quote": "Q1 FY25 INR 1,222 Cr; grew by 16.7% QoQ",
+      "metric": "Q1FY25 revenue INR 1,222 Cr",
+      "target": {
+        "text": "Q1FY25 revenue INR 1,222 Cr",
+        "value": 1222,
+        "value_high": null,
+        "unit": "INR Cr",
+        "period": "Q1FY25"
+      },
+      "test_date": "2024-08-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Q1FY25 revenue INR 1,222 Cr not explicitly reported; closest data: FY25 revenue INR 49,511 Mn (~INR 4,951 Cr)",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Q1FY25 revenue figure INR 1,222 Cr not reported in later documents"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -1221,
+        "pct": -99.9,
+        "bps": null,
+        "days": null,
+        "text": "1 vs 1222 INR Cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p010",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "On track to meet 2,000 stores within current financial year",
+      "quote": "On track to meet 2,000 stores guidance within the current financial year",
+      "metric": "2,000 stores by FY25-end",
+      "target": {
+        "text": "2,000 stores by FY25-end",
+        "value": 2000,
+        "value_high": null,
+        "unit": "stores",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "We ended September 2025 with a total store count of 2,184 stores",
+        "value": 2184,
+        "unit": "stores",
+        "source_id": "q2fy26-transcript",
+        "source_date": "2025-11-01",
+        "what_happened": "Reached 2,184 stores by September 2025, exceeding 2,000 target within FY25"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 184,
+        "pct": 9.2,
+        "bps": null,
+        "days": null,
+        "text": "2184 vs 2000 stores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p011",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "timeline",
+      "promise": "Launch and rollout of new brands from April 2025 onwards",
+      "quote": "Launch and rollout - Apr25 onwards",
+      "metric": "Launch and rollout from Apr 2025",
+      "target": {
+        "text": "Launch and rollout from Apr 2025",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "from Apr 2025"
+      },
+      "test_date": "2025",
+      "confidence": "H",
+      "actual": {
+        "text": "The timelines remain from April this year onwards.",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy25-transcript",
+        "source_date": "2025-02-01",
+        "what_happened": "Launch and rollout timelines remain from April 2025 onwards as planned."
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "in progress, not yet due"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p012",
+      "date": "2025-02-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-presentation",
+      "source_label": "Q3FY25 presentation",
+      "category": "capacity",
+      "promise": "Store count to exceed 2,000 stores milestone",
+      "quote": "crossing an impressive milestone of 2,000 stores in the recent quarter",
+      "metric": "Store count > 2,000 stores",
+      "target": {
+        "text": "> 2,000 stores by Q3FY25",
+        "value": 2000,
+        "value_high": null,
+        "unit": "stores",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Total DIL store count at 2,279 stores as at 31 Dec 25",
+        "value": 2279,
+        "unit": "stores",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "Store count exceeded 2,000 stores milestone by Q3FY26 (Dec 25)"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 279,
+        "pct": 14,
+        "bps": null,
+        "days": null,
+        "text": "2279 vs 2000 stores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p013",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capacity",
+      "promise": "Total store presence to reach 2,039 stores by March 31, 2025",
+      "quote": "elevating our total presence to 2,039 stores as of March 31, 2025",
+      "metric": "2,039 stores by 31 Mar 2025",
+      "target": {
+        "text": "2,039 stores by 31 Mar 2025",
+        "value": 2039,
+        "value_high": null,
+        "unit": "stores",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "2,039 stores as at 31 March 2025",
+        "value": 2039,
+        "unit": "stores",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "Reached 2,039 stores by 31 March 2025 as planned"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "2039 vs 2039 stores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p014",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capacity",
+      "promise": "Add 257 net new stores in FY25",
+      "quote": "successfully added 257 net new stores during FY'25",
+      "metric": "257 net new stores added in FY25",
+      "target": {
+        "text": "257 net new stores added in FY25",
+        "value": 257,
+        "value_high": null,
+        "unit": "stores",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Added 217 net new stores in FY26",
+        "value": 217,
+        "unit": "stores",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "217 net new stores added in FY26, short of 257 target"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -40,
+        "pct": -15.6,
+        "bps": null,
+        "days": null,
+        "text": "217 vs 257 stores"
+      },
+      "mgmt_explanation": "No explicit explanation for shortfall provided in documents",
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p015",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capital_allocation",
+      "promise": "Primary infusion of up to Rs 90 crore in Sky Gate Hospitality",
+      "quote": "In principle approval from Board for Primary Infusion of Upto Rs 90 Cr",
+      "metric": "Primary infusion up to Rs 90 Cr",
+      "target": {
+        "text": "Primary infusion up to Rs 90 Cr",
+        "value": 90,
+        "value_high": null,
+        "unit": "INR Cr",
+        "period": "by May 2025"
+      },
+      "test_date": "2025-05-31",
+      "confidence": "H",
+      "actual": {
+        "text": "Sky-Gate stores acquired on 10th June-25",
+        "value": null,
+        "unit": null,
+        "source_id": "Q3FY26 · q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "Acquisition of Sky Gate Hospitality completed on 10th June 2025"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -80,
+        "pct": -88.9,
+        "bps": null,
+        "days": null,
+        "text": "10 vs 90 INR Cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p016",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "ebitda",
+      "promise": "Increase absolute EBITDA by 29.1% over FY24",
+      "quote": "absolute EBITDA increased by 29.1% over FY24",
+      "metric": "EBITDA growth 29.1% YoY",
+      "target": {
+        "text": "29.1% EBITDA growth over FY24",
+        "value": 29.1,
+        "value_high": null,
+        "unit": "%",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Consolidated EBITDA Q4 FY26 INR 2,295 Mn",
+        "value": 2295,
+        "unit": "INR Mn",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Reported consolidated EBITDA for Q4 FY26 was INR 2,295 Mn"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 2265.9,
+        "pct": 7786.6,
+        "bps": null,
+        "days": null,
+        "text": "2295 vs 29.1 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p017",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "ebitda",
+      "promise": "Achieve EBITDA margin of 17% in FY25",
+      "quote": "The Company's EBITDA margin stood at 17%",
+      "metric": "FY25 EBITDA margin 17%",
+      "target": {
+        "text": "17% EBITDA margin in FY25",
+        "value": 17,
+        "value_high": null,
+        "unit": "%",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "EBITDA Margin at 17% in FY25",
+        "value": 17,
+        "unit": "%",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "EBITDA margin reached 17% in FY25 as reported in Q4FY26 presentation"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "17 vs 17 %"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p018",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "ebitda",
+      "promise": "Achieve Q4 FY25 EBITDA of Rs 200.8 crore, +15.5% YoY",
+      "quote": "Q4 FY25 INR 2008 Mn; +15.5% vs Q4 FY24",
+      "metric": "Q4 FY25 EBITDA Rs 200.8 Cr",
+      "target": {
+        "text": "Rs 200.8 Cr in Q4 FY25",
+        "value": 200.8,
+        "value_high": null,
+        "unit": "INR Cr",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Q4 FY25 EBITDA Rs 200.9 Cr",
+        "value": 200.9,
+        "unit": "Crore INR",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Q4 FY25 EBITDA reported at Rs 200.9 Cr, slightly above target"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0.1,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "200.9 vs 200.8 INR Cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p019",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "revenue",
+      "promise": "Achieve consolidated revenue of Rs 4,951 crore in FY25",
+      "quote": "DIL reported consolidated revenue of Rs 4,951 crore registering a robust 39.2% YoY growth",
+      "metric": "FY25 revenue Rs 4,951 Cr",
+      "target": {
+        "text": "Rs 4,951 Cr in FY25",
+        "value": 4951,
+        "value_high": null,
+        "unit": "INR Cr",
+        "period": "FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "FY25 revenue Rs 49,511 Mn",
+        "value": 49511,
+        "unit": "INR Million",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "FY25 consolidated revenue reported as Rs 49,511 Mn"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 44560,
+        "pct": 900,
+        "bps": null,
+        "days": null,
+        "text": "49511 vs 4951 INR Cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p020",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "revenue",
+      "promise": "Achieve Q4 FY25 revenue of Rs 1,212.6 crore, +15.8% YoY",
+      "quote": "Q4 FY25 INR 12,126 Mn; +15.8% vs Q4 FY24",
+      "metric": "Q4 FY25 revenue Rs 1,212.6 Cr",
+      "target": {
+        "text": "Rs 1,212.6 Cr in Q4 FY25",
+        "value": 1212.6,
+        "value_high": null,
+        "unit": "INR Cr",
+        "period": "Q4FY25"
+      },
+      "test_date": "2025-05-15",
+      "confidence": "H",
+      "actual": {
+        "text": "Q4 FY25 revenue INR 12,126 Mn",
+        "value": 12126,
+        "unit": "INR Mn",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Q4 FY25 revenue reported as INR 12,126 Mn in FY26 Q4 presentation"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 10913.4,
+        "pct": 900,
+        "bps": null,
+        "days": null,
+        "text": "12126 vs 1212.6 INR Cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p021",
+      "date": "2025-05-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "timeline",
+      "promise": "Deal closure of Sky Gate Hospitality acquisition by end May 2025",
+      "quote": "Deal closure expected by end May'25",
+      "metric": "Deal closure by May 2025",
+      "target": {
+        "text": "Deal closure by end May 2025",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "by May 2025"
+      },
+      "test_date": "2025-05-31",
+      "confidence": "H",
+      "actual": {
+        "text": "completed the acquisition of Sky Gate Hospitality recently",
+        "value": null,
+        "unit": null,
+        "source_id": "q1fy26-transcript",
+        "source_date": "2025-08-01",
+        "what_happened": "Acquisition of Sky Gate Hospitality completed by Q1 FY26 (June 2025)"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": 0,
+        "text": "on time"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p022",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-presentation",
+      "source_label": "Q2FY26 presentation",
+      "category": "timeline",
+      "promise": "Achieve brand contribution break-even by March 2026",
+      "quote": "our goal is to achieve brand contribution break-even by March 2026",
+      "metric": "Brand contribution break-even by Mar 2026",
+      "target": {
+        "text": "brand contribution break-even by March 2026",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Mar 2026"
+      },
+      "test_date": "2026",
+      "confidence": "H",
+      "actual": {
+        "text": "BBK achieves break even at Brand EBITDA, well ahead of March’26 target",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "BBK brand contribution break-even achieved before March 2026 target"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": 0,
+        "text": "on time"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p023",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "capacity",
+      "promise": "Total store count to reach 2,279 stores by end Q3 FY26",
+      "quote": "At the end of Q3' 2026, the total store count for DIL stood at 2,279 stores",
+      "metric": "2,279 stores by end Q3 FY26",
+      "target": {
+        "text": "2,279 stores by end Q3 FY26",
+        "value": 2279,
+        "value_high": null,
+        "unit": "stores",
+        "period": "Q3FY26"
+      },
+      "test_date": "2026-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "2,268 stores at end of Q3 FY26",
+        "value": 2268,
+        "unit": "stores",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Store count reached 2,268 stores by end Q3 FY26, slightly below target of 2,279 stores."
+      },
+      "status": "PARTIAL",
+      "variance": {
+        "absolute": -11,
+        "pct": -0.5,
+        "bps": null,
+        "days": null,
+        "text": "2268 vs 2279 stores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p024",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "capacity",
+      "promise": "Add 95 net new stores in Q3 FY26",
+      "quote": "Strong store addition with 95 NNUs in the quarter",
+      "metric": "95 net new stores in Q3 FY26",
+      "target": {
+        "text": "95 net new stores in Q3 FY26",
+        "value": 95,
+        "value_high": null,
+        "unit": "stores",
+        "period": "Q3FY26"
+      },
+      "test_date": "2026-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "217 net new stores in FY26",
+        "value": 217,
+        "unit": "stores",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "217 net new stores added in FY26, no specific Q3 number reported"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 122,
+        "pct": 128.4,
+        "bps": null,
+        "days": null,
+        "text": "217 vs 95 stores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p025",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "capital_allocation",
+      "promise": "Open new Pizza Hut stores only to compensate for closure of loss-making stores",
+      "quote": "we will open new stores only to compensate for the closure of loss-making stores",
+      "metric": "New PH stores opened = loss-making PH stores closed",
+      "target": {
+        "text": "New PH stores opened = loss-making PH stores closed",
+        "value": 1,
+        "value_high": 1,
+        "unit": "stores",
+        "period": "ongoing"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "we are not planning to add any net new stores for Pizza Hut in calendar year 2026",
+        "value": 0,
+        "unit": "net new stores",
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "No net new Pizza Hut stores opened in CY2026; focus on consolidation and portfolio realignment"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -1,
+        "pct": -100,
+        "bps": null,
+        "days": null,
+        "text": "0 vs 1 stores"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p026",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "other",
+      "promise": "Anupam Kumar to take over role of CFO",
+      "quote": "Anupam Kumar, currently EVP – Finance will take over the role of CFO",
+      "metric": "Anupam Kumar new CFO",
+      "target": {
+        "text": "Anupam Kumar new CFO",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Q3FY26"
+      },
+      "test_date": "2026-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Mr. Anupam Kumar, CFO of the company as of Q4FY26",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "Anupam Kumar is confirmed as CFO in Q4FY26 earnings call."
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no numeric target"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p027",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "other",
+      "promise": "Elevate Manish Dawar as President and CEO effective April 1, 2026",
+      "quote": "Manish Dawar shall get elevated as President and CEO for DIL with effect from April 1, 2026",
+      "metric": "Manish Dawar CEO from 1 Apr 2026",
+      "target": {
+        "text": "Manish Dawar CEO from 1 Apr 2026",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "1 Apr 2026"
+      },
+      "test_date": "2026",
+      "confidence": "H",
+      "actual": {
+        "text": "Mr. Manish Dawar, President and CEO",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "Manish Dawar is President and CEO as of Q4FY26 call on May 1, 2026"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "Manish Dawar is President and CEO as of Q4FY26 call on May 1"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p028",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "other",
+      "promise": "Virag to superannuate from company effective March 31, 2026",
+      "quote": "2026 Virag has expressed his desire to superannuate from the company. The Board has",
+      "metric": "Virag superannuates 31 Mar 2026",
+      "target": {
+        "text": "Virag superannuates 31 Mar 2026",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "31 Mar 2026"
+      },
+      "test_date": "2026",
+      "confidence": "H",
+      "actual": {
+        "text": "2,256 Stores as of Mar 31, 2026",
+        "value": 2256,
+        "unit": "stores",
+        "source_id": "q4fy26-presentation",
+        "source_date": "2026-05-01",
+        "what_happened": "Virag superannuation status not explicitly reported; store count as of Mar 31, 2026 provided."
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 2225,
+        "pct": 7177.4,
+        "bps": null,
+        "days": null,
+        "text": "2256 vs 31"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p029",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "timeline",
+      "promise": "Biryani by Kilo brand EBITDA breakeven achieved ahead of March 2026 target",
+      "quote": "BBK achieves break even at Brand EBITDA, well ahead of March'26 target",
+      "metric": "BBK Brand EBITDA breakeven by Mar 2026",
+      "target": {
+        "text": "BBK Brand EBITDA breakeven by Mar 2026",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "Mar 2026"
+      },
+      "test_date": "2026",
+      "confidence": "H",
+      "actual": {
+        "text": "Biryani By Kilo has turned from loss-making to profitable; express outlets opened are profitable; bullish on brand growth",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-05-01",
+        "what_happened": "BBK brand EBITDA breakeven achieved, turned from negative to positive profitability"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": 0,
+        "text": "on time"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    }
+  ],
+  "financial_trend": [
+    {
+      "quarter": "Q1FY25",
+      "revenue": 1222,
+      "ebitda": 223,
+      "ebitda_margin": 18.3,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "INR Cr"
+    },
+    {
+      "quarter": "Q2FY25",
+      "revenue": 1222,
+      "ebitda": 199,
+      "ebitda_margin": 16.3,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "INR Cr"
+    },
+    {
+      "quarter": "Q3FY25",
+      "revenue": 12945,
+      "ebitda": 2192,
+      "ebitda_margin": 16.9,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "INR Mn"
+    },
+    {
+      "quarter": "Q4FY25",
+      "revenue": 49510,
+      "ebitda": 8400,
+      "ebitda_margin": 17,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "INR_cr"
+    },
+    {
+      "quarter": "Q1FY26",
+      "revenue": 13570,
+      "ebitda": 2049,
+      "ebitda_margin": 15.1,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "INR Mn"
+    },
+    {
+      "quarter": "Q2FY26",
+      "revenue": 13767,
+      "ebitda": 1943,
+      "ebitda_margin": 14.1,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "INR Mn"
+    },
+    {
+      "quarter": "Q3FY26",
+      "revenue": 14409,
+      "ebitda_margin": 8.6,
+      "unit": "INR Mn",
+      "ebitda": 1238.174,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null
+    },
+    {
+      "quarter": "Q4FY26",
+      "revenue": null,
+      "ebitda": null,
+      "ebitda_margin": null,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": null
+    }
+  ],
+  "aggregates": {
+    "total": 29,
+    "status_counts": {
+      "MET": 18,
+      "PARTIAL": 2,
+      "MISSED": 6,
+      "NYT": 3
+    },
+    "testable": 26,
+    "by_quarter": {
+      "Q1FY25": {
+        "MET": 5,
+        "PARTIAL": 1,
+        "MISSED": 3,
+        "NYT": 0
+      },
+      "Q2FY25": {
+        "MET": 1,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 1
+      },
+      "Q3FY25": {
+        "MET": 1,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 0
+      },
+      "Q4FY25": {
+        "MET": 7,
+        "PARTIAL": 0,
+        "MISSED": 2,
+        "NYT": 0
+      },
+      "Q2FY26": {
+        "MET": 1,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 0
+      },
+      "Q3FY26": {
+        "MET": 3,
+        "PARTIAL": 1,
+        "MISSED": 1,
+        "NYT": 2
+      }
+    },
+    "root_causes": {},
+    "confidence_mix": {
+      "H": 28,
+      "M": 1,
+      "L": 0
+    },
+    "timeline_commitments": {
+      "due": 3,
+      "on_time": 3,
+      "slipped": 0
+    }
+  },
+  "credibility": {
+    "score": 66,
+    "grade": "B",
+    "timeline_score": 62,
+    "delivery_score": 63,
+    "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), shrunk toward a neutral 50 prior by 10 pseudo-observations so a thin testable base can't earn a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
+    "headline": "Mostly delivered on testable promises; 3 later targets still not yet testable."
+  },
+  "provenance": {
+    "mode": "live",
+    "complete": true,
+    "retrieval_errors": 0,
+    "forced_nyt": 3,
+    "models_used": [
+      "openai",
+      "mistral",
+      "gemini",
+      "groq"
+    ],
+    "generated_at": "2026-07-20T19:18:17.838Z",
+    "run_id": "29771188545"
+  }
+}
