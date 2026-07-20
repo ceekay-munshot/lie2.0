@@ -48,9 +48,9 @@ export function slippageTimeline(el, ledger) {
         },
       },
       legend: { top: 0, right: 0, data: ["Promised", "Re-set / actual"], icon: "circle", itemWidth: 9, itemHeight: 9, textStyle: { color: tokens.ui.muted } },
-      grid: { left: 10, right: 18, top: 32, bottom: 22, containLabel: true },
-      xAxis: { type: "value", min: min - 0.6, max: max + 0.6, interval: 1, axisLabel: { formatter: (v) => quarterLabel(v) } },
-      yAxis: { type: "category", data: cats, axisLabel: { width: 160, overflow: "truncate", color: tokens.ui.muted } },
+      grid: { left: 10, right: 28, top: 36, bottom: 28, containLabel: true },
+      xAxis: { type: "value", min: min - 0.6, max: max + 0.6, interval: 1, axisLabel: { formatter: (v) => quarterLabel(v), fontSize: 10.5, hideOverlap: true } },
+      yAxis: { type: "category", data: cats, axisLabel: { width: 200, overflow: "truncate", color: tokens.ui.muted, fontSize: 11 } },
       series: [
         // transparent offset places the coloured span between promised and revised
         { name: "_offset", type: "bar", stack: "slip", silent: true, tooltip: { show: false }, itemStyle: { color: "transparent" }, barWidth: "46%", data: rows.map((r) => Math.min(r.promised, r.revised)) },

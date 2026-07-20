@@ -18,17 +18,19 @@ export function statusDonut(el, ledger) {
     }));
     return {
       tooltip: { trigger: "item", formatter: "{b}<br/><b>{c}</b> ({d}%)" },
-      legend: { bottom: 0, icon: "circle", itemWidth: 9, itemHeight: 9, textStyle: { color: tokens.ui.muted } },
+      legend: { bottom: 2, icon: "circle", itemWidth: 9, itemHeight: 9, textStyle: { color: tokens.ui.muted, fontSize: 11.5 } },
       title: {
-        text: String(total), subtext: "promises", left: "50%", top: "40%", textAlign: "center",
-        textStyle: { fontSize: 30, fontWeight: 800, color: tokens.ui.text },
-        subtextStyle: { fontSize: 12, color: tokens.ui.muted },
+        text: String(total), subtext: "promises", left: "50%", top: "42%", textAlign: "center",
+        textStyle: { fontSize: 28, fontWeight: 800, color: tokens.ui.text },
+        subtextStyle: { fontSize: 11.5, color: tokens.ui.muted },
       },
       series: [{
-        type: "pie", radius: ["56%", "80%"], center: ["50%", "47%"], avoidLabelOverlap: true,
-        itemStyle: { borderColor: tokens.ui.card, borderWidth: 2 },
-        label: { show: false }, labelLine: { show: false }, data,
+        type: "pie", radius: ["54%", "78%"], center: ["50%", "46%"], avoidLabelOverlap: true,
+        itemStyle: { borderColor: tokens.ui.card, borderWidth: 3, borderRadius: 4 },
+        label: { show: false }, labelLine: { show: false },
+        emphasis: { scaleSize: 6, itemStyle: { shadowBlur: 10, shadowColor: "rgba(16,24,40,0.18)" } },
+        data,
       }],
     };
-  }, { empty: "No promises to chart", height: "290px", ariaLabel: "Promise status donut" });
+  }, { empty: "No promises to chart", height: "300px", ariaLabel: "Promise status donut" });
 }

@@ -11,6 +11,7 @@
  */
 import { loadIndex, gradeFromScore, gradeColor, escapeHTML } from "../ui.js";
 import { navigate } from "../lib/router.js";
+import { beginGenerate } from "./request-progress.js";
 
 /** Best-effort ticker from a free-text query (Screener resolves names server-side anyway). */
 const sanitizeTicker = (q) => String(q ?? "").trim().toUpperCase().replace(/[^A-Z0-9.&-]+/g, "").slice(0, 24);
@@ -195,57 +196,26 @@ export function mountSearch(host, { compact = false, autofocus = false, onReques
     navigate(ticker);
   }
 
-  /** Select a merged item: covered → open; external → generate a report. */
-  function selectItem(item, li) {
+  /** Select a merged item: covered → open the dashboard; external → generate a report. */
+  function selectItem(item) {
     if (!item) return;
     if (item.covered) return choose(item.ticker);
-    runRequest(item.ticker, li);
+    if (typeof onRequest === "function") onRequest(item.ticker);
+    setOpen(false);
+    input.blur();
+    beginGenerate(item.ticker); // full-screen progress overlay (survives tab-switch / reload)
   }
 
-  /** POST /api/request/:ticker then poll the index until the ledger appears. */
-  async function runRequest(ticker, li) {
-    const T = sanitizeTicker(ticker);
-    if (!T) { setReqState(li, "Enter a valid stock symbol", "e.g. INFY, RELIANCE"); return; }
-    if (typeof onRequest === "function") onRequest(T);
-    setReqState(li, `Requesting “${T}”…`, "");
-    let data = {};
-    try {
-      const r = await fetch(`/api/request/${encodeURIComponent(T)}`, { method: "POST", headers: { "content-type": "application/json" }, body: "{}" });
-      data = await r.json().catch(() => ({}));
-      if (r.status === 429) { setReqState(li, "Too many requests", "Please try again in a few minutes."); return; }
-      if (!r.ok) { setReqState(li, "Couldn’t queue that company", "Please try again later."); return; }
-    } catch { setReqState(li, "Network error", "Couldn’t reach the request service."); return; }
-    if (data.status === "ready") { choose(T); return; } // already covered → just open it
-    setReqState(li, `Processing “${T}” — pulling filings & scoring`, "This takes a few minutes; we’ll open it automatically when it’s ready.");
-    pollUntilReady(T, li);
-  }
-
-  /** The typed no-match fallback (API returned nothing) — require a symbol, then request. */
+  /** The typed no-match fallback (API returned nothing) — require a symbol, then generate. */
   function requestTyped(q, btn) {
     const li = btn.closest(".ld-result");
     const raw = String(q ?? "").trim();
     const ticker = sanitizeTicker(raw);
     const isSymbol = ticker.length > 0 && !/\s/.test(raw) && ticker === raw.toUpperCase();
     if (!isSymbol) { setReqState(li, "Enter the stock symbol to generate a report", `e.g. INFY for Infosys — “${raw}” isn’t a symbol.`); return; }
-    runRequest(ticker, li);
-  }
-
-  // Poll the committed index (the ground truth) until the requested ledger appears, then route.
-  function pollUntilReady(ticker, li) {
-    const T = ticker.toUpperCase();
-    const deadline = Date.now() + 6 * 60 * 1000;
-    const tick = async () => {
-      try {
-        const res = await fetch(`/data/companies/index.json?t=${Date.now()}`, { cache: "no-store" });
-        if (res.ok) {
-          const idx = await res.json();
-          if (Array.isArray(idx) && idx.some((c) => String(c.ticker).toUpperCase() === T)) { choose(ticker); return; }
-        }
-      } catch { /* transient — keep polling */ }
-      if (Date.now() < deadline) setTimeout(tick, 8000);
-      else setReqState(li, `Still processing “${ticker}”`, "Check back shortly — it’ll appear in search once scored.");
-    };
-    setTimeout(tick, 8000);
+    setOpen(false);
+    input.blur();
+    beginGenerate(ticker);
   }
 
   const onInput = () => { activeIdx = 0; renderMerged(); scheduleExternal(); };
@@ -256,7 +226,7 @@ export function mountSearch(host, { compact = false, autofocus = false, onReques
     else if (e.key === "ArrowUp") { e.preventDefault(); move(-1); }
     else if (e.key === "Enter") {
       const item = (open && results[activeIdx]) ? results[activeIdx] : results[0];
-      if (item) { e.preventDefault(); selectItem(item, panel.querySelector(".ld-result.is-active") || panel.querySelector(".ld-result[data-ticker]")); }
+      if (item) { e.preventDefault(); selectItem(item); }
     } else if (e.key === "Escape") { setOpen(false); input.blur(); }
   });
 
@@ -268,7 +238,7 @@ export function mountSearch(host, { compact = false, autofocus = false, onReques
     if (row) {
       e.preventDefault();
       const i = results.findIndex((c) => String(c.ticker) === row.dataset.ticker);
-      if (i >= 0) selectItem(results[i], row);
+      if (i >= 0) selectItem(results[i]);
     }
   });
   panel.addEventListener("mousemove", (e) => {

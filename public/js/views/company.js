@@ -4,7 +4,7 @@
  * Handles loading + error (unknown ticker → "no ledger — request it") states.
  * Generic: renders whatever ledger loadCompany returns.
  */
-import { loadCompany, escapeHTML } from "../ui.js";
+import { loadCompany, escapeHTML, fmtDate } from "../ui.js";
 import { toHome } from "../lib/router.js";
 import { mountSearch } from "../components/search.js";
 import { credibilityHeroHTML } from "../components/credibility-hero.js";
@@ -185,6 +185,10 @@ export async function renderCompany(app, ticker, { headerHost } = {}) {
 
   app.innerHTML = `
     <div class="company-view wrap">
+      <div class="cv-topbar">
+        <button type="button" class="btn-ghost sm" id="cv-back"><i data-lucide="arrow-left" aria-hidden="true"></i> All companies</button>
+        ${ledger.generated_at ? `<span class="cv-when"><i data-lucide="clock" aria-hidden="true"></i> Generated ${escapeHTML(fmtDate(ledger.generated_at))}</span>` : ""}
+      </div>
       ${credibilityHeroHTML(ledger)}
       ${kpiStripHTML(ledger)}
       ${chartsHTML(ledger)}
@@ -192,6 +196,8 @@ export async function renderCompany(app, ticker, { headerHost } = {}) {
       ${placeholdersHTML()}
     </div>`;
   drawIcons();
+  const backBtn = app.querySelector("#cv-back");
+  if (backBtn) backBtn.addEventListener("click", () => toHome());
   // Refine the document title with the real company name (the router set a ticker-only
   // placeholder before the ledger loaded) — shareable ?c= URLs get a meaningful title.
   const co = ledger.company || {};

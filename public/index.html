@@ -267,6 +267,7 @@
       display: grid; gap: 12px;
       grid-template-columns: repeat(auto-fill, minmax(min(100%, 208px), 1fr));
     }
+    .grid-more-cell { grid-column: 1 / -1; display: flex; justify-content: center; margin-top: 4px; }
     .empty {
       grid-column: 1 / -1; color: var(--muted);
       border: 1px dashed var(--line2); border-radius: var(--radius);
@@ -332,6 +333,8 @@
     .cc-cta i { width: 14px; height: 14px; transition: transform 0.16s ease; }
     .company-card:hover .cc-cta { color: var(--accent-violet); }
     .company-card:hover .cc-cta i { transform: translateX(3px); }
+    .cc-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .cc-when { font-size: 10.5px; color: var(--muted2); font-weight: 500; white-space: nowrap; }
 
     .company-card.is-soon::after {
       content: "Dashboard ships in a later build";
@@ -448,7 +451,10 @@
     .ld-result.is-external .ld-result-ticker { color: var(--muted); }
 
     /* ---- Company view layout ------------------------------------------ */
-    .company-view { padding: 26px 0 12px; display: grid; gap: 18px; }
+    .company-view { padding: 20px 0 12px; display: grid; gap: 18px; }
+    .cv-topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .cv-when { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); font-family: var(--font-mono); }
+    .cv-when i { width: 14px; height: 14px; }
 
     /* ---- Credibility hero --------------------------------------------- */
     .hero-card { position: relative; overflow: hidden; padding: 24px; display: grid; gap: 20px; }
@@ -778,6 +784,53 @@
     }
     .btn-primary:hover { filter: brightness(1.06); }
     .btn-primary i { width: 16px; height: 16px; }
+
+    /* ==================================================================
+     * "Generate report" overlay (request-progress.js).
+     * ================================================================== */
+    .gen-overlay {
+      position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 20px;
+      background: color-mix(in srgb, #0B1020 55%, transparent); backdrop-filter: blur(6px);
+      animation: gen-fade .18s ease;
+    }
+    @keyframes gen-fade { from { opacity: 0; } }
+    .gen-card {
+      width: min(460px, 100%); background: var(--card); border: 1px solid var(--line);
+      border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+      padding: 30px 28px 24px; text-align: center; display: grid; gap: 14px; justify-items: center;
+      animation: gen-pop .2s cubic-bezier(.22, 1, .36, 1);
+    }
+    @keyframes gen-pop { from { transform: translateY(8px) scale(.98); opacity: 0; } }
+    .gen-spark, .gen-check, .gen-x { width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; }
+    .gen-spark { color: var(--accent-violet); background: color-mix(in srgb, var(--accent-violet) 12%, transparent); animation: gen-pulse 1.7s ease-in-out infinite; }
+    .gen-spark i { width: 28px; height: 28px; }
+    @keyframes gen-pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-violet) 32%, transparent); } 50% { box-shadow: 0 0 0 12px color-mix(in srgb, var(--accent-violet) 0%, transparent); } }
+    .gen-check { color: var(--status-met); background: color-mix(in srgb, var(--status-met) 14%, transparent); }
+    .gen-check i { width: 32px; height: 32px; }
+    .gen-x { color: var(--accent-gold); background: color-mix(in srgb, var(--accent-gold) 14%, transparent); }
+    .gen-x i { width: 30px; height: 30px; }
+    .gen-title { margin: 0; font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
+    .gen-title b { color: var(--accent-violet); }
+    .gen-card.is-ready .gen-title b { color: var(--status-met); }
+    .gen-card.is-fail .gen-title b { color: var(--accent-gold); }
+    .gen-bar { width: 100%; height: 8px; border-radius: 999px; background: var(--ink2); overflow: hidden; }
+    .gen-bar-fill {
+      display: block; height: 100%; width: 0; border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-violet), var(--accent-cyan));
+      background-size: 200% 100%; animation: gen-shimmer 1.4s linear infinite;
+      transition: width .8s cubic-bezier(.22, 1, .36, 1);
+    }
+    @keyframes gen-shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .gen-stage { margin: 0; font-size: 14px; color: var(--text); font-weight: 600; min-height: 20px; }
+    .gen-note {
+      margin: 2px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.5;
+      display: flex; align-items: flex-start; gap: 8px; text-align: left;
+      background: var(--card2); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px 12px;
+    }
+    .gen-note i { width: 15px; height: 15px; flex: none; margin-top: 2px; color: var(--accent-cyan); }
+    .gen-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 4px; }
+    .gen-dismiss { font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 9px 16px; }
+    .gen-dismiss:hover { color: var(--text); border-color: var(--line2); }
 
     /* ==================================================================
      * Global reduced-motion safeguard.

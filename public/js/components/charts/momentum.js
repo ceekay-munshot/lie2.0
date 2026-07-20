@@ -56,11 +56,11 @@ export function momentum(el, ledger) {
         },
       },
       legend: { bottom: 0, icon: "roundRect", itemWidth: 10, itemHeight: 10, textStyle: { color: tokens.ui.muted } },
-      grid: { left: 8, right: 8, top: 16, bottom: 38, containLabel: true },
-      xAxis: { type: "category", data: quarters },
+      grid: { left: 10, right: 14, top: 34, bottom: 44, containLabel: true },
+      xAxis: { type: "category", data: quarters, axisLabel: { interval: 0, rotate: quarters.length > 6 ? 30 : 0, fontSize: 10.5 } },
       yAxis: [
-        { type: "value", name: "₹ cr", axisLabel: { formatter: (v) => (v >= 1000 ? `${(v / 1000).toFixed(0)}k` : v) } },
-        { type: "value", name: "%", position: "right", axisLabel: { formatter: "{value}%" }, splitLine: { show: false } },
+        { type: "value", name: "₹ cr", nameGap: 14, nameTextStyle: { fontSize: 10.5 }, axisLabel: { fontSize: 10.5, formatter: (v) => (v >= 1000 ? `${(v / 1000).toFixed(0)}k` : v) } },
+        { type: "value", name: "%", position: "right", nameGap: 14, nameTextStyle: { fontSize: 10.5 }, axisLabel: { fontSize: 10.5, formatter: "{value}%" }, splitLine: { show: false } },
       ],
       series,
     };

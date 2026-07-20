@@ -4,10 +4,11 @@
  * covered companies from index.json) and the COMPANY view (?c=<ticker>). The
  * company view, hero, search and provenance guard live in their own modules.
  */
-import { loadIndex, gradeColor, gradeFromScore, escapeHTML, hideBoot } from "./ui.js";
+import { loadIndex, gradeColor, gradeFromScore, escapeHTML, fmtWhen, hideBoot } from "./ui.js";
 import { currentTicker, navigate, onRoute } from "./lib/router.js";
 import { mountSearch } from "./components/search.js";
 import { renderCompany } from "./views/company.js";
+import { resumePending } from "./components/request-progress.js";
 
 const drawIcons = () => { if (window.lucide?.createIcons) window.lucide.createIcons(); };
 const $app = () => document.getElementById("app");
@@ -48,7 +49,10 @@ function companyCardHTML(c) {
         </div>
         <div class="cc-bar" role="presentation"><span style="width:${pct}%; background:${color}"></span></div>
       </div>
-      <div class="cc-cta"><span>View dashboard</span><i data-lucide="arrow-right"></i></div>
+      <div class="cc-foot">
+        <span class="cc-cta"><span>View dashboard</span><i data-lucide="arrow-right"></i></span>
+        ${c.updated_at ? `<span class="cc-when" title="Last generated">Updated ${escapeHTML(fmtWhen(c.updated_at))}</span>` : ""}
+      </div>
     </article>`;
 }
 
@@ -78,13 +82,25 @@ async function renderHome(app) {
 
   const grid = document.getElementById("company-grid");
   const count = document.getElementById("company-count");
+  const HOME_CAP = 5;
+  let expanded = false;
   try {
     const list = await getIndex();
-    grid.innerHTML = list.length
-      ? list.map(companyCardHTML).join("")
-      : `<div class="empty">No companies tracked yet.</div>`;
+    const paint = () => {
+      if (!list.length) { grid.innerHTML = `<div class="empty">No companies tracked yet.</div>`; return; }
+      const shown = expanded ? list : list.slice(0, HOME_CAP);
+      const more = list.length > HOME_CAP
+        ? `<div class="grid-more-cell"><button type="button" class="tr-more" data-grid-more aria-expanded="${expanded}">${expanded ? "Show fewer" : `Show ${list.length - HOME_CAP} more`}<i data-lucide="${expanded ? "chevron-up" : "chevron-down"}" aria-hidden="true"></i></button></div>`
+        : "";
+      grid.innerHTML = shown.map(companyCardHTML).join("") + more;
+      drawIcons();
+    };
+    paint();
+    grid.addEventListener("click", (e) => {
+      const m = e.target.closest("[data-grid-more]");
+      if (m) { e.stopPropagation(); expanded = !expanded; paint(); }
+    });
     if (count) count.textContent = `${list.length} compan${list.length === 1 ? "y" : "ies"} tracked`;
-    drawIcons();
   } catch (err) {
     console.error(err);
     grid.innerHTML = `<div class="empty">Couldn't load the company index. Is the dev server running?</div>`;
@@ -151,6 +167,7 @@ async function boot() {
   onRoute(route);                          // subsequent navigations + back/forward
   try { await route(currentTicker()); }    // initial render — keep the boot loader up until it's ready
   finally { hideBoot(); }
+  resumePending();                         // resume any "Generate" the user left mid-flight
 }
 
 if (document.readyState === "loading") {

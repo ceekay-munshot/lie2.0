@@ -21,10 +21,10 @@ export function byQuarter(el, ledger) {
     return {
       tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
       legend: { bottom: 0, icon: "roundRect", itemWidth: 10, itemHeight: 10, textStyle: { color: tokens.ui.muted } },
-      grid: { left: 8, right: 12, top: 14, bottom: 38, containLabel: true },
-      xAxis: { type: "category", data: quarters },
+      grid: { left: 6, right: 14, top: 16, bottom: 44, containLabel: true },
+      xAxis: { type: "category", data: quarters, axisTick: { alignWithLabel: true }, axisLabel: { interval: 0, rotate: quarters.length > 6 ? 32 : 0, fontSize: 10.5, hideOverlap: false } },
       yAxis: { type: "value", minInterval: 1 },
       series,
     };
-  }, { empty: "No per-quarter data", height: "290px", ariaLabel: "Promises by quarter" });
+  }, { empty: "No per-quarter data", height: "300px", ariaLabel: "Promises by quarter" });
 }

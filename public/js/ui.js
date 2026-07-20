@@ -186,6 +186,26 @@ export function escapeHTML(s) {
   return String(s ?? "").replace(/[&<>"']/g, (c) => HTML_ESCAPES[c]);
 }
 
+/** Absolute short date in IST, e.g. "1 Jul 2026". */
+export function fmtDate(iso) {
+  const t = Date.parse(String(iso || ""));
+  if (Number.isNaN(t)) return String(iso || "") || EM_DASH;
+  try { return new Date(t).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }); }
+  catch { return String(iso).slice(0, 10); }
+}
+
+/** Human "time since": "just now", "5 mins ago", "2 days ago", else the short date. */
+export function fmtWhen(iso) {
+  const t = Date.parse(String(iso || ""));
+  if (Number.isNaN(t)) return String(iso || "") || EM_DASH;
+  const diff = Date.now() - t, day = 86400000;
+  if (diff < 60000) return "just now";
+  if (diff < 3600000) { const m = Math.round(diff / 60000); return `${m} min${m === 1 ? "" : "s"} ago`; }
+  if (diff < day) { const h = Math.round(diff / 3600000); return `${h} hr${h === 1 ? "" : "s"} ago`; }
+  if (diff < 7 * day) { const d = Math.round(diff / day); return `${d} day${d === 1 ? "" : "s"} ago`; }
+  return fmtDate(iso);
+}
+
 /* ----------------------------------------------------------------------------
  * ECharts dark theme
  * ------------------------------------------------------------------------- */
@@ -281,6 +301,8 @@ if (typeof window !== "undefined") {
     fmtINRcr,
     fmtPct,
     fmtSigned,
+    fmtDate,
+    fmtWhen,
     echartsTheme,
     registerEchartsTheme,
     loadIndex,
