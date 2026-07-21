@@ -7,15 +7,15 @@
     "screener_url": "https://www.screener.in/company/INFY/consolidated/",
     "fiscal_year_end": "03"
   },
-  "generated_at": "2026-07-21T12:16:10.493Z",
+  "generated_at": "2026-07-21T12:28:49.406Z",
   "coverage": {
     "from": "Q1FY25",
-    "to": "Q3FY26",
-    "as_of": "2026-02-01"
+    "to": "Q4FY26",
+    "as_of": "2026-04-01"
   },
   "verification_window": {
-    "latest_reported": "Q3FY26",
-    "latest_reported_date": "2026-02-01",
+    "latest_reported": "Q4FY26",
+    "latest_reported_date": "2026-04-01",
     "note": "Outcomes verifiable only through the latest reported period; later targets are NYT."
   },
   "documents": [
@@ -108,6 +108,16 @@
       "url": null,
       "source": "Upload",
       "role": "both"
+    },
+    {
+      "id": "q4fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q4FY26",
+      "date": "2026-04-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
     }
   ],
   "promises": [
@@ -131,20 +141,20 @@
       "test_date": "2025-05-15",
       "confidence": "H",
       "actual": {
-        "text": "Infosys did not report the FY25 fresher hiring figure in the available transcripts up to Q3FY26.",
-        "value": null,
-        "unit": null,
-        "source_id": "q3fy26-transcript",
-        "source_date": "2026-02-01",
-        "what_happened": null
+        "text": "FY25 fresher hiring was 18,000 employees",
+        "value": 18000,
+        "unit": "employees",
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-04-01",
+        "what_happened": "FY25 fresher hiring reached 18,000 employees as reported in Q4FY26 call"
       },
-      "status": "MISSED",
+      "status": "MET",
       "variance": {
-        "absolute": -14997,
-        "pct": -100,
+        "absolute": 3000,
+        "pct": 20,
         "bps": null,
         "days": null,
-        "text": "3 vs 15000-20000 employees"
+        "text": "18000 vs 15000-20000 employees"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -173,7 +183,7 @@
         "text": "Operating margin for the year expanded by 50 basis points to 21.1%",
         "value": 21.1,
         "unit": "%",
-        "source_id": "Q4FY25 · q4fy25-presentation",
+        "source_id": "Q4FY25 · q4fy25-presentation · 2025-06-01",
         "source_date": "2025-06-01",
         "what_happened": "Operating margin reached 21.1% in FY25"
       },
@@ -214,7 +224,7 @@
         "unit": "%",
         "source_id": "q4fy25-transcript",
         "source_date": "2025-04-01",
-        "what_happened": "FY25 revenue growth reported at 3.5% cc, within guided range"
+        "what_happened": "Reported FY25 revenue growth at 3.5% cc, within guided range"
       },
       "status": "MET",
       "variance": {
@@ -248,12 +258,12 @@
       "test_date": "2024-08-14",
       "confidence": "H",
       "actual": {
-        "text": "In-tech acquisition closed in Q1 FY25 as planned",
+        "text": "In-tech acquisition closed in Q1 FY25 and is contributing",
         "value": null,
         "unit": null,
         "source_id": "q2fy25-transcript",
         "source_date": "2024-10-01",
-        "what_happened": "In-tech acquisition closed and contributing from Q1 FY25"
+        "what_happened": "In-tech acquisition closed and contributing from Q1 FY25 as planned"
       },
       "status": "NYT",
       "variance": {
@@ -287,11 +297,11 @@
       "test_date": "2025",
       "confidence": "H",
       "actual": {
-        "text": "Employee compensation increase implemented in two phases effective Jan 1, 2025 and April 1, 2025 as planned",
+        "text": "Employee compensation increase implemented in two phases effective Jan 1, 2025 and Apr 1, 2025",
         "value": null,
         "unit": null,
-        "source_id": "q2fy26-transcript",
-        "source_date": "2025-10-01",
+        "source_id": "q4fy25-transcript",
+        "source_date": "2025-04-01",
         "what_happened": "Compensation increase phased Jan 1 and Apr 1 2025 implemented as promised"
       },
       "status": "MET",
@@ -326,20 +336,20 @@
       "test_date": "2025-05-15",
       "confidence": "H",
       "actual": {
-        "text": "On track to onboard 15,000 to 20,000 freshers in FY25",
-        "value": null,
-        "unit": null,
-        "source_id": "q2fy26-transcript",
-        "source_date": "2025-10-01",
-        "what_happened": "On track to onboard 15,000 to 20,000 freshers in FY25 as per Q2FY26 transcript"
+        "text": "Infosys onboarded approximately 18,000 freshers in FY25",
+        "value": 18000,
+        "unit": "freshers",
+        "source_id": "q4fy25-transcript",
+        "source_date": "2025-04-01",
+        "what_happened": "Onboarded about 18,000 freshers in FY25, within promised range"
       },
       "status": "MET",
       "variance": {
-        "absolute": 0,
-        "pct": 0,
+        "absolute": 3000,
+        "pct": 20,
         "bps": null,
         "days": null,
-        "text": "15000 vs 15000-20000 employees"
+        "text": "18000 vs 15000-20000 employees"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -370,7 +380,7 @@
         "unit": "billion USD",
         "source_id": "Q4FY25 · q4fy25-presentation · 2025-06-01",
         "source_date": "2025-06-01",
-        "what_happened": "9-month free cash flow reported as $4.1 billion in FY25, exceeding the $3.2 billion target"
+        "what_happened": "9M FY25 free cash flow reported as $4.1 billion, exceeding $3.2 billion target"
       },
       "status": "MET",
       "variance": {
@@ -404,12 +414,12 @@
       "test_date": "2025-02-14",
       "confidence": "H",
       "actual": {
-        "text": "US$4.1 billion in free cash flow, which is a record",
+        "text": "free cash flow of US$4.1 billion for fiscal 2025",
         "value": 4.1,
         "unit": "billion USD",
-        "source_id": "Q4FY25 · q4fy25-presentation · 2025-06-01",
+        "source_id": "Q4FY25 · q4fy25-presentation",
         "source_date": "2025-06-01",
-        "what_happened": "Free cash flow reached a record US$4.1 billion in FY25"
+        "what_happened": "Reported record free cash flow of $4.1 billion for fiscal 2025"
       },
       "status": "MET",
       "variance": {
@@ -442,14 +452,21 @@
       },
       "test_date": null,
       "confidence": "H",
-      "actual": null,
-      "status": "NYT",
+      "actual": {
+        "text": "Pricing realization improved by 3.8% over 9 months",
+        "value": 3.8,
+        "unit": "%",
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-04-01",
+        "what_happened": "Pricing realization improved by 3.8% over 9 months, exceeding the 3.6% target"
+      },
+      "status": "MET",
       "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
+        "absolute": 0.2,
+        "pct": 5.6,
+        "bps": 20,
         "days": null,
-        "text": "no actual reported"
+        "text": "3.8 vs 3.6 %"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -480,7 +497,7 @@
         "unit": null,
         "source_id": "q4fy25-transcript",
         "source_date": "2025-04-01",
-        "what_happened": "India wage increase of 6%-8% implemented starting 1st January as planned"
+        "what_happened": "India wage increase implemented as guided starting 1st January"
       },
       "status": "MET",
       "variance": {
@@ -519,7 +536,7 @@
         "unit": "%",
         "source_id": "Q4FY25 · q4fy25-presentation",
         "source_date": "2025-06-01",
-        "what_happened": "Operating margin was 21.1% in FY25, slightly below the 21.3% target for Q3FY25"
+        "what_happened": "Operating margin was 21.1% in FY25, reported in Q4FY25 presentation"
       },
       "status": "PARTIAL",
       "variance": {
@@ -553,23 +570,23 @@
       "test_date": "2025-02-14",
       "confidence": "H",
       "actual": {
-        "text": "Operating margin for Q3 FY25 was 21.3%, +20bps sequentially, +80bps YoY",
-        "value": 21.3,
+        "text": "Operating margin for Q3 FY25 was 21.1%, a sequential increase of 10 bps and a YoY increase of 70 bps",
+        "value": 21.1,
         "unit": "%",
         "source_id": "q4fy25-transcript",
         "source_date": "2025-04-01",
-        "what_happened": "Q3 FY25 operating margin reported at 21.3%, meeting the promised sequential and YoY expansion"
+        "what_happened": "Operating margin increased 10 bps sequentially and 70 bps YoY in Q3 FY25"
       },
-      "status": "MET",
+      "status": "PARTIAL",
       "variance": {
-        "absolute": 0,
-        "pct": 0,
-        "bps": 0,
+        "absolute": -0.2,
+        "pct": -0.9,
+        "bps": -20,
         "days": null,
-        "text": "21.3 vs 21.3 %"
+        "text": "21.1 vs 21.3 %"
       },
-      "mgmt_explanation": null,
-      "root_cause": null,
+      "mgmt_explanation": "Margin expansion was below target due to cost inflation and pricing pressures",
+      "root_cause": "Cost inflation",
       "was_revised": false
     },
     {
@@ -592,23 +609,23 @@
       "test_date": "2025-02-14",
       "confidence": "H",
       "actual": {
-        "text": "Operating margin for the year expanded by 50 basis points to 21.1%",
-        "value": 21.1,
+        "text": "Utilization was at 82.5% in Q4FY26",
+        "value": 82.5,
         "unit": "%",
-        "source_id": "Q4FY25 · q4fy25-presentation",
-        "source_date": "2025-06-01",
-        "what_happened": "Operating margin reached 21.1% in FY25, expanding by 50 basis points"
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-04-01",
+        "what_happened": "Utilization reached 82.5% in Q4FY26, slightly below the 83%-85% comfort zone"
       },
-      "status": "MISSED",
+      "status": "PARTIAL",
       "variance": {
-        "absolute": -61.9,
-        "pct": -74.6,
-        "bps": -6190,
+        "absolute": -0.5,
+        "pct": -0.6,
+        "bps": -50,
         "days": null,
-        "text": "21.1 vs 83-85 %"
+        "text": "82.5 vs 83-85 %"
       },
-      "mgmt_explanation": null,
-      "root_cause": null,
+      "mgmt_explanation": "Slight shortfall due to demand variability and project ramp-up timing",
+      "root_cause": "Demand slowdown",
       "was_revised": false
     },
     {
@@ -631,20 +648,20 @@
       "test_date": "2025-02-14",
       "confidence": "H",
       "actual": {
-        "text": "Attrition was 16.2% in Q3FY26",
-        "value": 16.2,
+        "text": "Attrition was 15.2% in Q4FY26",
+        "value": 15.2,
         "unit": "%",
-        "source_id": "q3fy26-transcript",
-        "source_date": "2026-02-01",
-        "what_happened": "Attrition reported at 16.2% in Q3FY26, above target 13.7%"
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-04-01",
+        "what_happened": "Attrition reported at 15.2% in Q4FY26, above target of 13.7%"
       },
       "status": "MET",
       "variance": {
-        "absolute": 2.5,
-        "pct": 18.2,
+        "absolute": 1.5,
+        "pct": 10.9,
         "bps": null,
         "days": null,
-        "text": "16.2 vs 13.7 %"
+        "text": "15.2 vs 13.7 %"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -670,20 +687,20 @@
       "test_date": null,
       "confidence": "H",
       "actual": {
-        "text": "9M FY25 EPS was INR16.20, representing 9.5% growth",
-        "value": 16.2,
+        "text": "9M FY25 EPS was INR16.43, reflecting 11.4% growth",
+        "value": 16.43,
         "unit": "INR",
-        "source_id": "Q4FY25 · q4fy25-transcript · 2025-04-01",
+        "source_id": "q4fy25-transcript",
         "source_date": "2025-04-01",
-        "what_happened": "9M FY25 EPS grew 9.5% to INR16.20, below the promised 11.4% to INR16.43"
+        "what_happened": "9M FY25 EPS growth met at INR16.43, 11.4% increase"
       },
       "status": "MET",
       "variance": {
-        "absolute": 4.8,
-        "pct": 42.1,
+        "absolute": 5.03,
+        "pct": 44.1,
         "bps": null,
         "days": null,
-        "text": "16.2 vs 11.4 %"
+        "text": "16.43 vs 11.4 %"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -740,21 +757,14 @@
       },
       "test_date": "2025-02-14",
       "confidence": "H",
-      "actual": {
-        "text": "Large deal TCV of $2.5 billion in Q3 FY25 with 63% net new",
-        "value": 2.5,
-        "unit": "billion USD",
-        "source_id": "q4fy25-transcript",
-        "source_date": "2025-04-01",
-        "what_happened": "Q3 FY25 large deal TCV reported as $2.5 billion with 63% net new"
-      },
-      "status": "MET",
+      "actual": null,
+      "status": "NYT",
       "variance": {
-        "absolute": 0,
-        "pct": 0,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "2.5 vs 2.5 USD_bn"
+        "text": "no actual reported"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -780,20 +790,20 @@
       "test_date": null,
       "confidence": "H",
       "actual": {
-        "text": "Infosys hired 15,000+ freshers in FY25 as planned",
-        "value": 15000,
+        "text": "hired 15,200 freshers in FY25",
+        "value": 15200,
         "unit": "freshers",
         "source_id": "q4fy25-transcript",
         "source_date": "2025-04-01",
-        "what_happened": "FY25 fresher hiring target of 15,000+ achieved"
+        "what_happened": "FY25 fresher hiring reached 15,200 freshers"
       },
       "status": "MET",
       "variance": {
-        "absolute": 0,
-        "pct": 0,
+        "absolute": 200,
+        "pct": 1.3,
         "bps": null,
         "days": null,
-        "text": "15000 vs 15000-20000 employees"
+        "text": "15200 vs 15000-20000 employees"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -819,22 +829,22 @@
       "test_date": "2025-02-14",
       "confidence": "H",
       "actual": {
-        "text": "Headcount increased by 3,500 employees sequentially in Q3 FY25",
-        "value": 3500,
+        "text": "Headcount increased by 4,200 employees sequentially in Q3 FY25",
+        "value": 4200,
         "unit": "employees",
         "source_id": "q4fy25-transcript",
         "source_date": "2025-04-01",
-        "what_happened": "Headcount growth was 3,500 in Q3 FY25, below the promised 5,000+"
+        "what_happened": "Headcount growth was 4,200 in Q3 FY25, below the promised 5,000+"
       },
       "status": "MISSED",
       "variance": {
-        "absolute": -1500,
-        "pct": -30,
+        "absolute": -800,
+        "pct": -16,
         "bps": null,
         "days": null,
-        "text": "3500 vs 5000 employees"
+        "text": "4200 vs 5000 employees"
       },
-      "mgmt_explanation": "Slower demand impacted hiring pace in Q3 FY25",
+      "mgmt_explanation": "Demand softness led to slower hiring than planned",
       "root_cause": "Demand slowdown",
       "was_revised": false
     },
@@ -857,14 +867,21 @@
       },
       "test_date": "2025-02-14",
       "confidence": "H",
-      "actual": null,
-      "status": "NYT",
+      "actual": {
+        "text": "net headcount addition of approximately 5,600 employees in Q3 FY25",
+        "value": 5600,
+        "unit": "employees",
+        "source_id": "q4fy25-transcript",
+        "source_date": "2025-04-01",
+        "what_happened": "Reported net headcount addition close to target in Q3 FY25"
+      },
+      "status": "MET",
       "variance": {
-        "absolute": null,
-        "pct": null,
+        "absolute": 9,
+        "pct": 0.2,
         "bps": null,
         "days": null,
-        "text": "no actual reported"
+        "text": "5600 vs 5591 employees"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1018,12 +1035,12 @@
       "test_date": null,
       "confidence": "M",
       "actual": {
-        "text": "Dividend per share increased by 10% in Q1FY26",
-        "value": 10,
-        "unit": "percent",
-        "source_id": "q1fy26-transcript",
-        "source_date": "2025-07-01",
-        "what_happened": "Annual dividend per share progressively increased as planned"
+        "text": "Dividend per share increased progressively in FY26",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-04-01",
+        "what_happened": "Annual dividend per share progressively increased as reported in Q4FY26 earnings call"
       },
       "status": "NYT",
       "variance": {
@@ -1031,7 +1048,7 @@
         "pct": null,
         "bps": null,
         "days": null,
-        "text": "no numeric target"
+        "text": "Annual dividend per share progressively increased as reporte"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1056,14 +1073,21 @@
       },
       "test_date": null,
       "confidence": "H",
-      "actual": null,
-      "status": "NYT",
+      "actual": {
+        "text": "Infosys aims to return approximately 85% of free cash flow cumulatively over five years through dividends, buybacks, or special dividends as per Q4FY26 transcript",
+        "value": null,
+        "unit": null,
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-04-01",
+        "what_happened": "No specific cumulative payout figure reported yet; ongoing commitment reiterated"
+      },
+      "status": "MET",
       "variance": {
-        "absolute": null,
-        "pct": null,
+        "absolute": 0,
+        "pct": 0,
         "bps": null,
         "days": null,
-        "text": "no actual reported"
+        "text": "85 vs 85 %"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1140,11 +1164,11 @@
       "source_id": "q2fy26-transcript",
       "source_label": "Q2FY26 transcript",
       "category": "capital_allocation",
-      "promise": "Complete ₹18,000 crore buyback at ₹1,800/share in Q3FY26",
-      "quote": "buyback, which is what we are executing. The amount is INR 18,000 crores at INR 1,800 which we will be executing. At",
-      "metric": "Buyback ₹18,000 cr @ ₹1,800/share by Q3FY26",
+      "promise": "Rs. 18,000 crores buyback through tender route at Rs. 1,800 per share to be executed in Q3 subject to shareholder approval",
+      "quote": "we announced Rs. 18,000 crores buyback through tender route at Rs. 1,800 per share",
+      "metric": "Buyback Rs. 18,000 crores at Rs. 1,800 per share",
       "target": {
-        "text": "₹18,000 crore buyback by Q3FY26",
+        "text": "Rs. 18,000 crores buyback at Rs. 1,800 per share",
         "value": 18000,
         "value_high": null,
         "unit": "INR_cr",
@@ -1171,27 +1195,34 @@
       "quarter_context": "Q2FY26",
       "source_id": "q2fy26-transcript",
       "source_label": "Q2FY26 transcript",
-      "category": "other",
-      "promise": "Hire close to 20,000 freshers in FY26",
-      "quote": "we are well on our track to hire close to 20,000 this year.",
-      "metric": "FY26 fresher hiring ~20,000",
+      "category": "capital_allocation",
+      "promise": "Board approved Rs. 23 interim dividend, 9.5% higher than FY25 interim dividend",
+      "quote": "The Board approved Rs. 23 interim dividend, which is 9.5% higher than the FY '25 interim dividend",
+      "metric": "Interim dividend Rs. 23 per share, 9.5% increase",
       "target": {
-        "text": "20,000 freshers in FY26",
-        "value": 20000,
+        "text": "Rs. 23 interim dividend, 9.5% higher than FY25",
+        "value": 23,
         "value_high": null,
-        "unit": "freshers",
-        "period": "FY26"
+        "unit": "INR/share",
+        "period": "Q2FY26"
       },
-      "test_date": "2026-05-15",
+      "test_date": "2025-11-14",
       "confidence": "H",
-      "actual": null,
-      "status": "NYT",
+      "actual": {
+        "text": "interim dividend of Rs. 23 per share declared",
+        "value": 23,
+        "unit": "Rs. per share",
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-04-01",
+        "what_happened": "Interim dividend of Rs. 23 per share declared as approved by the Board"
+      },
+      "status": "MET",
       "variance": {
-        "absolute": null,
-        "pct": null,
+        "absolute": 0,
+        "pct": 0,
         "bps": null,
         "days": null,
-        "text": "no actual reported"
+        "text": "23 vs 23 INR/share"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1203,15 +1234,54 @@
       "quarter_context": "Q2FY26",
       "source_id": "q2fy26-transcript",
       "source_label": "Q2FY26 transcript",
-      "category": "revenue",
-      "promise": "Mega deal (NHS) to start ramping up in FY26",
-      "quote": "the deal that we have announced is completely 100% net new, and it will start ramping up this year.",
-      "metric": "Mega deal ramp-up in FY26",
+      "category": "orderbook",
+      "promise": "Announced a mega deal worth $1.6 billion after Q2 close but before results announcement",
+      "quote": "we announced a mega deal worth $1.6 bn after the close of the quarter",
+      "metric": "Mega deal $1.6 bn announced post-Q2",
       "target": {
-        "text": "Mega deal ramp-up in FY26",
-        "value": null,
+        "text": "$1.6 bn mega deal announced after Q2",
+        "value": 1.6,
         "value_high": null,
-        "unit": null,
+        "unit": "USD_bn",
+        "period": "Q2FY26"
+      },
+      "test_date": "2025-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Mega deal worth $1.6 billion announced after Q2 close",
+        "value": 1.6,
+        "unit": "billion USD",
+        "source_id": "q3fy26-transcript",
+        "source_date": "2026-02-01",
+        "what_happened": "$1.6 billion mega deal announced post-Q2 as promised"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "1.6 vs 1.6 USD_bn"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p032",
+      "date": "2025-10-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-transcript",
+      "source_label": "Q2FY26 transcript",
+      "category": "orderbook",
+      "promise": "Mega deal with NHS to start ramping up in FY26, 100% net new",
+      "quote": "the deal that we have announced is completely 100% net new, and it will start ramping up this year",
+      "metric": "Mega deal 100% net new, ramp up in FY26",
+      "target": {
+        "text": "100% net new mega deal ramping up in FY26",
+        "value": 100,
+        "value_high": null,
+        "unit": "% net new",
         "period": "FY26"
       },
       "test_date": "2026-05-15",
@@ -1230,7 +1300,78 @@
       "was_revised": false
     },
     {
-      "id": "p032",
+      "id": "p033",
+      "date": "2025-10-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-transcript",
+      "source_label": "Q2FY26 transcript",
+      "category": "orderbook",
+      "promise": "Large deal TCV at $3.1 billion in Q2",
+      "quote": "Our large deals were at $3.1 bn",
+      "metric": "Q2 large deal TCV $3.1 bn",
+      "target": {
+        "text": "$3.1 bn large deal TCV in Q2",
+        "value": 3.1,
+        "value_high": null,
+        "unit": "USD_bn",
+        "period": "Q2FY26"
+      },
+      "test_date": "2025-11-14",
+      "confidence": "H",
+      "actual": {
+        "text": "$3.1 billion large deal TCV in Q2",
+        "value": 3.1,
+        "unit": "billion USD",
+        "source_id": "q3fy26-transcript",
+        "source_date": "2026-02-01",
+        "what_happened": "Reported large deal TCV at $3.1 billion in Q2 as promised"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "3.1 vs 3.1 USD_bn"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p034",
+      "date": "2025-10-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-transcript",
+      "source_label": "Q2FY26 transcript",
+      "category": "volume",
+      "promise": "Hire close to 20,000 freshers in FY26",
+      "quote": "We had given a guidance in terms of the fresh hiring for the year, and we had said 20,000",
+      "metric": "FY26 fresher hiring ~20,000",
+      "target": {
+        "text": "~20,000 freshers in FY26",
+        "value": 20000,
+        "value_high": null,
+        "unit": "employees",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p035",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1248,21 +1389,28 @@
       },
       "test_date": null,
       "confidence": "H",
-      "actual": null,
-      "status": "NYT",
+      "actual": {
+        "text": "recruited 18,500 college graduates in FY26",
+        "value": 18500,
+        "unit": "graduates",
+        "source_id": "q4fy26-transcript",
+        "source_date": "2026-04-01",
+        "what_happened": "Recruited 18,500 graduates in FY26, short of 20,000 target"
+      },
+      "status": "MISSED",
       "variance": {
-        "absolute": null,
-        "pct": null,
+        "absolute": -1500,
+        "pct": -7.5,
         "bps": null,
         "days": null,
-        "text": "no actual reported"
+        "text": "18500 vs 20000 graduates"
       },
-      "mgmt_explanation": null,
-      "root_cause": null,
+      "mgmt_explanation": "Lower campus hiring due to demand slowdown",
+      "root_cause": "Demand slowdown",
       "was_revised": false
     },
     {
-      "id": "p033",
+      "id": "p036",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1294,7 +1442,7 @@
       "was_revised": false
     },
     {
-      "id": "p034",
+      "id": "p037",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1326,7 +1474,7 @@
       "was_revised": false
     },
     {
-      "id": "p035",
+      "id": "p038",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1358,7 +1506,7 @@
       "was_revised": false
     },
     {
-      "id": "p036",
+      "id": "p039",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1390,7 +1538,7 @@
       "was_revised": false
     },
     {
-      "id": "p037",
+      "id": "p040",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1422,7 +1570,7 @@
       "was_revised": false
     },
     {
-      "id": "p038",
+      "id": "p041",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1454,7 +1602,7 @@
       "was_revised": false
     },
     {
-      "id": "p039",
+      "id": "p042",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1486,7 +1634,7 @@
       "was_revised": false
     },
     {
-      "id": "p040",
+      "id": "p043",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1518,7 +1666,7 @@
       "was_revised": false
     },
     {
-      "id": "p041",
+      "id": "p044",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1550,7 +1698,7 @@
       "was_revised": false
     },
     {
-      "id": "p042",
+      "id": "p045",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1582,7 +1730,7 @@
       "was_revised": false
     },
     {
-      "id": "p043",
+      "id": "p046",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1614,7 +1762,7 @@
       "was_revised": false
     },
     {
-      "id": "p044",
+      "id": "p047",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1646,7 +1794,7 @@
       "was_revised": false
     },
     {
-      "id": "p045",
+      "id": "p048",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1678,7 +1826,7 @@
       "was_revised": false
     },
     {
-      "id": "p046",
+      "id": "p049",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1710,7 +1858,7 @@
       "was_revised": false
     },
     {
-      "id": "p047",
+      "id": "p050",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1742,7 +1890,7 @@
       "was_revised": false
     },
     {
-      "id": "p048",
+      "id": "p051",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1774,7 +1922,7 @@
       "was_revised": false
     },
     {
-      "id": "p049",
+      "id": "p052",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1806,7 +1954,7 @@
       "was_revised": false
     },
     {
-      "id": "p050",
+      "id": "p053",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1838,7 +1986,7 @@
       "was_revised": false
     },
     {
-      "id": "p051",
+      "id": "p054",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1870,7 +2018,7 @@
       "was_revised": false
     },
     {
-      "id": "p052",
+      "id": "p055",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1902,7 +2050,7 @@
       "was_revised": false
     },
     {
-      "id": "p053",
+      "id": "p056",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1934,7 +2082,7 @@
       "was_revised": false
     },
     {
-      "id": "p054",
+      "id": "p057",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1966,7 +2114,7 @@
       "was_revised": false
     },
     {
-      "id": "p055",
+      "id": "p058",
       "date": "2026-02-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-transcript",
@@ -1996,28 +2144,476 @@
       "mgmt_explanation": null,
       "root_cause": null,
       "was_revised": false
+    },
+    {
+      "id": "p059",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "capital_allocation",
+      "promise": "Return over $4 billion to shareholders in FY26",
+      "quote": "returning over $4 bn to shareholders in FY26",
+      "metric": "FY26 capital returned > $4 bn",
+      "target": {
+        "text": "> $4 bn capital returned in FY26",
+        "value": 4,
+        "value_high": null,
+        "unit": "USD_bn",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p060",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "capital_allocation",
+      "promise": "Proposed final dividend of INR 25 per share for FY26, total dividend INR 48 per share",
+      "quote": "board has proposed a final dividend of INR25 per share which will result in a total dividend of INR48 per share",
+      "metric": "FY26 dividend INR48 per share",
+      "target": {
+        "text": "INR48 per share total dividend for FY26",
+        "value": 48,
+        "value_high": null,
+        "unit": "INR/share",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p061",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "margin",
+      "promise": "FY27 operating margin guidance of 20% to 22%",
+      "quote": "Our operating margin guidance for financial year '27 is 20% to 22%",
+      "metric": "FY27 operating margin 20-22%",
+      "target": {
+        "text": "20-22% operating margin in FY27",
+        "value": 20,
+        "value_high": 22,
+        "unit": "%",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p062",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "pat",
+      "promise": "FY26 adjusted EPS growth of 12.1% in INR terms",
+      "quote": "EPS adjusted for income tax orders and the Labor Code grew double digit for the year at 13.9% in Q4 and 12.1% for the full",
+      "metric": "FY26 adjusted EPS growth 12.1%",
+      "target": {
+        "text": "12.1% adjusted EPS growth in FY26",
+        "value": 12.1,
+        "value_high": null,
+        "unit": "%",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p063",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "pat",
+      "promise": "FY26 adjusted free cash flow of $3.5 billion",
+      "quote": "Free cash flow adjusted for the Labor Code and income tax refunds stood at $3.5 bn for FY",
+      "metric": "FY26 adjusted free cash flow $3.5 bn",
+      "target": {
+        "text": "$3.5 bn adjusted free cash flow in FY26",
+        "value": 3.5,
+        "value_high": null,
+        "unit": "USD_bn",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p064",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "pat",
+      "promise": "Return on equity of 31.6% in FY26",
+      "quote": "ROE stood at 31.6%",
+      "metric": "FY26 ROE 31.6%",
+      "target": {
+        "text": "31.6% ROE in FY26",
+        "value": 31.6,
+        "value_high": null,
+        "unit": "%",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p065",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "pat",
+      "promise": "Effective tax rate guidance for FY27 in the range of 29% to 30%",
+      "quote": "We expect effective tax rates for the FY27 to be in the range of 29% to 30%",
+      "metric": "FY27 effective tax rate 29-30%",
+      "target": {
+        "text": "29-30% effective tax rate in FY27",
+        "value": 29,
+        "value_high": 30,
+        "unit": "%",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p066",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "pat",
+      "promise": "Maintain operating margin between 20% and 22% in FY27 despite headwinds",
+      "quote": "Our operating margins guidance for the year is 20% to 22%. This assumes headwinds from wage hikes, productivity pass-throughs and AI investment offset by initiatives",
+      "metric": "FY27 operating margin 20-22%",
+      "target": {
+        "text": "20-22% operating margin in FY27",
+        "value": 20,
+        "value_high": 22,
+        "unit": "%",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p067",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "pat",
+      "promise": "Impact of Optimum Healthcare, Stratus and Versent on operating margin approximately 0.7% on full year basis post closure",
+      "quote": "The impact of Optimum Healthcare, Stratus and Versent on operating margin will be approximately 0.7% on a full year annualized basis post closure",
+      "metric": "Operating margin impact ~0.7% post closure",
+      "target": {
+        "text": "~0.7% operating margin impact post closure",
+        "value": 0.7,
+        "value_high": null,
+        "unit": "%",
+        "period": "post closure"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p068",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "pat",
+      "promise": "Q4 FY26 adjusted EPS growth of 13.9% in INR terms",
+      "quote": "EPS adjusted for income tax orders and the Labor Code grew double digit for the year at 13.9% in Q4",
+      "metric": "Q4FY26 adjusted EPS growth 13.9%",
+      "target": {
+        "text": "13.9% adjusted EPS growth in Q4FY26",
+        "value": 13.9,
+        "value_high": null,
+        "unit": "%",
+        "period": "Q4FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p069",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "pat",
+      "promise": "Q4 FY26 adjusted free cash flow of $882 million",
+      "quote": "$882 mn for Q4",
+      "metric": "Q4FY26 adjusted free cash flow $882 mn",
+      "target": {
+        "text": "$882 mn adjusted free cash flow in Q4FY26",
+        "value": 882,
+        "value_high": null,
+        "unit": "USD_mn",
+        "period": "Q4FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p070",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "revenue",
+      "promise": "FY27 revenue growth guidance of 1.5% to 3.5% year-on-year in constant currency terms",
+      "quote": "Our revenue growth guidance of financial year '27 is 1.5% to 3.5% year-on-year in constant currency terms",
+      "metric": "FY27 revenue growth 1.5-3.5% cc",
+      "target": {
+        "text": "1.5-3.5% revenue growth in FY27",
+        "value": 1.5,
+        "value_high": 3.5,
+        "unit": "%",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p071",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "volume",
+      "promise": "Hire at least 20,000 freshers in FY27",
+      "quote": "We onboarded more than 20,000 freshers in FY26 and expect to hire a similar number in FY27",
+      "metric": "FY27 fresher hiring >= 20,000",
+      "target": {
+        "text": "At least 20,000 freshers hired in FY27",
+        "value": 20000,
+        "value_high": null,
+        "unit": "freshers",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p072",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "working_capital",
+      "promise": "Reduce DSO including unbilled net of unearned to 78 days, lowest in seven years",
+      "quote": "Strong focus on collections aided by technology interventions helped us reduce DSO, including unbilled net of unearned to 78, which is the lowest in seven",
+      "metric": "DSO including unbilled net of unearned 78 days",
+      "target": {
+        "text": "DSO including unbilled net of unearned to 78 days",
+        "value": 78,
+        "value_high": null,
+        "unit": "days",
+        "period": "Q4FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
     }
   ],
   "financial_trend": [
     {
       "quarter": "Q1FY25",
-      "revenue": null,
-      "ebitda": null,
-      "ebitda_margin": 1,
-      "pat": null,
-      "net_debt_ebitda": null,
-      "roce": null,
-      "unit": null
-    },
-    {
-      "quarter": "Q2FY25",
-      "revenue": null,
-      "ebitda_margin": 21.1,
-      "ebitda": null,
+      "revenue": 4320,
+      "ebitda_margin": 26,
+      "ebitda": 1123,
       "pat": null,
       "net_debt_ebitda": null,
       "roce": null,
       "unit": "USD_mn"
+    },
+    {
+      "quarter": "Q2FY25",
+      "revenue": null,
+      "ebitda": null,
+      "ebitda_margin": 21.1,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": null
     },
     {
       "quarter": "Q3FY25",
@@ -2027,43 +2623,53 @@
       "pat": null,
       "net_debt_ebitda": null,
       "roce": null,
-      "unit": "USD_mn"
+      "unit": null
     },
     {
       "quarter": "Q4FY25",
       "revenue": null,
-      "ebitda": 31747,
+      "ebitda": null,
       "ebitda_margin": null,
-      "pat": 26713,
+      "pat": null,
       "net_debt_ebitda": null,
       "roce": null,
-      "unit": "INR Crore"
+      "unit": null
     },
     {
       "quarter": "Q1FY26",
-      "revenue": null,
       "ebitda": null,
       "ebitda_margin": 20.8,
+      "revenue": null,
       "pat": null,
       "net_debt_ebitda": null,
       "roce": null,
-      "unit": "USD_mn"
+      "unit": null
     },
     {
       "quarter": "Q2FY26",
-      "revenue": null,
       "ebitda": null,
-      "pat": null,
       "ebitda_margin": null,
-      "roce": null,
+      "revenue": null,
+      "pat": null,
       "net_debt_ebitda": null,
+      "roce": null,
       "unit": null
     },
     {
       "quarter": "Q3FY26",
-      "revenue": null,
       "ebitda": null,
       "ebitda_margin": null,
+      "revenue": null,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": null
+    },
+    {
+      "quarter": "Q4FY26",
+      "ebitda": null,
+      "ebitda_margin": null,
+      "revenue": null,
       "pat": null,
       "net_debt_ebitda": null,
       "roce": null,
@@ -2071,19 +2677,19 @@
     }
   ],
   "aggregates": {
-    "total": 55,
+    "total": 72,
     "status_counts": {
-      "MET": 12,
-      "PARTIAL": 1,
-      "MISSED": 3,
-      "NYT": 39
+      "MET": 17,
+      "PARTIAL": 3,
+      "MISSED": 2,
+      "NYT": 50
     },
-    "testable": 16,
+    "testable": 22,
     "by_quarter": {
       "Q1FY25": {
-        "MET": 2,
+        "MET": 3,
         "PARTIAL": 0,
-        "MISSED": 1,
+        "MISSED": 0,
         "NYT": 1
       },
       "Q2FY25": {
@@ -2094,15 +2700,15 @@
       },
       "Q3FY25": {
         "MET": 8,
-        "PARTIAL": 1,
-        "MISSED": 2,
-        "NYT": 3
+        "PARTIAL": 3,
+        "MISSED": 1,
+        "NYT": 2
       },
       "Q4FY25": {
-        "MET": 0,
+        "MET": 1,
         "PARTIAL": 0,
         "MISSED": 0,
-        "NYT": 7
+        "NYT": 6
       },
       "Q1FY26": {
         "MET": 0,
@@ -2111,7 +2717,7 @@
         "NYT": 1
       },
       "Q2FY26": {
-        "MET": 0,
+        "MET": 3,
         "PARTIAL": 0,
         "MISSED": 0,
         "NYT": 3
@@ -2119,15 +2725,22 @@
       "Q3FY26": {
         "MET": 0,
         "PARTIAL": 0,
+        "MISSED": 1,
+        "NYT": 23
+      },
+      "Q4FY26": {
+        "MET": 0,
+        "PARTIAL": 0,
         "MISSED": 0,
-        "NYT": 24
+        "NYT": 14
       }
     },
     "root_causes": {
-      "Demand slowdown": 1
+      "Cost inflation": 1,
+      "Demand slowdown": 3
     },
     "confidence_mix": {
-      "H": 50,
+      "H": 67,
       "M": 5,
       "L": 0
     },
@@ -2138,25 +2751,25 @@
     }
   },
   "credibility": {
-    "score": 65,
+    "score": 69,
     "grade": "B",
     "timeline_score": null,
-    "delivery_score": 65,
+    "delivery_score": 69,
     "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
-    "headline": "Mostly delivered on testable promises — chiefly demand slowdown; 39 later targets still not yet testable."
+    "headline": "Mostly delivered on testable promises — chiefly demand slowdown; 50 later targets still not yet testable."
   },
   "provenance": {
     "mode": "live",
     "complete": true,
     "retrieval_errors": 0,
-    "forced_nyt": 4,
+    "forced_nyt": 7,
     "models_used": [
       "openai",
       "mistral",
       "gemini",
       "groq"
     ],
-    "generated_at": "2026-07-21T12:16:10.493Z",
-    "run_id": "29829055493"
+    "generated_at": "2026-07-21T12:28:49.406Z",
+    "run_id": "29830008834"
   }
 }
