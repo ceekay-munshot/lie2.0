@@ -10,8 +10,9 @@ import { createHash } from "node:crypto";
 import { completeJSON, providerConfig } from "./llm.mjs";
 import { EXTRACTION_PROVIDERS } from "./multi-llm.mjs";
 
-export const FIN_TREND_VERSION = "p5-2026-06a";
+export const FIN_TREND_VERSION = "p5-2026-07a";
 const FIN_RE = /revenue|ebitda|\bpat\b|profit|margin|net debt|roce|turnover|free cash/i;
+const numRuns = (s) => (String(s).match(/\d[\d,.]*/g) || []).length;
 
 const FIN_SCHEMA = {
   type: "object",
@@ -27,16 +28,28 @@ const FIN_SCHEMA = {
   },
 };
 
-const SYSTEM = `You read one quarter's investor-presentation "financial snapshot" text and report the headline REPORTED quarterly financials. Return numbers exactly as reported (consolidated, the quarter — not 9M/full-year). Any field not reported in the text → null. ebitda_margin and roce are percentages (number only). net_debt_ebitda is a ratio. unit is the currency unit for the absolute figures (e.g. INR_cr). Retrieval only; never estimate.`;
+const SYSTEM = `You read one quarter's financial-snapshot text — from the investor presentation, or from the earnings-call transcript when there is no deck — and report the headline REPORTED quarterly financials. Return numbers exactly as reported (consolidated, the quarter — not 9M/full-year). Any field not reported in the text → null. ebitda_margin and roce are percentages (number only). net_debt_ebitda is a ratio. unit is the currency unit for the absolute figures (e.g. INR_cr). Retrieval only; never estimate.`;
 
-function quartersWithPresentations(corpus) {
+// Gather each quarter's best "financial snapshot" text. Presentation slides are preferred (terse,
+// number-dense), but FALL BACK to the earnings-call transcript when the quarter has no deck carrying
+// financials — e.g. IT-services names that state the headline numbers only in the call, whose momentum
+// panel was otherwise silently blank. Require a digit (a qualitative "margin focus" line is useless)
+// and order sections most-number-dense first so the char-capped text keeps the actual figures.
+function quartersWithFinancials(corpus) {
   const byQ = new Map();
   for (const doc of corpus.documents || []) {
-    if (doc.type !== "presentation") continue;
-    const slides = (doc.sections || []).filter((s) => FIN_RE.test(s.text || "")).map((s) => s.text || "");
-    if (!slides.length) continue;
+    const isPresn = doc.type === "presentation";
+    if (!isPresn && doc.type !== "transcript") continue;
+    const secs = (doc.sections || [])
+      .filter((s) => FIN_RE.test(s.text || "") && /\d/.test(s.text || ""))
+      .map((s) => s.text || "")
+      .sort((a, b) => numRuns(b) - numRuns(a));
+    if (!secs.length) continue;
+    const rank = isPresn ? 2 : 1; // a presentation outranks a transcript for the same quarter
     const prev = byQ.get(doc.quarter);
-    if (!prev || String(doc.date) > String(prev.date)) byQ.set(doc.quarter, { quarter: doc.quarter, date: doc.date, doc_id: doc.id, slides });
+    if (!prev || rank > prev.rank || (rank === prev.rank && String(doc.date) > String(prev.date))) {
+      byQ.set(doc.quarter, { quarter: doc.quarter, date: doc.date, doc_id: doc.id, slides: secs, rank });
+    }
   }
   return [...byQ.values()].sort((a, b) => String(a.date).localeCompare(String(b.date)));
 }
@@ -47,7 +60,7 @@ export async function financialTrend({ corpus, mock = false, providers = null, c
   // instead of serving old-model figures across runs (mirror of find-actual.mjs). Stable across a
   // quota-truncation→resume cycle: derived from KEY presence, not runtime quota.
   const modelSig = chain.map((c) => `${c.provider}:${c.model}`).join(",");
-  const quarters = quartersWithPresentations(corpus);
+  const quarters = quartersWithFinancials(corpus);
   const stats = { calls: 0, cache_hits: 0, errors: [] };
   const trend = [];
 

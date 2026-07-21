@@ -5,7 +5,7 @@
  *
  * Bump PROMPT_VERSION whenever the prompt or schema changes (invalidates caches).
  */
-export const PROMPT_VERSION = "p4-2026-06d";
+export const PROMPT_VERSION = "p4-2026-07a";
 
 // Mirrors the company schema's promise.category enum.
 export const CATEGORIES = [
@@ -58,6 +58,11 @@ Typical measurable categories: revenue · ebitda · margin · pat · capex (amou
 A promise is FORWARD-LOOKING — a target/guidance for a future period ("we expect / target / guide / will / plan to / by <date> / going forward"). REPORTED ACTUALS and historical results are NOT promises: "Q3 EBITDA was Rs 15,171 crore", "we delivered 800 KT this quarter", "9M capex of $1.3bn", "revenue grew 12% YoY" describe what already happened — REJECT them. Only extract a number/date the company is COMMITTING to deliver in the future.
 
 REJECT vague or non-measurable statements with NO number/date — e.g. "we are confident", "we will grow strongly", "focused on execution", "well positioned". If it has no checkable forward number or date, it is NOT a promise: return nothing for it.
+
+CURRENT-STATE SNAPSHOTS & ALREADY-DONE ACTIONS (reject — these are the commonest false positives; a "promise" whose outcome is the SAME event trivially "passes" and pads the record):
+- A figure describing where something stands NOW is not a forward commitment. REJECT a point-in-time metric — deal/order pipeline value ("large deals pipeline at $3.8 billion"), current headcount or utilisation, a spot ratio/yield ("cash yield at 7%"), quarter-end net debt — UNLESS management explicitly guides it to a FUTURE target with a period ("grow the pipeline to $5 bn by FY27").
+- An already-declared/paid capital action is a completed fact (an ACTUAL), not a promise. REJECT an interim/final dividend, buyback or bonus the board HAS declared, proposed or paid for the current or just-ended period ("interim dividend of ₹21 declared", "we paid ₹21 per share"). Extract a capital_allocation commitment ONLY when it is a FORWARD target or policy ("target ~85% FCF payout", "buy back ₹X by FY27").
+- Reject a routine schedule already put into effect ("wage hike effective 1 Jan, already implemented"). Keep it only if it is a future-dated commitment still to happen with a checkable target.
 
 Extract each distinct commitment ONCE, at the most consolidated level stated (prefer the company/guidance figure over restating it per sub-business). Do NOT split one piece of guidance into several near-duplicate rows, and do NOT pad the list — a typical call yields a handful to ~15 real commitments, not dozens. Quality over quantity. This cap applies to presentations too: an investor deck is not a licence to extract more.
 
@@ -167,6 +172,40 @@ const FEW_SHOTS = [
           quote: "targeting total aluminium capacity of 3.1 million tonnes per annum by FY27",
           metric: "Aluminium capacity 3.1 Mtpa by FY27",
           target: { text: "3.1 Mtpa by FY27", value: 3.1, value_high: null, unit: "Mtpa", period: "FY27" },
+          confidence: "H",
+        },
+      ],
+    }),
+  },
+  {
+    role: "user",
+    content:
+      "Quarter: Q4FY25. Text:\n" +
+      "Nilanjan Roy: The board has declared an interim dividend of INR 21 per share, up 16.7 percent. Our large-deals pipeline stands at USD 3.8 billion as of quarter-end. For FY26 we expect revenue growth of 3 to 5 percent in constant currency and an operating margin of 20 to 22 percent.",
+  },
+  {
+    role: "assistant",
+    content: JSON.stringify({
+      // The declared dividend (a completed action — an actual) and the point-in-time deal
+      // pipeline (a snapshot, not guided to a future target) are REJECTED. Only the two forward
+      // FY26 guidance figures are promises.
+      promises: [
+        {
+          quarter_context: "Q4FY25",
+          category: "revenue",
+          promise: "FY26 revenue growth of 3-5% in constant currency",
+          quote: "For FY26 we expect revenue growth of 3 to 5 percent in constant currency",
+          metric: "FY26 revenue growth 3-5% cc",
+          target: { text: "3-5% cc revenue growth in FY26", value: 3, value_high: 5, unit: "%", period: "FY26" },
+          confidence: "H",
+        },
+        {
+          quarter_context: "Q4FY25",
+          category: "margin",
+          promise: "FY26 operating margin of 20-22%",
+          quote: "an operating margin of 20 to 22 percent",
+          metric: "FY26 operating margin 20-22%",
+          target: { text: "20-22% operating margin in FY26", value: 20, value_high: 22, unit: "%", period: "FY26" },
           confidence: "H",
         },
       ],

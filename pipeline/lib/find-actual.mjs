@@ -15,7 +15,8 @@ import { EXTRACTION_PROVIDERS } from "./multi-llm.mjs";
 import { subjectTokens } from "./dedup.mjs";
 
 export const ROOT_CAUSES = ["Demand slowdown", "Pricing / mix", "Cost inflation", "Supply chain", "Execution", "Capacity delay", "Regulatory", "Working capital", "Capital allocation", "Other"];
-export const FIND_ACTUAL_VERSION = "p5-2026-06a";
+export const FIND_ACTUAL_VERSION = "p5-2026-07a";
+const numRuns = (s) => (String(s).match(/\d[\d,.]*/g) || []).length;
 
 const ACTUAL_SCHEMA = {
   type: "object",
@@ -46,20 +47,37 @@ Rules:
 const norm = (s) => String(s || "").toLowerCase();
 
 /** Later-document sections that mention the promise's subject, best overlap first. */
-export function buildEvidence(promise, corpus, maxSections = 8) {
+export function buildEvidence(promise, corpus, maxSections = 10) {
   const subj = subjectTokens(`${promise.metric || ""} ${promise.promise || ""}`);
-  if (subj.size === 0) return [];
+  const laterDocs = (corpus.documents || []).filter((d) => d.date && promise.date && String(d.date) > String(promise.date)); // strictly later
   const out = [];
-  for (const doc of corpus.documents || []) {
-    if (!doc.date || !promise.date || String(doc.date) <= String(promise.date)) continue; // strictly later
-    for (const s of doc.sections || []) {
-      const toks = subjectTokens(s.text || "");
-      let ov = 0;
-      for (const t of subj) if (toks.has(t)) ov += 1;
-      if (ov > 0) out.push({ doc_id: doc.id, date: doc.date, quarter: doc.quarter, overlap: ov, text: s.text || "" });
+  if (subj.size > 0) {
+    for (const doc of laterDocs) {
+      for (const s of doc.sections || []) {
+        const toks = subjectTokens(s.text || "");
+        let ov = 0;
+        for (const t of subj) if (toks.has(t)) ov += 1;
+        if (ov > 0) out.push({ doc_id: doc.id, date: doc.date, quarter: doc.quarter, overlap: ov, text: s.text || "" });
+      }
     }
+    out.sort((a, b) => b.overlap - a.overlap || String(b.date).localeCompare(String(a.date)));
   }
-  out.sort((a, b) => b.overlap - a.overlap || String(b.date).localeCompare(String(a.date)));
+  // Recency fallback for the NO-overlap case — the main source of forced-NYTs, where the promise's
+  // wording simply didn't lexically match how the actual was later phrased. Seed with the most
+  // number-dense sections from the two most-recent later documents so the retriever still gets a
+  // shot. The prompt returns null when the metric isn't actually reported (temperature 0), so this
+  // is low-risk and fires ONLY when subject-overlap found nothing.
+  if (out.length === 0 && laterDocs.length) {
+    const recent = laterDocs.slice().sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 2);
+    const cand = [];
+    for (const doc of recent) {
+      for (const s of doc.sections || []) {
+        if (/\d/.test(s.text || "")) cand.push({ doc_id: doc.id, date: doc.date, quarter: doc.quarter, overlap: 0, text: s.text || "" });
+      }
+    }
+    cand.sort((a, b) => numRuns(b.text) - numRuns(a.text));
+    out.push(...cand.slice(0, 5));
+  }
   return out.slice(0, maxSections);
 }
 
