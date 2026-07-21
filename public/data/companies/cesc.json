@@ -1,0 +1,2189 @@
+{
+  "schema_version": "1.0",
+  "company": {
+    "ticker": "CESC",
+    "name": "CESC",
+    "sector": null,
+    "screener_url": "https://www.screener.in/company/CESC/consolidated/",
+    "fiscal_year_end": "03"
+  },
+  "generated_at": "2026-07-21T12:42:04.128Z",
+  "coverage": {
+    "from": "Q1FY25",
+    "to": "Q3FY26",
+    "as_of": "2026-02-01"
+  },
+  "verification_window": {
+    "latest_reported": "Q3FY26",
+    "latest_reported_date": "2026-02-01",
+    "note": "Outcomes verifiable only through the latest reported period; later targets are NYT."
+  },
+  "documents": [
+    {
+      "id": "q1fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q1FY25",
+      "date": "2024-08-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q1fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q1FY26",
+      "date": "2025-09-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q2FY25",
+      "date": "2024-11-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q2fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q2FY26",
+      "date": "2025-11-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q3FY25",
+      "date": "2025-02-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q3fy26-presentation",
+      "type": "presentation",
+      "quarter": "Q3FY26",
+      "date": "2026-02-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    },
+    {
+      "id": "q4fy25-presentation",
+      "type": "presentation",
+      "quarter": "Q4FY25",
+      "date": "2025-06-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
+    }
+  ],
+  "promises": [
+    {
+      "id": "p001",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capacity",
+      "promise": "Commission 1.5 GW wind turbines over 2-4 years",
+      "quote": "Binding framework agreement with Inox Wind Ltd for a 1.5 GW of wind turbines to be commissioned over 2-4 years",
+      "metric": "1.5 GW wind turbines by 2-4 years",
+      "target": {
+        "text": "1.5 GW wind turbines over 2-4 years",
+        "value": 1.5,
+        "value_high": null,
+        "unit": "GW",
+        "period": "by 2026-2028"
+      },
+      "test_date": "2026",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p002",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capacity",
+      "promise": "Commission 10,500 MT/annum Green Hydrogen Production facility within 3 years",
+      "quote": "10,500 MT/annum of Green Hydrogen Production facility expected to be commissioned within 3 yrs",
+      "metric": "10,500 MT/annum Green Hydrogen facility by 2027",
+      "target": {
+        "text": "10,500 MT/annum Green Hydrogen facility within 3 years",
+        "value": 10500,
+        "value_high": null,
+        "unit": "MT/annum",
+        "period": "by FY28"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "10,500 MT/annum of Green Hydrogen Production facility expected to be commissioned within 3 yrs",
+        "value": 10500,
+        "unit": "MT/annum",
+        "source_id": "q2fy25-presentation",
+        "source_date": "2024-11-01",
+        "what_happened": "Facility expected to be commissioned within 3 years as planned"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "10500 vs 10500 MT/annum"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p003",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capacity",
+      "promise": "Commission 3 GW Hybrid Renewable energy portfolio over next 3 years",
+      "quote": "Planned Investments in Renewable energy generation : 3GW Hybrid Renewable over next 3 years",
+      "metric": "3 GW Hybrid Renewable capacity by 2027",
+      "target": {
+        "text": "3 GW Hybrid Renewable over next 3 years",
+        "value": 3,
+        "value_high": null,
+        "unit": "GW",
+        "period": "by FY28"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Planned Renewable Capacity of 3,200 MW by FY29 in Phase-1",
+        "value": 3.2,
+        "unit": "GW",
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-06-01",
+        "what_happened": "Target to fully commission 3,200 MW by Mar-2029"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0.2,
+        "pct": 6.7,
+        "bps": null,
+        "days": null,
+        "text": "3.2 vs 3 GW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p004",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capacity",
+      "promise": "Commission 300 MW solar park in Rajasthan",
+      "quote": "developing a solar park - 300 MW with land and CTU connectivity in Rajasthan",
+      "metric": "300 MW solar park in Rajasthan",
+      "target": {
+        "text": "300 MW solar park in Rajasthan",
+        "value": 300,
+        "value_high": null,
+        "unit": "MW",
+        "period": "by FY28"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Construction is in full swing; SCOD March 31, 2026",
+        "value": 300,
+        "unit": "MW",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "300 MW solar park in Rajasthan under construction, expected commissioning by March 31, 2026"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "300 vs 300 MW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p005",
+      "date": "2024-08-01",
+      "quarter_context": "Q1FY25",
+      "source_id": "q1fy25-presentation",
+      "source_label": "Q1FY25 presentation",
+      "category": "capacity",
+      "promise": "Commission wind turbines under Suzlon Energy over next 2-4 years",
+      "quote": "Framework agreement with Suzlon Energy for Wind turbine Supply, EPC and O&M to be commissioned over next 2-4 years",
+      "metric": "Wind turbines by Suzlon over 2-4 years",
+      "target": {
+        "text": "Wind turbines by Suzlon over 2-4 years",
+        "value": null,
+        "value_high": null,
+        "unit": "GW",
+        "period": "by 2026-2028"
+      },
+      "test_date": "2026",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p006",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Commission 1.5 GW wind turbines over 2-4 years",
+      "quote": "Framework agreement with Inox Wind Ltd for a 1.5 GW of wind turbines to be commissioned over 2-4 years",
+      "metric": "1.5 GW wind turbines commissioned over 2-4 years",
+      "target": {
+        "text": "1.5 GW wind turbines over 2-4 years",
+        "value": 1500,
+        "value_high": null,
+        "unit": "MW",
+        "period": "2-4 years"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Target to fully commission 1st Phase of 3,200 MW by Mar -2029",
+        "value": 1.5,
+        "unit": "GW",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "Re-guided commissioning to March 2029 for 1.5 GW wind turbines"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -1498.5,
+        "pct": -99.9,
+        "bps": null,
+        "days": null,
+        "text": "1.5 vs 1500 MW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p007",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Develop 150 MW solar project via acquisition of Bhojraj Renewables Energy",
+      "quote": "Entered into a binding term-sheet to acquire 100% stake in Bhojraj Renewables Energy to develop a 150MW solar project",
+      "metric": "150 MW solar project developed",
+      "target": {
+        "text": "150 MW solar project",
+        "value": 150,
+        "value_high": null,
+        "unit": "MW",
+        "period": null
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "600 MW of solar projects in EPC mode",
+        "value": 600,
+        "unit": "MW",
+        "source_id": "q2fy26-presentation",
+        "source_date": "2025-11-01",
+        "what_happened": "600 MW solar projects in EPC mode reported, no mention of 150 MW Bhojraj acquisition"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 450,
+        "pct": 300,
+        "bps": null,
+        "days": null,
+        "text": "600 vs 150 MW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p008",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Develop 300 MW solar park in Rajasthan under Purvah",
+      "quote": "Acquired 100% stake in M/s Bhadla 3 SKP Green Ventures Pvt. Ltd. Under Purvah for developing a solar park - 300 MW",
+      "metric": "300 MW solar park developed",
+      "target": {
+        "text": "300 MW solar park",
+        "value": 300,
+        "value_high": null,
+        "unit": "MW",
+        "period": null
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Project 1 - 300 MW Solar - Status: All major contracts finalized, Construction is in full swing, SCOD: March 31, 2026",
+        "value": 300,
+        "unit": "MW",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "300 MW solar park under construction, expected COD March 31, 2026"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "300 vs 300 MW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p009",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Develop 300 MW solar PV power plant via acquisition of Deshraj Solar Energy",
+      "quote": "Acquired 100% stake in Deshraj Solar Energy Private Limited, for developing a solar PV power plant of 300 MW capacity",
+      "metric": "300 MW solar PV plant developed",
+      "target": {
+        "text": "300 MW solar PV plant",
+        "value": 300,
+        "value_high": null,
+        "unit": "MW",
+        "period": null
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Project 1- 300 MW Solar",
+        "value": 300,
+        "unit": "MW",
+        "source_id": "q1fy26-presentation",
+        "source_date": "2025-09-01",
+        "what_happened": "300 MW solar project under construction as of Q1FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "300 vs 300 MW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p010",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Set up 300 MW solar PV power project under tariff-based competitive bidding",
+      "quote": "PPA signed for setting up 300MW solar PV power project under tariff-based competitive bidding",
+      "metric": "300 MW solar PV project set up",
+      "target": {
+        "text": "300 MW solar PV project",
+        "value": 300,
+        "value_high": null,
+        "unit": "MW",
+        "period": null
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "300 MW Solar project under construction, SCOD March 31, 2026",
+        "value": 300,
+        "unit": "MW",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "300 MW solar project under construction, expected COD Q4 FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "300 vs 300 MW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p011",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Develop 300 MW wind project via acquisition of Bhojraj Renewables Energy",
+      "quote": "Entered into a binding term-sheet to acquire 100% stake in Bhojraj Renewables Energy to develop a 300MW wind project",
+      "metric": "300 MW wind project developed",
+      "target": {
+        "text": "300 MW wind project",
+        "value": 300,
+        "value_high": null,
+        "unit": "MW",
+        "period": null
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "~3,500 MW of wind projects in EPC mode (with land) with Inox, Suzlon & Envision",
+        "value": 3500,
+        "unit": "MW",
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-06-01",
+        "what_happened": "~3,500 MW wind projects in EPC mode with land, exceeding 300 MW target"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 3200,
+        "pct": 1066.7,
+        "bps": null,
+        "days": null,
+        "text": "3500 vs 300 MW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p012",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Commission 686.85 MW wind power project within 3 years",
+      "quote": "Agreement with Ecoren Energy India to set up a wind power project of up to 686.85 MW, to be commissioned within 3 years",
+      "metric": "686.85 MW wind project commissioned within 3 years",
+      "target": {
+        "text": "686.85 MW wind project within 3 years",
+        "value": 686.85,
+        "value_high": null,
+        "unit": "MW",
+        "period": "3 years"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Target to fully commission 3,200 MW by Mar -2029",
+        "value": 3200,
+        "unit": "MW",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "Target to fully commission 3,200 MW wind and solar by March 2029 remains set"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 2513.15,
+        "pct": 365.9,
+        "bps": null,
+        "days": null,
+        "text": "3200 vs 686.85 MW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p013",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Commission 10,500 MT/annum Green Hydrogen Production facility within 3 years",
+      "quote": "10,500 MT/annum of Green Hydrogen Production facility expected to be commissioned within 3 yrs",
+      "metric": "Green Hydrogen Production 10,500 MT/annum by 3 years",
+      "target": {
+        "text": "10,500 MT/annum by 3 years",
+        "value": 10500,
+        "value_high": null,
+        "unit": "MT/annum",
+        "period": "by Nov 2027"
+      },
+      "test_date": "2027",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p014",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Fully commission 3,200 MW renewable capacity by March 2029",
+      "quote": "Target to fully commission 3200 MW by Mar -2029",
+      "metric": "Renewable capacity 3,200 MW by Mar 2029",
+      "target": {
+        "text": "3,200 MW by Mar 2029",
+        "value": 3200,
+        "value_high": null,
+        "unit": "MW",
+        "period": "by Mar 2029"
+      },
+      "test_date": "2029",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p015",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Planned renewable capacity of 3.2 GW by FY29 in Phase-1 and overall 10 GW in Phase-2",
+      "quote": "Planned Renewable Capacity of 3.2 GW by FY29 in Phase-1 and overall capacity of 10 GW in Phase-2",
+      "metric": "Renewable capacity 3.2 GW by FY29 and 10 GW overall",
+      "target": {
+        "text": "3.2 GW by FY29 and 10 GW overall",
+        "value": 3.2,
+        "value_high": 10,
+        "unit": "GW",
+        "period": "FY29 and beyond"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Target to fully commission 3,200 MW by Mar -2029",
+        "value": 3200,
+        "unit": "MW",
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-06-01",
+        "what_happened": "Target to fully commission 3,200 MW by Mar-2029 reiterated"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 3196.8,
+        "pct": 99900,
+        "bps": null,
+        "days": null,
+        "text": "3200 vs 3.2-10 GW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p016",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Solar capacity targets: 600 MW FY27, 900 MW FY28, 1500 MW FY29",
+      "quote": "1500 MW Green Hydrogen Capacity FY27 FY28 FY29",
+      "metric": "Solar capacity 600 MW FY27, 900 MW FY28, 1500 MW FY29",
+      "target": {
+        "text": "600 MW FY27, 900 MW FY28, 1500 MW FY29",
+        "value": 600,
+        "value_high": 1500,
+        "unit": "MW",
+        "period": "FY27-FY29"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "600 MW Solar Project projected annual revenue ~ Rs. 1,200 Cr; 600 MW solar projects in EPC mode; 300 MW solar COD Q4FY26, 150 MW solar COD Q3FY27, 150 MW solar COD Q4FY27",
+        "value": 600,
+        "unit": "MW",
+        "source_id": "q4fy25-presentation",
+        "source_date": "2025-06-01",
+        "what_happened": "600 MW solar capacity under implementation, with staged CODs from Q4FY26 to Q4FY27"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "600 vs 600-1500 MW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p017",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Wind capacity targets: 800 MW FY27, 1500 MW FY28, 1700 MW FY29",
+      "quote": "Capacity FY27 FY28 FY29 Wind 800 1500 1700",
+      "metric": "Wind capacity 800 MW FY27, 1500 MW FY28, 1700 MW FY29",
+      "target": {
+        "text": "800 MW FY27, 1500 MW FY28, 1700 MW FY29",
+        "value": 800,
+        "value_high": 1700,
+        "unit": "MW",
+        "period": "FY27-FY29"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "800 MW Wind capacity targeted for FY27",
+        "value": 800,
+        "unit": "MW",
+        "source_id": "q3fy25-presentation",
+        "source_date": "2025-02-01",
+        "what_happened": "Wind capacity target for FY27 set at 800 MW, projects under implementation with 600 MW wind EPC mode"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "800 vs 800-1700 MW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p018",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "capacity",
+      "promise": "Commission wind turbines from Suzlon Energy over next 2-4 years",
+      "quote": "Agreement with Suzlon Energy for Wind turbine Supply, EPC and O&M to be commissioned over next 2-4 years",
+      "metric": "Wind turbines commissioned over 2-4 years",
+      "target": {
+        "text": "Wind turbines over 2-4 years",
+        "value": null,
+        "value_high": null,
+        "unit": "MW",
+        "period": "2-4 years"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Target to fully commission 3,200 MW by Mar -2029",
+        "value": 3200,
+        "unit": "MW",
+        "source_id": "q3fy25-presentation",
+        "source_date": "2025-02-01",
+        "what_happened": "Target to fully commission 3,200 MW by March 2029"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 3198,
+        "pct": 159900,
+        "bps": null,
+        "days": null,
+        "text": "3200 vs 2-4 MW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p019",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "timeline",
+      "promise": "Apply for CTU connectivity for 1,800 MW solar by Q3FY25",
+      "quote": "Applied CTU connectivity for 1,800 MW solar which is expected to be granted by Q3FY25",
+      "metric": "CTU connectivity for 1,800 MW solar by Q3FY25",
+      "target": {
+        "text": "1,800 MW solar CTU connectivity by Q3FY25",
+        "value": 1800,
+        "value_high": null,
+        "unit": "MW",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Applied CTU connectivity for 2,400 MW solar",
+        "value": 2400,
+        "unit": "MW",
+        "source_id": "q3fy25-presentation",
+        "source_date": "2025-02-01",
+        "what_happened": "Applied CTU connectivity for 2,400 MW solar by Q3FY25"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "in progress, not yet due"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p020",
+      "date": "2024-11-01",
+      "quarter_context": "Q2FY25",
+      "source_id": "q2fy25-presentation",
+      "source_label": "Q2FY25 presentation",
+      "category": "timeline",
+      "promise": "Apply for CTU connectivity for 2,995 MW wind by Q3FY25",
+      "quote": "Applied CTU connectivity for 2,995 MW wind which is expected to be granted by Q3FY25",
+      "metric": "CTU connectivity for 2,995 MW wind by Q3FY25",
+      "target": {
+        "text": "2,995 MW wind CTU connectivity by Q3FY25",
+        "value": 2995,
+        "value_high": null,
+        "unit": "MW",
+        "period": "Q3FY25"
+      },
+      "test_date": "2025-02-14",
+      "confidence": "H",
+      "actual": {
+        "text": "Applied CTU connectivity for 2,400 MW solar; wind Phase 1 target 1,700 MW (no specific wind CTU connectivity applied reported)",
+        "value": null,
+        "unit": null,
+        "source_id": "q3fy25-presentation",
+        "source_date": "2025-02-01",
+        "what_happened": "Applied CTU connectivity for 2,400 MW solar; no specific wind CTU connectivity applied reported"
+      },
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "in progress, not yet due"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p021",
+      "date": "2025-02-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-presentation",
+      "source_label": "Q3FY25 presentation",
+      "category": "capacity",
+      "promise": "Commission Project-1 Solar 300 MW in Rajasthan by Q4FY26",
+      "quote": "Status Expected COD Project-1 Solar Solar 300 Rajasthan",
+      "metric": "Project-1 Solar 300 MW COD Q4FY26",
+      "target": {
+        "text": "300 MW Solar project COD Q4FY26",
+        "value": 300,
+        "value_high": null,
+        "unit": "MW",
+        "period": "Q4FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p022",
+      "date": "2025-02-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-presentation",
+      "source_label": "Q3FY25 presentation",
+      "category": "capacity",
+      "promise": "Commission Project-2 Hybrid Solar 150 MW and Wind 300 MW by Q3FY27",
+      "quote": "Received Secured Q3FY27 Wind 300 Secured Project-3 Hybrid Solar 150",
+      "metric": "Project-2 Hybrid Solar 150 MW and Wind 300 MW COD Q3FY27",
+      "target": {
+        "text": "150 MW Solar and 300 MW Wind COD Q3FY27",
+        "value": 150,
+        "value_high": 300,
+        "unit": "MW",
+        "period": "Q3FY27"
+      },
+      "test_date": "2027-02-14",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p023",
+      "date": "2025-02-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-presentation",
+      "source_label": "Q3FY25 presentation",
+      "category": "capacity",
+      "promise": "Commission Project-3 Hybrid Solar 150 MW and Wind 300 MW by Q4FY27",
+      "quote": "Received Secured Q3FY27 Wind 300 Secured Project-3 Hybrid Solar 150",
+      "metric": "Project-3 Hybrid Solar 150 MW and Wind 300 MW COD Q4FY27",
+      "target": {
+        "text": "150 MW Solar and 300 MW Wind COD Q4FY27",
+        "value": 150,
+        "value_high": 300,
+        "unit": "MW",
+        "period": "Q4FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p024",
+      "date": "2025-06-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capacity",
+      "promise": "Execute 3.2 GW hybrid renewable projects over next 3 years",
+      "quote": "Purvah Green Power Private Ltd executing 3.2 GW Hybrid Renewable over next 3 years",
+      "metric": "3.2 GW hybrid renewable capacity over 3 years",
+      "target": {
+        "text": "3.2 GW hybrid renewable over 3 years",
+        "value": 3200,
+        "value_high": null,
+        "unit": "MW",
+        "period": "3 years from FY25"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Target to fully commission 1st Phase of 3,200 MW by Mar -2029",
+        "value": 3.2,
+        "unit": "GW",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "Target to fully commission 3.2 GW hybrid renewable by March 2029"
+      },
+      "status": "MISSED",
+      "variance": {
+        "absolute": -3196.8,
+        "pct": -99.9,
+        "bps": null,
+        "days": null,
+        "text": "3.2 vs 3200 MW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p025",
+      "date": "2025-06-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "capacity",
+      "promise": "Commission 300 MW solar project by Q4FY26",
+      "quote": "Status Expected COD Project-1 Solar Solar 300",
+      "metric": "Solar capacity 300 MW by Q4FY26",
+      "target": {
+        "text": "300 MW solar by Q4FY26",
+        "value": 300,
+        "value_high": null,
+        "unit": "MW",
+        "period": "Q4FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p026",
+      "date": "2025-09-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "capacity",
+      "promise": "Fully commission 1st Phase of 3,200 MW renewable capacity by March 2029",
+      "quote": "Target to fully commission 1st Phase of 3,200 MW by Mar -2029",
+      "metric": "3,200 MW commissioned by Mar 2029",
+      "target": {
+        "text": "3,200 MW by Mar 2029",
+        "value": 3200,
+        "value_high": null,
+        "unit": "MW",
+        "period": "by Mar 2029"
+      },
+      "test_date": "2029",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p027",
+      "date": "2025-09-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission 300 MW solar project by Q4FY26",
+      "quote": "Project 1: Solar by Q4FY26",
+      "metric": "300 MW solar by Q4FY26",
+      "target": {
+        "text": "300 MW solar by Q4FY26",
+        "value": 300,
+        "value_high": null,
+        "unit": "MW",
+        "period": "Q4FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p028",
+      "date": "2025-09-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission 450 MW hybrid project by Q3FY27",
+      "quote": "Project 2: Hybrid by Q3 FY27",
+      "metric": "450 MW hybrid by Q3FY27",
+      "target": {
+        "text": "450 MW hybrid by Q3FY27",
+        "value": 450,
+        "value_high": null,
+        "unit": "MW",
+        "period": "Q3FY27"
+      },
+      "test_date": "2027-02-14",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p029",
+      "date": "2025-09-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission 450 MW hybrid project by Q4FY27",
+      "quote": "Project 3: Hybrid by Q4 FY27",
+      "metric": "450 MW hybrid by Q4FY27",
+      "target": {
+        "text": "450 MW hybrid by Q4FY27",
+        "value": 450,
+        "value_high": null,
+        "unit": "MW",
+        "period": "Q4FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p030",
+      "date": "2025-09-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "capacity",
+      "promise": "Achieve 3.2 GW renewable energy capacity by FY29 and scale to 10 GW by FY32",
+      "quote": "Aiming for 3.2GW renewable energy capacity by FY29 and scale it up to 10GW by FY32",
+      "metric": "Renewable energy capacity 3.2 GW by FY29, 10 GW by FY32",
+      "target": {
+        "text": "3.2 GW by FY29 and 10 GW by FY32",
+        "value": 3.2,
+        "value_high": 10,
+        "unit": "GW",
+        "period": "FY29 and FY32"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "3.2 GW by FY29",
+        "value": 3.2,
+        "unit": "GW",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "3.2 GW capacity target for FY29 under implementation with projects progressing"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "3.2 vs 3.2-10 GW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p031",
+      "date": "2025-09-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "capacity",
+      "promise": "Build 3.2 GW renewables capacity by FY29 (Phase I) and 10 GW by FY32 (Phase II)",
+      "quote": "Planned 3.2 GW Renewables by FY29 (Phase I) and 10 GW by FY32 (Phase II)",
+      "metric": "Renewables capacity 3.2 GW by FY29, 10 GW by FY32",
+      "target": {
+        "text": "3.2 GW by FY29 and 10 GW by FY32",
+        "value": 3.2,
+        "value_high": 10,
+        "unit": "GW",
+        "period": "FY29 and FY32"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "3.2 GW by FY29 (Phase I) and 10 GW by FY32 (Phase II)",
+        "value": 3.2,
+        "unit": "GW",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "Target to fully commission 1st Phase of 3,200 MW by Mar-2029; projects under implementation with significant progress"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "3.2 vs 3.2-10 GW"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p032",
+      "date": "2025-09-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "capex",
+      "promise": "Planned investment of ~ Rs.1,000 Cr over next 5 years for Chandigarh Power network improvement",
+      "quote": "Planned investment of ~ Rs.1,000 Cr over next 5 years for Network improvement",
+      "metric": "Capex Rs 1,000 Cr over 5 years",
+      "target": {
+        "text": "~Rs. 1,000 Cr over 5 years",
+        "value": 1000,
+        "value_high": null,
+        "unit": "Rs Cr",
+        "period": "next 5 years"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p033",
+      "date": "2025-09-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "capex",
+      "promise": "Capex of ~Rs. 8,700 Cr for renewable projects under implementation",
+      "quote": "Capex of ~Rs. 8,700 Cr, Annualized Revenue of ~Rs. 1,200 Cr.",
+      "metric": "Capex Rs 8,700 Cr for renewable projects",
+      "target": {
+        "text": "~Rs. 8,700 Cr capex",
+        "value": 8700,
+        "value_high": null,
+        "unit": "Rs Cr",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "H",
+      "actual": {
+        "text": "Capex of ~Rs. 14,800 Cr for renewable projects under implementation",
+        "value": 14800,
+        "unit": "Rs. Cr",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "Capex for renewable projects under implementation is ~Rs. 14,800 Cr as of Q3FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 6100,
+        "pct": 70.1,
+        "bps": null,
+        "days": null,
+        "text": "14800 vs 8700 Rs Cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p034",
+      "date": "2025-09-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "capex",
+      "promise": "Phase 1 capex of Rs 6,000 Cr",
+      "quote": "Rs 6,000 Cr Phase 1 Capex",
+      "metric": "Phase 1 Capex Rs 6,000 Cr",
+      "target": {
+        "text": "Rs 6,000 Cr Phase 1 Capex",
+        "value": 6000,
+        "value_high": null,
+        "unit": "Rs Cr",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "H",
+      "actual": {
+        "text": "Rs 6,000 Cr Phase 1 Capex",
+        "value": 6000,
+        "unit": "Cr",
+        "source_id": "q2fy26-presentation",
+        "source_date": "2025-11-01",
+        "what_happened": "Phase 1 Capex planned at Rs 6,000 Cr as per Q2FY26 presentation"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 0,
+        "pct": 0,
+        "bps": null,
+        "days": null,
+        "text": "6000 vs 6000 Rs Cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p035",
+      "date": "2025-09-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "pat",
+      "promise": "Double consolidated PAT by FY29",
+      "quote": "Doubling of Profitability Hybrid renewable by FY29",
+      "metric": "Consolidated PAT 2x by FY29",
+      "target": {
+        "text": "2x PAT by FY29",
+        "value": 2,
+        "value_high": null,
+        "unit": "x",
+        "period": "FY29"
+      },
+      "test_date": "2029-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p036",
+      "date": "2025-09-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "pat",
+      "promise": "Achieve PAT breakeven for Malegaon Distribution Franchise in next 3 years",
+      "quote": "Aim to achieve PAT breakeven in next 3 years",
+      "metric": "PAT breakeven in 3 years",
+      "target": {
+        "text": "PAT breakeven in 3 years",
+        "value": 3,
+        "value_high": null,
+        "unit": "years",
+        "period": "next 3 years"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Losses reduced from over 50% at takeover to ~39% in FY25",
+        "value": 39,
+        "unit": "% loss",
+        "source_id": "q2fy26-presentation",
+        "source_date": "2025-11-01",
+        "what_happened": "Losses reduced but PAT breakeven not reported yet"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 36,
+        "pct": 1200,
+        "bps": null,
+        "days": null,
+        "text": "39 vs 3 years"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p037",
+      "date": "2025-09-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "revenue",
+      "promise": "Annualized revenue of ~Rs. 1,200 Cr from renewable projects under implementation",
+      "quote": "Annualized Revenue of ~Rs. 1,200 Cr.",
+      "metric": "Annualized revenue ~Rs. 1,200 Cr",
+      "target": {
+        "text": "~Rs. 1,200 Cr annualized revenue",
+        "value": 1200,
+        "value_high": null,
+        "unit": "Rs Cr",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "H",
+      "actual": {
+        "text": "Annualized Revenue of ~Rs. 2,100 Cr.",
+        "value": 2100,
+        "unit": "Rs. Cr.",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "Annualized revenue from renewable projects under implementation reported as ~Rs. 2,100 Cr."
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 900,
+        "pct": 75,
+        "bps": null,
+        "days": null,
+        "text": "2100 vs 1200 Rs Cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p038",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-presentation",
+      "source_label": "Q2FY26 presentation",
+      "category": "capacity",
+      "promise": "Develop 3 GW Solar Cell & Module manufacturing ecosystem by 2027",
+      "quote": "Cell lines are scheduled for commissioning in 2027",
+      "metric": "3 GW Solar Cell & Module capacity by 2027",
+      "target": {
+        "text": "3 GW Solar Cell & Module capacity by 2027",
+        "value": 3,
+        "value_high": null,
+        "unit": "GW",
+        "period": "2027"
+      },
+      "test_date": "2027",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p039",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-presentation",
+      "source_label": "Q2FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission Hybrid Project 2 by Q3FY27",
+      "quote": "Project 2: Hybrid by Q3 FY27",
+      "metric": "Hybrid Project 2 commissioned by Q3FY27",
+      "target": {
+        "text": "Project 2 Hybrid by Q3FY27",
+        "value": 1,
+        "value_high": null,
+        "unit": "project",
+        "period": "Q3FY27"
+      },
+      "test_date": "2027-02-14",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p040",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-presentation",
+      "source_label": "Q2FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission Hybrid Project 3 by Q4FY27",
+      "quote": "Project 3: Hybrid by Q4 FY27",
+      "metric": "Hybrid Project 3 commissioned by Q4FY27",
+      "target": {
+        "text": "Project 3 Hybrid by Q4FY27",
+        "value": 1,
+        "value_high": null,
+        "unit": "project",
+        "period": "Q4FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p041",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-presentation",
+      "source_label": "Q2FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission Solar + BESS Project 4 by Q4FY27",
+      "quote": "Project 4: Solar+ BESS 300 MW",
+      "metric": "Solar + BESS Project 4 commissioned by Q4FY27",
+      "target": {
+        "text": "Project 4 Solar + BESS by Q4FY27",
+        "value": 1,
+        "value_high": null,
+        "unit": "project",
+        "period": "Q4FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p042",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-presentation",
+      "source_label": "Q2FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission Solar Project 1 by Q4FY26",
+      "quote": "Project 1: Solar by Q4FY26",
+      "metric": "Solar Project 1 commissioned by Q4FY26",
+      "target": {
+        "text": "Project 1 Solar by Q4FY26",
+        "value": 1,
+        "value_high": null,
+        "unit": "project",
+        "period": "Q4FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p043",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-presentation",
+      "source_label": "Q2FY26 presentation",
+      "category": "capex",
+      "promise": "Capex of ~Rs. 10,800 Cr for renewable projects under implementation",
+      "quote": "Capex of ~Rs. 10,800 Cr",
+      "metric": "Capex Rs 10,800 Cr",
+      "target": {
+        "text": "Capex Rs 10,800 Cr",
+        "value": 10800,
+        "value_high": null,
+        "unit": "INR Cr",
+        "period": "current phase"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Capex of ~Rs. 14,800 Cr",
+        "value": 14800,
+        "unit": "Rs. Cr",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "Capex of ~Rs. 14,800 Cr for renewable projects under implementation as of Q3FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 4000,
+        "pct": 37,
+        "bps": null,
+        "days": null,
+        "text": "14800 vs 10800 INR Cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p044",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-presentation",
+      "source_label": "Q2FY26 presentation",
+      "category": "capex",
+      "promise": "Rs 6,000 Cr Phase 1 Capex and Rs 23,000+ Cr cost optimization initiatives",
+      "quote": "Rs 6,000 Cr Phase 1 Capex Rs 23,000+ Cr Cost optimization initiatives",
+      "metric": "Phase 1 Capex Rs 6,000 Cr, Cost optimization Rs 23,000+ Cr",
+      "target": {
+        "text": "Rs 6,000 Cr Phase 1 Capex and Rs 23,000+ Cr cost optimization",
+        "value": 6000,
+        "value_high": 23000,
+        "unit": "INR Cr",
+        "period": "next 5 years"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": {
+        "text": "Under Implementation 2,150 MW Capex of ~Rs. 14,800 Cr",
+        "value": 14800,
+        "unit": "Rs Cr",
+        "source_id": "q3fy26-presentation",
+        "source_date": "2026-02-01",
+        "what_happened": "Phase 1 Capex under implementation at ~Rs. 14,800 Cr as of Q3FY26"
+      },
+      "status": "MET",
+      "variance": {
+        "absolute": 8800,
+        "pct": 146.7,
+        "bps": null,
+        "days": null,
+        "text": "14800 vs 6000-23000 INR Cr"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p045",
+      "date": "2025-11-01",
+      "quarter_context": "Q2FY26",
+      "source_id": "q2fy26-presentation",
+      "source_label": "Q2FY26 presentation",
+      "category": "pat",
+      "promise": "Double PAT in distribution business by 2030",
+      "quote": "Phase: PAT set to double by 2030 PAT",
+      "metric": "Distribution PAT 2x by 2030",
+      "target": {
+        "text": "Double PAT by 2030",
+        "value": 2,
+        "value_high": null,
+        "unit": "x",
+        "period": "2030"
+      },
+      "test_date": "2030",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p046",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission 180 MW RTC renewable energy project by Q2 FY29",
+      "quote": "of Rs 2.86/Kwh b) 180 MW Railways (REMC) RTC RE",
+      "metric": "180 MW RTC renewable energy commissioned",
+      "target": {
+        "text": "180 MW RTC renewable energy commissioned",
+        "value": 180,
+        "value_high": null,
+        "unit": "MW",
+        "period": "Q2 FY29"
+      },
+      "test_date": "2028-11-14",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p047",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "capacity",
+      "promise": "Fully commission 1st phase of 3,200 MW renewable projects by March 2029",
+      "quote": "Target to fully commission 1st Phase of 3,200 MW by Mar -2029",
+      "metric": "3,200 MW commissioned",
+      "target": {
+        "text": "3,200 MW commissioned",
+        "value": 3200,
+        "value_high": null,
+        "unit": "MW",
+        "period": "by Mar 2029"
+      },
+      "test_date": "2029",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p048",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission 300 MW hybrid project by Q3 FY27",
+      "quote": "300 MW Hybrid NPCL 300 MW",
+      "metric": "300 MW hybrid commissioned",
+      "target": {
+        "text": "300 MW hybrid commissioned",
+        "value": 300,
+        "value_high": null,
+        "unit": "MW",
+        "period": "Q3 FY27"
+      },
+      "test_date": "2027-02-14",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p049",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission 400 MW solar + BESS project by Q4 FY28",
+      "quote": "300 MW 450 MW 450 MW 400 MW +",
+      "metric": "400 MW solar + BESS commissioned",
+      "target": {
+        "text": "400 MW solar + BESS commissioned",
+        "value": 400,
+        "value_high": null,
+        "unit": "MW",
+        "period": "Q4 FY28"
+      },
+      "test_date": "2028-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p050",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission 300 MW hybrid project by Q4 FY27",
+      "quote": "Q4 FY26 Q3 FY27 Q4 FY27",
+      "metric": "450 MW hybrid commissioned",
+      "target": {
+        "text": "450 MW hybrid commissioned",
+        "value": 450,
+        "value_high": null,
+        "unit": "MW",
+        "period": "Q4 FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p051",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "capacity",
+      "promise": "Scale up renewable energy capacity to 10 GW by FY32",
+      "quote": "Aiming and scale it up to 10GW by FY32",
+      "metric": "Renewable energy capacity 10 GW",
+      "target": {
+        "text": "10 GW renewable capacity",
+        "value": 10,
+        "value_high": null,
+        "unit": "GW",
+        "period": "FY32"
+      },
+      "test_date": "2032-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p052",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "capacity",
+      "promise": "Achieve 3.2 GW renewable capacity by FY29",
+      "quote": "3.2 GW by FY29",
+      "metric": "Renewable energy capacity 3.2 GW",
+      "target": {
+        "text": "3.2 GW renewable capacity",
+        "value": 3.2,
+        "value_high": null,
+        "unit": "GW",
+        "period": "FY29"
+      },
+      "test_date": "2029-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p053",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "capacity",
+      "promise": "Commission solar cell and module manufacturing lines in 2027",
+      "quote": "Cell lines are scheduled for commissioning in 2027",
+      "metric": "Solar cell & module lines commissioned",
+      "target": {
+        "text": "Commission solar cell & module lines",
+        "value": 2027,
+        "value_high": null,
+        "unit": "year",
+        "period": "2027"
+      },
+      "test_date": "2027",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p054",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "capex",
+      "promise": "Invest ~Rs. 14,800 Cr in renewable projects under implementation",
+      "quote": "Under Implementation 2,150 MW Capex of ~Rs. 14,800 Cr",
+      "metric": "Capex Rs. 14,800 Cr",
+      "target": {
+        "text": "Capex Rs. 14,800 Cr",
+        "value": 14800,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "under implementation"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    },
+    {
+      "id": "p055",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "revenue",
+      "promise": "Annualized revenue of ~Rs. 2,100 Cr from renewable projects under implementation",
+      "quote": "Annualized Revenue of ~Rs. 2,100 Cr.",
+      "metric": "Annualized revenue Rs. 2,100 Cr",
+      "target": {
+        "text": "Annualized revenue Rs. 2,100 Cr",
+        "value": 2100,
+        "value_high": null,
+        "unit": "INR_cr",
+        "period": "under implementation"
+      },
+      "test_date": null,
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false
+    }
+  ],
+  "financial_trend": [
+    {
+      "quarter": "Q1FY25",
+      "revenue": null,
+      "ebitda": null,
+      "pat": null,
+      "ebitda_margin": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": null
+    },
+    {
+      "quarter": "Q2FY25",
+      "revenue": null,
+      "ebitda": null,
+      "pat": null,
+      "ebitda_margin": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": null
+    },
+    {
+      "quarter": "Q3FY25",
+      "revenue": null,
+      "ebitda": null,
+      "pat": null,
+      "ebitda_margin": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": null
+    },
+    {
+      "quarter": "Q4FY25",
+      "revenue": 17375,
+      "ebitda": 4311,
+      "pat": 1428,
+      "ebitda_margin": 24.8,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "INR_cr"
+    },
+    {
+      "quarter": "Q1FY26",
+      "ebitda": null,
+      "ebitda_margin": null,
+      "revenue": null,
+      "pat": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": null
+    },
+    {
+      "quarter": "Q2FY26",
+      "revenue": null,
+      "ebitda": null,
+      "pat": null,
+      "ebitda_margin": null,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": null
+    },
+    {
+      "quarter": "Q3FY26",
+      "revenue": 4099,
+      "ebitda": 1036,
+      "pat": 304,
+      "ebitda_margin": 25.27,
+      "net_debt_ebitda": null,
+      "roce": null,
+      "unit": "Rs Cr."
+    }
+  ],
+  "aggregates": {
+    "total": 55,
+    "status_counts": {
+      "MET": 21,
+      "PARTIAL": 0,
+      "MISSED": 2,
+      "NYT": 32
+    },
+    "testable": 23,
+    "by_quarter": {
+      "Q1FY25": {
+        "MET": 3,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 2
+      },
+      "Q2FY25": {
+        "MET": 10,
+        "PARTIAL": 0,
+        "MISSED": 1,
+        "NYT": 4
+      },
+      "Q3FY25": {
+        "MET": 0,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 3
+      },
+      "Q4FY25": {
+        "MET": 0,
+        "PARTIAL": 0,
+        "MISSED": 1,
+        "NYT": 1
+      },
+      "Q1FY26": {
+        "MET": 6,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 6
+      },
+      "Q2FY26": {
+        "MET": 2,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 6
+      },
+      "Q3FY26": {
+        "MET": 0,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 10
+      }
+    },
+    "root_causes": {},
+    "confidence_mix": {
+      "H": 55,
+      "M": 0,
+      "L": 0
+    },
+    "timeline_commitments": {
+      "due": 0,
+      "on_time": 0,
+      "slipped": 0
+    }
+  },
+  "credibility": {
+    "score": 77,
+    "grade": "A",
+    "timeline_score": null,
+    "delivery_score": 77,
+    "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
+    "headline": "Mostly delivered on testable promises; 32 later targets still not yet testable."
+  },
+  "provenance": {
+    "mode": "live",
+    "complete": true,
+    "retrieval_errors": 0,
+    "forced_nyt": 2,
+    "models_used": [
+      "openai",
+      "mistral",
+      "gemini",
+      "groq"
+    ],
+    "generated_at": "2026-07-21T12:42:04.128Z",
+    "run_id": "29830899829"
+  }
+}
