@@ -15,7 +15,7 @@ import { EXTRACTION_PROVIDERS } from "./multi-llm.mjs";
 import { subjectTokens } from "./dedup.mjs";
 
 export const ROOT_CAUSES = ["Demand slowdown", "Pricing / mix", "Cost inflation", "Supply chain", "Execution", "Capacity delay", "Regulatory", "Working capital", "Capital allocation", "Other"];
-export const FIND_ACTUAL_VERSION = "p5-2026-07a";
+export const FIND_ACTUAL_VERSION = "p5-2026-07b";
 const numRuns = (s) => (String(s).match(/\d[\d,.]*/g) || []).length;
 
 const ACTUAL_SCHEMA = {
@@ -39,7 +39,8 @@ const SYSTEM = `You RETRIEVE the reported ACTUAL outcome for a single management
 You do NOT decide whether the promise was met or missed — a separate deterministic step does that. Just report the actual.
 
 Rules:
-- If the evidence does not report this metric's outcome, set actual_text and what_happened to null.
+- If the evidence does not report this metric's outcome, set actual_text AND what_happened to null (do NOT write a sentence like "the company did not report this" — leave both null so it is treated as not-yet-known, never as a miss).
+- Report the actual for THIS EXACT metric only. If the documents report a DIFFERENT or merely related metric (e.g. an operating-margin figure when the promise is about UTILISATION, or a headcount when the promise is about revenue), that is NOT this metric's actual → return null. Never substitute an adjacent metric.
 - what_happened and mgmt_explanation are <= 25 words each. mgmt_explanation is null unless management actually explains a miss.
 - root_cause_suggestion must be one of the allowed labels or null.
 - For a timeline/milestone, what_happened should say whether it was commissioned/completed, or re-guided to a new period (state the new period verbatim, e.g. "re-set to 1HFY27").`;
@@ -97,10 +98,21 @@ function buildMessages(promise, evidence) {
 }
 
 /** Shape an LLM/mock result into {actual, mgmt_explanation, root_cause}. */
+// Retrieval sometimes narrates a NON-DISCLOSURE ("Infosys did not report this figure", "not
+// disclosed in the transcripts") instead of returning null. With no structured value, the
+// downstream rules would parse a stray digit out of that sentence (a quarter token "Q3FY26" → 3)
+// and mis-score it as a MISS. A non-disclosure is NOT an actual — treat it as no-actual (→ NYT).
+// Guard against "not commissioned / not yet delivered", which ARE real milestone misses, by only
+// matching disclosure verbs (report/disclose/provide/mention/quantify/available), never outcome verbs.
+const NON_DISCLOSURE = /\bnot\s+(?:report|disclos|provid|specif|quantif|mention|stat(?:e|ed)|available|given)|no\s+(?:figure|actual|specific\s+figure|disclosure|data\b)|couldn'?t\s+find|could\s+not\s+find|unable\s+to\s+(?:find|locate)|not\s+found\b|no\s+mention/i;
+
 function shape(data, evidence) {
   // keep the result if it carries ANY usable signal — a structured value or a milestone
   // status — not only a text field (timeline actuals often report status with no figure).
   if (!data || (data.actual_text == null && data.actual_value == null && data.what_happened == null)) {
+    return { actual: null, mgmt_explanation: null, root_cause: null };
+  }
+  if (data.actual_value == null && NON_DISCLOSURE.test(`${data.actual_text || ""} ${data.what_happened || ""}`)) {
     return { actual: null, mgmt_explanation: null, root_cause: null };
   }
   const top = evidence[0] || {};

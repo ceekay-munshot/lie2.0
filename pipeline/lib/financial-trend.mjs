@@ -10,7 +10,7 @@ import { createHash } from "node:crypto";
 import { completeJSON, providerConfig } from "./llm.mjs";
 import { EXTRACTION_PROVIDERS } from "./multi-llm.mjs";
 
-export const FIN_TREND_VERSION = "p5-2026-07a";
+export const FIN_TREND_VERSION = "p5-2026-07b";
 const FIN_RE = /revenue|ebitda|\bpat\b|profit|margin|net debt|roce|turnover|free cash/i;
 const numRuns = (s) => (String(s).match(/\d[\d,.]*/g) || []).length;
 
@@ -28,7 +28,14 @@ const FIN_SCHEMA = {
   },
 };
 
-const SYSTEM = `You read one quarter's financial-snapshot text — from the investor presentation, or from the earnings-call transcript when there is no deck — and report the headline REPORTED quarterly financials. Return numbers exactly as reported (consolidated, the quarter — not 9M/full-year). Any field not reported in the text → null. ebitda_margin and roce are percentages (number only). net_debt_ebitda is a ratio. unit is the currency unit for the absolute figures (e.g. INR_cr). Retrieval only; never estimate.`;
+const SYSTEM = `You read one quarter's financial-snapshot text — from the investor presentation, or from the earnings-call transcript when there is no deck — and report the headline REPORTED financials for THAT SINGLE QUARTER.
+
+STRICT rules:
+- Report ONLY the single-quarter figure. NEVER an annual, full-year, YTD, 9M/6M/H1 or cumulative number. If a field is available only as a cumulative/annual total (common in call transcripts), return null for it — do not divide or estimate.
+- Any field not reported for the quarter → null. Retrieval only; never estimate or infer.
+- ebitda_margin and roce are PERCENTAGES as plain numbers (e.g. 21.1, not 0.211 and not 1). If you cannot find a clean quarterly margin percent, return null — do not output a placeholder like 1.
+- ebitda, revenue and pat are absolute amounts in ONE consistent currency unit; set "unit" to that unit (e.g. INR_cr, USD_mn). Do not mix units across those fields.
+- net_debt_ebitda is a ratio (e.g. 1.3).`;
 
 // Gather each quarter's best "financial snapshot" text. Presentation slides are preferred (terse,
 // number-dense), but FALL BACK to the earnings-call transcript when the quarter has no deck carrying
