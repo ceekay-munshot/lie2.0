@@ -2,7 +2,7 @@
   // Cloudflare Worker config for Lie Detector.
   // Docs: https://developers.cloudflare.com/workers/wrangler/configuration/
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "lie-detector",
+  "name": "lierecent",
   "main": "worker/index.js",
   "compatibility_date": "2025-06-01",
 
