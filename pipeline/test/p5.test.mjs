@@ -11,7 +11,7 @@ import { directionFor, numericDirection, parseTarget, actualNumber, fmtNum, unit
 import { periodIndex, maxPeriodIndex } from "../lib/fiscal.mjs";
 import { verificationWindow, isNotYetTestable } from "../lib/verification-window.mjs";
 import { aggregate, credibility, gradeFromScore } from "../lib/aggregate.mjs";
-import { tierFor, hasDeadline, attributionOf, linkGroups } from "../lib/promise-analysis.mjs";
+import { tierFor, hasDeadline, attributionOf, linkGroups, isDebtServicing } from "../lib/promise-analysis.mjs";
 import { runCompleteness } from "../verify.mjs";
 
 let fails = 0;
@@ -122,6 +122,26 @@ ok(sv(qip, { value: 1, unit: "USD_bn", what_happened: "debt down by ~$1bn" }).st
 // same metric, same unit still scores normally
 const cap = { category: "capacity", target: { value: 3.1, unit: "Mtpa" }, test_date: "Q3FY26", revisions: [] };
 ok(sv(cap, { value: 3.1, unit: "Mtpa", what_happened: "reached 3.1 Mtpa" }).status === "MET", "same-unit actual still scores (MET)");
+
+// ---- 9b) forward-target-as-actual · settlement gate · rate periods · undated → NYT ----
+// A restated FUTURE target grabbed as the "actual" must NOT be scored against itself, BUT a real
+// reported outcome (delivered / settled vs target) must never be hidden. These separate the two.
+console.log("\nforward-target / settlement / undated rules:");
+const fwd = { category: "capacity", target: { value: 3, unit: "GW", period: "by FY28", text: "3 GW by FY28" }, test_date: "Q4FY26", confidence: "H", promise: "commission 3 GW hybrid", metric: "3 GW capacity", revisions: [] };
+ok(sv(fwd, { value: 3.2, unit: "GW", text: "Target to fully commission 3,200 MW by Mar-2029", what_happened: "target to fully commission by 2029" }).status === "NYT", "restated future target as 'actual' (no delivery/settlement) → NYT, not a false MET");
+ok(sv(fwd, { value: 950, unit: "MW", text: "increased by 950 MW", what_happened: "increased 950 MW, exceeding the 700 MW target for H1FY26" }).status !== "NYT", "a real delivered+settled outcome ('increased 950 MW, exceeding target') is NOT hidden by the guard");
+// undated multi-year capex, interim spend so far → NYT (Vipool's '$8bn over next few years' case)
+const capex = { category: "capex", target: { value: 8, unit: "USD_bn", period: "next few years", text: "$8 bn over next few years" }, test_date: null, confidence: "H", promise: "execute $8bn capex over next few years", metric: "$8bn growth capex", revisions: [] };
+ok(sv(capex, { value: 1.3, unit: "USD_bn", what_happened: "growth capex spent $1.3 billion as of Q3FY26" }).status === "NYT", "undated multi-year capex, $1.3bn spent so far → NYT (in progress, not a mid-flight miss)");
+// undated BUT the reporter settled it vs target → respect the miss (don't hide it)
+const div = { category: "capital_allocation", target: { value: 6, unit: "%", period: "ongoing", text: "~6% dividend yield" }, test_date: null, confidence: "H", promise: "maintain 6% dividend yield", metric: "dividend yield 6%", revisions: [] };
+ok(sv(div, { value: 4, unit: "%", what_happened: "dividend yield lowered to ~4%, below the 6% target" }).status === "MISSED", "undated target the reporter settled ('4%, below the 6% target') stays MISSED");
+// a YoY/QoQ RATE is checkable each quarter — a reported shortfall stays a miss even without settlement words
+const yoy = { category: "revenue", target: { value: 14.5, unit: "%", period: "YoY", text: "14.5% YoY growth" }, test_date: null, confidence: "H", promise: "grow revenue 14.5% YoY", metric: "revenue growth 14.5% YoY", revisions: [] };
+ok(sv(yoy, { value: 11.2, unit: "%", what_happened: "revenue grew 11.2% YoY in Q4FY26" }).status === "MISSED", "a YoY rate at 11.2% vs 14.5% stays MISSED (rate is testable each quarter, not interim)");
+// routine debt-servicing is a non-promise; a real deleveraging target is kept
+ok(isDebtServicing({ promise: "Repay $417 million ICL debt as scheduled in Jan and May 2026", quote: "the entire ICL 350 million will be paid on time", metric: "ICL debt paid" }) === true, "routine debt-servicing ('repay ICL debt as scheduled') → flagged a non-promise (dropped)");
+ok(isDebtServicing({ promise: "Reduce Vedanta Resources debt from $4.4 billion to $3 billion", quote: "from current $4.4 billion will go down to $3 billion over two years", metric: "VRL debt $3bn" }) === false, "a real deleveraging TARGET ('reduce debt to $3bn') is NOT flagged (kept)");
 
 // ---- 9c) materiality by tier — binary outcomes weigh more --------------------
 console.log("\nmateriality (tier weighting):");

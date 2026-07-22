@@ -12,7 +12,7 @@
  *   Integrity rule: when revisions[] exist, judge vs the ORIGINAL target (the canonical
  *   promise.target the extractor keeps), and flag was_revised:true.
  */
-import { directionFor, numericDirection, parseTarget, actualNumber, fmtNum, unitsIncomparable } from "./metric-direction.mjs";
+import { directionFor, numericDirection, parseTarget, actualNumber, fmtNum, unitsIncomparable, hasDeadline } from "./metric-direction.mjs";
 import { maxPeriodIndex, periodIndex } from "./fiscal.mjs";
 
 const DELIVERED_RE = /\b(commission\w*|complet\w*|\blive\b|operational|on stream|started?|begun|began|achiev\w*|delivered|first oil|first production|ramp(?:ed|ing|-?up)?|in operation|done)\b/i;
@@ -20,6 +20,25 @@ const SLIPPED_RE = /\b(re-?set\w*|re-?guid\w*|push\w*|defer\w*|delay\w*|slip\w*|
 // Negated delivery ("not commissioned", "yet to be completed", "failed to deliver"):
 // a delivery verb within a short span of a negator — must NOT read as delivered.
 const NEG_DELIVERY_RE = /\b(?:not|yet to|unable to|failed to|behind schedule|no longer|won'?t|will not|did\s?n'?t|have\s?n'?t|has\s?n'?t)\b[\s\w-]{0,18}?(?:commission|complet|operational|deliver|achiev|start|\blive\b|on\s?stream|done|ramp|first oil|first production)/i;
+// Forward-target-as-actual: the retriever sometimes grabs a RE-STATED FUTURE TARGET ("Target to
+// fully commission 3,200 MW by Mar-2029", "target for FY29 under implementation") as the "actual".
+// That is not a reported outcome — comparing it to the promise scores a target against itself. Three
+// signals distinguish it from a genuine result:
+//   FORWARD_TARGET — the text restates a goal ("target to/for", "on track to", "reiterated", "remains set").
+//   DELIVERED_PAST — the text reports something that ACTUALLY happened ("commissioned/added/grew/
+//                    increased/fell/reached 950 MW"); if present, it's a real outcome, not a pure target.
+//   SETTLEMENT     — the reporter explicitly settled it vs the target ("below/above/exceeding/short of/
+//                    contrary to the target"); if present, respect the verdict — the number is decided.
+// The guard fires only on FORWARD_TARGET && !DELIVERED_PAST && !SETTLEMENT (a bare restated target).
+const FORWARD_TARGET_RE = /\b(?:target(?:ing|s|ed)?\s+(?:to|of|for|by)|targeting\b|aim(?:ing|s)?\s+to|plan(?:ning|s)?\s+to|intend(?:ing|s)?\s+to|expect(?:ing|s)?\s+to|on\s+track\s+to|guidance\s+(?:of|for)|will\s+(?:commission|complete|deliver|achieve|reach|start|begin|ramp|be)|remains?\s+(?:set|targeted|on\s+track|unchanged)|reiterat\w*|target\s+remains)\b/i;
+const DELIVERED_PAST_RE = /\b(?:commissioned|operational|achieved|completed|delivered|reported|recorded|stood\s+at|came\s+in|clocked|posted|reached|attained|realis\w*|realiz\w*|connected|added|grew|grown|rose|risen|increased|decreased|declined|fell|fallen|spent|was\s|were\s|has\s+been|have\s+been|hit\b|touched)\b/i;
+// The reporter explicitly settled the metric against its target — respect the deterministic verdict
+// even for an undated target (a stated "below/exceeding the X target" is a decided outcome, not interim).
+const SETTLEMENT_RE = /\b(?:below|above|short\s+of|shortfall|exceed\w*|surpass\w*|beat(?:s|en)?|miss\w*|\bmet\b|in\s+line\s+with|ahead\s+of|\bbehind\b|contrary\s+to|fell\s+short|falls?\s+short|outperform\w*|underperform\w*|lower\s+than|higher\s+than)\b/i;
+// A per-period RATE target ("grow 15% YoY", "2.4x QoQ") is checkable EVERY quarter it is reported —
+// it is not an open-ended horizon, so a reported shortfall is a real miss, not "interim". Exclude such
+// targets from the undated→NYT rule even when the period label ("YoY") carries no fiscal deadline.
+const RATE_PERIOD_RE = /\b(?:yoy|qoq|y-o-y|q-o-q|year[-\s]?on[-\s]?year|quarter[-\s]?on[-\s]?quarter)\b/i;
 
 const round = (n, d = 2) => (n == null || Number.isNaN(n) ? null : Number(n.toFixed(d)));
 const isISO = (s) => /^\d{4}-\d{2}-\d{2}/.test(String(s || ""));
@@ -123,6 +142,16 @@ export function statusVariance(promise, actual, ctx = {}) {
     return { status: "NYT", variance: { ...blankVar(), text: `actual in ${actual.unit} not comparable to ${target.unit || "target"}` }, was_revised };
   }
 
+  // Forward-target-as-actual guard: the "actual" is a bare RE-STATED future target (no reported
+  // outcome, no settlement vs target) → the target hasn't been settled yet → NYT. A real outcome
+  // ("increased 950 MW, exceeding the 700 MW target") carries a DELIVERED_PAST or SETTLEMENT marker
+  // and is spared, so this never hides a genuine hit or miss.
+  const awh = `${actual?.text || ""} ${actual?.what_happened || ""}`;
+  const settled = SETTLEMENT_RE.test(awh);
+  if (FORWARD_TARGET_RE.test(awh) && !DELIVERED_PAST_RE.test(awh) && !settled) {
+    return { status: "NYT", variance: { ...blankVar(), text: `target reaffirmed, not yet delivered — ${fmtNum(aVal)}${target.unit ? " " + target.unit : ""}` }, was_revised };
+  }
+
   // Future test_date → the figure is interim (e.g. 9M of an annual target) → NYT.
   if (isFuture(promise.test_date, latestReportedDate, latestReportedPeriod)) {
     const ref = numericDirection(promise.category) === "lower" ? (target.hi ?? target.lo) : (target.lo ?? target.hi);
@@ -131,5 +160,16 @@ export function statusVariance(promise, actual, ctx = {}) {
   }
 
   const v = compareNumeric(promise.category, target, aVal, partialTol);
+  // Undated target ("over the next few years", no concrete deadline) that is NOT already met: you
+  // can HIT an undated target early, but you cannot MISS it mid-flight before its horizon arrives.
+  // So an interim shortfall stays NYT (to be scored across future calls), never a one-quarter miss —
+  // e.g. "$8bn growth capex over the next few years" with $1.3bn spent so far is in progress, not a miss.
+  // EXCEPTION: if the reporter explicitly settled it vs the target ("grew 16%, BELOW the 18% target"),
+  // OR the target is a per-period rate (YoY/QoQ growth) that is checkable this quarter, that IS a
+  // decided outcome for a reported period — respect the verdict, don't hide it as interim.
+  const ratePeriod = RATE_PERIOD_RE.test(`${promise.target?.period || ""} ${promise.target?.text || ""} ${promise.metric || ""} ${promise.promise || ""}`);
+  if (v.status !== "MET" && !hasDeadline(promise) && !settled && !ratePeriod) {
+    return { status: "NYT", variance: { ...blankVar(), text: `undated target — interim ${fmtNum(aVal)}${target.unit ? " " + target.unit : ""}` }, was_revised };
+  }
   return { status: v.status, variance: v.variance, was_revised };
 }

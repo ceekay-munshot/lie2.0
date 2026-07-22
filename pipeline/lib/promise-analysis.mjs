@@ -15,6 +15,8 @@
  */
 import { periodIndex, maxPeriodIndex } from "./fiscal.mjs";
 import { isWithinWindow } from "./status-variance.mjs";
+import { hasDeadline } from "./metric-direction.mjs";
+export { hasDeadline };
 
 /* ---------------- tier (materiality) ---------------- */
 // Tier 1 — binary physical/financial outcomes, hardest to fudge. Tier 2 — financial guidance.
@@ -22,21 +24,9 @@ import { isWithinWindow } from "./status-variance.mjs";
 // be a hard commitment). Env-tunable weights; Tier-1 dominates, Tier-3 is discounted.
 const TIER1 = new Set(["timeline", "capacity", "capex", "leverage", "capital_allocation"]);
 const TIER2 = new Set(["revenue", "ebitda", "margin", "pat", "volume", "orderbook", "cost", "roce"]);
-const VAGUE_PERIOD = /medium[-\s]?term|near[-\s]?term|long[-\s]?term|next few|coming years|later years|over the (?:years|medium|coming)|in due course|going forward|steady[-\s]?state|over time|subsequent years|in time/i;
 const _num = (v, d) => { const n = Number(v); return Number.isFinite(n) ? n : d; };
 const TIER_W = { 1: _num(process.env.TIER1_W, 1.4), 2: _num(process.env.TIER2_W, 1.0), 3: _num(process.env.TIER3_W, 0.6) };
 export const tierWeight = (t) => TIER_W[t] ?? 1.0;
-
-/** Does the promise carry a concrete, checkable deadline (not "medium term" / null)? */
-export function hasDeadline(p) {
-  const period = String(p.target?.period ?? p.test_date ?? "");
-  if (!period || VAGUE_PERIOD.test(period)) {
-    // still allow a dated milestone embedded in the wording ("commission by FY27")
-    return maxPeriodIndex([p.target?.text, p.metric, p.promise].filter(Boolean).join(" ")) != null;
-  }
-  if (periodIndex(period) != null) return true;
-  return maxPeriodIndex([p.target?.text, p.metric, p.promise].filter(Boolean).join(" ")) != null;
-}
 
 /** Materiality tier 1/2/3 for a promise (deterministic from category + deadline concreteness). */
 export function tierFor(p) {
@@ -102,6 +92,25 @@ export function linkGroups(promises) {
   return groups;
 }
 
+/* ---------------- routine debt-servicing (a non-promise) ---------------- */
+// Repaying a specific facility on its contractual due date ("pay the $417m Sumangal payment in
+// December as scheduled", "the entire ICL 350m will be paid on time") is a CONTRACTUAL FACT, not a
+// discretionary forward commitment — it should never have been extracted as a promise (the P4 rubric
+// rejects it, but a mini-class model occasionally slips one through). This deterministic backstop
+// drops it. It is deliberately CONSERVATIVE: it fires only on (servicing verb + debt instrument +
+// an on-schedule/on-time marker) AND never when the row is a genuine DELEVERAGING TARGET (reduce /
+// bring down / net-debt to a level) — so "reduce VRL debt from $4.4bn to $3bn" is always kept.
+const DELEVERAGE = /\b(?:reduc\w*|cut\w*|lower\w*|bring\w*\s+(?:it\s+)?down|go(?:es|ing)?\s+down|come\s+down|deleverag\w*|de[-\s]?gear\w*|net[-\s]?debt|leverage)\b/i;
+const DEBT_SERVICE = /\b(?:repay\w*|pay\w*|settl\w*|clear\w*|servic\w*|honou?r\w*|meet\w*)\b[\s\w,$.()\-]{0,40}?\b(?:debt|loan|borrowing|bond|ncd|icl|inter[-\s]?corporate|instal\w*|liabilit\w*|dues?|maturit\w*|payment|obligation|principal)\b/i;
+const ON_SCHEDULE = /\b(?:as\s+scheduled|on\s+time|on\s+schedule|scheduled\s+payment|per\s+schedule|as\s+per|when\s+due|is\s+due|are\s+due|on\s+maturity|by\s+maturity|contractual|intend\s+to\s+pay)\b/i;
+/** True when a row is a routine debt-servicing obligation (repaying a facility on its due date),
+ *  not a discretionary commitment — so it can be dropped from the ledger. */
+export function isDebtServicing(p) {
+  const t = `${p.promise || ""} ${p.quote || ""} ${p.metric || ""}`;
+  if (DELEVERAGE.test(t)) return false;               // a real deleveraging TARGET — keep
+  return DEBT_SERVICE.test(t) && ON_SCHEDULE.test(t); // servicing a facility on schedule — drop
+}
+
 /* ---------------- the analysis pass ---------------- */
 const DROP_GAP = _num(process.env.DROP_GAP_QTRS, 2);   // quarters of silence before a prominent target reads as dropped
 const SANDBAG_PCT = _num(process.env.SANDBAG_PCT, 20);  // a MET beating its target by ≥ this % is a "wide beat"
@@ -112,7 +121,9 @@ const SANDBAG_SHARE = _num(process.env.SANDBAG_SHARE, 0.5);
  * ledger-level `signals` summary. Non-mutating (returns fresh promise objects).
  */
 export function analyzeLedger(ledger = {}) {
-  const promises = (ledger.promises || []).map((p) => ({ ...p }));
+  // Drop routine debt-servicing non-promises up front (a contractual repayment on its due date is
+  // not a commitment). Runs before scoring, so aggregates/credibility never count it.
+  const promises = (ledger.promises || []).filter((p) => !isDebtServicing(p)).map((p) => ({ ...p }));
   const vw = ledger.verification_window || {};
   const windowIdx = periodIndex(vw.latest_reported);
 

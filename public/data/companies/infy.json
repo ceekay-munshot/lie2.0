@@ -154,7 +154,7 @@
         "pct": 20,
         "bps": null,
         "days": null,
-        "text": "18000 vs 15000-20000 employees"
+        "text": "18,000 vs 15,000-20,000 employees"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -364,7 +364,7 @@
         "pct": 20,
         "bps": null,
         "days": null,
-        "text": "18000 vs 15000-20000 employees"
+        "text": "18,000 vs 15,000-20,000 employees"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -736,13 +736,13 @@
         "source_date": "2025-04-01",
         "what_happened": "9M FY25 EPS growth met at INR16.43, 11.4% increase"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 5.03,
-        "pct": 44.1,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "16.43 vs 11.4 %"
+        "text": "actual in INR not comparable to %"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -854,7 +854,7 @@
         "pct": 1.3,
         "bps": null,
         "days": null,
-        "text": "15200 vs 15000-20000 employees"
+        "text": "15,200 vs 15,000-20,000 employees"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -896,7 +896,7 @@
         "pct": -16,
         "bps": null,
         "days": null,
-        "text": "4200 vs 5000 employees"
+        "text": "4,200 vs 5,000 employees"
       },
       "mgmt_explanation": "Demand softness led to slower hiring than planned",
       "root_cause": "Demand slowdown",
@@ -938,7 +938,7 @@
         "pct": 0.2,
         "bps": null,
         "days": null,
-        "text": "5600 vs 5591 employees"
+        "text": "5,600 vs 5,591 employees"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1509,7 +1509,7 @@
         "pct": -7.5,
         "bps": null,
         "days": null,
-        "text": "18500 vs 20000 graduates"
+        "text": "18,500 vs 20,000 graduates"
       },
       "mgmt_explanation": "Lower campus hiring due to demand slowdown",
       "root_cause": "Demand slowdown",
@@ -2907,12 +2907,12 @@
   "aggregates": {
     "total": 72,
     "status_counts": {
-      "MET": 17,
+      "MET": 16,
       "PARTIAL": 3,
       "MISSED": 2,
-      "NYT": 50
+      "NYT": 51
     },
-    "testable": 22,
+    "testable": 21,
     "by_quarter": {
       "Q1FY25": {
         "MET": 3,
@@ -2927,10 +2927,10 @@
         "NYT": 0
       },
       "Q3FY25": {
-        "MET": 8,
+        "MET": 7,
         "PARTIAL": 3,
         "MISSED": 1,
-        "NYT": 2
+        "NYT": 3
       },
       "Q4FY25": {
         "MET": 1,
@@ -2980,7 +2980,7 @@
     "signals": {
       "tier_mix": {
         "1": 7,
-        "2": 13,
+        "2": 12,
         "3": 2
       },
       "dropped": 0,
@@ -2994,12 +2994,12 @@
     }
   },
   "credibility": {
-    "score": 70,
+    "score": 69,
     "grade": "B",
     "timeline_score": null,
-    "delivery_score": 70,
+    "delivery_score": 69,
     "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), materiality-weighted by tier (Tier-1 binary outcomes 1.4x, Tier-3 soft 0.6x), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
-    "headline": "Mostly delivered on testable promises — chiefly demand slowdown; 50 later targets still not yet testable."
+    "headline": "Mostly delivered on testable promises — chiefly demand slowdown; 51 later targets still not yet testable."
   },
   "provenance": {
     "mode": "live",

@@ -4,6 +4,16 @@
  * sector, ticker, or metric-name hardcoding: the only inputs are the schema
  * `category` and the target text/values. Pure & deterministic (unit-tested).
  */
+import { periodIndex, maxPeriodIndex } from "./fiscal.mjs";
+
+// A vague horizon carries no checkable deadline ("medium term", "next few years").
+const VAGUE_PERIOD = /medium[-\s]?term|near[-\s]?term|long[-\s]?term|next few|coming years|later years|over the (?:years|medium|coming)|in due course|going forward|steady[-\s]?state|over time|subsequent years|in time/i;
+/** Does the promise carry a concrete, checkable deadline (a real quarter/FY/date, not "medium term")? */
+export function hasDeadline(p) {
+  const period = String(p.target?.period ?? p.test_date ?? "");
+  if (period && !VAGUE_PERIOD.test(period) && periodIndex(period) != null) return true;
+  return maxPeriodIndex([p.target?.text, p.metric, p.promise].filter(Boolean).join(" ")) != null;
+}
 
 // higher = bigger is better · lower = smaller is better · timeline = a dated
 // milestone · target = delivered-vs-planned (treated like "higher": delivering at

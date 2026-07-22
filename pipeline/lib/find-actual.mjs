@@ -15,7 +15,7 @@ import { EXTRACTION_PROVIDERS } from "./multi-llm.mjs";
 import { subjectTokens } from "./dedup.mjs";
 
 export const ROOT_CAUSES = ["Demand slowdown", "Pricing / mix", "Cost inflation", "Supply chain", "Execution", "Capacity delay", "Regulatory", "Working capital", "Capital allocation", "Other"];
-export const FIND_ACTUAL_VERSION = "p5-2026-07c";
+export const FIND_ACTUAL_VERSION = "p5-2026-07d";
 const numRuns = (s) => (String(s).match(/\d[\d,.]*/g) || []).length;
 
 const ACTUAL_SCHEMA = {
@@ -41,6 +41,7 @@ You do NOT decide whether the promise was met or missed — a separate determini
 Rules:
 - If the evidence does not report this metric's outcome, set actual_text AND what_happened to null (do NOT write a sentence like "the company did not report this" — leave both null so it is treated as not-yet-known, never as a miss).
 - Report the actual for THIS EXACT metric only. If the documents report a DIFFERENT or merely related metric, that is NOT this metric's actual → return null. Never substitute an adjacent metric. Common traps to AVOID: reporting a cash-flow figure for a CAPEX/spending commitment; a deleveraging/debt-reduction figure for an INTEREST-SAVINGS target; one product's cost for another's (alumina ≠ aluminium); operating margin for a UTILISATION target; a headcount for a revenue target. If unsure it is the same metric, return null.
+- A RE-STATED FUTURE TARGET is NOT an actual. If the documents only show the company STILL AIMS at the goal — "target to fully commission 3,200 MW by Mar-2029", "on track to deliver 55 plants", "guidance reaffirmed", "target remains" — with nothing yet DELIVERED, that is the promise repeated, not its outcome → return null. Report a figure ONLY when the documents state what was actually achieved by a reported date (e.g. "commissioned 950 MW", "production reached 176 kt", "grew 11% YoY in Q4"). A number equal to the target that is still described as the future goal is a restatement — return null.
 - actual_value MUST be the FULL number in the SAME UNIT the promise's target uses, and actual_unit MUST state that unit. Never scale-strip: "89,000 barrels" → 89000 (never 89); "1.5 lakh tonnes" → 150000; "₹1,100 crore" with unit INR_cr → 1100. If the document reports the figure in a DIFFERENT unit or currency than the target (e.g. target in ₹ crore but the doc gives US$ billion) so it would need conversion, return null rather than a raw, non-comparable number.
 - what_happened and mgmt_explanation are <= 25 words each. mgmt_explanation is null unless management actually explains a miss.
 - root_cause_suggestion must be one of the allowed labels or null.

@@ -988,7 +988,7 @@
         "pct": 88.9,
         "bps": null,
         "days": null,
-        "text": "8500 vs 4500 INR_cr"
+        "text": "8,500 vs 4,500 INR_cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1184,7 +1184,7 @@
         "pct": 0,
         "bps": null,
         "days": null,
-        "text": "94899 vs 94899 sqm"
+        "text": "94,899 vs 94,899 sqm"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1268,7 +1268,7 @@
         "pct": 0,
         "bps": null,
         "days": null,
-        "text": "5250 vs 5250 INR Mn"
+        "text": "5,250 vs 5,250 INR Mn"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1310,7 +1310,7 @@
         "pct": -0.1,
         "bps": null,
         "days": null,
-        "text": "1560 vs 1562 INR Mn"
+        "text": "1,560 vs 1,562 INR Mn"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1387,7 +1387,7 @@
         "pct": null,
         "bps": null,
         "days": null,
-        "text": "no numeric target"
+        "text": "undated target — interim 26 days"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1744,7 +1744,7 @@
         "pct": -12.9,
         "bps": null,
         "days": null,
-        "text": "2177.5 vs 2500 INR crores"
+        "text": "2,177.5 vs 2,500 INR crores"
       },
       "mgmt_explanation": "Year was consolidation with capacity commissioning and qualification phases causing elevated upfront costs",
       "root_cause": "Execution",

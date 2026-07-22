@@ -404,7 +404,7 @@
         "pct": -1.3,
         "bps": null,
         "days": null,
-        "text": "2000 vs 2026 GW"
+        "text": "2,000 vs 2,026 GW"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -482,13 +482,13 @@
         "source_date": "2026-01-01",
         "what_happened": "Commissioned 10 GWp factory, planning further scale to 20 GWp"
       },
-      "status": "MISSED",
+      "status": "NYT",
       "variance": {
-        "absolute": -10,
-        "pct": -50,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "10 vs 20 GW"
+        "text": "undated target — interim 10 GW"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -530,7 +530,7 @@
         "pct": -99.5,
         "bps": null,
         "days": null,
-        "text": "10 vs 2024"
+        "text": "10 vs 2,024"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -608,13 +608,13 @@
         "source_date": "2025-10-01",
         "what_happened": "~9.5 million JioAirFiber homes connected by Q2FY26"
       },
-      "status": "MISSED",
+      "status": "NYT",
       "variance": {
-        "absolute": -90.5,
-        "pct": -90.5,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "9.5 vs 100 million homes"
+        "text": "undated target — interim 9.5 million homes"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -692,13 +692,13 @@
         "source_date": "2026-04-01",
         "what_happened": "Scaling up annual solar PV manufacturing capacity, targeting 20 GWp in next few quarters"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 19,
-        "pct": 1900,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "20 vs 1 x"
+        "text": "target reaffirmed, not yet delivered — 20 x"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -782,7 +782,7 @@
         "pct": -100,
         "bps": null,
         "days": null,
-        "text": "9.5 vs 2800000 connections"
+        "text": "9.5 vs 28,00,000 connections"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -908,7 +908,7 @@
         "pct": 53.8,
         "bps": null,
         "days": null,
-        "text": "1000 vs 650 stores"
+        "text": "1,000 vs 650 stores"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -950,7 +950,7 @@
         "pct": 0,
         "bps": null,
         "days": null,
-        "text": "1000000 vs 1000000 homes/month"
+        "text": "10,00,000 vs 10,00,000 homes/month"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1034,7 +1034,7 @@
         "pct": -5.2,
         "bps": null,
         "days": null,
-        "text": "32259 vs 34022 INR_cr"
+        "text": "32,259 vs 34,022 INR_cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1538,7 +1538,7 @@
         "pct": 0,
         "bps": null,
         "days": null,
-        "text": "1000000 vs 1000000 homes"
+        "text": "10,00,000 vs 10,00,000 homes"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1693,13 +1693,13 @@
         "source_date": "2026-01-01",
         "what_happened": "JioAirFiber homes connected reached 11.5 million as of Q3FY26"
       },
-      "status": "MISSED",
+      "status": "NYT",
       "variance": {
-        "absolute": -88.5,
-        "pct": -88.5,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "11.5 vs 100 million homes"
+        "text": "undated target — interim 11.5 million homes"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1825,7 +1825,7 @@
         "pct": 134966.7,
         "bps": null,
         "days": null,
-        "text": "2026 vs 1.5 MMTPA"
+        "text": "2,026 vs 1.5 MMTPA"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2035,7 +2035,7 @@
         "pct": 382.7,
         "bps": null,
         "days": null,
-        "text": "76255 vs 15798 INR_cr"
+        "text": "76,255 vs 15,798 INR_cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2203,7 +2203,7 @@
         "pct": 300,
         "bps": null,
         "days": null,
-        "text": "14000 vs 3500 INR_cr"
+        "text": "14,000 vs 3,500 INR_cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2287,7 +2287,7 @@
         "pct": 401.2,
         "bps": null,
         "days": null,
-        "text": "146885 vs 29307 INR_cr"
+        "text": "1,46,885 vs 29,307 INR_cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2329,7 +2329,7 @@
         "pct": 22.2,
         "bps": null,
         "days": null,
-        "text": "110000 vs 90000 INR_cr"
+        "text": "1,10,000 vs 90,000 INR_cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2561,13 +2561,13 @@
         "source_date": "2026-01-01",
         "what_happened": "Reached 25 million homes connected by Q3FY26, with steady net additions each quarter"
       },
-      "status": "MISSED",
+      "status": "NYT",
       "variance": {
-        "absolute": -75,
-        "pct": -75,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "25 vs 100 million homes"
+        "text": "undated target — interim 25 million homes"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2609,7 +2609,7 @@
         "pct": -87.5,
         "bps": null,
         "days": null,
-        "text": "333 vs 2659 stores"
+        "text": "333 vs 2,659 stores"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2651,7 +2651,7 @@
         "pct": -98,
         "bps": null,
         "days": null,
-        "text": "40 vs 2026 year"
+        "text": "40 vs 2,026 year"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2693,7 +2693,7 @@
         "pct": null,
         "bps": null,
         "days": null,
-        "text": "no numeric target"
+        "text": "undated target — interim 2,199 outlets"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2729,13 +2729,13 @@
         "source_date": "2026-01-01",
         "what_happened": "Target remains 3 MMTPA PTA capacity by 2026-27 as stated in Q3FY26 transcript"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 0,
-        "pct": 0,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "3 vs 3 MMTPA"
+        "text": "target reaffirmed, not yet delivered — 3 MMTPA"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2771,13 +2771,13 @@
         "source_date": "2026-04-01",
         "what_happened": null
       },
-      "status": "MISSED",
+      "status": "NYT",
       "variance": {
-        "absolute": -54,
-        "pct": -98.2,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "1 vs 55 plants"
+        "text": "undated target — interim 1 plants"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2823,7 +2823,7 @@
         "pct": -99,
         "bps": null,
         "days": null,
-        "text": "20 vs 2026-27 plants"
+        "text": "20 vs 2,026-27 plants"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2859,13 +2859,13 @@
         "source_date": "2025-07-01",
         "what_happened": "Reported ₹29,875 crore capex in Q1 FY26; ongoing commissioning of New Energy projects"
       },
-      "status": "MISSED",
+      "status": "NYT",
       "variance": {
-        "absolute": -45125,
-        "pct": -60.2,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "29875 vs 75000 INR_cr"
+        "text": "undated target — interim 29,875 INR_cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2907,7 +2907,7 @@
         "pct": null,
         "bps": null,
         "days": null,
-        "text": "no numeric target"
+        "text": "undated target — interim 4"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2949,7 +2949,7 @@
         "pct": 0,
         "bps": null,
         "days": null,
-        "text": "131107 vs 131107 Rs crore"
+        "text": "1,31,107 vs 1,31,107 Rs crore"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -3033,7 +3033,7 @@
         "pct": 18,
         "bps": null,
         "days": null,
-        "text": "20060 vs 17000 INR_cr"
+        "text": "20,060 vs 17,000 INR_cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -3285,7 +3285,7 @@
         "pct": 327.2,
         "bps": null,
         "days": null,
-        "text": "30000 vs 7023 INR_cr"
+        "text": "30,000 vs 7,023 INR_cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -3321,13 +3321,13 @@
         "source_date": "2026-04-01",
         "what_happened": "Reliance Retail PAT grew 11.7% YoY in FY26, short of 30% target"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 13970,
-        "pct": 46566.7,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "14000 vs 30 %"
+        "text": "actual in ₹ crore not comparable to %"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -3411,7 +3411,7 @@
         "pct": 0,
         "bps": null,
         "days": null,
-        "text": "600000 vs 600000 customers"
+        "text": "6,00,000 vs 6,00,000 customers"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -3495,7 +3495,7 @@
         "pct": 92.1,
         "bps": null,
         "days": null,
-        "text": "22000 vs 11450 INR_cr"
+        "text": "22,000 vs 11,450 INR_cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -3573,13 +3573,13 @@
         "source_date": "2026-04-01",
         "what_happened": "Reported 14.6% YoY revenue growth for FY26"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 12.6,
-        "pct": 630,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "14.6 vs 2 x"
+        "text": "actual in % YoY growth not comparable to x"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -3747,7 +3747,7 @@
         "pct": 12.5,
         "bps": null,
         "days": null,
-        "text": "38259 vs 34000 INR_cr"
+        "text": "38,259 vs 34,000 INR_cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -4154,13 +4154,13 @@
         "source_date": "2026-04-01",
         "what_happened": "Quick commerce orders increased 29% quarter-on-quarter in Q4 FY26"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 26.6,
-        "pct": 1108.3,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "29 vs 2.4 x"
+        "text": "actual in % QoQ not comparable to x"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -4490,13 +4490,13 @@
         "source_date": "2026-04-01",
         "what_happened": "FY26 EBITDA reported at ₹76,255 crore, showing 18.8% YoY growth"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 76253,
-        "pct": 3812650,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "76255 vs 2 x"
+        "text": "actual in ₹ crore not comparable to x"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -4664,7 +4664,7 @@
         "pct": 0.6,
         "bps": null,
         "days": null,
-        "text": "98232 vs 97605 INR_cr"
+        "text": "98,232 vs 97,605 INR_cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -4706,7 +4706,7 @@
         "pct": 2.7,
         "bps": null,
         "days": null,
-        "text": "38259 vs 37262 INR_cr"
+        "text": "38,259 vs 37,262 INR_cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -5053,18 +5053,18 @@
   "aggregates": {
     "total": 117,
     "status_counts": {
-      "MET": 57,
+      "MET": 51,
       "PARTIAL": 5,
-      "MISSED": 31,
-      "NYT": 24
+      "MISSED": 25,
+      "NYT": 36
     },
-    "testable": 93,
+    "testable": 81,
     "by_quarter": {
       "Q1FY25": {
-        "MET": 7,
+        "MET": 6,
         "PARTIAL": 1,
-        "MISSED": 5,
-        "NYT": 1
+        "MISSED": 3,
+        "NYT": 4
       },
       "Q2FY25": {
         "MET": 10,
@@ -5075,14 +5075,14 @@
       "Q3FY25": {
         "MET": 11,
         "PARTIAL": 2,
-        "MISSED": 3,
-        "NYT": 4
+        "MISSED": 2,
+        "NYT": 5
       },
       "Q4FY25": {
-        "MET": 22,
+        "MET": 18,
         "PARTIAL": 1,
-        "MISSED": 12,
-        "NYT": 6
+        "MISSED": 9,
+        "NYT": 13
       },
       "Q1FY26": {
         "MET": 1,
@@ -5091,10 +5091,10 @@
         "NYT": 4
       },
       "Q2FY26": {
-        "MET": 1,
+        "MET": 0,
         "PARTIAL": 0,
         "MISSED": 0,
-        "NYT": 3
+        "NYT": 4
       },
       "Q3FY26": {
         "MET": 5,
@@ -5126,15 +5126,15 @@
     },
     "signals": {
       "tier_mix": {
-        "1": 21,
-        "2": 45,
-        "3": 27
+        "1": 20,
+        "2": 42,
+        "3": 19
       },
       "dropped": 0,
       "slippage_vectors": 1,
       "sandbagging": {
-        "wide_beats": 28,
-        "of_guided": 40
+        "wide_beats": 23,
+        "of_guided": 35
       },
       "attribution": {
         "owned": 0,
@@ -5149,13 +5149,13 @@
     "timeline_score": 61,
     "delivery_score": 61,
     "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), materiality-weighted by tier (Tier-1 binary outcomes 1.4x, Tier-3 soft 0.6x), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
-    "headline": "Mostly delivered on testable promises — chiefly demand slowdown; 24 later targets still not yet testable."
+    "headline": "Mostly delivered on testable promises — chiefly demand slowdown; 36 later targets still not yet testable."
   },
   "provenance": {
     "mode": "live",
     "complete": true,
     "retrieval_errors": 0,
-    "forced_nyt": 4,
+    "forced_nyt": 7,
     "models_used": [
       "openai",
       "mistral",

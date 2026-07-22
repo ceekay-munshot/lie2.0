@@ -298,7 +298,7 @@
         "pct": 24.1,
         "bps": null,
         "days": null,
-        "text": "2279 vs 1836 stores"
+        "text": "2,279 vs 1,836 stores"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -340,7 +340,7 @@
         "pct": 879.4,
         "bps": null,
         "days": null,
-        "text": "2184 vs 223 INR Cr"
+        "text": "2,184 vs 223 INR Cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -550,7 +550,7 @@
         "pct": -99.9,
         "bps": null,
         "days": null,
-        "text": "1 vs 1222 INR Cr"
+        "text": "1 vs 1,222 INR Cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -592,7 +592,7 @@
         "pct": 9.2,
         "bps": null,
         "days": null,
-        "text": "2184 vs 2000 stores"
+        "text": "2,184 vs 2,000 stores"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -676,7 +676,7 @@
         "pct": 14,
         "bps": null,
         "days": null,
-        "text": "2279 vs 2000 stores"
+        "text": "2,279 vs 2,000 stores"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -718,7 +718,7 @@
         "pct": 0,
         "bps": null,
         "days": null,
-        "text": "2039 vs 2039 stores"
+        "text": "2,039 vs 2,039 stores"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -838,13 +838,13 @@
         "source_date": "2026-05-01",
         "what_happened": "Reported consolidated EBITDA for Q4 FY26 was INR 2,295 Mn"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 2265.9,
-        "pct": 7786.6,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "2295 vs 29.1 %"
+        "text": "actual in INR Mn not comparable to %"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -970,7 +970,7 @@
         "pct": 900,
         "bps": null,
         "days": null,
-        "text": "49511 vs 4951 INR Cr"
+        "text": "49,511 vs 4,951 INR Cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1012,7 +1012,7 @@
         "pct": 900,
         "bps": null,
         "days": null,
-        "text": "12126 vs 1212.6 INR Cr"
+        "text": "12,126 vs 1,212.6 INR Cr"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1138,7 +1138,7 @@
         "pct": -0.5,
         "bps": null,
         "days": null,
-        "text": "2268 vs 2279 stores"
+        "text": "2,268 vs 2,279 stores"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1216,13 +1216,13 @@
         "source_date": "2026-05-01",
         "what_happened": "No net new Pizza Hut stores opened in CY2026; focus on consolidation and portfolio realignment"
       },
-      "status": "MISSED",
+      "status": "NYT",
       "variance": {
-        "absolute": -1,
-        "pct": -100,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "0 vs 1 stores"
+        "text": "target reaffirmed, not yet delivered — 0 stores"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1348,7 +1348,7 @@
         "pct": 7177.4,
         "bps": null,
         "days": null,
-        "text": "2256 vs 31"
+        "text": "2,256 vs 31"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1485,12 +1485,12 @@
   "aggregates": {
     "total": 29,
     "status_counts": {
-      "MET": 18,
+      "MET": 17,
       "PARTIAL": 2,
-      "MISSED": 6,
-      "NYT": 3
+      "MISSED": 5,
+      "NYT": 5
     },
-    "testable": 26,
+    "testable": 24,
     "by_quarter": {
       "Q1FY25": {
         "MET": 5,
@@ -1511,10 +1511,10 @@
         "NYT": 0
       },
       "Q4FY25": {
-        "MET": 7,
+        "MET": 6,
         "PARTIAL": 0,
         "MISSED": 2,
-        "NYT": 0
+        "NYT": 1
       },
       "Q2FY26": {
         "MET": 1,
@@ -1525,8 +1525,8 @@
       "Q3FY26": {
         "MET": 3,
         "PARTIAL": 1,
-        "MISSED": 1,
-        "NYT": 2
+        "MISSED": 0,
+        "NYT": 3
       }
     },
     "root_causes": {},
@@ -1543,14 +1543,14 @@
     "signals": {
       "tier_mix": {
         "1": 12,
-        "2": 11,
-        "3": 3
+        "2": 10,
+        "3": 2
       },
       "dropped": 0,
       "slippage_vectors": 0,
       "sandbagging": {
-        "wide_beats": 4,
-        "of_guided": 7
+        "wide_beats": 3,
+        "of_guided": 6
       },
       "attribution": null
     }
@@ -1561,13 +1561,13 @@
     "timeline_score": 64,
     "delivery_score": 63,
     "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), materiality-weighted by tier (Tier-1 binary outcomes 1.4x, Tier-3 soft 0.6x), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
-    "headline": "Mostly delivered on testable promises; 3 later targets still not yet testable."
+    "headline": "Mostly delivered on testable promises; 5 later targets still not yet testable."
   },
   "provenance": {
     "mode": "live",
     "complete": true,
     "retrieval_errors": 0,
-    "forced_nyt": 3,
+    "forced_nyt": 4,
     "models_used": [
       "openai",
       "mistral",
