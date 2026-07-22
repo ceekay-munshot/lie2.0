@@ -99,5 +99,29 @@ export async function financialTrend({ corpus, mock = false, providers = null, c
       trend.push(base);
     }
   }
-  return { trend, stats };
+  return { trend: sanitizeFinancialTrend(trend), stats };
+}
+
+const _median = (xs) => { const s = [...xs].sort((a, b) => a - b); const n = s.length; return n ? (n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2) : null; };
+/**
+ * Null a per-quarter figure that is a GROSS OUTLIER vs the other quarters — a full-year / cumulative
+ * total the extractor mislabeled as a single quarter (e.g. CESC FY25 revenue 17,375 dropped into a
+ * Q4FY25 slot next to ~4,000/qtr, which makes the momentum chart read as a cliff). Deterministic &
+ * conservative: a stable business's quarters never differ by ≥ OUTLIER_MULT (2.5×), so this only trips
+ * on annual-in-quarterly, never on genuine seasonality. Ratios (margin/roce/leverage) are left alone —
+ * they read the same annual or quarterly. Pure; safe to re-run (idempotent).
+ */
+export function sanitizeFinancialTrend(trend = []) {
+  const MULT = Number(process.env.FIN_OUTLIER_MULT) || 2.5;
+  const rows = (trend || []).map((q) => ({ ...q }));
+  for (const field of ["revenue", "ebitda", "pat"]) {
+    const vals = rows.map((r) => { const v = Number(r[field]); return Number.isFinite(v) && v > 0 ? v : null; });
+    for (let i = 0; i < rows.length; i++) {
+      if (vals[i] == null) continue;
+      const others = vals.filter((v, j) => v != null && j !== i);
+      const med = _median(others);
+      if (med != null && med > 0 && vals[i] > MULT * med) rows[i][field] = null; // drop the mislabeled annual figure
+    }
+  }
+  return rows;
 }

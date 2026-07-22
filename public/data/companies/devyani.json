@@ -1222,7 +1222,7 @@
         "pct": null,
         "bps": null,
         "days": null,
-        "text": "target reaffirmed, not yet delivered — 0 stores"
+        "text": "target reaffirmed / in progress — not yet delivered (0 stores)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1433,8 +1433,8 @@
     },
     {
       "quarter": "Q4FY25",
-      "revenue": 49510,
-      "ebitda": 8400,
+      "revenue": null,
+      "ebitda": null,
       "ebitda_margin": 17,
       "pat": null,
       "net_debt_ebitda": null,

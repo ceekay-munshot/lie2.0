@@ -7,7 +7,7 @@
  *   node pipeline/test/p5.test.mjs
  */
 import { statusVariance } from "../lib/status-variance.mjs";
-import { directionFor, numericDirection, parseTarget, actualNumber, fmtNum, unitsIncomparable } from "../lib/metric-direction.mjs";
+import { directionFor, numericDirection, parseTarget, actualNumber, fmtNum, unitsIncomparable, reconcileScale } from "../lib/metric-direction.mjs";
 import { periodIndex, maxPeriodIndex } from "../lib/fiscal.mjs";
 import { verificationWindow, isNotYetTestable } from "../lib/verification-window.mjs";
 import { aggregate, credibility, gradeFromScore } from "../lib/aggregate.mjs";
@@ -142,6 +142,21 @@ ok(sv(yoy, { value: 11.2, unit: "%", what_happened: "revenue grew 11.2% YoY in Q
 // routine debt-servicing is a non-promise; a real deleveraging target is kept
 ok(isDebtServicing({ promise: "Repay $417 million ICL debt as scheduled in Jan and May 2026", quote: "the entire ICL 350 million will be paid on time", metric: "ICL debt paid" }) === true, "routine debt-servicing ('repay ICL debt as scheduled') → flagged a non-promise (dropped)");
 ok(isDebtServicing({ promise: "Reduce Vedanta Resources debt from $4.4 billion to $3 billion", quote: "from current $4.4 billion will go down to $3 billion over two years", metric: "VRL debt $3bn" }) === false, "a real deleveraging TARGET ('reduce debt to $3bn') is NOT flagged (kept)");
+
+// ---- 9e) in-progress / future-passive project & unit-scale (Vipool transcript-2 findings) ----
+console.log("\nin-progress projects + unit scale:");
+const CTXW = { ...CTX, latestReportedPeriod: "Q4FY26" };
+const hydro = { category: "capacity", target: { value: 10500, unit: "MT/annum", period: "by FY28", text: "10,500 MT/annum by FY28" }, test_date: "Q4FY28", confidence: "H", promise: "commission 10,500 MT/annum green hydrogen facility", metric: "green hydrogen 10,500 MT/annum", revisions: [] };
+ok(sv(hydro, { value: 10500, unit: "MT/annum", what_happened: "Facility expected to be commissioned within 3 years as planned" }, CTXW).status === "NYT", "'expected to be commissioned within 3 years as planned' → NYT (not a self-comparison MET)");
+const solar = { category: "capacity", target: { value: 300, unit: "MW", period: "Q4FY26", text: "300 MW solar" }, test_date: "Q4FY26", confidence: "H", promise: "commission 300 MW solar park", metric: "300 MW solar", revisions: [] };
+ok(sv(solar, { value: 300, unit: "MW", what_happened: "300 MW solar park under construction, expected COD Q4 FY26" }, CTXW).status === "NYT", "'under construction, expected COD' → NYT (in progress, not delivered)");
+const cbg = { category: "capacity", target: { value: 55, unit: "plants", period: "2025", text: "55 plants by 2025" }, test_date: "2025-12-31", confidence: "H", promise: "55 CBG plants operational by 2025", metric: "55 CBG plants", revisions: [] };
+ok(sv(cbg, { value: 10, unit: "plants", what_happened: "10 CBG plants operational by Q4FY25; on track to deliver 55 plants" }, CTXW).status === "MISSED", "a real partial delivery ('10 operational … on track to 55') stays MISSED, never hidden");
+const pvc = { category: "capacity", target: { value: 1.5, unit: "million tons", period: "Q3FY26", text: "1.5 mt PVC" }, test_date: "Q3FY26", confidence: "H", promise: "commission 1.5 mt PVC", metric: "1.5 mt PVC", revisions: [] };
+ok(sv(pvc, { value: 1.5, unit: "million tons", what_happened: "1.5 million tons PVC capacity commissioned as planned" }, CTXW).status === "MET", "a genuinely 'commissioned' capacity stays MET (real delivery not hidden by 'as planned')");
+ok(reconcileScale(1.5, "GW", "MW") === 1500 && reconcileScale(1500, "MW", "GW") === 1.5, "reconcileScale: 1.5 GW ↔ 1,500 MW");
+const wind = { category: "capacity", target: { value: 1500, unit: "MW", period: "Q3FY26", text: "1500 MW wind" }, test_date: "Q3FY26", confidence: "H", promise: "commission 1500 MW wind", metric: "1500 MW wind", revisions: [] };
+ok(sv(wind, { value: 1.5, unit: "GW", what_happened: "commissioned 1.5 GW wind, meeting the 1,500 MW target" }, CTXW).status === "MET", "1.5 GW actual vs 1,500 MW target → MET (unit scale reconciled, not '1.5 vs 1500')");
 
 // ---- 9c) materiality by tier — binary outcomes weigh more --------------------
 console.log("\nmateriality (tier weighting):");

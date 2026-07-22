@@ -94,6 +94,19 @@ export function fmtNum(n) {
   return x.toLocaleString("en-IN", { maximumFractionDigits: 2 });
 }
 
+/** Reconcile a same-dimension SCALE mismatch between the actual's unit and the target's unit, so a
+ *  1.5 GW actual is compared against a 1,500 MW target as equal (not "1.5 vs 1500"). Deliberately
+ *  narrow — only the fully-UNAMBIGUOUS power units (GW/MW/kW), where a 1000× factor is certain — so it
+ *  never mis-scales an ambiguous unit like "MT" (metric tonne vs megatonne). Returns aVal unchanged
+ *  when the units aren't a known power pair. */
+export function reconcileScale(aVal, actualUnit, targetUnit) {
+  if (aVal == null || !Number.isFinite(Number(aVal))) return aVal;
+  const pw = (u) => { const s = String(u ?? "").toLowerCase(); return /\bgw\b|gigawatt/.test(s) ? 1000 : /\bmw\b|megawatt/.test(s) ? 1 : /\bkw\b|kilowatt/.test(s) ? 0.001 : null; };
+  const a = pw(actualUnit), t = pw(targetUnit);
+  if (a != null && t != null && a !== t) return Number(aVal) * (a / t); // convert actual → target's scale
+  return aVal;
+}
+
 /** Coarse physical dimension of a unit string, for comparability checks. null = unknown. */
 export function unitDimension(u) {
   const s = String(u ?? "").toLowerCase();

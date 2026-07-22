@@ -198,13 +198,13 @@
         "source_date": "2025-08-01",
         "what_happened": "3 Mtpa iron ore plant under construction as planned"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 0,
-        "pct": 0,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "3 vs 3 million tons per annum"
+        "text": "target reaffirmed / in progress — not yet delivered (3 million tons per annum)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -568,7 +568,7 @@
         "pct": null,
         "bps": null,
         "days": null,
-        "text": "target reaffirmed, not yet delivered — 80"
+        "text": "target reaffirmed / in progress — not yet delivered (80)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -723,13 +723,13 @@
         "source_date": "2026-04-01",
         "what_happened": "Run rate close to 4 million tons at FY26 exit; rated capacity expected in Q1FY27"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 0,
-        "pct": 0,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "4 vs 4-5 million tons"
+        "text": "target reaffirmed / in progress — not yet delivered (4 million tons)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1010,13 +1010,13 @@
         "source_date": "2026-04-01",
         "what_happened": "VZI capacity expected to commission next quarter, ramping to about 450,000 KTPA run rate"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 449500,
-        "pct": 89900,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "4,50,000 vs 500 KTPA"
+        "text": "target reaffirmed / in progress — not yet delivered (4,50,000 KTPA)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2702,16 +2702,16 @@
         "source_date": "2026-04-01",
         "what_happened": "Ramp-up delayed; run rate close to 4 million tons at FY26 end, rated capacity expected in Q1 FY27"
       },
-      "status": "MISSED",
+      "status": "NYT",
       "variance": {
-        "absolute": -2020,
-        "pct": -99.8,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "4 vs 2,024 date"
+        "text": "target reaffirmed / in progress — not yet delivered (4 date)"
       },
-      "mgmt_explanation": "Calciners and boiler running at 75-80% capacity causing delay",
-      "root_cause": "Capacity delay",
+      "mgmt_explanation": null,
+      "root_cause": null,
       "was_revised": false,
       "tier": 1,
       "link_id": 58,
@@ -2874,13 +2874,13 @@
         "source_date": "2025-11-01",
         "what_happened": "Drilling campaign commenced in Dwarka offshore; Ambe drilling planned for 3QFY26"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 0,
-        "pct": 0,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "3 vs 3 campaign"
+        "text": "target reaffirmed / in progress — not yet delivered (3 campaign)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -4954,7 +4954,7 @@
         "pct": null,
         "bps": null,
         "days": null,
-        "text": "undated target — interim 500 USD"
+        "text": "target reaffirmed / in progress — not yet delivered (500 USD)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -5644,7 +5644,7 @@
         "pct": null,
         "bps": null,
         "days": null,
-        "text": "target reaffirmed, not yet delivered — 20,000"
+        "text": "target reaffirmed / in progress — not yet delivered (20,000)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -7220,13 +7220,13 @@
         "source_date": "2026-01-01",
         "what_happened": "Group deleveraging in FY26 expected around $0.8 to $1 billion, short of $1.2 billion FY25 target"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": -0.3,
-        "pct": -25,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "0.9 vs 1.2 USD_bn"
+        "text": "target reaffirmed / in progress — not yet delivered (0.9 USD_bn)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -7997,13 +7997,13 @@
         "source_date": "2026-01-01",
         "what_happened": "160,000 tpa Debari Roaster commissioning scheduled for 1HFY26"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 0,
-        "pct": 0,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "1,60,000 vs 1,60,000 tons per annum"
+        "text": "target reaffirmed / in progress — not yet delivered (1,60,000 tons per annum)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -8228,13 +8228,13 @@
         "source_date": "2026-04-01",
         "what_happened": "Project 94% complete; commissioning expected in Q1FY27, ramp-up thereafter."
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 92,
-        "pct": 4600,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "94 vs 2"
+        "text": "target reaffirmed / in progress — not yet delivered (94)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -9580,13 +9580,13 @@
         "source_date": "2026-01-01",
         "what_happened": "ASP commissioning delayed; first volumes expected in next three months"
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 70000,
-        "pct": 466.7,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "85,000 vs 15,000 bpd"
+        "text": "target reaffirmed / in progress — not yet delivered (85,000 bpd)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -10274,13 +10274,13 @@
         "source_date": "2026-04-01",
         "what_happened": "Gamsberg Phase 2 is 94% complete; commissioning expected in Q1FY27 with ramp-up thereafter."
       },
-      "status": "MET",
+      "status": "NYT",
       "variance": {
-        "absolute": 92,
-        "pct": 4600,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "94 vs 2"
+        "text": "target reaffirmed / in progress — not yet delivered (94)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -11917,13 +11917,13 @@
         "source_date": "2026-04-01",
         "what_happened": "BALCO smelter ramp-up progressing quarterly to full 100,000 tons run rate by Q4 FY26"
       },
-      "status": "NYT",
+      "status": "MET",
       "variance": {
-        "absolute": null,
-        "pct": null,
+        "absolute": 0,
+        "pct": 0,
         "bps": null,
         "days": null,
-        "text": "target reaffirmed, not yet delivered — 1,00,000 tons"
+        "text": "1,00,000 vs 1,00,000 tons"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -13468,24 +13468,24 @@
   "aggregates": {
     "total": 337,
     "status_counts": {
-      "MET": 87,
+      "MET": 79,
       "PARTIAL": 6,
-      "MISSED": 48,
-      "NYT": 196
+      "MISSED": 47,
+      "NYT": 205
     },
-    "testable": 141,
+    "testable": 132,
     "by_quarter": {
       "Q1FY25": {
-        "MET": 15,
+        "MET": 12,
         "PARTIAL": 0,
         "MISSED": 10,
-        "NYT": 21
+        "NYT": 24
       },
       "Q2FY25": {
-        "MET": 19,
+        "MET": 18,
         "PARTIAL": 1,
-        "MISSED": 10,
-        "NYT": 22
+        "MISSED": 9,
+        "NYT": 24
       },
       "Q3FY25": {
         "MET": 13,
@@ -13494,28 +13494,28 @@
         "NYT": 13
       },
       "Q4FY25": {
-        "MET": 13,
+        "MET": 12,
         "PARTIAL": 1,
         "MISSED": 8,
-        "NYT": 39
+        "NYT": 40
       },
       "Q1FY26": {
-        "MET": 6,
-        "PARTIAL": 0,
-        "MISSED": 10,
-        "NYT": 38
-      },
-      "Q2FY26": {
-        "MET": 18,
-        "PARTIAL": 2,
-        "MISSED": 6,
-        "NYT": 15
-      },
-      "Q3FY26": {
         "MET": 3,
         "PARTIAL": 0,
+        "MISSED": 10,
+        "NYT": 41
+      },
+      "Q2FY26": {
+        "MET": 17,
+        "PARTIAL": 2,
+        "MISSED": 6,
+        "NYT": 16
+      },
+      "Q3FY26": {
+        "MET": 4,
+        "PARTIAL": 0,
         "MISSED": 1,
-        "NYT": 29
+        "NYT": 28
       },
       "Q4FY26": {
         "MET": 0,
@@ -13526,7 +13526,7 @@
     },
     "root_causes": {
       "Execution": 12,
-      "Capacity delay": 12,
+      "Capacity delay": 11,
       "Cost inflation": 1,
       "Capital allocation": 1,
       "Pricing / mix": 1,
@@ -13544,36 +13544,36 @@
     },
     "signals": {
       "tier_mix": {
-        "1": 98,
+        "1": 92,
         "2": 12,
-        "3": 31
+        "3": 28
       },
       "dropped": 0,
       "slippage_vectors": 26,
       "sandbagging": {
-        "wide_beats": 5,
-        "of_guided": 8
+        "wide_beats": 4,
+        "of_guided": 7
       },
       "attribution": {
-        "owned": 25,
+        "owned": 24,
         "external": 2,
-        "external_share": 0.07
+        "external_share": 0.08
       }
     }
   },
   "credibility": {
-    "score": 59,
+    "score": 57,
     "grade": "C",
     "timeline_score": 53,
-    "delivery_score": 59,
+    "delivery_score": 57,
     "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), materiality-weighted by tier (Tier-1 binary outcomes 1.4x, Tier-3 soft 0.6x), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
-    "headline": "Mostly delivered on testable promises — chiefly execution; 196 later targets still not yet testable."
+    "headline": "Mostly delivered on testable promises — chiefly execution; 205 later targets still not yet testable."
   },
   "provenance": {
     "mode": "live",
     "complete": true,
     "retrieval_errors": 0,
-    "forced_nyt": 34,
+    "forced_nyt": 38,
     "models_used": [
       "openai",
       "mistral",

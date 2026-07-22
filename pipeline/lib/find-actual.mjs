@@ -15,7 +15,7 @@ import { EXTRACTION_PROVIDERS } from "./multi-llm.mjs";
 import { subjectTokens } from "./dedup.mjs";
 
 export const ROOT_CAUSES = ["Demand slowdown", "Pricing / mix", "Cost inflation", "Supply chain", "Execution", "Capacity delay", "Regulatory", "Working capital", "Capital allocation", "Other"];
-export const FIND_ACTUAL_VERSION = "p5-2026-07d";
+export const FIND_ACTUAL_VERSION = "p5-2026-07e";
 const numRuns = (s) => (String(s).match(/\d[\d,.]*/g) || []).length;
 
 const ACTUAL_SCHEMA = {
@@ -45,7 +45,8 @@ Rules:
 - actual_value MUST be the FULL number in the SAME UNIT the promise's target uses, and actual_unit MUST state that unit. Never scale-strip: "89,000 barrels" → 89000 (never 89); "1.5 lakh tonnes" → 150000; "₹1,100 crore" with unit INR_cr → 1100. If the document reports the figure in a DIFFERENT unit or currency than the target (e.g. target in ₹ crore but the doc gives US$ billion) so it would need conversion, return null rather than a raw, non-comparable number.
 - what_happened and mgmt_explanation are <= 25 words each. mgmt_explanation is null unless management actually explains a miss.
 - root_cause_suggestion must be one of the allowed labels or null.
-- For a timeline/milestone, what_happened should say whether it was commissioned/completed, or re-guided to a new period (state the new period verbatim, e.g. "re-set to 1HFY27").`;
+- For a timeline/milestone, what_happened should say whether it was commissioned/completed, or re-guided to a new period (state the new period verbatim, e.g. "re-set to 1HFY27").
+- FISCAL periods are NOT calendar years. "FY26" = the fiscal year ending 31 March 2026 (Apr 2025–Mar 2026); Q4FY26 = Jan–Mar 2026. Retrieve the actual for the promise's FISCAL period. NEVER match an "FY26" promise to a figure reported for calendar-2026 or a different fiscal year; if the documents report only a different period, return null.`;
 
 const norm = (s) => String(s || "").toLowerCase();
 

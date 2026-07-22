@@ -698,7 +698,7 @@
         "pct": null,
         "bps": null,
         "days": null,
-        "text": "target reaffirmed, not yet delivered — 20 x"
+        "text": "target reaffirmed / in progress — not yet delivered (20 x)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -2735,7 +2735,7 @@
         "pct": null,
         "bps": null,
         "days": null,
-        "text": "target reaffirmed, not yet delivered — 3 MMTPA"
+        "text": "target reaffirmed / in progress — not yet delivered (3 MMTPA)"
       },
       "mgmt_explanation": null,
       "root_cause": null,
