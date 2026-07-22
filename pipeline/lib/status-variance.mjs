@@ -12,7 +12,7 @@
  *   Integrity rule: when revisions[] exist, judge vs the ORIGINAL target (the canonical
  *   promise.target the extractor keeps), and flag was_revised:true.
  */
-import { directionFor, numericDirection, parseTarget, actualNumber } from "./metric-direction.mjs";
+import { directionFor, numericDirection, parseTarget, actualNumber, fmtNum, unitsIncomparable } from "./metric-direction.mjs";
 import { maxPeriodIndex, periodIndex } from "./fiscal.mjs";
 
 const DELIVERED_RE = /\b(commission\w*|complet\w*|\blive\b|operational|on stream|started?|begun|began|achiev\w*|delivered|first oil|first production|ramp(?:ed|ing|-?up)?|in operation|done)\b/i;
@@ -61,8 +61,8 @@ function compareNumeric(category, target, a, tol) {
   const absolute = round(a - ref, 3);
   const pct = ref !== 0 ? round(((a - ref) / Math.abs(ref)) * 100, 1) : null;
   const bps = category === "margin" ? round((a - ref) * 100, 0) : null;
-  const refTxt = target.op === "range" && target.hi != null ? `${target.lo}-${target.hi}` : `${ref}`;
-  return { status, variance: { absolute, pct, bps, days: null, text: `${a} vs ${refTxt}${target.unit ? " " + target.unit : ""}` } };
+  const refTxt = target.op === "range" && target.hi != null ? `${fmtNum(target.lo)}-${fmtNum(target.hi)}` : `${fmtNum(ref)}`;
+  return { status, variance: { absolute, pct, bps, days: null, text: `${fmtNum(a)} vs ${refTxt}${target.unit ? " " + target.unit : ""}` } };
 }
 
 /** Milestone (timeline) verdict from delivered/slipped wording + named periods. */
@@ -114,6 +114,14 @@ export function statusVariance(promise, actual, ctx = {}) {
   const target = parseTarget(promise.target); // ORIGINAL target (integrity rule)
   const aVal = actual ? actualNumber(actual) : null;
   if (aVal == null) return { status: "NYT", variance: { ...blankVar(), text: actual?.what_happened ? actual.what_happened.slice(0, 60) : "no actual reported" }, was_revised };
+
+  // Metric-mismatch guard: if the retrieved actual is reported in a unit dimensionally different
+  // from the target's (e.g. an INR-crore interest-savings target vs the USD-billion deleveraging
+  // figure the retriever grabbed), the two numbers measure different things — do NOT manufacture a
+  // MET/MISSED from an apples-to-oranges comparison. Leave it NYT (unverifiable as retrieved).
+  if (unitsIncomparable(target.unit, actual?.unit)) {
+    return { status: "NYT", variance: { ...blankVar(), text: `actual in ${actual.unit} not comparable to ${target.unit || "target"}` }, was_revised };
+  }
 
   // Future test_date → the figure is interim (e.g. 9M of an annual target) → NYT.
   if (isFuture(promise.test_date, latestReportedDate, latestReportedPeriod)) {

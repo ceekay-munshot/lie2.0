@@ -59,10 +59,50 @@ export function parseTarget(target = {}) {
 // 3M/6M/9M/12M year-to-date, FYnn/CYnn) — NOT bare "5m" magnitudes.
 const PERIOD_LABEL_RE = /\b(?:q[1-4]|[1-4]q|h[12]|[12]h|(?:3|6|9|12)m|fy'?\d{2,4}|cy'?\d{2,4})\b/gi;
 
+const isPow10 = (r) => { if (!(r > 1) || !Number.isFinite(r)) return false; const l = Math.log10(r); return Math.abs(l - Math.round(l)) < 1e-9 && Math.round(l) >= 1; };
+
 /** Best single number from a retrieved actual (structured value, else parsed text). */
 export function actualNumber(actual = {}) {
-  if (actual && actual.value != null) return actual.value;
   const text = String(actual?.text ?? actual?.what_happened ?? "").replace(PERIOD_LABEL_RE, " ");
-  const ns = nums(text);
-  return ns.length ? ns[0] : null;
+  const textNums = nums(text);
+  const v = actual?.value;
+  if (v != null && !Number.isNaN(Number(v))) {
+    // Guard against the LLM scale-stripping a structured value (returning 89 for "89,000",
+    // 1.5 for "1.5 lakh"): if the verbatim text carries a number that is `value` scaled by a
+    // power of 10 AND shares its leading digits, trust the fuller text figure.
+    const vi = String(Math.trunc(Math.abs(Number(v))));
+    const scaled = textNums.find((t) => t > Number(v) && String(Math.trunc(Math.abs(t))).startsWith(vi) && isPow10(t / Number(v)));
+    return scaled != null ? scaled : Number(v);
+  }
+  return textNums.length ? textNums[0] : null;
+}
+
+/** Group a number for display (Indian digit grouping): 89000 → "89,000", 150000 → "1,50,000". */
+export function fmtNum(n) {
+  const x = Number(n);
+  if (n == null || !Number.isFinite(x)) return String(n);
+  return x.toLocaleString("en-IN", { maximumFractionDigits: 2 });
+}
+
+/** Coarse physical dimension of a unit string, for comparability checks. null = unknown. */
+export function unitDimension(u) {
+  const s = String(u ?? "").toLowerCase();
+  if (!s) return null;
+  if (/%|percent|\bpct\b|bps|basis point/.test(s)) return "percent";
+  if (/(^|[^a-z])x($|[^a-z])|\btimes\b|ratio/.test(s)) return "ratio";
+  const inr = /inr|rupee|\brs\b|\bcr\b|crore|lakh|₹/.test(s);
+  const usd = /usd|dollar|\$/.test(s);
+  if (inr && !usd) return "money_inr";
+  if (usd && !inr) return "money_usd";
+  if (/bpd|boepd|bopd|barrel|kbpd|kboepd/.test(s)) return "oil";
+  if (/tonne|\bton\b|\bmt\b|\bkt\b|mtpa|mmt|\/t\b/.test(s)) return "mass";
+  if (/\bgw\b|\bmw\b|\bkw\b|mwh|gwh/.test(s)) return "power";
+  return null; // bare "bn"/"mn"/"entities"/unknown — treat as unknown, never block on it
+}
+
+/** True only when BOTH units are known AND belong to different dimensions (a metric mismatch
+ *  the verifier should never score, e.g. an INR-crore target vs a USD-billion actual). */
+export function unitsIncomparable(a, b) {
+  const da = unitDimension(a), db = unitDimension(b);
+  return da != null && db != null && da !== db;
 }

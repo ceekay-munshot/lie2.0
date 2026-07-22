@@ -15,7 +15,7 @@ import { EXTRACTION_PROVIDERS } from "./multi-llm.mjs";
 import { subjectTokens } from "./dedup.mjs";
 
 export const ROOT_CAUSES = ["Demand slowdown", "Pricing / mix", "Cost inflation", "Supply chain", "Execution", "Capacity delay", "Regulatory", "Working capital", "Capital allocation", "Other"];
-export const FIND_ACTUAL_VERSION = "p5-2026-07b";
+export const FIND_ACTUAL_VERSION = "p5-2026-07c";
 const numRuns = (s) => (String(s).match(/\d[\d,.]*/g) || []).length;
 
 const ACTUAL_SCHEMA = {
@@ -40,7 +40,8 @@ You do NOT decide whether the promise was met or missed — a separate determini
 
 Rules:
 - If the evidence does not report this metric's outcome, set actual_text AND what_happened to null (do NOT write a sentence like "the company did not report this" — leave both null so it is treated as not-yet-known, never as a miss).
-- Report the actual for THIS EXACT metric only. If the documents report a DIFFERENT or merely related metric (e.g. an operating-margin figure when the promise is about UTILISATION, or a headcount when the promise is about revenue), that is NOT this metric's actual → return null. Never substitute an adjacent metric.
+- Report the actual for THIS EXACT metric only. If the documents report a DIFFERENT or merely related metric, that is NOT this metric's actual → return null. Never substitute an adjacent metric. Common traps to AVOID: reporting a cash-flow figure for a CAPEX/spending commitment; a deleveraging/debt-reduction figure for an INTEREST-SAVINGS target; one product's cost for another's (alumina ≠ aluminium); operating margin for a UTILISATION target; a headcount for a revenue target. If unsure it is the same metric, return null.
+- actual_value MUST be the FULL number in the SAME UNIT the promise's target uses, and actual_unit MUST state that unit. Never scale-strip: "89,000 barrels" → 89000 (never 89); "1.5 lakh tonnes" → 150000; "₹1,100 crore" with unit INR_cr → 1100. If the document reports the figure in a DIFFERENT unit or currency than the target (e.g. target in ₹ crore but the doc gives US$ billion) so it would need conversion, return null rather than a raw, non-comparable number.
 - what_happened and mgmt_explanation are <= 25 words each. mgmt_explanation is null unless management actually explains a miss.
 - root_cause_suggestion must be one of the allowed labels or null.
 - For a timeline/milestone, what_happened should say whether it was commissioned/completed, or re-guided to a new period (state the new period verbatim, e.g. "re-set to 1HFY27").`;

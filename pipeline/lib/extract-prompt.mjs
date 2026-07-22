@@ -5,7 +5,7 @@
  *
  * Bump PROMPT_VERSION whenever the prompt or schema changes (invalidates caches).
  */
-export const PROMPT_VERSION = "p4-2026-07a";
+export const PROMPT_VERSION = "p4-2026-07b";
 
 // Mirrors the company schema's promise.category enum.
 export const CATEGORIES = [
@@ -63,6 +63,7 @@ CURRENT-STATE SNAPSHOTS & ALREADY-DONE ACTIONS (reject — these are the commone
 - A figure describing where something stands NOW is not a forward commitment. REJECT a point-in-time metric — deal/order pipeline value ("large deals pipeline at $3.8 billion"), current headcount or utilisation, a spot ratio/yield ("cash yield at 7%"), quarter-end net debt — UNLESS management explicitly guides it to a FUTURE target with a period ("grow the pipeline to $5 bn by FY27").
 - An already-declared/paid capital action is a completed fact (an ACTUAL), not a promise. REJECT an interim/final dividend, buyback or bonus the board HAS declared, proposed or paid for the current or just-ended period ("interim dividend of ₹21 declared", "we paid ₹21 per share"). Extract a capital_allocation commitment ONLY when it is a FORWARD target or policy ("target ~85% FCF payout", "buy back ₹X by FY27").
 - Reject a routine schedule already put into effect ("wage hike effective 1 Jan, already implemented"). Keep it only if it is a future-dated commitment still to happen with a checkable target.
+- A routine financial OBLIGATION the company is merely servicing — a debt repayment, a due liability, an interest/coupon payment, a scheduled instalment ("the USD 417 million is due in December and we intend to pay", "we will repay the ₹X bond on maturity") — is paying what is already owed, NOT a performance commitment. REJECT it. (A forward DELEVERAGING or debt-reduction TARGET — "cut net debt by ₹X by FY27", "bring net-debt/EBITDA below 1x" — IS a promise: keep that.)
 
 Extract each distinct commitment ONCE, at the most consolidated level stated (prefer the company/guidance figure over restating it per sub-business). Do NOT split one piece of guidance into several near-duplicate rows, and do NOT pad the list — a typical call yields a handful to ~15 real commitments, not dozens. Quality over quantity. This cap applies to presentations too: an investor deck is not a licence to extract more.
 
@@ -206,6 +207,31 @@ const FEW_SHOTS = [
           quote: "an operating margin of 20 to 22 percent",
           metric: "FY26 operating margin 20-22%",
           target: { text: "20-22% operating margin in FY26", value: 20, value_high: 22, unit: "%", period: "FY26" },
+          confidence: "H",
+        },
+      ],
+    }),
+  },
+  {
+    role: "user",
+    content:
+      "Quarter: Q2FY26. Text:\n" +
+      "[context: Analyst asks about the Sumangal liability due this year.]\n" +
+      "Ajay Goel: The USD 417 million Sumangal payment is due in December and we intend to pay it on schedule. Separately, we are committed to deleveraging the group by USD 3 billion by FY27.",
+  },
+  {
+    role: "assistant",
+    content: JSON.stringify({
+      // Paying the $417m due obligation is servicing a debt already owed — NOT a promise.
+      // Only the forward $3bn deleveraging TARGET is a commitment.
+      promises: [
+        {
+          quarter_context: "Q2FY26",
+          category: "leverage",
+          promise: "Deleverage the group by $3bn by FY27",
+          quote: "committed to deleveraging the group by USD 3 billion by FY27",
+          metric: "Group deleveraging $3bn by FY27",
+          target: { text: "$3bn deleveraging by FY27", value: 3, value_high: null, unit: "USD_bn", period: "FY27" },
           confidence: "H",
         },
       ],

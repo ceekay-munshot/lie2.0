@@ -7,7 +7,7 @@
  *   node pipeline/test/p5.test.mjs
  */
 import { statusVariance } from "../lib/status-variance.mjs";
-import { directionFor, numericDirection, parseTarget, actualNumber } from "../lib/metric-direction.mjs";
+import { directionFor, numericDirection, parseTarget, actualNumber, fmtNum, unitsIncomparable } from "../lib/metric-direction.mjs";
 import { periodIndex, maxPeriodIndex } from "../lib/fiscal.mjs";
 import { verificationWindow, isNotYetTestable } from "../lib/verification-window.mjs";
 import { aggregate, credibility, gradeFromScore } from "../lib/aggregate.mjs";
@@ -106,6 +106,29 @@ ok(credibility(infy15, null, { forcedNyt: 0 }).score === credibility(infy15).sco
 ok(credibility(infy15, null, { forcedNyt: 20 }).score < credibility(infy15, null, { forcedNyt: 7 }).score, "more unresolved-due promises → lower score (monotonic)");
 const big90 = Array.from({ length: 90 }, () => P("MET", "H"));
 ok(credibility(big90, null, { forcedNyt: 4 }).grade === "A", "a large all-MET base with few unresolved stays A (penalty is coverage-aware, negligible at scale)");
+
+// ---- 9b) number scale/format + metric-mismatch guard (the Vedanta-review fixes) ------
+console.log("\nnumber scale + unit-mismatch guard:");
+ok(actualNumber({ value: 89, text: "Production was 89,000 barrels per day" }) === 89000, "LLM scale-strip 89 + text '89,000' → 89000 (fixed)");
+ok(actualNumber({ value: 21.1, text: "operating margin 21.1%" }) === 21.1, "21.1 not falsely rescaled");
+ok(actualNumber({ value: 150000 }) === 150000, "clean structured value passes through");
+ok(fmtNum(89000) === "89,000" && fmtNum(150000) === "1,50,000", "variance numbers get Indian digit grouping");
+ok(unitsIncomparable("INR_cr", "USD_bn") === true && unitsIncomparable("USD_bn", "USD_bn") === false, "cross-currency incomparable; same-unit comparable");
+ok(unitsIncomparable("USD_mn", null) === false, "unknown actual unit never blocks a comparison");
+// the QIP false-miss: ₹1,100cr interest-savings target vs a $1bn deleveraging actual → NYT, not MISSED
+const qip = { category: "capital_allocation", target: { value: 1100, unit: "INR_cr" }, test_date: "Q4FY25", revisions: [] };
+ok(sv(qip, { value: 1, unit: "USD_bn", what_happened: "debt down by ~$1bn" }).status === "NYT", "INR-cr target vs USD-bn actual → NYT (not a false MISS)");
+// same metric, same unit still scores normally
+const cap = { category: "capacity", target: { value: 3.1, unit: "Mtpa" }, test_date: "Q3FY26", revisions: [] };
+ok(sv(cap, { value: 3.1, unit: "Mtpa", what_happened: "reached 3.1 Mtpa" }).status === "MET", "same-unit actual still scores (MET)");
+
+// ---- 9c) materiality — reaffirmed promises weigh more ------------------------
+console.log("\nmateriality (reaffirmation weighting):");
+const reaff = (status, quarters) => ({ status, confidence: "H", category: "volume", quarter_context: "Q1FY26", reaffirmed_on: Array.from({ length: quarters }, (_, i) => `Q${i + 1}FY25`) });
+// one MET + one MISSED, equal weight → 50. Make the MISSED one heavily reaffirmed → score drops below 50.
+const oneEach = [reaff("MET", 0), reaff("MISSED", 0)];
+const missReaffirmed = [reaff("MET", 0), reaff("MISSED", 4)];
+ok(credibility(missReaffirmed).score < credibility(oneEach).score, "a repeatedly-reaffirmed MISS drags the score more than a one-off miss");
 
 // ---- 10) Codex review regressions (hardening generic parsing/verdicts) ------
 console.log("\nCodex-review regressions:");
