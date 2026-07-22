@@ -9,6 +9,7 @@ import { toHome } from "../lib/router.js";
 import { mountSearch } from "../components/search.js";
 import { credibilityHeroHTML } from "../components/credibility-hero.js";
 import { kpiStripHTML } from "../components/kpi-strip.js";
+import { credibilitySignalsHTML } from "../components/credibility-signals.js";
 import { disposeCharts } from "../lib/echarts.js";
 import { slippageTimeline } from "../components/charts/slippage-timeline.js";
 import { statusDonut } from "../components/charts/status-donut.js";
@@ -193,6 +194,7 @@ export async function renderCompany(app, ticker, { headerHost } = {}) {
       </div>
       ${credibilityHeroHTML(ledger)}
       ${kpiStripHTML(ledger)}
+      ${credibilitySignalsHTML(ledger)}
       ${chartsHTML(ledger)}
       ${ledgerDetailHTML()}
       ${placeholdersHTML()}

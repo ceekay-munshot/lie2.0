@@ -642,6 +642,45 @@
     .slip-chart { width: 100%; min-height: 260px; }
     @media (max-width: 520px) { .slip-lead:not(:first-child) { margin-left: 0; padding-left: 0; border-left: none; } }
 
+    /* ==================================================================
+     * Credibility signals panel (#signals): tier mix · quiet drops · sandbagging · attribution.
+     * ================================================================== */
+    .signals-section { display: grid; gap: 12px; margin-top: 2px; }
+    .signals-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 14px; }
+    .sig-card { padding: 15px 17px; border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow-sm); display: grid; gap: 9px; align-content: start; }
+    .sig-card.sig-danger { border-color: color-mix(in srgb, var(--accent-red) 42%, var(--line)); background: color-mix(in srgb, var(--accent-red) 5%, var(--card)); }
+    .sig-card-h { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 700; letter-spacing: -0.01em; }
+    .sig-card-h i { width: 16px; height: 16px; color: var(--accent-violet); flex: none; }
+    .sig-danger .sig-card-h i { color: var(--accent-red); }
+    .sig-card-h b { margin-left: 2px; color: var(--accent-red); }
+    .sig-bar { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--ink2); }
+    .sig-seg { height: 100%; }
+    .sig-keys { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+    .sig-key { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; color: var(--muted); }
+    .sig-key i { width: 11px; height: 11px; border-radius: 3px; flex: none; }
+    .sig-key b { color: var(--text); font-weight: 800; }
+    .sig-note { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--muted); }
+    .sig-note b { color: var(--text); font-weight: 700; }
+    .sig-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+    .sig-list li { font-size: 12.5px; line-height: 1.4; color: var(--text); }
+    .sig-flag { display: inline-block; font-size: 10.5px; font-weight: 800; color: #fff; background: var(--accent-red); border-radius: 5px; padding: 1px 6px; margin-right: 5px; white-space: nowrap; }
+    .sig-q { font-family: var(--font-mono); font-size: 11px; color: var(--muted); }
+    .sig-more { color: var(--muted); font-size: 12px; }
+
+    /* tier badges (drill + table) + drill red flags */
+    .drill-tier, .td-tier { display: inline-flex; align-items: center; font-size: 10.5px; font-weight: 800; border-radius: 5px; padding: 2px 7px; white-space: nowrap; }
+    .td-tier { font-size: 9.5px; padding: 0 5px; margin-right: 5px; vertical-align: middle; }
+    .tier-1 { color: #0B7A5B; background: color-mix(in srgb, var(--accent-teal) 18%, var(--card)); }
+    .tier-2 { color: #0B6E82; background: color-mix(in srgb, var(--accent-cyan) 18%, var(--card)); }
+    .tier-3 { color: var(--muted); background: color-mix(in srgb, var(--status-nyt) 16%, var(--card)); }
+    .td-drop { color: var(--accent-red); font-weight: 800; margin-right: 4px; cursor: help; }
+    .drill-drop, .drill-slip { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.5; border-radius: var(--radius-sm); padding: 10px 13px; }
+    .drill-drop { background: color-mix(in srgb, var(--accent-red) 8%, var(--card2)); border: 1px solid color-mix(in srgb, var(--accent-red) 34%, var(--line)); color: var(--text); }
+    .drill-slip { background: color-mix(in srgb, var(--accent-gold) 9%, var(--card2)); border: 1px solid color-mix(in srgb, var(--accent-gold) 32%, var(--line)); color: var(--text); }
+    .drill-drop i, .drill-slip i { width: 16px; height: 16px; flex: none; margin-top: 1px; }
+    .drill-drop i { color: var(--accent-red); }
+    .drill-slip i { color: var(--accent-gold); }
+
     @media (max-width: 720px) {
       .charts-grid { grid-template-columns: 1fr; }
       .chart-panel.wide { grid-column: auto; }

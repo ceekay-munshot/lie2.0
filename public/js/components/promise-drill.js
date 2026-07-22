@@ -9,6 +9,8 @@ import { statusColor, confColor, escapeHTML } from "../ui.js";
 import { onRoute } from "../lib/router.js";
 
 const LABEL = { MET: "Met", PARTIAL: "Partial", MISSED: "Missed", NYT: "NYT" };
+const TIER_LABEL = { 1: "Tier 1 · binary", 2: "Tier 2 · guidance", 3: "Tier 3 · soft" };
+const TIER_TITLE = { 1: "Binary physical/financial outcome — hardest to fudge", 2: "Financial guidance — scoreable", 3: "Soft / medium-term or undated — lowest signal" };
 let current = null; // { overlay, trigger, onKey, prevOverflow }
 
 // A route change (navigate() or browser Back/Forward) swaps #app underneath the modal,
@@ -68,9 +70,12 @@ export function openDrill(p, trigger) {
       <button type="button" class="drill-close" aria-label="Close">&times;</button>
       <div class="drill-head">
         <span class="status-pill" style="--c:${color}">${LABEL[p.status] || escapeHTML(p.status || "")}</span>
+        ${p.tier ? `<span class="drill-tier tier-${p.tier}" title="${TIER_TITLE[p.tier] || ""}">${TIER_LABEL[p.tier] || `Tier ${p.tier}`}</span>` : ""}
         <span class="drill-cat">${escapeHTML(p.category || "")}${p.quarter_context ? ` · ${escapeHTML(p.quarter_context)}` : ""}</span>
       </div>
       <h3 id="drill-title" class="drill-title">${escapeHTML(p.promise || p.metric || p.id)}</h3>
+      ${p.dropped ? `<div class="drill-drop"><i data-lucide="triangle-alert" aria-hidden="true"></i> <b>Quietly dropped.</b> Reaffirmed across ${p.mentions || 2} quarters, then went silent once it came due and was never reported — the strongest credibility red flag.</div>` : ""}
+      ${Array.isArray(p.slippage_path) && p.slippage_path.length > 1 ? `<div class="drill-slip"><i data-lucide="move-right" aria-hidden="true"></i> <b>Deadline drifted:</b> ${p.slippage_path.map(escapeHTML).join(" → ")}</div>` : ""}
 
       <section class="drill-section">
         <div class="drill-sec-h"><i data-lucide="megaphone" aria-hidden="true"></i> Where the promise was made</div>

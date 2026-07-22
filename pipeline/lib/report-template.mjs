@@ -232,6 +232,19 @@ export function reportHTML(ledger) {
   const confMix = agg.confidence_mix || {};
   const confItems = [["H — hard numeric", confMix.H || 0, T.RED], ["M — directional", confMix.M || 0, T.GOLD], ["L — aspirational", confMix.L || 0, T.NYT]].filter((x) => x[1] > 0);
 
+  /* credibility signals (promise-analysis: tier mix · quiet drop · sandbagging · attribution) */
+  const sigs = agg.signals || {};
+  const droppedList = promises.filter((p) => p.dropped);
+  const signalRows = [];
+  {
+    const tm = sigs.tier_mix || {}; const stot = (tm[1] || 0) + (tm[2] || 0) + (tm[3] || 0);
+    if (stot) signalRows.push(`<div class="sig-row"><i style="background:${T.TEAL}"></i><b>${Math.round(((tm[1] || 0) / stot) * 100)}%</b> of the verdict rests on hard Tier-1 (binary) outcomes.</div>`);
+    if (droppedList.length) signalRows.push(`<div class="sig-row"><i style="background:${T.MISSED}"></i><b>${droppedList.length} quietly dropped</b> — reaffirmed, then went silent once due (top red flag).</div>`);
+    if (sigs.sandbagging) signalRows.push(`<div class="sig-row"><i style="background:${T.GOLD}"></i>Wide beats on <b>${sigs.sandbagging.wide_beats}/${sigs.sandbagging.of_guided}</b> guided metrics — a conservative bar.</div>`);
+    if (sigs.attribution && (sigs.attribution.owned + sigs.attribution.external)) signalRows.push(`<div class="sig-row"><i style="background:${T.VIOLET}"></i><b>${Math.round((sigs.attribution.external_share || 0) * 100)}%</b> of explained misses blamed on external factors.</div>`);
+  }
+  const signalsPanel = signalRows.length ? `<div class="panel" style="flex:1"><h3>Credibility signals — where the record shows</h3><div class="siglist">${signalRows.join("")}</div></div>` : (confItems.length ? `<div class="panel" style="flex:1"><h3>Confidence mix of the promises</h3>${hbars(confItems)}</div>` : "");
+
   /* timeline → gantt rows on a shared quarter axis */
   const tlRaw = [];
   for (const p of promises) {
@@ -318,7 +331,7 @@ export function reportHTML(ledger) {
     <div class="row2" style="margin-top:16px">
       <div class="callout" style="flex:1.2"><div class="big">${esc(cred.headline || `${testableN} of ${total} promises are testable so far.`)}</div>
         ${tlc.due ? `<p>Of the ${tlc.due} dated commitment${tlc.due === 1 ? "" : "s"} that came due, ${tlc.on_time || 0} landed on time and ${tlc.slipped || 0} slipped right. The slippage timeline is overleaf.</p>` : ""}</div>
-      ${confItems.length ? `<div class="panel" style="flex:1"><h3>Confidence mix of the promises</h3>${hbars(confItems)}</div>` : ""}
+      ${signalsPanel}
     </div>
     ${foot()}</div></div>`);
 
@@ -582,6 +595,11 @@ const EXTRA_CSS = `
 .gk .dash{width:22px;height:0;border-top:3px dashed #C6CFDE}
 .gk-sub{color:${T.MUT};font-weight:500}
 .gt-more{margin-top:8px;font-size:10.5px;color:${T.MUT};font-weight:600}
+/* exec-dashboard credibility-signals panel */
+.siglist{display:flex;flex-direction:column;gap:9px}
+.sig-row{display:flex;align-items:flex-start;gap:8px;font-size:11.5px;line-height:1.4;color:${T.MUT}}
+.sig-row i{width:9px;height:9px;border-radius:3px;flex:none;margin-top:3px}
+.sig-row b{color:${T.TXT};font-weight:800}
 /* cover credibility ring + split (on the vibrant gradient) */
 .cover-cred{display:flex;align-items:center;gap:22px;margin-top:24px}
 .cc-ring{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle at center, rgba(255,255,255,.16) 55%, transparent 56%), conic-gradient(var(--gc) calc(1%*var(--p,0)), rgba(255,255,255,.30) 0)}

@@ -57,11 +57,18 @@ const COMPARE = {
 // raw cell value (drives the empty-column check); badge columns have no `get`.
 const rawOf = (col, p) => (col.badge === "status" ? p.status : col.badge === "conf" ? p.confidence : col.get ? col.get(p) : "");
 
+const TIER_T = { 1: "Tier 1 · binary outcome (highest signal)", 2: "Tier 2 · financial guidance", 3: "Tier 3 · soft / undated" };
+
 function cell(col, p) {
   if (col.badge === "status") return `<td class="ctr"><span class="status-pill sm" style="--c:${statusColor(p.status)}">${LABEL[p.status] || escapeHTML(p.status || "")}</span></td>`;
   if (col.badge === "conf") return p.confidence ? `<td class="ctr"><span class="conf-badge" style="--c:${confColor(p.confidence)}" title="${p.confidence} confidence">${p.confidence}</span></td>` : `<td class="ctr"></td>`;
+  if (col.key === "promise") {
+    const drop = p.dropped ? `<span class="td-drop" title="Quietly dropped — reaffirmed, then went silent once due">⚠</span>` : "";
+    const tier = p.tier ? `<span class="td-tier tier-${p.tier}" title="${TIER_T[p.tier] || ""}">T${p.tier}</span>` : "";
+    return `<td class="${col.cls || ""}">${drop}${tier}${escapeHTML(col.get(p))}</td>`;
+  }
   const v = col.get(p);
-  return `<td class="${col.cls || ""}"${v ? "" : ""}>${escapeHTML(v)}</td>`;
+  return `<td class="${col.cls || ""}">${escapeHTML(v)}</td>`;
 }
 
 const rowHTML = (p, cols) => `<tr data-id="${escapeHTML(p.id)}" tabindex="0">${cols.map((c) => cell(c, p)).join("")}</tr>`;
