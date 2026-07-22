@@ -198,7 +198,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 1,
+      "mentions": 1
     },
     {
       "id": "p002",
@@ -237,7 +240,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 2,
+      "mentions": 1
     },
     {
       "id": "p003",
@@ -276,7 +282,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 3,
+      "mentions": 1
     },
     {
       "id": "p004",
@@ -315,7 +324,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 4,
+      "mentions": 2
     },
     {
       "id": "p005",
@@ -354,7 +366,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 5,
+      "mentions": 1
     },
     {
       "id": "p006",
@@ -393,7 +408,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 6,
+      "mentions": 1
     },
     {
       "id": "p007",
@@ -432,7 +450,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 7,
+      "mentions": 1
     },
     {
       "id": "p008",
@@ -471,7 +492,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 8,
+      "mentions": 1
     },
     {
       "id": "p009",
@@ -510,7 +534,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 9,
+      "mentions": 1
     },
     {
       "id": "p010",
@@ -549,7 +576,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 10,
+      "mentions": 1
     },
     {
       "id": "p011",
@@ -588,7 +618,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 11,
+      "mentions": 1
     },
     {
       "id": "p012",
@@ -627,7 +660,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 12,
+      "mentions": 1
     },
     {
       "id": "p013",
@@ -666,7 +702,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 13,
+      "mentions": 1
     },
     {
       "id": "p014",
@@ -705,7 +744,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 14,
+      "mentions": 1
     },
     {
       "id": "p015",
@@ -744,7 +786,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 15,
+      "mentions": 1
     },
     {
       "id": "p016",
@@ -783,7 +828,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 16,
+      "mentions": 1
     },
     {
       "id": "p017",
@@ -822,7 +870,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 17,
+      "mentions": 1
     },
     {
       "id": "p018",
@@ -861,7 +912,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 18,
+      "mentions": 1
     },
     {
       "id": "p019",
@@ -900,7 +954,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 19,
+      "mentions": 1
     },
     {
       "id": "p020",
@@ -939,7 +996,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 20,
+      "mentions": 1
     },
     {
       "id": "p021",
@@ -978,7 +1038,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": true
+      "was_revised": true,
+      "tier": 1,
+      "link_id": 21,
+      "mentions": 1
     },
     {
       "id": "p022",
@@ -1017,7 +1080,10 @@
       },
       "mgmt_explanation": "Increased US natural gas prices led to higher ethane prices despite subdued downstream demand.",
       "root_cause": "Demand slowdown",
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 22,
+      "mentions": 1
     },
     {
       "id": "p023",
@@ -1056,7 +1122,10 @@
       },
       "mgmt_explanation": "Growth led by higher revenues and margin expansion; no explicit shortfall explanation",
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 23,
+      "mentions": 1
     },
     {
       "id": "p024",
@@ -1095,7 +1164,10 @@
       },
       "mgmt_explanation": "Lower margin due to declining volumes, lower price realization, higher operating cost and government levies",
       "root_cause": "Demand slowdown",
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 24,
+      "mentions": 1
     },
     {
       "id": "p025",
@@ -1134,7 +1206,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 25,
+      "mentions": 1
     },
     {
       "id": "p026",
@@ -1173,7 +1248,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 26,
+      "mentions": 1
     },
     {
       "id": "p027",
@@ -1212,7 +1290,10 @@
       },
       "mgmt_explanation": "No explicit explanation for shortfall provided in the document",
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 27,
+      "mentions": 1
     },
     {
       "id": "p028",
@@ -1251,7 +1332,10 @@
       },
       "mgmt_explanation": "null",
       "root_cause": "Demand slowdown",
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 28,
+      "mentions": 1
     },
     {
       "id": "p029",
@@ -1290,7 +1374,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 29,
+      "mentions": 1
     },
     {
       "id": "p030",
@@ -1329,7 +1416,10 @@
       },
       "mgmt_explanation": "Lower YoY EBITDA due to lower margin and weak price realization for CBM",
       "root_cause": "Pricing / mix",
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 30,
+      "mentions": 1
     },
     {
       "id": "p031",
@@ -1368,7 +1458,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 31,
+      "mentions": 1
     },
     {
       "id": "p032",
@@ -1407,7 +1500,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 32,
+      "mentions": 1
     },
     {
       "id": "p033",
@@ -1446,7 +1542,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 33,
+      "mentions": 1
     },
     {
       "id": "p034",
@@ -1485,7 +1584,10 @@
       },
       "mgmt_explanation": "Natural decline in KGD6 volume and weak price realization",
       "root_cause": "Demand slowdown",
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 34,
+      "mentions": 1
     },
     {
       "id": "p035",
@@ -1524,7 +1626,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 35,
+      "mentions": 1
     },
     {
       "id": "p036",
@@ -1556,7 +1661,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 36,
+      "mentions": 1
     },
     {
       "id": "p037",
@@ -1595,7 +1703,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 37,
+      "mentions": 1
     },
     {
       "id": "p038",
@@ -1634,7 +1745,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 38,
+      "mentions": 1
     },
     {
       "id": "p039",
@@ -1673,7 +1787,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 39,
+      "mentions": 1
     },
     {
       "id": "p040",
@@ -1712,7 +1829,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 40,
+      "mentions": 1
     },
     {
       "id": "p041",
@@ -1751,7 +1871,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 41,
+      "mentions": 1
     },
     {
       "id": "p042",
@@ -1790,7 +1913,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 42,
+      "mentions": 1
     },
     {
       "id": "p043",
@@ -1829,7 +1955,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 43,
+      "mentions": 1
     },
     {
       "id": "p044",
@@ -1868,7 +1997,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 44,
+      "mentions": 1
     },
     {
       "id": "p045",
@@ -1907,7 +2039,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 45,
+      "mentions": 1
     },
     {
       "id": "p046",
@@ -1946,7 +2081,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 46,
+      "mentions": 1
     },
     {
       "id": "p047",
@@ -1985,7 +2123,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 47,
+      "mentions": 1
     },
     {
       "id": "p048",
@@ -2024,7 +2165,10 @@
       },
       "mgmt_explanation": "Robust performance despite disruptions like tariff, AI, and conflict",
       "root_cause": "Other",
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 48,
+      "mentions": 1
     },
     {
       "id": "p049",
@@ -2063,7 +2207,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 49,
+      "mentions": 1
     },
     {
       "id": "p050",
@@ -2102,7 +2249,10 @@
       },
       "mgmt_explanation": "Growth driven by subscriber additions and improved mix; no explicit shortfall explanation",
       "root_cause": "Other",
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 50,
+      "mentions": 1
     },
     {
       "id": "p051",
@@ -2141,7 +2291,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 51,
+      "mentions": 1
     },
     {
       "id": "p052",
@@ -2180,7 +2333,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 52,
+      "mentions": 1
     },
     {
       "id": "p053",
@@ -2219,7 +2375,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 53,
+      "mentions": 1
     },
     {
       "id": "p054",
@@ -2258,7 +2417,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 54,
+      "mentions": 1
     },
     {
       "id": "p055",
@@ -2297,7 +2459,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 55,
+      "mentions": 1
     },
     {
       "id": "p056",
@@ -2329,7 +2494,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 56,
+      "mentions": 1
     },
     {
       "id": "p057",
@@ -2361,7 +2529,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 57,
+      "mentions": 1
     },
     {
       "id": "p058",
@@ -2400,7 +2571,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 58,
+      "mentions": 1
     },
     {
       "id": "p059",
@@ -2439,7 +2613,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 59,
+      "mentions": 1
     },
     {
       "id": "p060",
@@ -2478,7 +2655,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 60,
+      "mentions": 1
     },
     {
       "id": "p061",
@@ -2517,7 +2697,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 61,
+      "mentions": 1
     },
     {
       "id": "p062",
@@ -2556,7 +2739,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 62,
+      "mentions": 1
     },
     {
       "id": "p063",
@@ -2595,7 +2781,14 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 4,
+      "mentions": 2,
+      "slippage_path": [
+        "2025",
+        "medium term"
+      ]
     },
     {
       "id": "p064",
@@ -2634,7 +2827,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 63,
+      "mentions": 1
     },
     {
       "id": "p065",
@@ -2673,7 +2869,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 64,
+      "mentions": 1
     },
     {
       "id": "p066",
@@ -2712,7 +2911,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 65,
+      "mentions": 1
     },
     {
       "id": "p067",
@@ -2751,7 +2953,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 66,
+      "mentions": 1
     },
     {
       "id": "p068",
@@ -2790,7 +2995,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 67,
+      "mentions": 1
     },
     {
       "id": "p069",
@@ -2829,7 +3037,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 68,
+      "mentions": 1
     },
     {
       "id": "p070",
@@ -2868,7 +3079,10 @@
       },
       "mgmt_explanation": "Soft food & lifestyle demand and scale-up of hyperlocal commerce impacted growth",
       "root_cause": "Demand slowdown",
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 69,
+      "mentions": 1
     },
     {
       "id": "p071",
@@ -2907,7 +3121,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 70,
+      "mentions": 1
     },
     {
       "id": "p072",
@@ -2946,7 +3163,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 71,
+      "mentions": 1
     },
     {
       "id": "p073",
@@ -2985,7 +3205,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 72,
+      "mentions": 1
     },
     {
       "id": "p074",
@@ -3024,7 +3247,10 @@
       },
       "mgmt_explanation": "No explicit explanation for shortfall provided",
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 73,
+      "mentions": 1
     },
     {
       "id": "p075",
@@ -3063,7 +3289,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 74,
+      "mentions": 1
     },
     {
       "id": "p076",
@@ -3102,7 +3331,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 75,
+      "mentions": 1
     },
     {
       "id": "p077",
@@ -3141,7 +3373,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 76,
+      "mentions": 1
     },
     {
       "id": "p078",
@@ -3180,7 +3415,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 77,
+      "mentions": 1
     },
     {
       "id": "p079",
@@ -3219,7 +3457,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 78,
+      "mentions": 1
     },
     {
       "id": "p080",
@@ -3258,7 +3499,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 79,
+      "mentions": 1
     },
     {
       "id": "p081",
@@ -3297,7 +3541,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 80,
+      "mentions": 1
     },
     {
       "id": "p082",
@@ -3336,7 +3583,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 81,
+      "mentions": 1
     },
     {
       "id": "p083",
@@ -3375,7 +3625,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 82,
+      "mentions": 1
     },
     {
       "id": "p084",
@@ -3414,7 +3667,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 83,
+      "mentions": 1
     },
     {
       "id": "p085",
@@ -3453,7 +3709,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 84,
+      "mentions": 1
     },
     {
       "id": "p086",
@@ -3492,7 +3751,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 85,
+      "mentions": 1
     },
     {
       "id": "p087",
@@ -3531,7 +3793,10 @@
       },
       "mgmt_explanation": "No explicit explanation given for shortfall in transcript",
       "root_cause": "Demand slowdown",
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 86,
+      "mentions": 1
     },
     {
       "id": "p088",
@@ -3570,7 +3835,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 87,
+      "mentions": 1
     },
     {
       "id": "p089",
@@ -3609,7 +3877,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 88,
+      "mentions": 1
     },
     {
       "id": "p090",
@@ -3648,7 +3919,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 89,
+      "mentions": 1
     },
     {
       "id": "p091",
@@ -3680,7 +3954,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 90,
+      "mentions": 1
     },
     {
       "id": "p092",
@@ -3719,7 +3996,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 91,
+      "mentions": 1
     },
     {
       "id": "p093",
@@ -3758,7 +4038,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 92,
+      "mentions": 1
     },
     {
       "id": "p094",
@@ -3797,7 +4080,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 93,
+      "mentions": 1
     },
     {
       "id": "p095",
@@ -3836,7 +4122,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 94,
+      "mentions": 1
     },
     {
       "id": "p096",
@@ -3875,7 +4164,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 95,
+      "mentions": 1
     },
     {
       "id": "p097",
@@ -3907,7 +4199,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 96,
+      "mentions": 1
     },
     {
       "id": "p098",
@@ -3939,7 +4234,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 97,
+      "mentions": 1
     },
     {
       "id": "p099",
@@ -3971,7 +4269,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": true
+      "was_revised": true,
+      "tier": 1,
+      "link_id": 98,
+      "mentions": 1
     },
     {
       "id": "p100",
@@ -4003,7 +4304,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 99,
+      "mentions": 1
     },
     {
       "id": "p101",
@@ -4042,7 +4346,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 100,
+      "mentions": 1
     },
     {
       "id": "p102",
@@ -4074,7 +4381,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 101,
+      "mentions": 1
     },
     {
       "id": "p103",
@@ -4113,7 +4423,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 102,
+      "mentions": 1
     },
     {
       "id": "p104",
@@ -4145,7 +4458,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 103,
+      "mentions": 1
     },
     {
       "id": "p105",
@@ -4184,7 +4500,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 104,
+      "mentions": 1
     },
     {
       "id": "p106",
@@ -4223,7 +4542,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 105,
+      "mentions": 1
     },
     {
       "id": "p107",
@@ -4262,7 +4584,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 106,
+      "mentions": 1
     },
     {
       "id": "p108",
@@ -4301,7 +4626,10 @@
       },
       "mgmt_explanation": "No explicit explanation for margin shortfall provided in the document",
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 107,
+      "mentions": 1
     },
     {
       "id": "p109",
@@ -4340,7 +4668,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 108,
+      "mentions": 1
     },
     {
       "id": "p110",
@@ -4379,7 +4710,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 109,
+      "mentions": 1
     },
     {
       "id": "p111",
@@ -4418,7 +4752,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 110,
+      "mentions": 1
     },
     {
       "id": "p112",
@@ -4450,7 +4787,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 111,
+      "mentions": 1
     },
     {
       "id": "p113",
@@ -4482,7 +4822,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 112,
+      "mentions": 1
     },
     {
       "id": "p114",
@@ -4514,7 +4857,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 113,
+      "mentions": 1
     },
     {
       "id": "p115",
@@ -4546,7 +4892,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 114,
+      "mentions": 1
     },
     {
       "id": "p116",
@@ -4578,7 +4927,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 115,
+      "mentions": 1
     },
     {
       "id": "p117",
@@ -4610,7 +4962,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 116,
+      "mentions": 1
     }
   ],
   "financial_trend": [
@@ -4768,14 +5123,32 @@
       "due": 2,
       "on_time": 2,
       "slipped": 0
+    },
+    "signals": {
+      "tier_mix": {
+        "1": 21,
+        "2": 45,
+        "3": 27
+      },
+      "dropped": 0,
+      "slippage_vectors": 1,
+      "sandbagging": {
+        "wide_beats": 28,
+        "of_guided": 40
+      },
+      "attribution": {
+        "owned": 0,
+        "external": 7,
+        "external_share": 1
+      }
     }
   },
   "credibility": {
     "score": 62,
     "grade": "B",
-    "timeline_score": 58,
+    "timeline_score": 61,
     "delivery_score": 61,
-    "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
+    "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), materiality-weighted by tier (Tier-1 binary outcomes 1.4x, Tier-3 soft 0.6x), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
     "headline": "Mostly delivered on testable promises — chiefly demand slowdown; 24 later targets still not yet testable."
   },
   "provenance": {

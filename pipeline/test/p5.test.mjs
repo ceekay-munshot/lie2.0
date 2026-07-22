@@ -11,6 +11,7 @@ import { directionFor, numericDirection, parseTarget, actualNumber, fmtNum, unit
 import { periodIndex, maxPeriodIndex } from "../lib/fiscal.mjs";
 import { verificationWindow, isNotYetTestable } from "../lib/verification-window.mjs";
 import { aggregate, credibility, gradeFromScore } from "../lib/aggregate.mjs";
+import { tierFor, hasDeadline, attributionOf, linkGroups } from "../lib/promise-analysis.mjs";
 import { runCompleteness } from "../verify.mjs";
 
 let fails = 0;
@@ -122,13 +123,26 @@ ok(sv(qip, { value: 1, unit: "USD_bn", what_happened: "debt down by ~$1bn" }).st
 const cap = { category: "capacity", target: { value: 3.1, unit: "Mtpa" }, test_date: "Q3FY26", revisions: [] };
 ok(sv(cap, { value: 3.1, unit: "Mtpa", what_happened: "reached 3.1 Mtpa" }).status === "MET", "same-unit actual still scores (MET)");
 
-// ---- 9c) materiality — reaffirmed promises weigh more ------------------------
-console.log("\nmateriality (reaffirmation weighting):");
-const reaff = (status, quarters) => ({ status, confidence: "H", category: "volume", quarter_context: "Q1FY26", reaffirmed_on: Array.from({ length: quarters }, (_, i) => `Q${i + 1}FY25`) });
-// one MET + one MISSED, equal weight → 50. Make the MISSED one heavily reaffirmed → score drops below 50.
-const oneEach = [reaff("MET", 0), reaff("MISSED", 0)];
-const missReaffirmed = [reaff("MET", 0), reaff("MISSED", 4)];
-ok(credibility(missReaffirmed).score < credibility(oneEach).score, "a repeatedly-reaffirmed MISS drags the score more than a one-off miss");
+// ---- 9c) materiality by tier — binary outcomes weigh more --------------------
+console.log("\nmateriality (tier weighting):");
+const tierP = (status, tier) => ({ status, confidence: "H", category: "volume", quarter_context: "Q1FY26", tier });
+// same MET + MISSED both times; the MISS at Tier-1 (weight 1.4) must drag more than at Tier-3 (0.6).
+ok(credibility([tierP("MET", 3), tierP("MISSED", 1)]).score < credibility([tierP("MET", 3), tierP("MISSED", 3)]).score, "a Tier-1 (binary) miss drags the score more than a soft Tier-3 miss");
+ok(credibility([tierP("MET", 1)]).score > credibility([tierP("MET", 3)]).score, "a Tier-1 hit lifts more than a Tier-3 hit");
+ok(credibility([P("MET", "H")]).score === credibility([{ status: "MET", confidence: "H", category: "ebitda", quarter_context: "Q1FY26" }]).score, "a promise with no tier → neutral weight (tests unaffected)");
+
+// ---- 9d) promise-analysis: tier, deadline, attribution, linking, quiet-drop ----
+console.log("\npromise-analysis (tiers + trajectory):");
+ok(tierFor({ category: "capacity", target: { period: "FY27" } }) === 1, "dated capacity commissioning → Tier 1");
+ok(tierFor({ category: "revenue", target: { period: "FY26" } }) === 2, "dated revenue guidance → Tier 2");
+ok(tierFor({ category: "capacity", target: { period: "medium term" } }) === 3, "undated (medium term) → Tier 3 regardless of category");
+ok(hasDeadline({ target: { period: "Q3FY26" } }) === true && hasDeadline({ target: { period: "near term" } }) === false, "hasDeadline: concrete period yes, 'near term' no");
+ok(attributionOf("Demand slowdown") === "external" && attributionOf("Execution") === "owned", "attribution: demand=external, execution=owned");
+// linking: two DISTINCT products (same wording, different number) must NOT merge; the SAME target across quarters must.
+const distinct = [{ category: "capacity", metric: "alumina production 2.3 Mt", promise: "achieve alumina production of 2.3 Mt in FY25", quarter_context: "Q2FY25", target: { value: 2.3 } }, { category: "capacity", metric: "iron ore production 5.5 Mt", promise: "achieve iron ore production of 5.5 Mt in FY25", quarter_context: "Q2FY25", target: { value: 5.5 } }];
+ok(linkGroups(distinct).length === 2, "distinct targets (2.3 Mt alumina vs 5.5 Mt iron) stay separate");
+const same = [{ category: "leverage", metric: "net debt to EBITDA 1.2x", promise: "reduce net debt to EBITDA to 1.2x", quarter_context: "Q1FY25", target: { value: 1.2 } }, { category: "leverage", metric: "net debt to EBITDA 1.2x", promise: "reduce net debt to EBITDA to 1.2x", quarter_context: "Q3FY25", target: { value: 1.2 } }];
+ok(linkGroups(same).length === 1, "same target restated across quarters → one link group");
 
 // ---- 10) Codex review regressions (hardening generic parsing/verdicts) ------
 console.log("\nCodex-review regressions:");

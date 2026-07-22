@@ -19,6 +19,7 @@ import { directionFor } from "./lib/metric-direction.mjs";
 import { findActuals } from "./lib/find-actual.mjs";
 import { financialTrend } from "./lib/financial-trend.mjs";
 import { aggregate, credibility } from "./lib/aggregate.mjs";
+import { analyzeLedger } from "./lib/promise-analysis.mjs";
 import { outputDir } from "./lib/manifest.mjs";
 import { providerConfig } from "./lib/llm.mjs";
 import { EXTRACTION_PROVIDERS } from "./lib/multi-llm.mjs";
@@ -177,14 +178,18 @@ async function main() {
   // 4. financial trend (LLM-assisted)
   const { trend, stats: ftStats } = await financialTrend({ corpus, mock: MOCK, cacheDir, debug: DEBUG });
 
-  // 5. aggregates + credibility (deterministic)
-  const aggregates = aggregate(verified);
+  // 5. analysis (deterministic) — enrich each promise with its materiality TIER + trajectory
+  // (link the same target across quarters → quiet-drop / slippage) and derive ledger-level SIGNALS
+  // (sandbagging, miss attribution). Runs before scoring so credibility can weight by tier.
+  const { promises: analyzed, signals } = analyzeLedger({ promises: verified, verification_window: vw });
+  const aggregates = aggregate(analyzed);
+  aggregates.signals = signals;
   // forced_nyt = due promises (deadline provably within the window) left NYT for want of a
   // retrieved actual. Computed here (not just for provenance) so credibility can fold these
   // unresolved-due unknowns into its shrinkage — a thinly-verified, one-sided ledger must not
   // read as a confident grade. (Same value re-used for the provenance stamp below.)
-  const forced_nyt = verified.filter((p) => p.status === "NYT" && isWithinWindow(p.test_date, vw.latest_reported_date, vw.latest_reported)).length;
-  const cred = credibility(verified, aggregates, { forcedNyt: forced_nyt });
+  const forced_nyt = analyzed.filter((p) => p.status === "NYT" && isWithinWindow(p.test_date, vw.latest_reported_date, vw.latest_reported)).length;
+  const cred = credibility(analyzed, aggregates, { forcedNyt: forced_nyt });
 
   // 6. provenance — the honesty stamp the UI badges and the commit guard enforce.
   //   retrieval_errors = retrieval calls that FAILED (provider quota/network) — the pipeline
@@ -227,7 +232,7 @@ async function main() {
     coverage: coverageBlock(corpus),
     verification_window: vw,
     documents: documentsBlock(corpus),
-    promises: verified,
+    promises: analyzed,
     financial_trend: trend,
     aggregates,
     credibility: cred,

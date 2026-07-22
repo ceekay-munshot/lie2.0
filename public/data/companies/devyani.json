@@ -218,7 +218,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 1,
+      "mentions": 1
     },
     {
       "id": "p002",
@@ -257,7 +260,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 2,
+      "mentions": 1
     },
     {
       "id": "p003",
@@ -296,7 +302,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 3,
+      "mentions": 1
     },
     {
       "id": "p004",
@@ -335,7 +344,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 4,
+      "mentions": 1
     },
     {
       "id": "p005",
@@ -374,7 +386,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 5,
+      "mentions": 1
     },
     {
       "id": "p006",
@@ -413,7 +428,10 @@
       },
       "mgmt_explanation": "No explicit explanation for shortfall provided in documents",
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 6,
+      "mentions": 1
     },
     {
       "id": "p007",
@@ -452,7 +470,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 7,
+      "mentions": 1
     },
     {
       "id": "p008",
@@ -491,7 +512,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 8,
+      "mentions": 1
     },
     {
       "id": "p009",
@@ -530,7 +554,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 9,
+      "mentions": 1
     },
     {
       "id": "p010",
@@ -569,7 +596,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 10,
+      "mentions": 1
     },
     {
       "id": "p011",
@@ -608,7 +638,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 11,
+      "mentions": 1
     },
     {
       "id": "p012",
@@ -647,7 +680,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 12,
+      "mentions": 1
     },
     {
       "id": "p013",
@@ -686,7 +722,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 13,
+      "mentions": 1
     },
     {
       "id": "p014",
@@ -725,7 +764,10 @@
       },
       "mgmt_explanation": "No explicit explanation for shortfall provided in documents",
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 14,
+      "mentions": 1
     },
     {
       "id": "p015",
@@ -764,7 +806,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 15,
+      "mentions": 1
     },
     {
       "id": "p016",
@@ -803,7 +848,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 16,
+      "mentions": 1
     },
     {
       "id": "p017",
@@ -842,7 +890,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 17,
+      "mentions": 1
     },
     {
       "id": "p018",
@@ -881,7 +932,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 18,
+      "mentions": 1
     },
     {
       "id": "p019",
@@ -920,7 +974,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 19,
+      "mentions": 1
     },
     {
       "id": "p020",
@@ -959,7 +1016,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 20,
+      "mentions": 1
     },
     {
       "id": "p021",
@@ -998,7 +1058,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 21,
+      "mentions": 1
     },
     {
       "id": "p022",
@@ -1037,7 +1100,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 22,
+      "mentions": 1
     },
     {
       "id": "p023",
@@ -1076,7 +1142,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 23,
+      "mentions": 1
     },
     {
       "id": "p024",
@@ -1115,7 +1184,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 24,
+      "mentions": 1
     },
     {
       "id": "p025",
@@ -1154,7 +1226,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 25,
+      "mentions": 1
     },
     {
       "id": "p026",
@@ -1193,7 +1268,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 26,
+      "mentions": 1
     },
     {
       "id": "p027",
@@ -1232,7 +1310,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 27,
+      "mentions": 1
     },
     {
       "id": "p028",
@@ -1271,7 +1352,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 28,
+      "mentions": 1
     },
     {
       "id": "p029",
@@ -1310,7 +1394,10 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 29,
+      "mentions": 1
     }
   ],
   "financial_trend": [
@@ -1452,14 +1539,28 @@
       "due": 3,
       "on_time": 3,
       "slipped": 0
+    },
+    "signals": {
+      "tier_mix": {
+        "1": 12,
+        "2": 11,
+        "3": 3
+      },
+      "dropped": 0,
+      "slippage_vectors": 0,
+      "sandbagging": {
+        "wide_beats": 4,
+        "of_guided": 7
+      },
+      "attribution": null
     }
   },
   "credibility": {
-    "score": 65,
+    "score": 67,
     "grade": "B",
-    "timeline_score": 61,
-    "delivery_score": 62,
-    "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
+    "timeline_score": 64,
+    "delivery_score": 63,
+    "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), materiality-weighted by tier (Tier-1 binary outcomes 1.4x, Tier-3 soft 0.6x), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
     "headline": "Mostly delivered on testable promises; 3 later targets still not yet testable."
   },
   "provenance": {

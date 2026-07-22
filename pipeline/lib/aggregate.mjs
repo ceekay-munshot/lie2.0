@@ -17,13 +17,12 @@ const OUTCOME_W = { MET: 1, PARTIAL: 0.5, MISSED: 0 };
 const _num = (v, d) => { const n = Number(v); return Number.isFinite(n) ? n : d; };
 const PRIOR_RATE = Math.min(1, Math.max(0, _num(process.env.CRED_PRIOR_RATE, 0.5)));
 const PRIOR_K = Math.max(0, _num(process.env.CRED_PRIOR_K, 10));
-// Materiality — a promise management REPEATED across quarters (reaffirmed_on) is a sustained,
-// public commitment, so a flagship target met/missed repeatedly should weigh more than a one-off
-// aside. Bounded so it can't dominate; env-tunable. (v1 signal = reaffirmation count; magnitude/
-// category weighting can layer on later.)
-const REAFFIRM_W = Math.max(0, _num(process.env.CRED_REAFFIRM_W, 0.35));
-const REAFFIRM_CAP = Math.max(0, _num(process.env.CRED_REAFFIRM_CAP, 4));
-const materiality = (p) => 1 + REAFFIRM_W * Math.min(REAFFIRM_CAP, Array.isArray(p.reaffirmed_on) ? p.reaffirmed_on.length : 0);
+// Materiality by TIER — a Tier-1 binary physical/financial outcome (commissioning, capex,
+// deleverage) is far harder to fudge and higher-signal than a soft Tier-3 medium-term aspiration,
+// so it weighs more; an undated/soft promise weighs less. `tier` is set upstream by
+// promise-analysis.mjs; a promise with no tier (e.g. a unit-test fixture) gets the neutral 1.0.
+const TIER_W = { 1: _num(process.env.TIER1_W, 1.4), 2: _num(process.env.TIER2_W, 1.0), 3: _num(process.env.TIER3_W, 0.6) };
+const materiality = (p) => TIER_W[p.tier] ?? 1.0;
 const BANDS = [[75, "A"], [60, "B"], [45, "C"], [30, "D"], [0, "E"]];
 export const gradeFromScore = (s) => (s == null ? null : (BANDS.find(([t]) => s >= t) || [, "E"])[1]);
 
@@ -120,7 +119,7 @@ export function credibility(promises = [], aggregates = null, opts = {}) {
     grade: gradeFromScore(score),
     timeline_score,
     delivery_score,
-    method: `Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), with promises management reaffirmed across quarters weighted more (materiality), shrunk toward a neutral ${Math.round(PRIOR_RATE * 100)} prior by ${PRIOR_K} pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.`,
+    method: `Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), materiality-weighted by tier (Tier-1 binary outcomes ${TIER_W[1]}x, Tier-3 soft ${TIER_W[3]}x), shrunk toward a neutral ${Math.round(PRIOR_RATE * 100)} prior by ${PRIOR_K} pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.`,
     headline: buildHeadline(agg),
   };
 }

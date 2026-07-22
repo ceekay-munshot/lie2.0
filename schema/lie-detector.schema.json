@@ -60,7 +60,13 @@
           "absolute":{"type":["number","null"]},"pct":{"type":["number","null"]},
           "bps":{"type":["number","null"]},"days":{"type":["number","null"]},"text":{"type":["string","null"]}}},
         "mgmt_explanation":{"type":["string","null"],"description":"<=25 words"},
-        "root_cause":{"type":["string","null"],"enum":["Demand slowdown","Pricing / mix","Cost inflation","Supply chain","Execution","Capacity delay","Regulatory","Working capital","Capital allocation","Other",null]}
+        "root_cause":{"type":["string","null"],"enum":["Demand slowdown","Pricing / mix","Cost inflation","Supply chain","Execution","Capacity delay","Regulatory","Working capital","Capital allocation","Other",null]},
+        "was_revised":{"type":["boolean","null"]},
+        "tier":{"type":["integer","null"],"enum":[1,2,3,null],"description":"materiality tier: 1 binary physical/financial outcome · 2 financial guidance · 3 soft/medium-term or undated"},
+        "link_id":{"type":["integer","null"],"description":"groups the same target restated across quarters"},
+        "mentions":{"type":["integer","null"],"description":"distinct quarters this target was raised in"},
+        "dropped":{"type":["boolean","null"],"description":"a reaffirmed, now-due target management went silent on — a quiet-drop red flag"},
+        "slippage_path":{"type":["array","null"],"items":{"type":"string"},"description":"the target's stated period as it drifted across mentions"}
       }}},
     "financial_trend":{"type":"array","items":{
       "type":"object","required":["quarter"],
@@ -76,7 +82,8 @@
         "by_quarter":{"type":"object"},
         "root_causes":{"type":"object"},
         "confidence_mix":{"type":"object"},
-        "timeline_commitments":{"type":"object"}}},
+        "timeline_commitments":{"type":"object"},
+        "signals":{"type":"object","description":"credibility signals: tier_mix, dropped, slippage_vectors, sandbagging, attribution"}}},
     "credibility":{"type":"object","required":["score","grade"],
       "properties":{
         "score":{"type":["number","null"]},"grade":{"type":["string","null"]},
