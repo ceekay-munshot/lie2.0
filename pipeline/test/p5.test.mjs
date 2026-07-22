@@ -11,7 +11,7 @@ import { directionFor, numericDirection, parseTarget, actualNumber, fmtNum, unit
 import { periodIndex, maxPeriodIndex } from "../lib/fiscal.mjs";
 import { verificationWindow, isNotYetTestable } from "../lib/verification-window.mjs";
 import { aggregate, credibility, gradeFromScore } from "../lib/aggregate.mjs";
-import { tierFor, hasDeadline, attributionOf, linkGroups, isDebtServicing } from "../lib/promise-analysis.mjs";
+import { tierFor, hasDeadline, attributionOf, linkGroups, isDebtServicing, collapseDuplicates } from "../lib/promise-analysis.mjs";
 import { runCompleteness } from "../verify.mjs";
 
 let fails = 0;
@@ -155,6 +155,26 @@ ok(sv(cbg, { value: 10, unit: "plants", what_happened: "10 CBG plants operationa
 const pvc = { category: "capacity", target: { value: 1.5, unit: "million tons", period: "Q3FY26", text: "1.5 mt PVC" }, test_date: "Q3FY26", confidence: "H", promise: "commission 1.5 mt PVC", metric: "1.5 mt PVC", revisions: [] };
 ok(sv(pvc, { value: 1.5, unit: "million tons", what_happened: "1.5 million tons PVC capacity commissioned as planned" }, CTXW).status === "MET", "a genuinely 'commissioned' capacity stays MET (real delivery not hidden by 'as planned')");
 ok(reconcileScale(1.5, "GW", "MW") === 1500 && reconcileScale(1500, "MW", "GW") === 1.5, "reconcileScale: 1.5 GW ↔ 1,500 MW");
+
+// ---- 9f) duplicate collapse: same promise restated → one row; distinct projects kept separate ----
+console.log("\nduplicate collapse:");
+const dup = [
+  { category: "capacity", metric: "300 MW solar by Q4FY26", promise: "Commission Project-1 Solar 300 MW in Rajasthan by Q4FY26", quarter_context: "Q3FY25", status: "NYT", target: { value: 300, period: "Q4FY26" } },
+  { category: "capacity", metric: "300 MW solar by Q4FY26", promise: "Commission 300 MW solar project by Q4FY26", quarter_context: "Q4FY25", status: "NYT", target: { value: 300, period: "Q4FY26" } },
+  { category: "capacity", metric: "300 MW solar by Q4FY26", promise: "Commission 300 MW solar project by Q4FY26", quarter_context: "Q1FY26", status: "NYT", target: { value: 300, period: "Q4FY26" } },
+];
+ok(collapseDuplicates(dup).length === 1, "'300 MW solar by Q4FY26' restated across 3 quarters → one row (the 'it came back again' bug)");
+ok(collapseDuplicates(dup)[0].mentions === 3, "the survivor records it was raised in 3 distinct quarters");
+const distinctProj = [
+  { category: "capacity", metric: "Project-2 hybrid 150 MW Q3FY27", promise: "Commission Project-2 Hybrid 150 MW by Q3FY27", quarter_context: "Q3FY25", status: "NYT", target: { value: 150, period: "Q3FY27" } },
+  { category: "capacity", metric: "Project-3 hybrid 150 MW Q4FY27", promise: "Commission Project-3 Hybrid 150 MW by Q4FY27", quarter_context: "Q3FY25", status: "NYT", target: { value: 150, period: "Q4FY27" } },
+];
+ok(collapseDuplicates(distinctProj).length === 2, "same value but DIFFERENT deadline (Project-2 Q3FY27 vs Project-3 Q4FY27) → kept as two");
+const trains = [
+  { category: "capacity", metric: "Lanjigarh Train 1 refinery 3.5 mt", promise: "Lanjigarh refinery Train 1 full capacity by Q3FY25", quarter_context: "Q1FY25", status: "MISSED", target: { value: 3.5, period: "Q3FY25" } },
+  { category: "capacity", metric: "Lanjigarh Train 2 refinery 3 mt", promise: "Commission Lanjigarh refinery Train 2 in Q3FY25", quarter_context: "Q2FY25", status: "MISSED", target: { value: 3, period: "Q3FY25" } },
+];
+ok(collapseDuplicates(trains).length === 2, "Train-1 (3.5 mt) vs Train-2 (3 mt) — different values → kept as two distinct projects");
 const wind = { category: "capacity", target: { value: 1500, unit: "MW", period: "Q3FY26", text: "1500 MW wind" }, test_date: "Q3FY26", confidence: "H", promise: "commission 1500 MW wind", metric: "1500 MW wind", revisions: [] };
 ok(sv(wind, { value: 1.5, unit: "GW", what_happened: "commissioned 1.5 GW wind, meeting the 1,500 MW target" }, CTXW).status === "MET", "1.5 GW actual vs 1,500 MW target → MET (unit scale reconciled, not '1.5 vs 1500')");
 

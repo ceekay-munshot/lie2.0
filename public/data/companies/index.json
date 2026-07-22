@@ -8,20 +8,20 @@
     "updated_at": "2026-07-01T10:09:15.435Z"
   },
   {
-    "ticker": "VEDL",
-    "name": "VEDL",
-    "sector": null,
-    "credibility_score": 57,
-    "coverage": "Q1 FY25–Q4 FY26",
-    "updated_at": "2026-07-22T09:41:27.205Z"
-  },
-  {
     "ticker": "CESC",
     "name": "CESC",
     "sector": null,
     "credibility_score": 58,
     "coverage": "Q1 FY25–Q3 FY26",
     "updated_at": "2026-07-21T12:42:04.128Z"
+  },
+  {
+    "ticker": "VEDL",
+    "name": "VEDL",
+    "sector": null,
+    "credibility_score": 58,
+    "coverage": "Q1 FY25–Q4 FY26",
+    "updated_at": "2026-07-22T09:41:27.205Z"
   },
   {
     "ticker": "RELIANCE",

@@ -92,6 +92,59 @@ export function linkGroups(promises) {
   return groups;
 }
 
+/* ---------------- duplicate collapse (the SAME promise restated) ---------------- */
+// The extractor emits one commitment several times — the identical target reaffirmed across quarters
+// (CESC "300 MW solar by Q4FY26" in Q3FY25, Q4FY25, Q1FY26), or two near-identical rows for one promise
+// — which inflates the ledger and gives a single promise several verdicts. Collapse a cluster to ONE
+// row ONLY when it is unambiguously the SAME promise: same category, same subject (≥2 shared distinctive
+// tokens + high overlap), the SAME target VALUE, and the SAME deadline PERIOD. Distinct look-alikes that
+// differ in value or period — Project-2 (Q3FY27) vs Project-3 (Q4FY27), 300 MW vs 450 MW, Train-1 vs
+// Train-2 — are ALWAYS kept separate, so real promises are never destroyed.
+const sameValue = (a, b) => {
+  const va = Number(a.target?.value), vb = Number(b.target?.value);
+  if (!Number.isFinite(va) && !Number.isFinite(vb)) return true;   // both unspecified → same
+  if (!Number.isFinite(va) || !Number.isFinite(vb)) return false;  // one specified, one not → differ
+  if (va === 0 || vb === 0) return va === vb;
+  return Math.max(Math.abs(va), Math.abs(vb)) / Math.min(Math.abs(va), Math.abs(vb)) <= 1.02;
+};
+const samePeriod = (a, b) => {
+  const pa = a.target?.period ?? a.test_date ?? "", pb = b.target?.period ?? b.test_date ?? "";
+  const ia = periodIndex(pa), ib = periodIndex(pb);
+  if (ia != null && ib != null) return ia === ib;                                 // same fiscal deadline
+  return String(pa).trim().toLowerCase() === String(pb).trim().toLowerCase();     // else identical text
+};
+const STATUS_RANK = { MISSED: 4, PARTIAL: 3, MET: 2, NYT: 1 };
+/** The representative of a true-duplicate cluster: most-resolved verdict, then the row carrying an
+ *  actual, then the latest quarter — so no real outcome is lost when duplicates merge. */
+function pickRepresentative(rows) {
+  return [...rows].sort((a, b) =>
+    ((STATUS_RANK[b.status] || 0) - (STATUS_RANK[a.status] || 0)) ||
+    ((b.actual ? 1 : 0) - (a.actual ? 1 : 0)) ||
+    ((periodIndex(b.quarter_context) ?? 0) - (periodIndex(a.quarter_context) ?? 0)))[0];
+}
+/** Collapse exact-restatement duplicates to one row each (criteria above). Returns a fresh, shorter
+ *  list; the survivor's `mentions` reflects how many distinct quarters the promise was raised in. */
+export function collapseDuplicates(promises) {
+  const sigs = promises.map(subjectSig);
+  const used = new Array(promises.length).fill(false);
+  const out = [];
+  for (let i = 0; i < promises.length; i++) {
+    if (used[i]) continue;
+    const cluster = [promises[i]]; used[i] = true;
+    for (let j = i + 1; j < promises.length; j++) {
+      if (used[j] || promises[j].category !== promises[i].category) continue;
+      if (sharedCount(sigs[i], sigs[j]) >= 2 && jaccard(sigs[i], sigs[j]) >= LINK_TOL && sameValue(promises[i], promises[j]) && samePeriod(promises[i], promises[j])) {
+        cluster.push(promises[j]); used[j] = true;
+      }
+    }
+    if (cluster.length === 1) { out.push(promises[i]); continue; }
+    const rep = pickRepresentative(cluster);
+    const quarters = new Set(cluster.map((r) => r.quarter_context).filter(Boolean));
+    out.push({ ...rep, mentions: Math.max(rep.mentions || 1, quarters.size) });
+  }
+  return out;
+}
+
 /* ---------------- routine debt-servicing (a non-promise) ---------------- */
 // Repaying a specific facility on its contractual due date ("pay the $417m Sumangal payment in
 // December as scheduled", "the entire ICL 350m will be paid on time") is a CONTRACTUAL FACT, not a
@@ -121,9 +174,11 @@ const SANDBAG_SHARE = _num(process.env.SANDBAG_SHARE, 0.5);
  * ledger-level `signals` summary. Non-mutating (returns fresh promise objects).
  */
 export function analyzeLedger(ledger = {}) {
-  // Drop routine debt-servicing non-promises up front (a contractual repayment on its due date is
-  // not a commitment). Runs before scoring, so aggregates/credibility never count it.
-  const promises = (ledger.promises || []).filter((p) => !isDebtServicing(p)).map((p) => ({ ...p }));
+  // Clean the row set BEFORE scoring, so aggregates/credibility count each real commitment ONCE:
+  //   1. drop routine debt-servicing non-promises (a contractual repayment on its due date), then
+  //   2. collapse exact-restatement duplicates (the same target reaffirmed across quarters).
+  const deduped = collapseDuplicates((ledger.promises || []).filter((p) => !isDebtServicing(p)));
+  const promises = deduped.map((p) => ({ ...p }));
   const vw = ledger.verification_window || {};
   const windowIdx = periodIndex(vw.latest_reported);
 
@@ -136,7 +191,7 @@ export function analyzeLedger(ledger = {}) {
     const rows = idxs.map((i) => promises[i]).sort((a, b) => (periodIndex(a.quarter_context) ?? 0) - (periodIndex(b.quarter_context) ?? 0));
     const mentions = new Set(rows.map((r) => r.quarter_context).filter(Boolean)).size; // DISTINCT quarters raised in
     const lastMentionIdx = Math.max(...rows.map((r) => periodIndex(r.quarter_context) ?? -Infinity));
-    for (const r of rows) { r.link_id = gi + 1; r.mentions = mentions; }
+    for (const r of rows) { r.link_id = gi + 1; r.mentions = Math.max(mentions, r.mentions || 1); }
 
     // QUIET DROP — the single strongest red flag: a target management REAFFIRMED across ≥2 quarters
     // (it was "loud"), whose DEADLINE is provably DUE within the window, that they then went silent

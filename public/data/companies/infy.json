@@ -782,44 +782,9 @@
       "mgmt_explanation": null,
       "root_cause": null,
       "was_revised": false,
+      "mentions": 1,
       "tier": 2,
-      "link_id": 16,
-      "mentions": 1
-    },
-    {
-      "id": "p017",
-      "date": "2025-01-01",
-      "quarter_context": "Q3FY25",
-      "source_id": "q3fy25-transcript",
-      "source_label": "Q3FY25 transcript",
-      "category": "revenue",
-      "promise": "Large deal TCV of $2.5 billion in Q3 FY25 with 63% net new",
-      "quote": "Large deal TCV for the quarter was at $2.5 bn, 63% of this being net new",
-      "metric": "Q3FY25 large deal TCV $2.5 bn, 63% net new",
-      "target": {
-        "text": "$2.5 bn large deal TCV with 63% net new in Q3FY25",
-        "value": 2.5,
-        "value_high": null,
-        "unit": "USD_bn",
-        "period": "Q3FY25"
-      },
-      "test_date": "2025-02-14",
-      "confidence": "H",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 2,
-      "link_id": 16,
-      "mentions": 1
+      "link_id": 16
     },
     {
       "id": "p018",
@@ -2905,12 +2870,12 @@
     }
   ],
   "aggregates": {
-    "total": 72,
+    "total": 71,
     "status_counts": {
       "MET": 16,
       "PARTIAL": 3,
       "MISSED": 2,
-      "NYT": 51
+      "NYT": 50
     },
     "testable": 21,
     "by_quarter": {
@@ -2930,7 +2895,7 @@
         "MET": 7,
         "PARTIAL": 3,
         "MISSED": 1,
-        "NYT": 3
+        "NYT": 2
       },
       "Q4FY25": {
         "MET": 1,
@@ -2968,7 +2933,7 @@
       "Demand slowdown": 3
     },
     "confidence_mix": {
-      "H": 67,
+      "H": 66,
       "M": 5,
       "L": 0
     },
@@ -2999,13 +2964,13 @@
     "timeline_score": null,
     "delivery_score": 69,
     "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), materiality-weighted by tier (Tier-1 binary outcomes 1.4x, Tier-3 soft 0.6x), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
-    "headline": "Mostly delivered on testable promises — chiefly demand slowdown; 51 later targets still not yet testable."
+    "headline": "Mostly delivered on testable promises — chiefly demand slowdown; 50 later targets still not yet testable."
   },
   "provenance": {
     "mode": "live",
     "complete": true,
     "retrieval_errors": 0,
-    "forced_nyt": 7,
+    "forced_nyt": 6,
     "models_used": [
       "openai",
       "mistral",

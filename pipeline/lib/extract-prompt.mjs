@@ -5,7 +5,7 @@
  *
  * Bump PROMPT_VERSION whenever the prompt or schema changes (invalidates caches).
  */
-export const PROMPT_VERSION = "p4-2026-07c";
+export const PROMPT_VERSION = "p4-2026-07d";
 
 // Mirrors the company schema's promise.category enum.
 export const CATEGORIES = [
@@ -56,6 +56,8 @@ A commitment is MEASURABLE only if it has a number, percent, ratio, ₹/$ amount
 Typical measurable categories: revenue · ebitda · margin · pat · capex (amount + timeline) · capacity (commissioning timelines) · working_capital · leverage (net-debt, net-debt/EBITDA) · roce · volume · orderbook · timeline (project/listing milestones) · cost (unit cost guidance) · capital_allocation (dividend/buyback/stake) · other.
 
 A promise is FORWARD-LOOKING — a target/guidance for a future period ("we expect / target / guide / will / plan to / by <date> / going forward"). REPORTED ACTUALS and historical results are NOT promises: "Q3 EBITDA was Rs 15,171 crore", "we delivered 800 KT this quarter", "9M capex of $1.3bn", "revenue grew 12% YoY" describe what already happened — REJECT them. Only extract a number/date the company is COMMITTING to deliver in the future.
+
+BE SELECTIVE — quality over quantity. A single earnings document yields roughly 5–15 genuine, MATERIAL commitments, not 40+. Extract the commitments an investor would actually hold management to, not every passing number. Emit ONE row per distinct commitment: do NOT create several rows for the same commitment restated in different words within this document, and do NOT re-list a target the company merely REAFFIRMS from a prior quarter unless its number or date has CHANGED. When torn between a minor aside and a material commitment, skip it.
 
 REJECT vague or non-measurable statements with NO number/date — e.g. "we are confident", "we will grow strongly", "focused on execution", "well positioned". If it has no checkable forward number or date, it is NOT a promise: return nothing for it.
 

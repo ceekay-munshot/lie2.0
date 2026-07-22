@@ -621,15 +621,15 @@
       ]
     },
     {
-      "id": "p014",
-      "date": "2024-11-01",
-      "quarter_context": "Q2FY25",
-      "source_id": "q2fy25-presentation",
-      "source_label": "Q2FY25 presentation",
+      "id": "p026",
+      "date": "2025-09-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
       "category": "capacity",
-      "promise": "Fully commission 3,200 MW renewable capacity by March 2029",
-      "quote": "Target to fully commission 3200 MW by Mar -2029",
-      "metric": "Renewable capacity 3,200 MW by Mar 2029",
+      "promise": "Fully commission 1st Phase of 3,200 MW renewable capacity by March 2029",
+      "quote": "Target to fully commission 1st Phase of 3,200 MW by Mar -2029",
+      "metric": "3,200 MW commissioned by Mar 2029",
       "target": {
         "text": "3,200 MW by Mar 2029",
         "value": 3200,
@@ -651,9 +651,9 @@
       "mgmt_explanation": null,
       "root_cause": null,
       "was_revised": false,
+      "mentions": 2,
       "tier": 1,
-      "link_id": 12,
-      "mentions": 2
+      "link_id": 12
     },
     {
       "id": "p015",
@@ -908,17 +908,17 @@
       "mentions": 1
     },
     {
-      "id": "p021",
-      "date": "2025-02-01",
-      "quarter_context": "Q3FY25",
-      "source_id": "q3fy25-presentation",
-      "source_label": "Q3FY25 presentation",
+      "id": "p027",
+      "date": "2025-09-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
       "category": "capacity",
-      "promise": "Commission Project-1 Solar 300 MW in Rajasthan by Q4FY26",
-      "quote": "Status Expected COD Project-1 Solar Solar 300 Rajasthan",
-      "metric": "Project-1 Solar 300 MW COD Q4FY26",
+      "promise": "Commission 300 MW solar project by Q4FY26",
+      "quote": "Project 1: Solar by Q4FY26",
+      "metric": "300 MW solar by Q4FY26",
       "target": {
-        "text": "300 MW Solar project COD Q4FY26",
+        "text": "300 MW solar by Q4FY26",
         "value": 300,
         "value_high": null,
         "unit": "MW",
@@ -938,9 +938,9 @@
       "mgmt_explanation": null,
       "root_cause": null,
       "was_revised": false,
+      "mentions": 3,
       "tier": 1,
-      "link_id": 18,
-      "mentions": 3
+      "link_id": 18
     },
     {
       "id": "p022",
@@ -1059,111 +1059,6 @@
       "mentions": 1
     },
     {
-      "id": "p025",
-      "date": "2025-06-01",
-      "quarter_context": "Q4FY25",
-      "source_id": "q4fy25-presentation",
-      "source_label": "Q4FY25 presentation",
-      "category": "capacity",
-      "promise": "Commission 300 MW solar project by Q4FY26",
-      "quote": "Status Expected COD Project-1 Solar Solar 300",
-      "metric": "Solar capacity 300 MW by Q4FY26",
-      "target": {
-        "text": "300 MW solar by Q4FY26",
-        "value": 300,
-        "value_high": null,
-        "unit": "MW",
-        "period": "Q4FY26"
-      },
-      "test_date": "2026-05-15",
-      "confidence": "H",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 1,
-      "link_id": 18,
-      "mentions": 3
-    },
-    {
-      "id": "p026",
-      "date": "2025-09-01",
-      "quarter_context": "Q1FY26",
-      "source_id": "q1fy26-presentation",
-      "source_label": "Q1FY26 presentation",
-      "category": "capacity",
-      "promise": "Fully commission 1st Phase of 3,200 MW renewable capacity by March 2029",
-      "quote": "Target to fully commission 1st Phase of 3,200 MW by Mar -2029",
-      "metric": "3,200 MW commissioned by Mar 2029",
-      "target": {
-        "text": "3,200 MW by Mar 2029",
-        "value": 3200,
-        "value_high": null,
-        "unit": "MW",
-        "period": "by Mar 2029"
-      },
-      "test_date": "2029",
-      "confidence": "H",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 1,
-      "link_id": 12,
-      "mentions": 2
-    },
-    {
-      "id": "p027",
-      "date": "2025-09-01",
-      "quarter_context": "Q1FY26",
-      "source_id": "q1fy26-presentation",
-      "source_label": "Q1FY26 presentation",
-      "category": "capacity",
-      "promise": "Commission 300 MW solar project by Q4FY26",
-      "quote": "Project 1: Solar by Q4FY26",
-      "metric": "300 MW solar by Q4FY26",
-      "target": {
-        "text": "300 MW solar by Q4FY26",
-        "value": 300,
-        "value_high": null,
-        "unit": "MW",
-        "period": "Q4FY26"
-      },
-      "test_date": "2026-05-15",
-      "confidence": "H",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 1,
-      "link_id": 18,
-      "mentions": 3
-    },
-    {
       "id": "p028",
       "date": "2025-09-01",
       "quarter_context": "Q1FY26",
@@ -1199,21 +1094,21 @@
       "mentions": 2
     },
     {
-      "id": "p029",
-      "date": "2025-09-01",
-      "quarter_context": "Q1FY26",
-      "source_id": "q1fy26-presentation",
-      "source_label": "Q1FY26 presentation",
+      "id": "p050",
+      "date": "2026-02-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
       "category": "capacity",
-      "promise": "Commission 450 MW hybrid project by Q4FY27",
-      "quote": "Project 3: Hybrid by Q4 FY27",
-      "metric": "450 MW hybrid by Q4FY27",
+      "promise": "Commission 300 MW hybrid project by Q4 FY27",
+      "quote": "Q4 FY26 Q3 FY27 Q4 FY27",
+      "metric": "450 MW hybrid commissioned",
       "target": {
-        "text": "450 MW hybrid by Q4FY27",
+        "text": "450 MW hybrid commissioned",
         "value": 450,
         "value_high": null,
         "unit": "MW",
-        "period": "Q4FY27"
+        "period": "Q4 FY27"
       },
       "test_date": "2027-05-15",
       "confidence": "H",
@@ -1229,9 +1124,9 @@
       "mgmt_explanation": null,
       "root_cause": null,
       "was_revised": false,
+      "mentions": 2,
       "tier": 1,
-      "link_id": 21,
-      "mentions": 2
+      "link_id": 21
     },
     {
       "id": "p030",
@@ -1924,8 +1819,8 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 1,
-      "link_id": 37,
-      "mentions": 1
+      "link_id": 12,
+      "mentions": 2
     },
     {
       "id": "p048",
@@ -1960,7 +1855,12 @@
       "was_revised": false,
       "tier": 1,
       "link_id": 21,
-      "mentions": 2
+      "mentions": 2,
+      "slippage_path": [
+        "Q3FY27",
+        "Q4 FY27",
+        "Q3 FY27"
+      ]
     },
     {
       "id": "p049",
@@ -1994,49 +1894,8 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 1,
-      "link_id": 38,
+      "link_id": 37,
       "mentions": 1
-    },
-    {
-      "id": "p050",
-      "date": "2026-02-01",
-      "quarter_context": "Q3FY26",
-      "source_id": "q3fy26-presentation",
-      "source_label": "Q3FY26 presentation",
-      "category": "capacity",
-      "promise": "Commission 300 MW hybrid project by Q4 FY27",
-      "quote": "Q4 FY26 Q3 FY27 Q4 FY27",
-      "metric": "450 MW hybrid commissioned",
-      "target": {
-        "text": "450 MW hybrid commissioned",
-        "value": 450,
-        "value_high": null,
-        "unit": "MW",
-        "period": "Q4 FY27"
-      },
-      "test_date": "2027-05-15",
-      "confidence": "H",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 1,
-      "link_id": 21,
-      "mentions": 2,
-      "slippage_path": [
-        "Q3FY27",
-        "Q4FY27",
-        "Q3 FY27",
-        "Q4 FY27"
-      ]
     },
     {
       "id": "p051",
@@ -2070,7 +1929,7 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 1,
-      "link_id": 39,
+      "link_id": 38,
       "mentions": 1
     },
     {
@@ -2105,7 +1964,7 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 1,
-      "link_id": 40,
+      "link_id": 39,
       "mentions": 1
     },
     {
@@ -2140,7 +1999,7 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 1,
-      "link_id": 41,
+      "link_id": 40,
       "mentions": 1
     },
     {
@@ -2175,7 +2034,7 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 3,
-      "link_id": 42,
+      "link_id": 41,
       "mentions": 1
     },
     {
@@ -2210,7 +2069,7 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 3,
-      "link_id": 43,
+      "link_id": 42,
       "mentions": 1
     }
   ],
@@ -2287,12 +2146,12 @@
     }
   ],
   "aggregates": {
-    "total": 55,
+    "total": 51,
     "status_counts": {
       "MET": 4,
       "PARTIAL": 0,
       "MISSED": 0,
-      "NYT": 51
+      "NYT": 47
     },
     "testable": 4,
     "by_quarter": {
@@ -2306,42 +2165,42 @@
         "MET": 1,
         "PARTIAL": 0,
         "MISSED": 0,
-        "NYT": 14
-      },
-      "Q3FY25": {
-        "MET": 0,
-        "PARTIAL": 0,
-        "MISSED": 0,
-        "NYT": 3
-      },
-      "Q4FY25": {
-        "MET": 0,
-        "PARTIAL": 0,
-        "MISSED": 0,
-        "NYT": 2
+        "NYT": 13
       },
       "Q1FY26": {
         "MET": 3,
         "PARTIAL": 0,
         "MISSED": 0,
-        "NYT": 9
+        "NYT": 8
       },
-      "Q2FY26": {
+      "Q3FY25": {
         "MET": 0,
         "PARTIAL": 0,
         "MISSED": 0,
-        "NYT": 8
+        "NYT": 2
+      },
+      "Q4FY25": {
+        "MET": 0,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 1
       },
       "Q3FY26": {
         "MET": 0,
         "PARTIAL": 0,
         "MISSED": 0,
         "NYT": 10
+      },
+      "Q2FY26": {
+        "MET": 0,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 8
       }
     },
     "root_causes": {},
     "confidence_mix": {
-      "H": 55,
+      "H": 51,
       "M": 0,
       "L": 0
     },
@@ -2368,7 +2227,7 @@
     "timeline_score": null,
     "delivery_score": 58,
     "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), materiality-weighted by tier (Tier-1 binary outcomes 1.4x, Tier-3 soft 0.6x), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
-    "headline": "Mostly delivered on testable promises; 51 later targets still not yet testable."
+    "headline": "Mostly delivered on testable promises; 47 later targets still not yet testable."
   },
   "provenance": {
     "mode": "live",
