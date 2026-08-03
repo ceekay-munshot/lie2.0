@@ -94,6 +94,19 @@ export const PROVIDER_PRESETS = {
     structured: "json_object",
     keyEnv: "NVIDIA_API_KEY",
   },
+  // Claude via AWS Bedrock — NOT an OpenAI-compatible endpoint (no /chat/completions,
+  // different auth/request/response shape), so it is handled entirely by the
+  // self-contained pipeline/lib/bedrock-claude.mjs module; callChat() below just
+  // dispatches to it for this one provider. Opt-in only (see that file's header) —
+  // no existing deployment is affected unless EXTRACTION_ORDER/LLM_PROVIDER/
+  // LLM_FALLBACKS is explicitly set to include "claude". Override the model with
+  // CLAUDE_MODEL, the region with BEDROCK_REGION (see bedrock-claude.mjs).
+  claude: {
+    baseURL: null,
+    model: "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
+    structured: "json_object",
+    keyEnv: "BEDROCK_API_KEY",
+  },
 };
 
 const DEFAULT_PROVIDER = "gemini";
@@ -213,6 +226,14 @@ class LLMError extends Error {
  * 429/5xx responses with backoff. Throws LLMError on give-up.
  */
 async function callChat(cfg, messages, opts = {}) {
+  // --- Claude/Bedrock path ---------------------------------------------------
+  // Self-contained; delete this block + pipeline/lib/bedrock-claude.mjs to remove
+  // the Claude path without touching anything below (the OpenAI-compatible path).
+  if (cfg.provider === "claude") {
+    const { bedrockCallChat } = await import("./bedrock-claude.mjs");
+    return bedrockCallChat(cfg, messages, opts);
+  }
+  // --- end Claude/Bedrock path -----------------------------------------------
   if (!cfg.baseURL) throw new LLMError(`No base URL for provider "${cfg.provider}"`, { provider: cfg.provider });
   if (!cfg.apiKey) throw new LLMError(`No API key for provider "${cfg.provider}"`, { provider: cfg.provider });
 
