@@ -7,7 +7,9 @@
 # Nothing is committed.
 #
 # Repo secrets: OPENAI_API_KEY (paid lead, optional) · GEMINI_API_KEY, GROQ_API_KEY, MISTRAL_API_KEY (free pool)
+#               · temp_claude_token (Claude via AWS Bedrock — opt-in, see EXTRACTION_ORDER)
 # Egress: api.openai.com · generativelanguage.googleapis.com · api.groq.com · api.mistral.ai
+#         · bedrock-runtime.<region>.amazonaws.com (only when EXTRACTION_ORDER includes "claude")
 
 name: Test extraction (ensemble)
 
@@ -43,6 +45,7 @@ jobs:
       GEMINI_MODEL: ${{ inputs.gemini_model }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+      BEDROCK_API_KEY: ${{ secrets.temp_claude_token }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}

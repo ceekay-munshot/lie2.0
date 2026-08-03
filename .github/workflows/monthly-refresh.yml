@@ -6,7 +6,8 @@
 # (never a downgrade). A monthly commit also keeps the repository active.
 #
 # Secrets: SCREENER_EMAIL/PASSWORD · OPENAI_API_KEY (paid lead, optional) ·
-#          GEMINI/GROQ/MISTRAL_API_KEY (free fallback pool).
+#          GEMINI/GROQ/MISTRAL_API_KEY (free fallback pool) ·
+#          temp_claude_token (Claude via AWS Bedrock — opt-in, see EXTRACTION_ORDER).
 
 name: Monthly refresh
 
@@ -38,6 +39,7 @@ jobs:
       SCREENER_PASSWORD: ${{ secrets.SCREENER_PASSWORD }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+      BEDROCK_API_KEY: ${{ secrets.temp_claude_token }}
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
       MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
