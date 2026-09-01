@@ -7,7 +7,7 @@
     "screener_url": "https://www.screener.in/company/HDFCBANK/consolidated/",
     "fiscal_year_end": "03"
   },
-  "generated_at": "2026-08-01T10:55:19.921Z",
+  "generated_at": "2026-09-01T11:17:53.432Z",
   "coverage": {
     "from": "Q2FY25",
     "to": "Q1FY27",
@@ -148,38 +148,31 @@
       "source_id": "q2fy25-transcript",
       "source_label": "Q2FY25 transcript",
       "category": "leverage",
-      "promise": "Bring loan-deposit ratio to high-80s within 2-3 years",
+      "promise": "Bring CD ratio to high-80s within 2-3 years",
       "quote": "we will do it within two to three years to get to the high 80s",
-      "metric": "LDR high-80s within 2-3 years",
+      "metric": "CD ratio to high-80s in 2-3 years",
       "target": {
-        "text": "LDR high-80s",
-        "value": 88,
+        "text": "CD ratio high-80s in 2-3 years",
+        "value": 85,
         "value_high": 89,
         "unit": "%",
-        "period": "2-3 years"
+        "period": "by FY27"
       },
       "test_date": null,
       "confidence": "H",
-      "actual": {
-        "text": "88.2%",
-        "value": 88.2,
-        "unit": "percent",
-        "source_id": "q4fy26-transcript",
-        "source_date": "2026-04-01",
-        "what_happened": "Loan-deposit ratio reached 88.2% in FY26"
-      },
-      "status": "MET",
+      "actual": null,
+      "status": "NYT",
       "variance": {
-        "absolute": -0.8,
-        "pct": -0.9,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "88.2 vs 88-89 %"
+        "text": "no actual reported"
       },
       "mgmt_explanation": null,
       "root_cause": null,
       "was_revised": false,
-      "tier": 3,
+      "tier": 1,
       "link_id": 1,
       "mentions": 1
     },
@@ -189,39 +182,39 @@
       "quarter_context": "Q2FY25",
       "source_id": "q2fy25-transcript",
       "source_label": "Q2FY25 transcript",
-      "category": "margin",
-      "promise": "Maintain stable NIM in 3.45-3.5% range",
-      "quote": "margins have been stable in the range that we have been talking about at 3.45% to 3.5%",
-      "metric": "NIM 3.45-3.5%",
+      "category": "revenue",
+      "promise": "FY25 credit growth slower than system",
+      "quote": "FY '25, we would probably grow slower than the system",
+      "metric": "FY25 loan growth < system growth",
       "target": {
-        "text": "3.45-3.5% NIM",
-        "value": 3.45,
-        "value_high": 3.5,
-        "unit": "%",
-        "period": "medium term"
+        "text": "FY25 loan growth below system",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "FY25"
       },
-      "test_date": "medium term",
+      "test_date": "2025-05-15",
       "confidence": "H",
       "actual": {
-        "text": "3.31%",
-        "value": 3.31,
+        "text": "12%",
+        "value": 12,
         "unit": "percent",
         "source_id": "q4fy26-transcript",
         "source_date": "2026-04-01",
-        "what_happened": "NIM for FY26 reported at 3.31%"
+        "what_happened": "FY26 credit growth was 12%; system growth estimated 10.5-11.5%, actual system ~16% per period-end RBI data"
       },
-      "status": "NYT",
+      "status": "MISSED",
       "variance": {
-        "absolute": null,
-        "pct": null,
+        "absolute": -13,
+        "pct": -52,
         "bps": null,
         "days": null,
-        "text": "undated target — interim 3.31 %"
+        "text": "12 vs 25"
       },
-      "mgmt_explanation": null,
-      "root_cause": null,
+      "mgmt_explanation": "Calibrated strategies expecting system 10.5-11.5%; actual system comparison shows period-end RBI numbers differ from consensus",
+      "root_cause": "Other",
       "was_revised": false,
-      "tier": 3,
+      "tier": 2,
       "link_id": 2,
       "mentions": 1
     },
@@ -232,17 +225,17 @@
       "source_id": "q2fy25-transcript",
       "source_label": "Q2FY25 transcript",
       "category": "revenue",
-      "promise": "FY25 credit growth slower than system, FY26 at or around system growth, FY27 faster than system",
-      "quote": "FY '25, we would probably grow slower than the system. FY '26, we may be at or around the system growth rate. FY '27, we",
-      "metric": "Credit growth glide path FY25-27 vs system",
+      "promise": "FY26 credit growth at or around system rate",
+      "quote": "FY '26, we may be at or around the system growth rate",
+      "metric": "FY26 loan growth ≈ system growth",
       "target": {
-        "text": "FY25 slower, FY26 at/around system, FY27 faster",
+        "text": "FY26 loan growth at/around system",
         "value": null,
         "value_high": null,
         "unit": null,
-        "period": "FY25-FY27"
+        "period": "FY26"
       },
-      "test_date": null,
+      "test_date": "2026-05-15",
       "confidence": "M",
       "actual": {
         "text": "12%",
@@ -250,35 +243,74 @@
         "unit": "percent",
         "source_id": "q4fy26-transcript",
         "source_date": "2026-04-01",
-        "what_happened": "FY26 credit growth reached 12% vs system's 15-16%"
+        "what_happened": "Bank achieved 12% credit growth in FY26; system growth estimated at 10.5-11.5%, actual system was higher per period-end RBI data."
       },
       "status": "MISSED",
       "variance": {
-        "absolute": -13,
-        "pct": -52,
+        "absolute": -14,
+        "pct": -53.8,
         "bps": null,
         "days": null,
-        "text": "12 vs 25"
+        "text": "12 vs 26"
+      },
+      "mgmt_explanation": "Calibrated strategies for expected system growth of 10.5-11.5%; actual system comparison uses RBI period-end numbers showing different rate.",
+      "root_cause": null,
+      "was_revised": true,
+      "tier": 2,
+      "link_id": 2,
+      "mentions": 1,
+      "slippage_path": [
+        "FY25",
+        "FY26"
+      ]
+    },
+    {
+      "id": "p006",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "revenue",
+      "promise": "FY27 loan growth faster than system",
+      "quote": "FY '27 will be faster than the system",
+      "metric": "FY27 loan growth > system",
+      "target": {
+        "text": "FY27 loan growth faster than system",
+        "value": null,
+        "value_high": null,
+        "unit": null,
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "M",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
       },
       "mgmt_explanation": null,
       "root_cause": null,
       "was_revised": false,
+      "mentions": 2,
       "tier": 2,
-      "link_id": 3,
-      "mentions": 1
+      "link_id": 3
     },
     {
-      "id": "p004",
+      "id": "p005",
       "date": "2024-10-01",
       "quarter_context": "Q2FY25",
       "source_id": "q2fy25-transcript",
       "source_label": "Q2FY25 transcript",
       "category": "timeline",
-      "promise": "List HDB Financial Services by September 2025",
+      "promise": "List HDB Financial by September 2025",
       "quote": "requires HDB to be listed by September '25",
-      "metric": "HDB listing by Sep 2025",
+      "metric": "HDB IPO by Sep'25",
       "target": {
-        "text": "HDB listed by Sep 2025",
+        "text": "HDB listing by Sep 2025",
         "value": null,
         "value_high": null,
         "unit": null,
@@ -287,20 +319,20 @@
       "test_date": "2025",
       "confidence": "H",
       "actual": {
-        "text": "transaction gains of ₹ 69.49 billion from partial divestment through an offer for sale (OFS) in the IPO of Bank's subsidiary HDB Financial Services",
+        "text": "IPO of Bank's subsidiary HDB Financial Services completed in Q1 FY26 with partial divestment through an offer for sale (OFS)",
         "value": null,
         "unit": null,
-        "source_id": "q1fy27-presentation",
-        "source_date": "2026-07-01",
-        "what_happened": "HDB Financial Services listed via IPO in Q1FY26"
+        "source_id": "q1fy26-transcript",
+        "source_date": "2025-07-01",
+        "what_happened": "HDB Financial Services IPO completed in Q1 FY26 (Apr-Jun 2025) with OFS generating ₹69.49bn transaction gains"
       },
-      "status": "NYT",
+      "status": "MET",
       "variance": {
         "absolute": null,
         "pct": null,
         "bps": null,
-        "days": null,
-        "text": "in progress, not yet due"
+        "days": 0,
+        "text": "on time"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -310,39 +342,32 @@
       "mentions": 1
     },
     {
-      "id": "p005",
-      "date": "2024-10-01",
-      "quarter_context": "Q2FY25",
-      "source_id": "q2fy25-transcript",
-      "source_label": "Q2FY25 transcript",
-      "category": "working_capital",
-      "promise": "Operate LCR between 110-120%",
-      "quote": "our target that we normally tend to operate is between 110 to 120",
-      "metric": "LCR 110-120%",
+      "id": "p007",
+      "date": "2025-07-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-transcript",
+      "source_label": "Q1FY26 transcript",
+      "category": "leverage",
+      "promise": "Medium-term CD ratio target of 85-90%",
+      "quote": "in the medium term we aspire to be there. And that naturally comes in when you have the deposit growth superior",
+      "metric": "CD ratio 85-90% medium term",
       "target": {
-        "text": "LCR 110-120%",
-        "value": 110,
-        "value_high": 120,
+        "text": "CD ratio 85-90% medium term",
+        "value": 85,
+        "value_high": 90,
         "unit": "%",
         "period": "medium term"
       },
       "test_date": "medium term",
-      "confidence": "H",
-      "actual": {
-        "text": "114%",
-        "value": 114,
-        "unit": "%",
-        "source_id": "q4fy26-transcript",
-        "source_date": "2026-04-01",
-        "what_happened": "LCR reported at 114% in Q4FY26"
-      },
-      "status": "MET",
+      "confidence": "M",
+      "actual": null,
+      "status": "NYT",
       "variance": {
-        "absolute": -6,
-        "pct": -5,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "114 vs 110-120 %"
+        "text": "no actual reported"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -352,39 +377,39 @@
       "mentions": 1
     },
     {
-      "id": "p006",
-      "date": "2025-01-01",
-      "quarter_context": "Q3FY25",
-      "source_id": "q3fy25-transcript",
-      "source_label": "Q3FY25 transcript",
-      "category": "cost",
-      "promise": "Keep cost-to-assets at ~1.93%",
-      "quote": "that were about 1.93% or so, is very tight and is one of the best in-class",
-      "metric": "Cost-to-assets ~1.93%",
+      "id": "p008",
+      "date": "2025-07-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-transcript",
+      "source_label": "Q1FY26 transcript",
+      "category": "revenue",
+      "promise": "FY26 loan growth at system rate, FY27 above system",
+      "quote": "remain confident of growing our advances at the system growth rate at FY26 and higher than the system in FY27",
+      "metric": "FY26 loan growth ≥ system rate; FY27 loan growth > system",
       "target": {
-        "text": "~1.93% cost-to-assets",
-        "value": 1.93,
+        "text": "FY26 loan growth at system rate, FY27 above system",
+        "value": null,
         "value_high": null,
-        "unit": "%",
-        "period": "FY25"
+        "unit": "% vs system",
+        "period": "FY26"
       },
-      "test_date": "2025-05-15",
+      "test_date": "2026-05-15",
       "confidence": "H",
       "actual": {
-        "text": "1.9%",
-        "value": 1.9,
+        "text": "12% loan growth in FY26, system estimated at 10.5%-11.5%",
+        "value": 12,
         "unit": "percent",
-        "source_id": "q4fy26-presentation",
+        "source_id": "q4fy26-transcript",
         "source_date": "2026-04-01",
-        "what_happened": "Cost-to-assets reported at 1.9% for Q4 FY26"
+        "what_happened": "Achieved 12% loan growth in FY26, above estimated system rate of 10.5%-11.5%"
       },
-      "status": "MET",
+      "status": "MISSED",
       "variance": {
-        "absolute": -0.03,
-        "pct": -1.6,
+        "absolute": -14,
+        "pct": -53.8,
         "bps": null,
         "days": null,
-        "text": "1.9 vs 1.93 %"
+        "text": "12 vs 26 % vs system"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -394,937 +419,13 @@
       "mentions": 1
     },
     {
-      "id": "p007",
-      "date": "2025-01-01",
-      "quarter_context": "Q3FY25",
-      "source_id": "q3fy25-transcript",
-      "source_label": "Q3FY25 transcript",
-      "category": "cost",
-      "promise": "Hold cost growth at ~7% YoY",
-      "quote": "Our cost growth has grown 7% year-on-year",
-      "metric": "FY25 cost growth ~7% YoY",
-      "target": {
-        "text": "~7% YoY cost growth in FY25",
-        "value": 7,
-        "value_high": null,
-        "unit": "%",
-        "period": "FY25"
-      },
-      "test_date": "2025-05-15",
-      "confidence": "H",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 2,
-      "link_id": 7,
-      "mentions": 1
-    },
-    {
-      "id": "p008",
-      "date": "2025-01-01",
-      "quarter_context": "Q3FY25",
-      "source_id": "q3fy25-transcript",
-      "source_label": "Q3FY25 transcript",
-      "category": "leverage",
-      "promise": "Bring down credit-deposit ratio over 2-3 years",
-      "quote": "we will grow. We will try and bring down the credit deposit ratio as quickly as possible over a 2- to 3-year timeframe",
-      "metric": "CD ratio glide path: FY25 < system, FY26 = system, FY27 > system",
-      "target": {
-        "text": "FY25 < system, FY26 = system, FY27 > system",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "2-3 years"
-      },
-      "test_date": null,
-      "confidence": "H",
-      "actual": {
-        "text": "95 thereabout in CD ratio",
-        "value": 95,
-        "unit": "ratio",
-        "source_id": "q1fy26-transcript",
-        "source_date": "2025-07-01",
-        "what_happened": "CD ratio at 95 in Q1FY26, targeting medium-term range of 85-90"
-      },
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "target reaffirmed / in progress — not yet delivered (95)"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 1,
-      "link_id": 8,
-      "mentions": 1
-    },
-    {
-      "id": "p009",
-      "date": "2025-01-01",
-      "quarter_context": "Q3FY25",
-      "source_id": "q3fy25-transcript",
-      "source_label": "Q3FY25 transcript",
-      "category": "margin",
-      "promise": "Maintain NIM in stable band",
-      "quote": "NIMs have remained reasonably range-bound and stable",
-      "metric": "NIM stable band Q3FY25",
-      "target": {
-        "text": "NIM stable band",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "Q3FY25"
-      },
-      "test_date": "2025-02-14",
-      "confidence": "M",
-      "actual": {
-        "text": "3.26%",
-        "value": 3.26,
-        "unit": "percent",
-        "source_id": "q1fy27-presentation",
-        "source_date": "2026-07-01",
-        "what_happened": "NIM reported at 3.26% in Q1FY27"
-      },
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no numeric target"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 2,
-      "link_id": 9,
-      "mentions": 1
-    },
-    {
-      "id": "p010",
-      "date": "2025-01-01",
-      "quarter_context": "Q3FY25",
-      "source_id": "q3fy25-transcript",
-      "source_label": "Q3FY25 transcript",
-      "category": "other",
-      "promise": "Grow retail mix to raise overall book yield",
-      "quote": "the retail mix will go up. And so thereby, the yield on the",
-      "metric": "Retail mix ↑ → overall yield ↑",
-      "target": {
-        "text": "Retail mix ↑ → overall yield ↑",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "medium term"
-      },
-      "test_date": "medium term",
-      "confidence": "M",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 10,
-      "mentions": 1
-    },
-    {
       "id": "p011",
-      "date": "2025-01-01",
-      "quarter_context": "Q3FY25",
-      "source_id": "q3fy25-transcript",
-      "source_label": "Q3FY25 transcript",
-      "category": "revenue",
-      "promise": "FY25 average AUM growth of ~7% YoY",
-      "quote": "timeframe. FY '25 will be lesser than the system. FY '26 will be",
-      "metric": "FY25 AUM growth ~7% YoY",
-      "target": {
-        "text": "~7% YoY AUM growth in FY25",
-        "value": 7,
-        "value_high": null,
-        "unit": "%",
-        "period": "FY25"
-      },
-      "test_date": "2025-05-15",
-      "confidence": "H",
-      "actual": {
-        "text": "average YoY ↑ ₹ 2.96 tn (10.8%)",
-        "value": 10.8,
-        "unit": "percent_YoY",
-        "source_id": "q4fy26-presentation",
-        "source_date": "2026-04-01",
-        "what_happened": "FY25 average AUM grew 10.0% YoY"
-      },
-      "status": "MET",
-      "variance": {
-        "absolute": 3.8,
-        "pct": 54.3,
-        "bps": null,
-        "days": null,
-        "text": "10.8 vs 7 %"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 2,
-      "link_id": 11,
-      "mentions": 1
-    },
-    {
-      "id": "p012",
-      "date": "2025-01-01",
-      "quarter_context": "Q3FY25",
-      "source_id": "q3fy25-transcript",
-      "source_label": "Q3FY25 transcript",
-      "category": "volume",
-      "promise": "FY26 loan growth in line with system, FY27 faster than system",
-      "quote": "FY '26 will be in line with the system. FY '27 will be faster than the system",
-      "metric": "FY26 loan growth = system, FY27 loan growth > system",
-      "target": {
-        "text": "FY26 = system, FY27 > system loan growth",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "FY26, FY27"
-      },
-      "test_date": null,
-      "confidence": "H",
-      "actual": {
-        "text": "12%",
-        "value": 12,
-        "unit": "percent",
-        "source_id": "q4fy26-transcript",
-        "source_date": "2026-04-01",
-        "what_happened": "FY26 loan growth reached 12% vs system 10.5–11.5%"
-      },
-      "status": "MISSED",
-      "variance": {
-        "absolute": -14,
-        "pct": -53.8,
-        "bps": null,
-        "days": null,
-        "text": "12 vs 26"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 2,
-      "link_id": 12,
-      "mentions": 1
-    },
-    {
-      "id": "p013",
-      "date": "2025-04-01",
-      "quarter_context": "Q4FY25",
-      "source_id": "q4fy25-transcript",
-      "source_label": "Q4FY25 transcript",
-      "category": "cost",
-      "promise": "Improve cost-to-income ratio trajectory through productivity gains",
-      "quote": "the trajectory of that is for the cost to income to improve",
-      "metric": "Cost-to-income ratio to improve",
-      "target": {
-        "text": "Cost-to-income ratio to improve",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "ongoing"
-      },
-      "test_date": null,
-      "confidence": "M",
-      "actual": {
-        "text": "39.9%",
-        "value": 39.9,
-        "unit": "ratio",
-        "source_id": "q4fy26-presentation",
-        "source_date": "2026-04-01",
-        "what_happened": "Cost-to-income ratio reached 39.9% in Q4FY26"
-      },
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "undated target — interim 39.9"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 13,
-      "mentions": 1
-    },
-    {
-      "id": "p014",
-      "date": "2025-04-01",
-      "quarter_context": "Q4FY25",
-      "source_id": "q4fy25-transcript",
-      "source_label": "Q4FY25 transcript",
-      "category": "leverage",
-      "promise": "Reduce borrowing mix towards pre-merger single-digit level long term",
-      "quote": "the borrowing mix to the total liabilities now stands at about 14%. Premerger, it was in single digit call it 8% or thereabouts 9%. So",
-      "metric": "Borrowing mix ~8-9% long term",
-      "target": {
-        "text": "Borrowing mix ~8-9% long term",
-        "value": 8,
-        "value_high": 9,
-        "unit": "%",
-        "period": "long term"
-      },
-      "test_date": "long term",
-      "confidence": "M",
-      "actual": {
-        "text": "11%",
-        "value": 11,
-        "unit": "%",
-        "source_id": "q1fy27-transcript",
-        "source_date": "2026-07-01",
-        "what_happened": "Borrowing mix reported at 11%"
-      },
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "undated target — interim 11 %"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 14,
-      "mentions": 1
-    },
-    {
-      "id": "p015",
-      "date": "2025-04-01",
-      "quarter_context": "Q4FY25",
-      "source_id": "q4fy25-transcript",
-      "source_label": "Q4FY25 transcript",
-      "category": "leverage",
-      "promise": "Bring LDR to pre-merger level of 85-90% by FY27",
-      "quote": "the LDR will come down to the premerger level, 85 to 90; more precisely, it was 87-and-change the quarter before the merger, 85 to 90",
-      "metric": "LDR 85-90% by FY27",
-      "target": {
-        "text": "85-90% LDR by FY27",
-        "value": 85,
-        "value_high": 90,
-        "unit": "%",
-        "period": "FY27"
-      },
-      "test_date": "2027-05-15",
-      "confidence": "H",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": true,
-      "tier": 1,
-      "link_id": 15,
-      "mentions": 1
-    },
-    {
-      "id": "p016",
-      "date": "2025-04-01",
-      "quarter_context": "Q4FY25",
-      "source_id": "q4fy25-transcript",
-      "source_label": "Q4FY25 transcript",
-      "category": "margin",
-      "promise": "Maintain NIM in a stable narrow band around current levels",
-      "quote": "how we think about the margin to be within a stable range",
-      "metric": "NIM stable ~3.4-3.5%",
-      "target": {
-        "text": "NIM stable ~3.4-3.5%",
-        "value": 3.4,
-        "value_high": 3.5,
-        "unit": "%",
-        "period": "ongoing"
-      },
-      "test_date": null,
-      "confidence": "H",
-      "actual": {
-        "text": "3.31%",
-        "value": 3.31,
-        "unit": "percent",
-        "source_id": "q4fy26-transcript",
-        "source_date": "2026-04-01",
-        "what_happened": "NIM for FY26 reported at 3.31%"
-      },
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "undated target — interim 3.31 %"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 16,
-      "mentions": 1
-    },
-    {
-      "id": "p017",
-      "date": "2025-04-01",
-      "quarter_context": "Q4FY25",
-      "source_id": "q4fy25-transcript",
-      "source_label": "Q4FY25 transcript",
-      "category": "revenue",
-      "promise": "Grow loans at market rate in FY26 subject to appropriate pricing and quality",
-      "quote": "in FY '26, we are subject to appropriate pricing, quality is always given, appropriate pricing that we will be growing at the market rate of",
-      "metric": "Loan growth at market rate in FY26",
-      "target": {
-        "text": "Grow loans at market rate in FY26",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "FY26"
-      },
-      "test_date": "2026-05-15",
-      "confidence": "M",
-      "actual": {
-        "text": "12%",
-        "value": 12,
-        "unit": "percent",
-        "source_id": "q4fy26-transcript",
-        "source_date": "2026-04-01",
-        "what_happened": "Loan growth reached 12% in FY26, exceeding system credit growth"
-      },
-      "status": "MISSED",
-      "variance": {
-        "absolute": -14,
-        "pct": -53.8,
-        "bps": null,
-        "days": null,
-        "text": "12 vs 26"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 2,
-      "link_id": 17,
-      "mentions": 1
-    },
-    {
-      "id": "p018",
-      "date": "2025-04-01",
-      "quarter_context": "Q4FY25",
-      "source_id": "q4fy25-transcript",
-      "source_label": "Q4FY25 transcript",
-      "category": "roce",
-      "promise": "Maintain ROA around 1.9-2.1% long-term average",
-      "quote": "Our long-term average of ROA, if you see, somewhere, I think we have published that also. Over a 10-year, 15-year period, if you see, anywhere",
-      "metric": "ROA 1.9-2.1%",
-      "target": {
-        "text": "ROA 1.9-2.1%",
-        "value": 1.9,
-        "value_high": 2.1,
-        "unit": "%",
-        "period": "long term"
-      },
-      "test_date": "long term",
-      "confidence": "H",
-      "actual": {
-        "text": "1.85%",
-        "value": 1.85,
-        "unit": "percent",
-        "source_id": "q1fy27-presentation",
-        "source_date": "2026-07-01",
-        "what_happened": "Return on assets reported at 1.85% for Q1 FY27"
-      },
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "undated target — interim 1.85 %"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 18,
-      "mentions": 1
-    },
-    {
-      "id": "p019",
-      "date": "2025-04-01",
-      "quarter_context": "Q4FY25",
-      "source_id": "q4fy25-transcript",
-      "source_label": "Q4FY25 transcript",
-      "category": "working_capital",
-      "promise": "Maintain CASA ratio trajectory in line with historical empirical trend",
-      "quote": "the CASA has moved in the opposite direction, which is when the rate goes up, CASA ratio goes down; and the rate starts to come",
-      "metric": "CASA ratio to rise with lagged rate cuts",
-      "target": {
-        "text": "CASA ratio to rise with lagged rate cuts",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "ongoing"
-      },
-      "test_date": null,
-      "confidence": "M",
-      "actual": {
-        "text": "38%",
-        "value": 38,
-        "unit": "percent",
-        "source_id": "q1fy26-transcript",
-        "source_date": "2025-07-01",
-        "what_happened": "CASA ratio settled at 38% post-merger day-zero adjustment"
-      },
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "undated target — interim 38"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 19,
-      "mentions": 1
-    },
-    {
-      "id": "p020",
-      "date": "2025-07-01",
-      "quarter_context": "Q1FY26",
-      "source_id": "q1fy26-transcript",
-      "source_label": "Q1FY26 transcript",
-      "category": "cost",
-      "promise": "Improve cost-to-income ratio over the full year",
-      "quote": "we envisage to take it down and keep improving on that",
-      "metric": "Cost-to-income ratio ↓ FY26",
-      "target": {
-        "text": "Cost-to-income ratio improvement",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "FY26"
-      },
-      "test_date": "2026-05-15",
-      "confidence": "M",
-      "actual": {
-        "text": "39.9%",
-        "value": 39.9,
-        "unit": "ratio_percentage",
-        "source_id": "q4fy26-presentation",
-        "source_date": "2026-04-01",
-        "what_happened": "Full-year FY26 core cost-to-income ratio reported at 39.9%"
-      },
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no numeric target"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 2,
-      "link_id": 20,
-      "mentions": 1
-    },
-    {
-      "id": "p021",
-      "date": "2025-07-01",
-      "quarter_context": "Q1FY26",
-      "source_id": "q1fy26-transcript",
-      "source_label": "Q1FY26 transcript",
-      "category": "leverage",
-      "promise": "Bring CD ratio to 85–90% in the medium term",
-      "quote": "between 85 and 90 is the range that in the medium term we aspire to",
-      "metric": "CD ratio 85–90%",
-      "target": {
-        "text": "85–90% CD ratio",
-        "value": 85,
-        "value_high": 90,
-        "unit": "%",
-        "period": "medium term"
-      },
-      "test_date": "medium term",
-      "confidence": "M",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 21,
-      "mentions": 1
-    },
-    {
-      "id": "p022",
-      "date": "2025-07-01",
-      "quarter_context": "Q1FY26",
-      "source_id": "q1fy26-transcript",
-      "source_label": "Q1FY26 transcript",
-      "category": "margin",
-      "promise": "Stabilise NIM over time as rate cuts fully reprice",
-      "quote": "we expect to stabilize it over a period of time",
-      "metric": "NIM stabilised post rate cuts",
-      "target": {
-        "text": "NIM stabilised",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "medium term"
-      },
-      "test_date": "medium term",
-      "confidence": "M",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 22,
-      "mentions": 1
-    },
-    {
-      "id": "p023",
-      "date": "2025-07-01",
-      "quarter_context": "Q1FY26",
-      "source_id": "q1fy26-transcript",
-      "source_label": "Q1FY26 transcript",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-presentation",
+      "source_label": "Q4FY26 presentation",
       "category": "other",
-      "promise": "Maintain contingent provision at ~57 bps of loans",
-      "quote": "contingent provision is about 57 basis points of the loans portfolio",
-      "metric": "Contingent provision ~57 bps",
-      "target": {
-        "text": "~57 bps contingent provision",
-        "value": 57,
-        "value_high": null,
-        "unit": "bps",
-        "period": "ongoing"
-      },
-      "test_date": null,
-      "confidence": "H",
-      "actual": {
-        "text": "26 bps",
-        "value": 26,
-        "unit": "bps",
-        "source_id": "q4fy26-presentation",
-        "source_date": "2026-04-01",
-        "what_happened": "contingent provision at 26 bps of loans in Q4FY26"
-      },
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "undated target — interim 26 bps"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 23,
-      "mentions": 1
-    },
-    {
-      "id": "p024",
-      "date": "2025-07-01",
-      "quarter_context": "Q1FY26",
-      "source_id": "q1fy26-transcript",
-      "source_label": "Q1FY26 transcript",
-      "category": "volume",
-      "promise": "Grow advances at system growth rate in FY26 and higher than system in FY27",
-      "quote": "expect our loan growth to continue to improve from here and remain confident of growing our advances at the system growth rate at FY26 and",
-      "metric": "FY26 advances growth ≥ system; FY27 > system",
-      "target": {
-        "text": "FY26 system growth; FY27 above system",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "FY26 & FY27"
-      },
-      "test_date": null,
-      "confidence": "H",
-      "actual": {
-        "text": "12%",
-        "value": 12,
-        "unit": "percent",
-        "source_id": "q4fy26-transcript",
-        "source_date": "2026-04-01",
-        "what_happened": "FY26 advances grew 12% YoY, above system growth of 10.5–11.5%"
-      },
-      "status": "MISSED",
-      "variance": {
-        "absolute": -14,
-        "pct": -53.8,
-        "bps": null,
-        "days": null,
-        "text": "12 vs 26"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 2,
-      "link_id": 24,
-      "mentions": 1
-    },
-    {
-      "id": "p025",
-      "date": "2025-10-01",
-      "quarter_context": "Q2FY26",
-      "source_id": "q2fy26-transcript",
-      "source_label": "Q2FY26 transcript",
-      "category": "margin",
-      "promise": "Cost of funds to decline over next 4-5 quarters with stable rates",
-      "quote": "cost of funds has come down by. And so, it has got another at least four - five quarters to",
-      "metric": "Cost of funds decline over 4-5 quarters",
-      "target": {
-        "text": "Cost of funds decline over 4-5 quarters",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "4-5 quarters"
-      },
-      "test_date": null,
-      "confidence": "M",
-      "actual": {
-        "text": "cost of funds is published along with the yield too. Sequential quarter I think it's almost there flat a couple of basis points plus-minus, it's within the range. And over a period of a year, I think it's about call it 40, 50 basis points, 40 basis points or so year-to-year",
-        "value": 40,
-        "unit": "basis_points",
-        "source_id": "q1fy27-transcript",
-        "source_date": "2026-07-01",
-        "what_happened": "Cost of funds declined ~40 bps year-to-year by Q1FY27"
-      },
-      "status": "MET",
-      "variance": {
-        "absolute": 36,
-        "pct": 900,
-        "bps": 3600,
-        "days": null,
-        "text": "40 vs 4-5"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 25,
-      "mentions": 1
-    },
-    {
-      "id": "p026",
-      "date": "2025-10-01",
-      "quarter_context": "Q2FY26",
-      "source_id": "q2fy26-transcript",
-      "source_label": "Q2FY26 transcript",
-      "category": "margin",
-      "promise": "NIM tailwind from deposit repricing over next 6-12 months",
-      "quote": "We should see over the next 6 to 12 months the deposit repricing having some amount of tailwind effect in",
-      "metric": "NIM tailwind over 6-12 months",
-      "target": {
-        "text": "NIM tailwind over 6-12 months",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "6-12 months"
-      },
-      "test_date": null,
-      "confidence": "M",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 26,
-      "mentions": 1
-    },
-    {
-      "id": "p027",
-      "date": "2025-10-01",
-      "quarter_context": "Q2FY26",
-      "source_id": "q2fy26-transcript",
-      "source_label": "Q2FY26 transcript",
-      "category": "other",
-      "promise": "Return on Assets (ROA) to operate between 1.8% and 1.95%",
-      "quote": "we are between 1.8% to 1.85% to 1.95%. That is where we have operated over the last eight quarters or so",
-      "metric": "ROA 1.8-1.95%",
-      "target": {
-        "text": "ROA 1.8-1.95%",
-        "value": 1.8,
-        "value_high": 1.95,
-        "unit": "%",
-        "period": "medium term"
-      },
-      "test_date": "medium term",
-      "confidence": "H",
-      "actual": {
-        "text": "1.96%",
-        "value": 1.96,
-        "unit": "percent",
-        "source_id": "q4fy26-presentation",
-        "source_date": "2026-04-01",
-        "what_happened": "ROA reached 1.96% for FY26"
-      },
-      "status": "MET",
-      "variance": {
-        "absolute": 0.16,
-        "pct": 8.9,
-        "bps": null,
-        "days": null,
-        "text": "1.96 vs 1.8-1.95 %"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 27,
-      "mentions": 1
-    },
-    {
-      "id": "p028",
-      "date": "2025-10-01",
-      "quarter_context": "Q2FY26",
-      "source_id": "q2fy26-transcript",
-      "source_label": "Q2FY26 transcript",
-      "category": "revenue",
-      "promise": "Loan growth in line with market in FY26, faster than market in FY27",
-      "quote": "the rate of growth on loans in this year will be at market and in FY'27 will be faster than the market",
-      "metric": "Loan growth at market in FY26, faster in FY27",
-      "target": {
-        "text": "Loan growth at market in FY26, faster in FY27",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "FY26, FY27"
-      },
-      "test_date": null,
-      "confidence": "M",
-      "actual": {
-        "text": "12%",
-        "value": 12,
-        "unit": "percent",
-        "source_id": "q4fy26-transcript",
-        "source_date": "2026-04-01",
-        "what_happened": "Loan growth reached 12% in FY26, above system growth"
-      },
-      "status": "MISSED",
-      "variance": {
-        "absolute": -14,
-        "pct": -53.8,
-        "bps": null,
-        "days": null,
-        "text": "12 vs 26"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 2,
-      "link_id": 28,
-      "mentions": 1
-    },
-    {
-      "id": "p029",
-      "date": "2025-10-01",
-      "quarter_context": "Q2FY26",
-      "source_id": "q2fy26-transcript",
-      "source_label": "Q2FY26 transcript",
-      "category": "working_capital",
-      "promise": "General provisions to be maintained at ~41 bps of loans",
-      "quote": "the general provisions is about 41 basis points of loans coming up from about 40 basis points",
-      "metric": "General provisions ~41 bps of loans",
-      "target": {
-        "text": "General provisions ~41 bps of loans",
-        "value": 41,
-        "value_high": null,
-        "unit": "bps",
-        "period": "ongoing"
-      },
-      "test_date": null,
-      "confidence": "H",
-      "actual": {
-        "text": "41 bps",
-        "value": 41,
-        "unit": "bps",
-        "source_id": "q4fy26-presentation",
-        "source_date": "2026-04-01",
-        "what_happened": "General provisions maintained at 41 bps of loans in Q4FY26"
-      },
-      "status": "MET",
-      "variance": {
-        "absolute": 0,
-        "pct": 0,
-        "bps": null,
-        "days": null,
-        "text": "41 vs 41 bps"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 29,
-      "mentions": 1
-    },
-    {
-      "id": "p030",
-      "date": "2026-01-01",
-      "quarter_context": "Q3FY26",
-      "source_id": "q3fy26-presentation",
-      "source_label": "Q3FY26 presentation",
-      "category": "other",
-      "promise": "Achieve carbon neutrality by FY32",
+      "promise": "Target carbon neutrality by FY32",
       "quote": "Target to be carbon neutral by FY32",
       "metric": "Carbon neutral by FY32",
       "target": {
@@ -1335,7 +436,7 @@
         "period": "FY32"
       },
       "test_date": "2032-05-15",
-      "confidence": "H",
+      "confidence": "M",
       "actual": null,
       "status": "NYT",
       "variance": {
@@ -1348,18 +449,18 @@
       "mgmt_explanation": null,
       "root_cause": null,
       "was_revised": false,
+      "mentions": 2,
       "tier": 3,
-      "link_id": 30,
-      "mentions": 1
+      "link_id": 7
     },
     {
-      "id": "p031",
+      "id": "p010",
       "date": "2026-01-01",
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-presentation",
       "source_label": "Q3FY26 presentation",
       "category": "other",
-      "promise": "Increase gender diversity to 27% by FY27",
+      "promise": "Gender diversity 27% by FY27",
       "quote": "Gender diversity target 27% by FY27",
       "metric": "Gender diversity 27% by FY27",
       "target": {
@@ -1384,248 +485,17 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 3,
-      "link_id": 31,
+      "link_id": 8,
       "mentions": 1
     },
     {
-      "id": "p032",
+      "id": "p012",
       "date": "2026-04-01",
       "quarter_context": "Q4FY26",
       "source_id": "q4fy26-transcript",
       "source_label": "Q4FY26 transcript",
-      "category": "cost",
-      "promise": "Cost-to-income ratio below 40% on a core basis",
-      "quote": "cost-to-income declining from 40.5% to 39.5% on a core basis",
-      "metric": "Core cost-to-income < 40%",
-      "target": {
-        "text": "Core cost-to-income < 40%",
-        "value": 40,
-        "value_high": null,
-        "unit": "%",
-        "period": "ongoing"
-      },
-      "test_date": null,
-      "confidence": "H",
-      "actual": {
-        "text": "Core cost-to-income ratio of 39.2%",
-        "value": 39.2,
-        "unit": "percent",
-        "source_id": "q1fy27-presentation",
-        "source_date": "2026-07-01",
-        "what_happened": "Core cost-to-income ratio reached 39.2% in Q1FY27"
-      },
-      "status": "MET",
-      "variance": {
-        "absolute": -0.8,
-        "pct": -2,
-        "bps": null,
-        "days": null,
-        "text": "39.2 vs 40 %"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 32,
-      "mentions": 1
-    },
-    {
-      "id": "p033",
-      "date": "2026-04-01",
-      "quarter_context": "Q4FY26",
-      "source_id": "q4fy26-transcript",
-      "source_label": "Q4FY26 transcript",
-      "category": "margin",
-      "promise": "Sustain return on assets at ~1.9%",
-      "quote": "the return on assets continue to be stable at 1.9%",
-      "metric": "ROA ~1.9%",
-      "target": {
-        "text": "ROA ~1.9%",
-        "value": 1.9,
-        "value_high": null,
-        "unit": "%",
-        "period": "ongoing"
-      },
-      "test_date": null,
-      "confidence": "H",
-      "actual": {
-        "text": "Return on assets of 1.85%",
-        "value": 1.85,
-        "unit": "percent",
-        "source_id": "q1fy27-presentation",
-        "source_date": "2026-07-01",
-        "what_happened": "Q1FY27 ROA reported at 1.85%"
-      },
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "undated target — interim 1.85 %"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 33,
-      "mentions": 1
-    },
-    {
-      "id": "p034",
-      "date": "2026-04-01",
-      "quarter_context": "Q4FY26",
-      "source_id": "q4fy26-transcript",
-      "source_label": "Q4FY26 transcript",
-      "category": "revenue",
-      "promise": "Maintain system credit growth above sector average",
-      "quote": "we will continue to have a good momentum and trajectory in our growth",
-      "metric": "Loan growth above system rate",
-      "target": {
-        "text": "Loan growth above system rate",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "ongoing"
-      },
-      "test_date": null,
-      "confidence": "M",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 34,
-      "mentions": 1
-    },
-    {
-      "id": "p035",
-      "date": "2026-04-01",
-      "quarter_context": "Q4FY26",
-      "source_id": "q4fy26-transcript",
-      "source_label": "Q4FY26 transcript",
-      "category": "revenue",
-      "promise": "MSME loan growth of 18-21% YoY",
-      "quote": "representative of our MSME, we've grown at about 20% year-on-year, and that will continue to also be in that range of 18% to 20%,",
-      "metric": "MSME loan growth 18-21% YoY",
-      "target": {
-        "text": "MSME loan growth 18-21% YoY",
-        "value": 18,
-        "value_high": 21,
-        "unit": "%",
-        "period": "FY27"
-      },
-      "test_date": "2027-05-15",
-      "confidence": "H",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 2,
-      "link_id": 35,
-      "mentions": 1
-    },
-    {
-      "id": "p036",
-      "date": "2026-04-01",
-      "quarter_context": "Q4FY26",
-      "source_id": "q4fy26-transcript",
-      "source_label": "Q4FY26 transcript",
-      "category": "volume",
-      "promise": "Grow less-than-INR 3 crore retail deposits to > 47% of net accretion",
-      "quote": "from 31% of the net total accretion to about 47% of the total net deposit accretion for the",
-      "metric": "< INR 3 crore deposits > 47% of net accretion",
-      "target": {
-        "text": "> 47% of net accretion in < INR 3 crore deposits",
-        "value": 47,
-        "value_high": null,
-        "unit": "%",
-        "period": "ongoing"
-      },
-      "test_date": null,
-      "confidence": "H",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 36,
-      "mentions": 1
-    },
-    {
-      "id": "p037",
-      "date": "2026-04-01",
-      "quarter_context": "Q4FY26",
-      "source_id": "q4fy26-transcript",
-      "source_label": "Q4FY26 transcript",
-      "category": "volume",
-      "promise": "Retail deposit mix to stay above 80% of total deposits",
-      "quote": "retail continues to power and stays ahead of the 80% mark",
-      "metric": "Retail deposits > 80% of total",
-      "target": {
-        "text": "Retail deposits > 80% of total",
-        "value": 80,
-        "value_high": null,
-        "unit": "%",
-        "period": "ongoing"
-      },
-      "test_date": null,
-      "confidence": "H",
-      "actual": {
-        "text": "80%",
-        "value": 80,
-        "unit": "percent",
-        "source_id": "q1fy27-presentation",
-        "source_date": "2026-07-01",
-        "what_happened": "Retail deposit mix reached 80% of total deposits in Q1FY27"
-      },
-      "status": "MET",
-      "variance": {
-        "absolute": 0,
-        "pct": 0,
-        "bps": null,
-        "days": null,
-        "text": "80 vs 80 %"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 37,
-      "mentions": 1
-    },
-    {
-      "id": "p038",
-      "date": "2026-04-01",
-      "quarter_context": "Q4FY26",
-      "source_id": "q4fy26-transcript",
-      "source_label": "Q4FY26 transcript",
-      "category": "working_capital",
-      "promise": "LCR maintained between 110% and 120%",
+      "category": "other",
+      "promise": "LCR to be maintained between 110-120%",
       "quote": "our endeavor for LCR is to be between 110% and 120%",
       "metric": "LCR 110-120%",
       "target": {
@@ -1633,51 +503,51 @@
         "value": 110,
         "value_high": 120,
         "unit": "%",
-        "period": "ongoing"
+        "period": "medium term"
       },
-      "test_date": null,
+      "test_date": "medium term",
       "confidence": "H",
       "actual": {
-        "text": "118%",
-        "value": 118,
+        "text": "119%",
+        "value": 119,
         "unit": "%",
         "source_id": "q1fy27-presentation",
         "source_date": "2026-07-01",
-        "what_happened": "LCR reported at 118% for Q4FY26 (Mar'26)"
+        "what_happened": "Average LCR reported at 119% for Jun'26 (Q1FY27), within the 110-120% target range."
       },
       "status": "MET",
       "variance": {
-        "absolute": -2,
-        "pct": -1.7,
+        "absolute": 9,
+        "pct": 8.2,
         "bps": null,
         "days": null,
-        "text": "118 vs 110-120 %"
+        "text": "119 vs 110-120 %"
       },
       "mgmt_explanation": null,
       "root_cause": null,
       "was_revised": false,
       "tier": 3,
-      "link_id": 38,
+      "link_id": 9,
       "mentions": 1
     },
     {
-      "id": "p039",
-      "date": "2026-07-01",
-      "quarter_context": "Q1FY27",
-      "source_id": "q1fy27-transcript",
-      "source_label": "Q1FY27 transcript",
-      "category": "cost",
-      "promise": "ECL transition impact ≤ 15 bps",
-      "quote": "basis points, anything of th…] Srinivasan Vaidyanathan: I don't think there will be anything material, but there will be some",
-      "metric": "ECL transition impact ≤ 15 bps",
+      "id": "p013",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "revenue",
+      "promise": "System credit growth expected at 10.5-11.5% for FY26",
+      "quote": "We had estimated the system credit growth to be around 10.5% to 11.5%",
+      "metric": "FY26 system credit growth 10.5-11.5%",
       "target": {
-        "text": "≤ 15 bps ECL impact",
-        "value": 15,
-        "value_high": null,
-        "unit": "bps",
-        "period": "FY27"
+        "text": "10.5-11.5% system credit growth in FY26",
+        "value": 10.5,
+        "value_high": 11.5,
+        "unit": "%",
+        "period": "FY26"
       },
-      "test_date": "2027-05-15",
+      "test_date": "2026-05-15",
       "confidence": "M",
       "actual": null,
       "status": "NYT",
@@ -1692,168 +562,70 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 2,
-      "link_id": 39,
+      "link_id": 10,
       "mentions": 1
     },
     {
-      "id": "p040",
-      "date": "2026-07-01",
-      "quarter_context": "Q1FY27",
-      "source_id": "q1fy27-transcript",
-      "source_label": "Q1FY27 transcript",
-      "category": "margin",
-      "promise": "Longer-term margin improvement via cost of funds and asset mix",
-      "quote": "the cost of fund elements that needs to play out are very much intact and those are being…",
-      "metric": "Cost of funds benefit 40-50 bps vs historical norms",
-      "target": {
-        "text": "40-50 bps cost of funds benefit",
-        "value": 40,
-        "value_high": 50,
-        "unit": "bps",
-        "period": "medium term"
-      },
-      "test_date": "medium term",
-      "confidence": "M",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 40,
-      "mentions": 1
-    },
-    {
-      "id": "p041",
-      "date": "2026-07-01",
-      "quarter_context": "Q1FY27",
-      "source_id": "q1fy27-transcript",
-      "source_label": "Q1FY27 transcript",
-      "category": "other",
-      "promise": "FCNR(B) milestone in Q2-Q3FY27",
-      "quote": "you will see in the month of July, August, September, we have certain milestones",
-      "metric": "FCNR(B) significant market share by Q3FY27",
-      "target": {
-        "text": "FCNR(B) milestone by Q3FY27",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "Q3FY27"
-      },
-      "test_date": "2027-02-14",
-      "confidence": "M",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 41,
-      "mentions": 1
-    },
-    {
-      "id": "p042",
-      "date": "2026-07-01",
-      "quarter_context": "Q1FY27",
-      "source_id": "q1fy27-transcript",
-      "source_label": "Q1FY27 transcript",
-      "category": "pat",
-      "promise": "Profit growth at or above balance-sheet growth",
-      "quote": "in the longer term that the profit growth should be at or above the balance sheet growth",
-      "metric": "Profit growth ≥ balance-sheet growth",
-      "target": {
-        "text": "Profit growth ≥ balance-sheet growth",
-        "value": 1,
-        "value_high": null,
-        "unit": "x",
-        "period": "longer term"
-      },
-      "test_date": null,
-      "confidence": "M",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 42,
-      "mentions": 1
-    },
-    {
-      "id": "p043",
-      "date": "2026-07-01",
-      "quarter_context": "Q1FY27",
-      "source_id": "q1fy27-transcript",
-      "source_label": "Q1FY27 transcript",
+      "id": "p014",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
       "category": "revenue",
-      "promise": "Retail asset mix target of 60%",
-      "quote": "we always have thought that India's consumption component of the GDP is at about 60% and that's where we want to be as far as",
-      "metric": "Retail asset mix 60%",
+      "promise": "MSME business to grow at 18-21% going forward",
+      "quote": "that will continue to also be in that range of 18% to 20%, 21%",
+      "metric": "MSME growth 18-21%",
       "target": {
-        "text": "60% retail asset mix",
-        "value": 60,
-        "value_high": null,
+        "text": "MSME growth 18-21%",
+        "value": 18,
+        "value_high": 21,
         "unit": "%",
         "period": "medium term"
       },
       "test_date": "medium term",
       "confidence": "M",
-      "actual": null,
-      "status": "NYT",
+      "actual": {
+        "text": "business banking which is the largest component of our MSME segment grow at 22.3",
+        "value": 22.3,
+        "unit": "%",
+        "source_id": "q1fy27-transcript",
+        "source_date": "2026-07-01",
+        "what_happened": "MSME business banking segment grew at 22.3% in Q1FY27"
+      },
+      "status": "MET",
       "variance": {
-        "absolute": null,
-        "pct": null,
+        "absolute": 4.3,
+        "pct": 23.9,
         "bps": null,
         "days": null,
-        "text": "no actual reported"
+        "text": "22.3 vs 18-21 %"
       },
       "mgmt_explanation": null,
       "root_cause": null,
       "was_revised": false,
       "tier": 3,
-      "link_id": 43,
+      "link_id": 11,
       "mentions": 1
     },
     {
-      "id": "p044",
+      "id": "p015",
       "date": "2026-07-01",
       "quarter_context": "Q1FY27",
-      "source_id": "q1fy27-transcript",
-      "source_label": "Q1FY27 transcript",
-      "category": "volume",
-      "promise": "ECLGS 5.0 disbursement milestone by Q1FY27-end",
-      "quote": "we have already as of 30th of June had a disbursement in that scheme of close to INR14,000 crores under the ECLGS scheme",
-      "metric": "ECLGS 5.0 disbursement ~₹14,000 cr by Q1FY27",
+      "source_id": "q1fy27-presentation",
+      "source_label": "Q1FY27 presentation",
+      "category": "timeline",
+      "promise": "Carbon neutral by FY32",
+      "quote": "Target to be carbon neutral by FY32",
+      "metric": "Carbon neutrality by FY32",
       "target": {
-        "text": "₹14,000 cr ECLGS 5.0 disbursed by Q1FY27",
-        "value": 14000,
+        "text": "Carbon neutral by FY32",
+        "value": null,
         "value_high": null,
-        "unit": "INR_cr",
-        "period": "Q1FY27"
+        "unit": null,
+        "period": "FY32"
       },
-      "test_date": "2026-08-14",
-      "confidence": "H",
+      "test_date": "2032-05-15",
+      "confidence": "M",
       "actual": null,
       "status": "NYT",
       "variance": {
@@ -1861,13 +633,13 @@
         "pct": null,
         "bps": null,
         "days": null,
-        "text": "no actual reported"
+        "text": "no outcome reported"
       },
       "mgmt_explanation": null,
       "root_cause": null,
       "was_revised": false,
-      "tier": 2,
-      "link_id": 44,
+      "tier": 1,
+      "link_id": 12,
       "mentions": 1
     }
   ],
@@ -1954,107 +726,101 @@
     }
   ],
   "aggregates": {
-    "total": 44,
+    "total": 13,
     "status_counts": {
-      "MET": 10,
+      "MET": 3,
       "PARTIAL": 0,
-      "MISSED": 5,
-      "NYT": 29
+      "MISSED": 3,
+      "NYT": 7
     },
-    "testable": 15,
+    "testable": 6,
     "by_quarter": {
       "Q2FY25": {
-        "MET": 2,
+        "MET": 1,
         "PARTIAL": 0,
-        "MISSED": 1,
-        "NYT": 2
+        "MISSED": 2,
+        "NYT": 1
       },
       "Q3FY25": {
-        "MET": 2,
-        "PARTIAL": 0,
-        "MISSED": 1,
-        "NYT": 4
-      },
-      "Q4FY25": {
         "MET": 0,
         "PARTIAL": 0,
-        "MISSED": 1,
-        "NYT": 6
+        "MISSED": 0,
+        "NYT": 1
       },
       "Q1FY26": {
         "MET": 0,
         "PARTIAL": 0,
         "MISSED": 1,
-        "NYT": 4
-      },
-      "Q2FY26": {
-        "MET": 3,
-        "PARTIAL": 0,
-        "MISSED": 1,
         "NYT": 1
+      },
+      "Q4FY26": {
+        "MET": 2,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 2
       },
       "Q3FY26": {
         "MET": 0,
         "PARTIAL": 0,
         "MISSED": 0,
-        "NYT": 2
-      },
-      "Q4FY26": {
-        "MET": 3,
-        "PARTIAL": 0,
-        "MISSED": 0,
-        "NYT": 4
+        "NYT": 1
       },
       "Q1FY27": {
         "MET": 0,
         "PARTIAL": 0,
         "MISSED": 0,
-        "NYT": 6
+        "NYT": 1
       }
     },
-    "root_causes": {},
+    "root_causes": {
+      "Other": 1
+    },
     "confidence_mix": {
-      "H": 25,
-      "M": 19,
+      "H": 6,
+      "M": 7,
       "L": 0
     },
     "timeline_commitments": {
-      "due": 0,
-      "on_time": 0,
+      "due": 1,
+      "on_time": 1,
       "slipped": 0
     },
     "signals": {
       "tier_mix": {
-        "1": 0,
-        "2": 7,
-        "3": 8
+        "1": 1,
+        "2": 3,
+        "3": 2
       },
       "dropped": 0,
-      "slippage_vectors": 0,
+      "slippage_vectors": 1,
       "sandbagging": null,
-      "attribution": null
+      "attribution": {
+        "owned": 0,
+        "external": 0,
+        "external_share": null
+      }
     }
   },
   "credibility": {
-    "score": 55,
+    "score": 49,
     "grade": "C",
-    "timeline_score": null,
-    "delivery_score": 55,
+    "timeline_score": 56,
+    "delivery_score": 44,
     "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), materiality-weighted by tier (Tier-1 binary outcomes 1.4x, Tier-3 soft 0.6x), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
-    "headline": "Mostly delivered on testable promises; 29 later targets still not yet testable."
+    "headline": "A mixed delivery record — chiefly other; 7 later targets still not yet testable."
   },
   "provenance": {
     "mode": "live",
     "complete": true,
     "retrieval_errors": 0,
-    "forced_nyt": 4,
+    "forced_nyt": 1,
     "models_used": [
-      "openai",
+      "claude",
       "mistral",
       "gemini",
       "groq"
     ],
-    "generated_at": "2026-08-01T10:55:19.921Z",
-    "run_id": "30691094638"
+    "generated_at": "2026-09-01T11:17:53.432Z",
+    "run_id": "33499552261"
   }
 }
