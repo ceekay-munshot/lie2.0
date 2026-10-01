@@ -1,19 +1,19 @@
 [
   {
-    "ticker": "VEDL",
-    "name": "VEDL",
-    "sector": null,
-    "credibility_score": 48,
-    "coverage": "Q2 FY25–Q1 FY27",
-    "updated_at": "2026-09-01T11:02:01.085Z"
-  },
-  {
     "ticker": "HDFCBANK",
     "name": "HDFCBANK",
     "sector": null,
     "credibility_score": 49,
     "coverage": "Q2 FY25–Q1 FY27",
     "updated_at": "2026-09-01T11:17:53.432Z"
+  },
+  {
+    "ticker": "VEDL",
+    "name": "VEDL",
+    "sector": null,
+    "credibility_score": 51,
+    "coverage": "Q2 FY25–Q1 FY27",
+    "updated_at": "2026-10-01T12:18:33.543Z"
   },
   {
     "ticker": "CESC",
