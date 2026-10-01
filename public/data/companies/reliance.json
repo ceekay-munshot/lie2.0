@@ -7,7 +7,7 @@
     "screener_url": "https://www.screener.in/company/RELIANCE/consolidated/",
     "fiscal_year_end": "03"
   },
-  "generated_at": "2026-09-01T11:08:28.154Z",
+  "generated_at": "2026-10-01T12:24:54.193Z",
   "coverage": {
     "from": "Q2FY25",
     "to": "Q1FY27",
@@ -168,6 +168,16 @@
       "url": null,
       "source": "Upload",
       "role": "both"
+    },
+    {
+      "id": "q4fy26-transcript",
+      "type": "transcript",
+      "quarter": "Q4FY26",
+      "date": "2026-04-01",
+      "title": null,
+      "url": null,
+      "source": "Upload",
+      "role": "both"
     }
   ],
   "promises": [
@@ -178,14 +188,14 @@
       "source_id": "q2fy25-transcript",
       "source_label": "Q2FY25 transcript",
       "category": "capacity",
-      "promise": "Target 1 million home additions per month via Jio AirFiber",
+      "promise": "Add 1 million homes per month via JioAirFiber",
       "quote": "our target now, the next target that we have is to add nearly 1 million homes every given month",
-      "metric": "1 million homes per month via AirFiber",
+      "metric": "1 million homes/month acquisition rate",
       "target": {
         "text": "1 million homes per month",
         "value": 1,
         "value_high": null,
-        "unit": "million homes/month",
+        "unit": "million_homes_per_month",
         "period": "medium term"
       },
       "test_date": "medium term",
@@ -196,7 +206,7 @@
         "unit": "million homes per month",
         "source_id": "q2fy26-presentation",
         "source_date": "2025-10-01",
-        "what_happened": "Jio successfully scaled to 1 million new home connects monthly during Q2FY26"
+        "what_happened": "Jio successfully scaled to 1 million new home connects every month during Q2FY26"
       },
       "status": "MET",
       "variance": {
@@ -204,7 +214,7 @@
         "pct": 0,
         "bps": null,
         "days": null,
-        "text": "1 vs 1 million homes/month"
+        "text": "1 vs 1 million_homes_per_month"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -257,19 +267,19 @@
     },
     {
       "id": "p003",
-      "date": "2024-10-01",
-      "quarter_context": "Q2FY25",
-      "source_id": "q2fy25-presentation",
-      "source_label": "Q2FY25 presentation",
-      "category": "other",
-      "promise": "Enterprise digital portfolio to add marquee logos and grow SMB segment",
-      "quote": "High bandwidth links contribute 50%+ of SMB segment",
-      "metric": "SMB high-bandwidth links >50% share",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "capacity",
+      "promise": "Polyester capacity expansion: 1 Mtpa specialty polyester and 3 Mtpa PTA",
+      "quote": "million tons of specialty polyester capacity, and matched 3 million tons of PTA",
+      "metric": "1 Mtpa specialty polyester + 3 Mtpa PTA",
       "target": {
-        "text": "50%+ of SMB segment",
-        "value": 50,
+        "text": "1 Mtpa specialty polyester + 3 Mtpa PTA",
+        "value": 1,
         "value_high": null,
-        "unit": "%",
+        "unit": "Mtpa",
         "period": "medium term"
       },
       "test_date": "medium term",
@@ -297,18 +307,18 @@
       "source_id": "q3fy25-transcript",
       "source_label": "Q3FY25 transcript",
       "category": "capacity",
-      "promise": "1 Mtpa specialty polyester and 3 Mtpa PTA capacity",
-      "quote": "million tons of specialty polyester capacity, and matched 3 million tons of PTA",
-      "metric": "1 Mtpa specialty polyester + 3 Mtpa PTA",
+      "promise": "Vinyls capacity expansion: 1.5 Mtpa PVC and CPVC at Dahej and Nagothane",
+      "quote": "1.5 million tons PVC and CPVC facility at Dahej and Nagothane",
+      "metric": "1.5 Mtpa PVC/CPVC capacity",
       "target": {
-        "text": "1 Mtpa specialty polyester, 3 Mtpa PTA",
-        "value": 1,
+        "text": "1.5 Mtpa PVC/CPVC at Dahej and Nagothane",
+        "value": 1.5,
         "value_high": null,
         "unit": "Mtpa",
         "period": "medium term"
       },
       "test_date": "medium term",
-      "confidence": "H",
+      "confidence": "M",
       "actual": null,
       "status": "NYT",
       "variance": {
@@ -327,83 +337,6 @@
     },
     {
       "id": "p005",
-      "date": "2025-01-01",
-      "quarter_context": "Q3FY25",
-      "source_id": "q3fy25-transcript",
-      "source_label": "Q3FY25 transcript",
-      "category": "capacity",
-      "promise": "Add 3 VLECs to expand virtual ethane pipeline",
-      "quote": "we are adding three more VLECs",
-      "metric": "3 VLECs added to ethane fleet",
-      "target": {
-        "text": "Add 3 VLECs (currently 6 ships)",
-        "value": 3,
-        "value_high": null,
-        "unit": "ships",
-        "period": "medium term"
-      },
-      "test_date": "medium term",
-      "confidence": "H",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 5,
-      "mentions": 1
-    },
-    {
-      "id": "p006",
-      "date": "2025-01-01",
-      "quarter_context": "Q3FY25",
-      "source_id": "q3fy25-transcript",
-      "source_label": "Q3FY25 transcript",
-      "category": "capacity",
-      "promise": "PVC/CPVC capacity of 1.5 Mtpa at Dahej and Nagothane",
-      "quote": "1.5 million tons PVC and CPVC facility at Dahej and Nagothane",
-      "metric": "PVC/CPVC capacity 1.5 Mtpa",
-      "target": {
-        "text": "1.5 Mtpa PVC/CPVC at Dahej and Nagothane",
-        "value": 1.5,
-        "value_high": null,
-        "unit": "Mtpa",
-        "period": "medium term"
-      },
-      "test_date": "medium term",
-      "confidence": "H",
-      "actual": {
-        "text": "Commissioning of plants for the entire value chain in phases by 2026",
-        "value": null,
-        "unit": null,
-        "source_id": "q4fy25-presentation",
-        "source_date": "2025-04-01",
-        "what_happened": "Timeline re-set to phased commissioning by 2026; construction commenced at both sites, orders placed for long-lead items"
-      },
-      "status": "MET",
-      "variance": {
-        "absolute": 2024.5,
-        "pct": 134966.7,
-        "bps": null,
-        "days": null,
-        "text": "2,026 vs 1.5 Mtpa"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 6,
-      "mentions": 1
-    },
-    {
-      "id": "p007",
       "date": "2025-01-01",
       "quarter_context": "Q3FY25",
       "source_id": "q3fy25-presentation",
@@ -434,11 +367,46 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 1,
-      "link_id": 7,
+      "link_id": 5,
       "mentions": 1
     },
     {
-      "id": "p008",
+      "id": "p006",
+      "date": "2025-01-01",
+      "quarter_context": "Q3FY25",
+      "source_id": "q3fy25-transcript",
+      "source_label": "Q3FY25 transcript",
+      "category": "capex",
+      "promise": "Add three more VLECs to expand virtual ethane pipeline",
+      "quote": "We currently have six ships, and we are adding three more VLECs",
+      "metric": "Add 3 VLECs to ethane fleet",
+      "target": {
+        "text": "Add 3 VLECs (total 9 ships)",
+        "value": 3,
+        "value_high": null,
+        "unit": "ships",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 6,
+      "mentions": 1
+    },
+    {
+      "id": "p007",
       "date": "2025-04-01",
       "quarter_context": "Q4FY25",
       "source_id": "q4fy25-transcript",
@@ -476,18 +444,18 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 3,
-      "link_id": 8,
+      "link_id": 7,
       "mentions": 1
     },
     {
-      "id": "p009",
+      "id": "p008",
       "date": "2025-04-01",
       "quarter_context": "Q4FY25",
       "source_id": "q4fy25-presentation",
       "source_label": "Q4FY25 presentation",
       "category": "capacity",
       "promise": "55 CBG plants by 2025",
-      "quote": "55 integrated CBG plants by 2025",
+      "quote": "on track to deliver 55 CBG plants",
       "metric": "55 CBG plants by 2025",
       "target": {
         "text": "55 CBG plants by 2025",
@@ -498,107 +466,65 @@
       },
       "test_date": "2025",
       "confidence": "H",
-      "actual": {
-        "text": "14 CBG & CNG Stations",
-        "value": 14,
-        "unit": "stations",
-        "source_id": "q1fy27-presentation",
-        "source_date": "2026-07-01",
-        "what_happened": "Jio-bp reported 14 CBG & CNG stations operational in Q1FY27, significantly below the 55 CBG plants target for 2025."
-      },
-      "status": "MISSED",
+      "actual": null,
+      "status": "NYT",
       "variance": {
-        "absolute": -41,
-        "pct": -74.5,
+        "absolute": null,
+        "pct": null,
         "bps": null,
         "days": null,
-        "text": "14 vs 55 plants"
+        "text": "no actual reported"
       },
       "mgmt_explanation": null,
       "root_cause": null,
       "was_revised": false,
       "tier": 1,
-      "link_id": 9,
+      "link_id": 8,
       "mentions": 2
+    },
+    {
+      "id": "p009",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-transcript",
+      "source_label": "Q4FY25 transcript",
+      "category": "capacity",
+      "promise": "Scale CBG plants to 55 operational",
+      "quote": "we have 10 plants operational we want to scale it up quickly to 55",
+      "metric": "55 CBG plants operational",
+      "target": {
+        "text": "55 CBG plants operational",
+        "value": 55,
+        "value_high": null,
+        "unit": "plants",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "M",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false,
+      "tier": 3,
+      "link_id": 9,
+      "mentions": 1
     },
     {
       "id": "p010",
       "date": "2025-04-01",
       "quarter_context": "Q4FY25",
-      "source_id": "q4fy25-presentation",
-      "source_label": "Q4FY25 presentation",
-      "category": "capacity",
-      "promise": "Vinyl chain 1.5 MMTPA PVC by FY27",
-      "quote": "Commissioning of plants for the entire value chain in phases by 2026-27",
-      "metric": "PVC capacity 1.5 MMTPA by FY27",
-      "target": {
-        "text": "1.5 MMTPA by 2026-27",
-        "value": 1.5,
-        "value_high": null,
-        "unit": "MMTPA",
-        "period": "FY27"
-      },
-      "test_date": "2027-05-15",
-      "confidence": "H",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 1,
-      "link_id": 10,
-      "mentions": 1
-    },
-    {
-      "id": "p011",
-      "date": "2025-04-01",
-      "quarter_context": "Q4FY25",
-      "source_id": "q4fy25-presentation",
-      "source_label": "Q4FY25 presentation",
-      "category": "capacity",
-      "promise": "Specialty polyester 1 MMTPA by FY27",
-      "quote": "RIL 1 MMTPA expansion project for Specialized Polyester Products by 2026-27",
-      "metric": "Specialty polyester capacity 1 MMTPA by FY27",
-      "target": {
-        "text": "1 MMTPA by 2026-27",
-        "value": 1,
-        "value_high": null,
-        "unit": "MMTPA",
-        "period": "FY27"
-      },
-      "test_date": "2027-05-15",
-      "confidence": "H",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 1,
-      "link_id": 11,
-      "mentions": 1
-    },
-    {
-      "id": "p012",
-      "date": "2025-04-01",
-      "quarter_context": "Q4FY25",
       "source_id": "q4fy25-transcript",
       "source_label": "Q4FY25 transcript",
       "category": "capex",
-      "promise": "O2C expansion projects capex of ₹60-65,000 crore",
+      "promise": "O2C expansion projects capex ₹60-65,000 crore",
       "quote": "Overall, maybe in the ₹ 60 to 65,000",
       "metric": "O2C capex ₹60-65k crore",
       "target": {
@@ -623,6 +549,76 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 3,
+      "link_id": 10,
+      "mentions": 1
+    },
+    {
+      "id": "p011",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "timeline",
+      "promise": "Commission 1 MMTPA specialty polyester by FY27",
+      "quote": "RIL 1 MMTPA expansion project for Specialized Polyester Products by 2026-27",
+      "metric": "1 MMTPA specialty polyester by FY27",
+      "target": {
+        "text": "1 MMTPA by 2026-27",
+        "value": 1,
+        "value_high": null,
+        "unit": "MMTPA",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no outcome reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 11,
+      "mentions": 1
+    },
+    {
+      "id": "p012",
+      "date": "2025-04-01",
+      "quarter_context": "Q4FY25",
+      "source_id": "q4fy25-presentation",
+      "source_label": "Q4FY25 presentation",
+      "category": "timeline",
+      "promise": "Commission 1.5 MMTPA PVC value chain in phases by FY27",
+      "quote": "Commissioning of plants for the entire value chain in phases by 2026-27",
+      "metric": "1.5 MMTPA PVC by FY27",
+      "target": {
+        "text": "1.5 MMTPA PVC by 2026-27",
+        "value": 1.5,
+        "value_high": null,
+        "unit": "MMTPA",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no outcome reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false,
+      "tier": 1,
       "link_id": 12,
       "mentions": 1
     },
@@ -633,17 +629,17 @@
       "source_id": "q4fy25-transcript",
       "source_label": "Q4FY25 transcript",
       "category": "timeline",
-      "promise": "Polyester expansion earnings benefit in FY2027-28",
-      "quote": "2027-2028 you will see the benefit of the expansion in terms of earnings",
-      "metric": "Polyester expansion earnings by FY28",
+      "promise": "Polyester expansion earnings contribution by FY27-28",
+      "quote": "you will see the benefit of the expansion in terms of earnings, etc.",
+      "metric": "Polyester expansion earnings by FY27-28",
       "target": {
-        "text": "Earnings benefit FY2027-28",
+        "text": "FY27-28 earnings contribution",
         "value": null,
         "value_high": null,
         "unit": null,
-        "period": "FY28"
+        "period": "FY27-FY28"
       },
-      "test_date": "2028-05-15",
+      "test_date": null,
       "confidence": "M",
       "actual": null,
       "status": "NYT",
@@ -668,25 +664,25 @@
       "source_id": "q4fy25-transcript",
       "source_label": "Q4FY25 transcript",
       "category": "timeline",
-      "promise": "Solar manufacturing commissioned by end-2025/early-2026",
+      "promise": "Solar manufacturing factories commissioned by end-2025/early-2026",
       "quote": "by end of 2025, early 2026, all these factories will get commissioned and will start producing",
-      "metric": "Solar factories commissioned by early 2026",
+      "metric": "Solar factories commissioned by end-2025/early-2026",
       "target": {
-        "text": "Solar factories commissioned end-2025/early-2026",
+        "text": "Solar factories commissioned by end-2025/early-2026",
         "value": null,
         "value_high": null,
         "unit": null,
-        "period": "by Mar 2026"
+        "period": "by early 2026"
       },
       "test_date": "2026",
       "confidence": "H",
       "actual": {
-        "text": "commissioned solar module manufacturing; commissioned solar cell manufacturing Q3FY26; pilot line commissioned for ingot and wafer, giga factory commissioning in phases during FY26",
+        "text": "commissioned solar module manufacturing; commissioned solar cell manufacturing and ramping up; commissioned pilot line for ingot and wafer, commissioning giga factory in phases during the year",
         "value": null,
         "unit": null,
         "source_id": "q3fy26-presentation",
         "source_date": "2026-01-01",
-        "what_happened": "Module and cell manufacturing commissioned by Q3FY26; ingot/wafer giga factory commissioning in phases during FY26"
+        "what_happened": "Module and cell manufacturing commissioned; ingot/wafer pilot commissioned, giga factory commissioning in phases during FY26"
       },
       "status": "MET",
       "variance": {
@@ -710,17 +706,17 @@
       "source_id": "q4fy25-transcript",
       "source_label": "Q4FY25 transcript",
       "category": "timeline",
-      "promise": "Solar generation capacity by FY2027-28",
+      "promise": "Solar generation capacity by FY27-28",
       "quote": "fair to say 2027-2028, that is the kind of time frame by which anything meaningful will happen",
-      "metric": "Solar generation by FY28",
+      "metric": "Solar generation by FY27-28",
       "target": {
-        "text": "Meaningful solar generation FY2027-28",
+        "text": "Meaningful solar generation by FY27-28",
         "value": null,
         "value_high": null,
         "unit": null,
-        "period": "FY28"
+        "period": "FY27-FY28"
       },
-      "test_date": "2028-05-15",
+      "test_date": null,
       "confidence": "M",
       "actual": null,
       "status": "NYT",
@@ -745,63 +741,17 @@
       "source_id": "q1fy26-presentation",
       "source_label": "Q1FY26 presentation",
       "category": "capacity",
-      "promise": "Achieve 55 CBG plants by end of FY26",
-      "quote": "on track to achieve our targeted capacity of 55 CBG plants by end of this year",
+      "promise": "55 CBG plants by end of FY26",
+      "quote": "targeted capacity of 55 CBG plants by end of this year",
       "metric": "55 CBG plants by FY26-end",
       "target": {
-        "text": "55 CBG plants by end FY26",
+        "text": "55 CBG plants by FY26-end",
         "value": 55,
         "value_high": null,
         "unit": "plants",
         "period": "FY26"
       },
       "test_date": "2026-05-15",
-      "confidence": "H",
-      "actual": {
-        "text": "14",
-        "value": 14,
-        "unit": "CBG plants",
-        "source_id": "q1fy27-presentation",
-        "source_date": "2026-07-01",
-        "what_happened": "14 CBG & CNG stations reported in Q1FY27, significantly below the 55 CBG plants target by end of FY26"
-      },
-      "status": "MISSED",
-      "variance": {
-        "absolute": -41,
-        "pct": -74.5,
-        "bps": null,
-        "days": null,
-        "text": "14 vs 55 plants"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 1,
-      "link_id": 9,
-      "mentions": 2,
-      "slippage_path": [
-        "2025",
-        "FY26"
-      ]
-    },
-    {
-      "id": "p018",
-      "date": "2025-07-01",
-      "quarter_context": "Q1FY26",
-      "source_id": "q1fy26-presentation",
-      "source_label": "Q1FY26 presentation",
-      "category": "capacity",
-      "promise": "Commission New Energy giga-factories over next 4-6 quarters",
-      "quote": "On-track to commission giga-factories progressively over next 4-6 quarters",
-      "metric": "Commission giga-factories in 4-6 quarters",
-      "target": {
-        "text": "Commission giga-factories in 4-6 quarters from Q1FY26",
-        "value": 4,
-        "value_high": 6,
-        "unit": "quarters",
-        "period": "by Q1FY27-Q3FY27"
-      },
-      "test_date": "2026-08-14",
       "confidence": "H",
       "actual": null,
       "status": "NYT",
@@ -816,11 +766,16 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 1,
-      "link_id": 16,
-      "mentions": 1
+      "link_id": 8,
+      "mentions": 2,
+      "dropped": true,
+      "slippage_path": [
+        "2025",
+        "FY26"
+      ]
     },
     {
-      "id": "p019",
+      "id": "p018",
       "date": "2025-07-01",
       "quarter_context": "Q1FY26",
       "source_id": "q1fy26-presentation",
@@ -828,15 +783,15 @@
       "category": "ebitda",
       "promise": "Double group EBITDA by end of golden decade",
       "quote": "confident of doubling EBITDA across RIL group by end of golden decade",
-      "metric": "Double group EBITDA by 2030",
+      "metric": "Double EBITDA by ~FY35",
       "target": {
-        "text": "2x EBITDA by 2030",
+        "text": "2x EBITDA by end of golden decade",
         "value": 2,
         "value_high": null,
         "unit": "x",
-        "period": "2030"
+        "period": "by FY35"
       },
-      "test_date": "2030",
+      "test_date": null,
       "confidence": "M",
       "actual": null,
       "status": "NYT",
@@ -851,11 +806,11 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 2,
-      "link_id": 17,
+      "link_id": 16,
       "mentions": 1
     },
     {
-      "id": "p020",
+      "id": "p019",
       "date": "2025-07-01",
       "quarter_context": "Q1FY26",
       "source_id": "q1fy26-presentation",
@@ -863,15 +818,15 @@
       "category": "leverage",
       "promise": "Maintain net debt to LTM EBITDA below 1.0x",
       "quote": "Net Debt to LTM EBITDA of < 1.0x",
-      "metric": "Net Debt/LTM EBITDA < 1.0x",
+      "metric": "Net Debt/EBITDA < 1.0x",
       "target": {
-        "text": "Net Debt/LTM EBITDA < 1.0x",
+        "text": "Net Debt/EBITDA < 1.0x",
         "value": 1,
         "value_high": null,
         "unit": "x",
-        "period": "ongoing"
+        "period": "Q1FY26"
       },
-      "test_date": null,
+      "test_date": "2025-08-14",
       "confidence": "H",
       "actual": {
         "text": "0.60x",
@@ -879,7 +834,7 @@
         "unit": "x",
         "source_id": "q1fy27-presentation",
         "source_date": "2026-07-01",
-        "what_happened": "Net Debt to LTM EBITDA remained at 0.60x as of Jun-26, well below the 1.0x threshold."
+        "what_happened": "Net Debt to LTM EBITDA maintained at 0.60x as of Jun-26, well below 1.0x target"
       },
       "status": "MET",
       "variance": {
@@ -892,9 +847,44 @@
       "mgmt_explanation": null,
       "root_cause": null,
       "was_revised": false,
-      "tier": 3,
-      "link_id": 18,
+      "tier": 1,
+      "link_id": 17,
       "mentions": 2
+    },
+    {
+      "id": "p020",
+      "date": "2025-07-01",
+      "quarter_context": "Q1FY26",
+      "source_id": "q1fy26-presentation",
+      "source_label": "Q1FY26 presentation",
+      "category": "timeline",
+      "promise": "Operationalize entire New Energy ecosystem in next 4-6 quarters",
+      "quote": "fully operationalize our entire New Energy Ecosystem in next 4-6 quarters",
+      "metric": "New Energy ecosystem operational in 4-6 quarters",
+      "target": {
+        "text": "4-6 quarters from Q1FY26",
+        "value": 4,
+        "value_high": 6,
+        "unit": "quarters",
+        "period": "by Q1FY27-Q3FY27"
+      },
+      "test_date": "2026-08-14",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no outcome reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false,
+      "tier": 1,
+      "link_id": 18,
+      "mentions": 1
     },
     {
       "id": "p021",
@@ -926,7 +916,7 @@
       },
       "mgmt_explanation": null,
       "root_cause": null,
-      "was_revised": false,
+      "was_revised": true,
       "tier": 3,
       "link_id": 19,
       "mentions": 1
@@ -993,12 +983,12 @@
       "test_date": null,
       "confidence": "M",
       "actual": {
-        "text": "₹76,255 crore for FY26",
+        "text": "JPL EBITDA FY26: ₹76,255 crore (18.8% YoY growth)",
         "value": 76255,
         "unit": "INR_cr",
         "source_id": "q4fy26-presentation",
         "source_date": "2026-04-01",
-        "what_happened": "JPL EBITDA reached ₹76,255 crore in FY26, representing 18.8% YoY growth with 190 bps margin expansion."
+        "what_happened": "JPL reported FY26 EBITDA of ₹76,255 crore, representing 18.8% YoY growth with 190 bps margin expansion."
       },
       "status": "NYT",
       "variance": {
@@ -1070,7 +1060,6 @@
       "target": {
         "text": "Solar generation 1H FY27",
         "value": null,
-        "value_high": null,
         "unit": null,
         "period": "1H FY27"
       },
@@ -1082,15 +1071,15 @@
         "unit": null,
         "source_id": "q1fy27-presentation",
         "source_date": "2026-07-01",
-        "what_happened": "Installation planned post-monsoon; transmission capacity to be ready for electricity export this year"
+        "what_happened": "Installation planned post-monsoon; transmission capacity to be ready for electricity export this year; not yet commissioned"
       },
-      "status": "NYT",
+      "status": "MISSED",
       "variance": {
         "absolute": null,
         "pct": null,
         "bps": null,
-        "days": null,
-        "text": "in progress, not yet due"
+        "days": 182,
+        "text": "slipped ~2 qtrs"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -1106,9 +1095,9 @@
       "source_id": "q3fy26-presentation",
       "source_label": "Q3FY26 presentation",
       "category": "capacity",
-      "promise": "Scale up BESS capacity to 100 GWh annual",
+      "promise": "Scale up BESS capacity to 100 GWh annually",
       "quote": "plan to further scale up to 100 GWh annual capacity",
-      "metric": "BESS capacity 100 GWh",
+      "metric": "BESS capacity 100 GWh annual",
       "target": {
         "text": "100 GWh annual BESS capacity",
         "value": 100,
@@ -1141,9 +1130,9 @@
       "source_id": "q3fy26-presentation",
       "source_label": "Q3FY26 presentation",
       "category": "capacity",
-      "promise": "Scale up solar manufacturing to 20 GWp annual capacity",
+      "promise": "Scale up solar manufacturing capacity to 20 GWp annually",
       "quote": "plan to further scale up to 20 GWp annual capacity",
-      "metric": "Solar capacity 20 GWp",
+      "metric": "Solar capacity 20 GWp annual",
       "target": {
         "text": "20 GWp annual solar capacity",
         "value": 20,
@@ -1182,47 +1171,12 @@
       "quarter_context": "Q3FY26",
       "source_id": "q3fy26-presentation",
       "source_label": "Q3FY26 presentation",
-      "category": "other",
-      "promise": "Become India's leading pulses player in short span",
-      "quote": "target to become India's leading pulses player in a short span of time",
-      "metric": "Leading pulses player in India",
-      "target": {
-        "text": "Leading pulses player in short span",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "short term"
-      },
-      "test_date": null,
-      "confidence": "M",
-      "actual": null,
-      "status": "NYT",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": null,
-        "text": "no actual reported"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 26,
-      "mentions": 1
-    },
-    {
-      "id": "p029",
-      "date": "2026-01-01",
-      "quarter_context": "Q3FY26",
-      "source_id": "q3fy26-presentation",
-      "source_label": "Q3FY26 presentation",
       "category": "timeline",
-      "promise": "Commission fully integrated 10 GWp solar giga factory",
+      "promise": "Commission integrated 10 GWp solar gigafactory during FY26",
       "quote": "on track to commission our fully integrated 10 GWp annual solar manufacturing giga factory",
-      "metric": "10 GWp solar giga factory commissioned",
+      "metric": "10 GWp solar gigafactory commissioned in FY26",
       "target": {
-        "text": "10 GWp solar giga factory commissioned",
+        "text": "10 GWp solar gigafactory commissioned in FY26",
         "value": 10,
         "value_high": null,
         "unit": "GWp",
@@ -1250,6 +1204,41 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 1,
+      "link_id": 26,
+      "mentions": 1
+    },
+    {
+      "id": "p029",
+      "date": "2026-01-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
+      "category": "timeline",
+      "promise": "Commission 40 GWh BESS gigafactory in phases during FY26",
+      "quote": "40 GWh annual BESS assembly and cell manufacturing giga factories - commissioning planned in various phases during the year",
+      "metric": "40 GWh BESS commissioned in FY26",
+      "target": {
+        "text": "40 GWh BESS commissioned in phases in FY26",
+        "value": 40,
+        "value_high": null,
+        "unit": "GWh",
+        "period": "FY26"
+      },
+      "test_date": "2026-05-15",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no outcome reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false,
+      "tier": 1,
       "link_id": 27,
       "mentions": 1
     },
@@ -1260,14 +1249,14 @@
       "source_id": "q3fy26-presentation",
       "source_label": "Q3FY26 presentation",
       "category": "timeline",
-      "promise": "Commission 40 GWh BESS giga factories in phases during the year",
-      "quote": "40 GWh annual BESS assembly and cell manufacturing giga factories - commissioning planned in various phases during the year",
-      "metric": "40 GWh BESS commissioned FY26",
+      "promise": "Commission polysilicon and glass gigafactories in FY26",
+      "quote": "Commissioning of polysilicon and glass planned for this year",
+      "metric": "Polysilicon & glass commissioned in FY26",
       "target": {
-        "text": "40 GWh BESS commissioned in phases FY26",
-        "value": 40,
+        "text": "Polysilicon and glass commissioned in FY26",
+        "value": null,
         "value_high": null,
-        "unit": "GWh",
+        "unit": null,
         "period": "FY26"
       },
       "test_date": "2026-05-15",
@@ -1290,48 +1279,6 @@
     },
     {
       "id": "p031",
-      "date": "2026-01-01",
-      "quarter_context": "Q3FY26",
-      "source_id": "q3fy26-presentation",
-      "source_label": "Q3FY26 presentation",
-      "category": "timeline",
-      "promise": "Commission polysilicon and glass plants this year",
-      "quote": "Commissioning of polysilicon and glass planned for this year",
-      "metric": "Polysilicon & glass commissioned FY26",
-      "target": {
-        "text": "Polysilicon and glass commissioned FY26",
-        "value": null,
-        "value_high": null,
-        "unit": null,
-        "period": "FY26"
-      },
-      "test_date": "2026-05-15",
-      "confidence": "H",
-      "actual": {
-        "text": "continue to make good progress on polysilicon, ingot, wafer and glass manufacturing",
-        "value": null,
-        "unit": null,
-        "source_id": "q4fy26-presentation",
-        "source_date": "2026-04-01",
-        "what_happened": "Q4FY26: stated continued progress on polysilicon and glass; no commissioning reported for FY26"
-      },
-      "status": "MET",
-      "variance": {
-        "absolute": null,
-        "pct": null,
-        "bps": null,
-        "days": 0,
-        "text": "on time"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 1,
-      "link_id": 29,
-      "mentions": 1
-    },
-    {
-      "id": "p032",
       "date": "2026-04-01",
       "quarter_context": "Q4FY26",
       "source_id": "q4fy26-presentation",
@@ -1362,11 +1309,11 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 1,
-      "link_id": 30,
+      "link_id": 29,
       "mentions": 1
     },
     {
-      "id": "p033",
+      "id": "p032",
       "date": "2026-04-01",
       "quarter_context": "Q4FY26",
       "source_id": "q4fy26-presentation",
@@ -1390,7 +1337,7 @@
         "unit": null,
         "source_id": "q1fy27-presentation",
         "source_date": "2026-07-01",
-        "what_happened": "Installation re-guided to post-monsoon; scaling up execution to 55 MWp solar and 150 MWh (not 150+ GWp)"
+        "what_happened": "Installation re-guided to post-monsoon; scaling execution aimed at 55 MWp solar and 150 MWh (not 150+ GWp)"
       },
       "status": "NYT",
       "variance": {
@@ -1404,11 +1351,11 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 3,
-      "link_id": 31,
+      "link_id": 30,
       "mentions": 1
     },
     {
-      "id": "p034",
+      "id": "p033",
       "date": "2026-04-01",
       "quarter_context": "Q4FY26",
       "source_id": "q4fy26-presentation",
@@ -1439,24 +1386,24 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 3,
-      "link_id": 32,
+      "link_id": 31,
       "mentions": 1
     },
     {
-      "id": "p035",
+      "id": "p034",
       "date": "2026-04-01",
       "quarter_context": "Q4FY26",
       "source_id": "q4fy26-presentation",
       "source_label": "Q4FY26 presentation",
       "category": "volume",
-      "promise": "Green ammonia supply to Samsung C&T starting 2029 for 15 years",
+      "promise": "Supply green ammonia to Samsung C&T starting 2029 for 15 years under $3bn agreement",
       "quote": "$ 3 Bn long term supply agreement for green ammonia with Samsung C&T – starting in 2029",
-      "metric": "Green ammonia supply from 2029",
+      "metric": "Green ammonia supply from 2029 ($3bn, 15-year contract)",
       "target": {
-        "text": "Green ammonia supply starting 2029 for 15 years",
-        "value": null,
+        "text": "Green ammonia supply starting 2029, 15-year $3bn contract",
+        "value": 3,
         "value_high": null,
-        "unit": null,
+        "unit": "USD_bn",
         "period": "2029"
       },
       "test_date": "2029",
@@ -1474,11 +1421,11 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 2,
-      "link_id": 33,
+      "link_id": 32,
       "mentions": 1
     },
     {
-      "id": "p036",
+      "id": "p035",
       "date": "2026-07-01",
       "quarter_context": "Q1FY27",
       "source_id": "q1fy27-presentation",
@@ -1488,7 +1435,7 @@
       "quote": "40 GWh to be commissioned this year",
       "metric": "Battery capacity 40 GWh commissioned FY27",
       "target": {
-        "text": "40 GWh battery capacity in FY27",
+        "text": "40 GWh commissioned in FY27",
         "value": 40,
         "value_high": null,
         "unit": "GWh",
@@ -1509,11 +1456,11 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 1,
-      "link_id": 34,
+      "link_id": 33,
       "mentions": 1
     },
     {
-      "id": "p037",
+      "id": "p036",
       "date": "2026-07-01",
       "quarter_context": "Q1FY27",
       "source_id": "q1fy27-presentation",
@@ -1544,6 +1491,41 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 1,
+      "link_id": 34,
+      "mentions": 1
+    },
+    {
+      "id": "p037",
+      "date": "2026-07-01",
+      "quarter_context": "Q1FY27",
+      "source_id": "q1fy27-presentation",
+      "source_label": "Q1FY27 presentation",
+      "category": "capacity",
+      "promise": "HJT module capacity scale-up to 20 GWp annually",
+      "quote": "scaling up to 20 GWp annual manufacturing capacity",
+      "metric": "HJT module capacity 20 GWp/year",
+      "target": {
+        "text": "20 GWp annual HJT capacity",
+        "value": 20,
+        "value_high": null,
+        "unit": "GWp",
+        "period": "medium term"
+      },
+      "test_date": "medium term",
+      "confidence": "H",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false,
+      "tier": 3,
       "link_id": 35,
       "mentions": 1
     },
@@ -1649,10 +1631,10 @@
       "root_cause": null,
       "was_revised": false,
       "tier": 3,
-      "link_id": 18,
+      "link_id": 17,
       "mentions": 2,
       "slippage_path": [
-        "ongoing",
+        "Q1FY26",
         "medium term"
       ]
     }
@@ -1724,7 +1706,7 @@
       "ebitda_margin": null,
       "revenue": 325290,
       "pat": 20589,
-      "net_debt_ebitda": null,
+      "net_debt_ebitda": 0.64,
       "roce": null,
       "unit": "INR_cr"
     },
@@ -1742,45 +1724,45 @@
   "aggregates": {
     "total": 39,
     "status_counts": {
-      "MET": 8,
+      "MET": 6,
       "PARTIAL": 0,
-      "MISSED": 2,
-      "NYT": 29
+      "MISSED": 1,
+      "NYT": 32
     },
-    "testable": 10,
+    "testable": 7,
     "by_quarter": {
       "Q2FY25": {
         "MET": 2,
         "PARTIAL": 0,
         "MISSED": 0,
-        "NYT": 1
+        "NYT": 0
       },
       "Q3FY25": {
+        "MET": 0,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 4
+      },
+      "Q4FY25": {
+        "MET": 1,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 8
+      },
+      "Q1FY26": {
         "MET": 1,
         "PARTIAL": 0,
         "MISSED": 0,
         "NYT": 3
       },
-      "Q4FY25": {
-        "MET": 1,
-        "PARTIAL": 0,
-        "MISSED": 1,
-        "NYT": 6
-      },
-      "Q1FY26": {
-        "MET": 1,
-        "PARTIAL": 0,
-        "MISSED": 1,
-        "NYT": 2
-      },
       "Q2FY26": {
         "MET": 1,
         "PARTIAL": 0,
-        "MISSED": 0,
-        "NYT": 4
+        "MISSED": 1,
+        "NYT": 3
       },
       "Q3FY26": {
-        "MET": 2,
+        "MET": 1,
         "PARTIAL": 0,
         "MISSED": 0,
         "NYT": 4
@@ -1795,52 +1777,52 @@
         "MET": 0,
         "PARTIAL": 0,
         "MISSED": 0,
-        "NYT": 5
+        "NYT": 6
       }
     },
     "root_causes": {},
     "confidence_mix": {
-      "H": 24,
-      "M": 15,
+      "H": 22,
+      "M": 17,
       "L": 0
     },
     "timeline_commitments": {
       "due": 4,
-      "on_time": 4,
-      "slipped": 0
+      "on_time": 3,
+      "slipped": 1
     },
     "signals": {
       "tier_mix": {
-        "1": 6,
+        "1": 5,
         "2": 0,
-        "3": 4
+        "3": 2
       },
-      "dropped": 0,
+      "dropped": 1,
       "slippage_vectors": 2,
       "sandbagging": null,
       "attribution": null
     }
   },
   "credibility": {
-    "score": 62,
+    "score": 63,
     "grade": "B",
-    "timeline_score": 68,
-    "delivery_score": 48,
+    "timeline_score": 59,
+    "delivery_score": 58,
     "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), materiality-weighted by tier (Tier-1 binary outcomes 1.4x, Tier-3 soft 0.6x), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
-    "headline": "Mostly delivered on testable promises; 29 later targets still not yet testable."
+    "headline": "Mostly delivered on testable promises; 32 later targets still not yet testable."
   },
   "provenance": {
     "mode": "live",
     "complete": true,
     "retrieval_errors": 0,
-    "forced_nyt": 1,
+    "forced_nyt": 4,
     "models_used": [
       "claude",
       "mistral",
       "gemini",
       "groq"
     ],
-    "generated_at": "2026-09-01T11:08:28.154Z",
-    "run_id": "33499552261"
+    "generated_at": "2026-10-01T12:24:54.193Z",
+    "run_id": "36859796064"
   }
 }
