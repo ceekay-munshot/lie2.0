@@ -7,7 +7,7 @@
     "screener_url": "https://www.screener.in/company/HDFCBANK/consolidated/",
     "fiscal_year_end": "03"
   },
-  "generated_at": "2026-09-01T11:17:53.432Z",
+  "generated_at": "2026-10-01T12:36:18.042Z",
   "coverage": {
     "from": "Q2FY25",
     "to": "Q1FY27",
@@ -148,11 +148,11 @@
       "source_id": "q2fy25-transcript",
       "source_label": "Q2FY25 transcript",
       "category": "leverage",
-      "promise": "Bring CD ratio to high-80s within 2-3 years",
+      "promise": "Reduce loan-to-deposit ratio to high-80s% within 2-3 years",
       "quote": "we will do it within two to three years to get to the high 80s",
-      "metric": "CD ratio to high-80s in 2-3 years",
+      "metric": "LDR to high-80s% in 2-3 years",
       "target": {
-        "text": "CD ratio high-80s in 2-3 years",
+        "text": "LDR to high-80s% in 2-3 years",
         "value": 85,
         "value_high": 89,
         "unit": "%",
@@ -196,12 +196,12 @@
       "test_date": "2025-05-15",
       "confidence": "H",
       "actual": {
-        "text": "12%",
-        "value": 12,
-        "unit": "percent",
+        "text": "12% loan growth in FY26, system estimated 10.5%-11.5%",
+        "value": null,
+        "unit": null,
         "source_id": "q4fy26-transcript",
         "source_date": "2026-04-01",
-        "what_happened": "FY26 credit growth was 12%; system growth estimated 10.5-11.5%, actual system ~16% per period-end RBI data"
+        "what_happened": "No FY25 actual reported; documents show FY26 growth at 12% vs estimated system 10.5-11.5%"
       },
       "status": "MISSED",
       "variance": {
@@ -211,8 +211,8 @@
         "days": null,
         "text": "12 vs 25"
       },
-      "mgmt_explanation": "Calibrated strategies expecting system 10.5-11.5%; actual system comparison shows period-end RBI numbers differ from consensus",
-      "root_cause": "Other",
+      "mgmt_explanation": null,
+      "root_cause": null,
       "was_revised": false,
       "tier": 2,
       "link_id": 2,
@@ -253,8 +253,8 @@
         "days": null,
         "text": "12 vs 26"
       },
-      "mgmt_explanation": "Calibrated strategies for expected system growth of 10.5-11.5%; actual system comparison uses RBI period-end numbers showing different rate.",
-      "root_cause": null,
+      "mgmt_explanation": "Calibrated strategies for 10.5-11.5% system growth expectation; actual system growth differed from consensus when comparing RBI period-end numbers.",
+      "root_cause": "Other",
       "was_revised": true,
       "tier": 2,
       "link_id": 2,
@@ -282,7 +282,7 @@
         "period": "FY27"
       },
       "test_date": "2027-05-15",
-      "confidence": "M",
+      "confidence": "H",
       "actual": null,
       "status": "NYT",
       "variance": {
@@ -306,7 +306,7 @@
       "source_id": "q2fy25-transcript",
       "source_label": "Q2FY25 transcript",
       "category": "timeline",
-      "promise": "List HDB Financial by September 2025",
+      "promise": "List HDB Financial Services by September 2025",
       "quote": "requires HDB to be listed by September '25",
       "metric": "HDB IPO by Sep'25",
       "target": {
@@ -319,12 +319,12 @@
       "test_date": "2025",
       "confidence": "H",
       "actual": {
-        "text": "IPO of Bank's subsidiary HDB Financial Services completed in Q1 FY26 with partial divestment through an offer for sale (OFS)",
+        "text": "IPO completed in Q1 FY26 with partial divestment through offer for sale",
         "value": null,
         "unit": null,
         "source_id": "q1fy26-transcript",
         "source_date": "2025-07-01",
-        "what_happened": "HDB Financial Services IPO completed in Q1 FY26 (Apr-Jun 2025) with OFS generating ₹69.49bn transaction gains"
+        "what_happened": "HDB Financial Services IPO completed in Q1 FY26; stake reduced to 74.12% from partial OFS divestment"
       },
       "status": "MET",
       "variance": {
@@ -390,7 +390,7 @@
         "text": "FY26 loan growth at system rate, FY27 above system",
         "value": null,
         "value_high": null,
-        "unit": "% vs system",
+        "unit": "%",
         "period": "FY26"
       },
       "test_date": "2026-05-15",
@@ -401,7 +401,7 @@
         "unit": "percent",
         "source_id": "q4fy26-transcript",
         "source_date": "2026-04-01",
-        "what_happened": "Achieved 12% loan growth in FY26, above estimated system rate of 10.5%-11.5%"
+        "what_happened": "Achieved 12% loan growth in FY26, exceeding estimated system rate of 10.5%-11.5%"
       },
       "status": "MISSED",
       "variance": {
@@ -409,7 +409,7 @@
         "pct": -53.8,
         "bps": null,
         "days": null,
-        "text": "12 vs 26 % vs system"
+        "text": "12 vs 26 %"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -419,13 +419,13 @@
       "mentions": 1
     },
     {
-      "id": "p011",
-      "date": "2026-04-01",
-      "quarter_context": "Q4FY26",
-      "source_id": "q4fy26-presentation",
-      "source_label": "Q4FY26 presentation",
+      "id": "p009",
+      "date": "2026-01-01",
+      "quarter_context": "Q3FY26",
+      "source_id": "q3fy26-presentation",
+      "source_label": "Q3FY26 presentation",
       "category": "other",
-      "promise": "Target carbon neutrality by FY32",
+      "promise": "Carbon neutral by FY32",
       "quote": "Target to be carbon neutral by FY32",
       "metric": "Carbon neutral by FY32",
       "target": {
@@ -449,9 +449,9 @@
       "mgmt_explanation": null,
       "root_cause": null,
       "was_revised": false,
-      "mentions": 2,
       "tier": 3,
-      "link_id": 7
+      "link_id": 7,
+      "mentions": 1
     },
     {
       "id": "p010",
@@ -489,59 +489,52 @@
       "mentions": 1
     },
     {
-      "id": "p012",
-      "date": "2026-04-01",
-      "quarter_context": "Q4FY26",
-      "source_id": "q4fy26-transcript",
-      "source_label": "Q4FY26 transcript",
-      "category": "other",
-      "promise": "LCR to be maintained between 110-120%",
-      "quote": "our endeavor for LCR is to be between 110% and 120%",
-      "metric": "LCR 110-120%",
-      "target": {
-        "text": "LCR 110-120%",
-        "value": 110,
-        "value_high": 120,
-        "unit": "%",
-        "period": "medium term"
-      },
-      "test_date": "medium term",
-      "confidence": "H",
-      "actual": {
-        "text": "119%",
-        "value": 119,
-        "unit": "%",
-        "source_id": "q1fy27-presentation",
-        "source_date": "2026-07-01",
-        "what_happened": "Average LCR reported at 119% for Jun'26 (Q1FY27), within the 110-120% target range."
-      },
-      "status": "MET",
-      "variance": {
-        "absolute": 9,
-        "pct": 8.2,
-        "bps": null,
-        "days": null,
-        "text": "119 vs 110-120 %"
-      },
-      "mgmt_explanation": null,
-      "root_cause": null,
-      "was_revised": false,
-      "tier": 3,
-      "link_id": 9,
-      "mentions": 1
-    },
-    {
-      "id": "p013",
+      "id": "p011",
       "date": "2026-04-01",
       "quarter_context": "Q4FY26",
       "source_id": "q4fy26-transcript",
       "source_label": "Q4FY26 transcript",
       "category": "revenue",
-      "promise": "System credit growth expected at 10.5-11.5% for FY26",
-      "quote": "We had estimated the system credit growth to be around 10.5% to 11.5%",
-      "metric": "FY26 system credit growth 10.5-11.5%",
+      "promise": "MSME business to grow at 18-21% range",
+      "quote": "that will continue to also be in that range of 18% to 20%, 21%",
+      "metric": "MSME growth 18-21%",
       "target": {
-        "text": "10.5-11.5% system credit growth in FY26",
+        "text": "MSME growth 18-21%",
+        "value": 18,
+        "value_high": 21,
+        "unit": "%",
+        "period": "FY27"
+      },
+      "test_date": "2027-05-15",
+      "confidence": "M",
+      "actual": null,
+      "status": "NYT",
+      "variance": {
+        "absolute": null,
+        "pct": null,
+        "bps": null,
+        "days": null,
+        "text": "no actual reported"
+      },
+      "mgmt_explanation": null,
+      "root_cause": null,
+      "was_revised": false,
+      "tier": 2,
+      "link_id": 9,
+      "mentions": 1
+    },
+    {
+      "id": "p012",
+      "date": "2026-04-01",
+      "quarter_context": "Q4FY26",
+      "source_id": "q4fy26-transcript",
+      "source_label": "Q4FY26 transcript",
+      "category": "revenue",
+      "promise": "System credit growth expected at 10.5-11.5%",
+      "quote": "We had estimated the system credit growth to be around 10.5% to 11.5%",
+      "metric": "System credit growth 10.5-11.5%",
+      "target": {
+        "text": "System credit growth 10.5-11.5%",
         "value": 10.5,
         "value_high": 11.5,
         "unit": "%",
@@ -566,39 +559,39 @@
       "mentions": 1
     },
     {
-      "id": "p014",
+      "id": "p013",
       "date": "2026-04-01",
       "quarter_context": "Q4FY26",
       "source_id": "q4fy26-transcript",
       "source_label": "Q4FY26 transcript",
-      "category": "revenue",
-      "promise": "MSME business to grow at 18-21% going forward",
-      "quote": "that will continue to also be in that range of 18% to 20%, 21%",
-      "metric": "MSME growth 18-21%",
+      "category": "working_capital",
+      "promise": "Target LCR between 110-120%",
+      "quote": "our endeavor for LCR is to be between 110% and 120%",
+      "metric": "LCR 110-120%",
       "target": {
-        "text": "MSME growth 18-21%",
-        "value": 18,
-        "value_high": 21,
+        "text": "LCR 110-120%",
+        "value": 110,
+        "value_high": 120,
         "unit": "%",
         "period": "medium term"
       },
       "test_date": "medium term",
       "confidence": "M",
       "actual": {
-        "text": "business banking which is the largest component of our MSME segment grow at 22.3",
-        "value": 22.3,
+        "text": "119%",
+        "value": 119,
         "unit": "%",
-        "source_id": "q1fy27-transcript",
+        "source_id": "q1fy27-presentation",
         "source_date": "2026-07-01",
-        "what_happened": "MSME business banking segment grew at 22.3% in Q1FY27"
+        "what_happened": "LCR reported at 119% as of Jun'26 (Q1FY27), within the target range of 110-120%."
       },
       "status": "MET",
       "variance": {
-        "absolute": 4.3,
-        "pct": 23.9,
+        "absolute": -1,
+        "pct": -0.8,
         "bps": null,
         "days": null,
-        "text": "22.3 vs 18-21 %"
+        "text": "119 vs 110-120 %"
       },
       "mgmt_explanation": null,
       "root_cause": null,
@@ -608,7 +601,7 @@
       "mentions": 1
     },
     {
-      "id": "p015",
+      "id": "p014",
       "date": "2026-07-01",
       "quarter_context": "Q1FY27",
       "source_id": "q1fy27-presentation",
@@ -728,12 +721,12 @@
   "aggregates": {
     "total": 13,
     "status_counts": {
-      "MET": 3,
+      "MET": 2,
       "PARTIAL": 0,
       "MISSED": 3,
-      "NYT": 7
+      "NYT": 8
     },
-    "testable": 6,
+    "testable": 5,
     "by_quarter": {
       "Q2FY25": {
         "MET": 1,
@@ -753,17 +746,17 @@
         "MISSED": 1,
         "NYT": 1
       },
-      "Q4FY26": {
-        "MET": 2,
-        "PARTIAL": 0,
-        "MISSED": 0,
-        "NYT": 2
-      },
       "Q3FY26": {
         "MET": 0,
         "PARTIAL": 0,
         "MISSED": 0,
-        "NYT": 1
+        "NYT": 2
+      },
+      "Q4FY26": {
+        "MET": 1,
+        "PARTIAL": 0,
+        "MISSED": 0,
+        "NYT": 2
       },
       "Q1FY27": {
         "MET": 0,
@@ -789,7 +782,7 @@
       "tier_mix": {
         "1": 1,
         "2": 3,
-        "3": 2
+        "3": 1
       },
       "dropped": 0,
       "slippage_vectors": 1,
@@ -802,12 +795,12 @@
     }
   },
   "credibility": {
-    "score": 49,
+    "score": 47,
     "grade": "C",
     "timeline_score": 56,
-    "delivery_score": 44,
+    "delivery_score": 42,
     "method": "Confidence-weighted delivery rate over testable promises (MET=1, PARTIAL=0.5, MISSED=0; H=1.0,M=0.8,L=0.6), materiality-weighted by tier (Tier-1 binary outcomes 1.4x, Tier-3 soft 0.6x), shrunk toward a neutral 50 prior by 10 pseudo-observations (plus one per due-but-unverified promise) so neither a thin testable base nor a one-sided, thinly-retrieved ledger earns a confident extreme score. Bands A>=75 B>=60 C>=45 D>=30 E<30.",
-    "headline": "A mixed delivery record — chiefly other; 7 later targets still not yet testable."
+    "headline": "A mixed delivery record — chiefly other; 8 later targets still not yet testable."
   },
   "provenance": {
     "mode": "live",
@@ -820,7 +813,7 @@
       "gemini",
       "groq"
     ],
-    "generated_at": "2026-09-01T11:17:53.432Z",
-    "run_id": "33499552261"
+    "generated_at": "2026-10-01T12:36:18.042Z",
+    "run_id": "36859796064"
   }
 }
